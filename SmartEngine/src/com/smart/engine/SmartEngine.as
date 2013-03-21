@@ -216,8 +216,8 @@ package com.smart.engine {
 		}
 
 		public function setSize(width:Number, height:Number):void {
-				/*displayArea.x = width * .5;
-				displayArea.y = height * .5;*/
+				displayArea.x = width * .5;
+				displayArea.y = height * .5;
 		}
 
 		public function start():void {

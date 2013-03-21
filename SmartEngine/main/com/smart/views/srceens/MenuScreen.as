@@ -1,7 +1,7 @@
 package com.smart.views.srceens
 {
-	import com.smart.logs.Debug;
 	import com.smart.model.Language;
+	import com.smart.model.SignalBus;
 	import com.smart.views.signals.ScreenEventConst;
 	
 	import feathers.controls.Button;
@@ -9,7 +9,6 @@ package com.smart.views.srceens
 	import feathers.controls.Header;
 	import feathers.data.ListCollection;
 	
-	import starling.display.DisplayObject;
 	import starling.events.Event;
 	
 	public class MenuScreen extends BaseScreen
@@ -19,6 +18,8 @@ package com.smart.views.srceens
 		private var _buttonGroup:ButtonGroup;
 
 		private var _buttonsData:ListCollection;
+	
+		
 		public function MenuScreen()
 		{
 			super();

@@ -8,18 +8,16 @@
 
 package com.smart.engine.display {
 	
-	import flash.geom.Point;
-	import flash.utils.Dictionary;
-	
 	import com.smart.engine.SmartEngine;
-
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.viewport.IProjection;
 	import com.smart.engine.viewport.MapViewport;
 	
+	import flash.geom.Point;
+	import flash.utils.Dictionary;
+	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
-	import starling.display.MovieClip;
 	import starling.display.QuadBatch;
 	import starling.display.Sprite;
 	
@@ -29,7 +27,7 @@ package com.smart.engine.display {
 		
 		public var _display:Sprite;
 
-		public var _quadBatch:QuadBatch=new QuadBatch();
+		public var _quadBatch:QuadBatch;
 		
 		public var _name:String;
 		
@@ -60,18 +58,19 @@ package com.smart.engine.display {
 			
 			if (projectionType == MapViewport.TYPE_ISOMETRIC)
 			{
-				tileWidthOffset = tileWidth - 2;
-				tileHeightOffset = tileHeight - 2;
+				tileWidthOffset = tileWidth;
+				tileHeightOffset = tileHeight;
 			}
 			else if (projectionType == MapViewport.TYPE_ORTHOGONAL)
 			{
-				tileWidthOffset = tileWidth - 7;
-				tileHeightOffset = tileHeight - 7;	
+				tileWidthOffset = tileWidth;
+				tileHeightOffset = tileHeight;	
 			}
 			
 			sqEdgeSize = tileHeightOffset;
 			
 			_display = new Sprite();
+			_quadBatch=new QuadBatch();
 			_display.addChild(_quadBatch);
 			data = new Vector.<Vector.<SmartDisplayObject>>(w * h, true);
 			flatData = new <SmartDisplayObject>[];
@@ -307,10 +306,8 @@ package com.smart.engine.display {
 			//_display.addChild(image);
 			//var mc:MovieClip= image as MovieClip;
 			var img:Image=Image(image);
-			
 			_quadBatch.addImage(img);
-			
-			
+			//_quadBatch.reset();
 			forceUpdate();
 		}
 		
@@ -380,6 +377,7 @@ package com.smart.engine.display {
 			}
 			collection.push(val);
 			val.layerIndex = index;
+
 		}
 	}
 	

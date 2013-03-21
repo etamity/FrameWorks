@@ -22,6 +22,8 @@ package com.smart.engine.plugins {
 	import com.smart.engine.tmxdata.TMXTileset;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.utils.State;
+	
+	import starling.display.Sprite;
 
 	public class TMXBatchPlugin extends Plugin implements IPlugin {
 		private static const TILE_PROPERTY_HIT_MAP:String       = "hitmap";
@@ -34,7 +36,7 @@ package com.smart.engine.plugins {
 			linkedLayer = new <LayerBatchDisplay>[];
 		}
 
-		private var iSprite:int                                 = 0;
+		private var iSprite:int                                 = 1;
 		private var linkedLayer:Vector.<LayerBatchDisplay>;
 		private var steps:int                                   = 0; 
 		private var tmx:TMXParser;
@@ -59,12 +61,16 @@ package com.smart.engine.plugins {
 			var sprite:SmartImage;
 			for each (var obj:TMXObject in group.objects) {
 				 tile       = tmx.tilesets[obj.gid];
-				 name           = tmx.getImgSrc(obj.gid) + "_" + "1";
+				// name           = tmx.getImgSrc(obj.gid) + "_" + "1";
+				 
+				 name           =  String(obj.gid);
 				 assetID        = tmx.getImgSrc(obj.gid);
+				 
+				 trace("Objs: "+assetID, name, new Point3D(obj.x, obj.y));
 				 sprite = new SmartImage(assetID, name, new Point3D(obj.x, obj.y));
-				if (obj.name == "") {
-					obj.name = name;
-				}
+					if (obj.name == "") {
+						obj.name = name;
+					}
 				sprite.name = obj.name;
 				sprite.type = obj.type;
 				//sprite.currentFrame = tmx.getImgFrame(obj.gid);
@@ -152,21 +158,23 @@ package com.smart.engine.plugins {
 					continue;
 				}
 				_cell             = layer.getCell(cellX, cellY); 
+				
 				if (_cell == 0 || isNaN(_cell)) {
 					continue;
 				}
 				grid     = linkedLayer[i];
 				pt3           = grid.gridToLayerPt(cellX, cellY);
 				//var name:String           = tmx.getImgSrc(_cell) + "_" + (iSprite++);
-				name           = String(iSprite++);
-				assetID        = tmx.getImgSrc(_cell);
+				name           =  String(_cell);   //String(iSprite++);
+				assetID        =  tmx.getImgSrc(_cell);
+				
+				trace(assetID, name, pt3, new State("", 0, 0, true));
+				
 				sprite = new SmartImage(assetID, name, pt3, new State("", 0, 0, true)); 
 				//sprite.currentFrame = tmx.getImgFrame(_cell);
-
+				//Sprite(grid.display).addChild(sprite.display);
 				grid.add(sprite);
 			}
-		
-
 		}
 	}
 

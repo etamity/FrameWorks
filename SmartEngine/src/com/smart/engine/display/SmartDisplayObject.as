@@ -30,7 +30,6 @@ package com.smart.engine.display {
 			this.state = state != null ? state : new State();
 			this.position = pt != null ? pt : new Point3D();
 			_assetID=assetID;
-			//trace("_assetID:"+_assetID);
 			changeTo(assetID);
 		}
 		

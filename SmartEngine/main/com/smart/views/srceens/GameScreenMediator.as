@@ -1,11 +1,10 @@
 package com.smart.views.srceens
 {
-	import com.smart.logs.Debug;
 	import com.smart.model.SignalBus;
 	import com.smart.views.signals.ScreenEventConst;
+	
 	import org.robotlegs.mvcs.StarlingMediator;
 	
-	import starling.events.Event;
 	import starling.utils.AssetManager;
 	
 	public class GameScreenMediator extends StarlingMediator

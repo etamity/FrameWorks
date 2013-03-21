@@ -10,10 +10,11 @@ package com.smart.views {
 
 	import com.smart.engine.SmartEngine;
 	import com.smart.engine.core.PluginCenter;
+	import com.smart.engine.display.SmartImage;
+	import com.smart.engine.display.SmartSprite;
 	import com.smart.engine.plugins.CameraPlugin;
 	import com.smart.engine.plugins.SpriteControlPlugin;
 	import com.smart.engine.plugins.TMXBatchPlugin;
-	import com.smart.engine.plugins.TMXPlugin;
 	import com.smart.engine.plugins.ViewPortControlPlugin;
 	import com.smart.engine.plugins.XRayLayersPlugin;
 	import com.smart.engine.tmxdata.TMXParser;
@@ -67,6 +68,34 @@ package com.smart.views {
 			engine.addPlugin(new CameraPlugin(new Point3D(0,0,1)));
 			
 			engine.addPlugin(new ViewPortControlPlugin());
+			
+			
+			
+			
+			
+			
+			
+			
+			var sprite:SmartSprite =new  SmartSprite("./Monopoly/tileSet.png","12");
+			addChild(sprite.display);
+			
+			for (var a:int= 1; a<=10 ;a ++)
+				for (var b:int =1 ; b<=10;b++)
+				{
+					var index:int = a*b;
+					if (index<30)
+					{
+						sprite =new  SmartSprite("./Monopoly/tileSet.png",String(index));
+						sprite.x= a*32;
+						sprite.y= b*32;
+						addChild(sprite.display);
+					}
+					
+					
+				}
+			
+			
+			
 			
 		}
 		private function registerPlugins():void {
