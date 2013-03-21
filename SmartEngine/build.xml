@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="MadWorld" default="build" basedir=".">
+	
+	<!-- build.local.properties and sdk.local.proprties are optional files that
+		can be used to override the default properties. -->
+	<property name="AppName" value="WorldWar" />
+	
+	
+	<property name="RootDir" value="../" />
+	<property name="main.path" value="${basedir}/main" />
+	
+	<property file="${RootDir}/build/sdk.local.properties"/>
+	<property file="${RootDir}/build/sdk.properties"/>
+	<property file="${RootDir}/build/build.local.properties"/>
+	<property file="${RootDir}/build/build.properties"/>
+	
+	<fail unless="ios.provision.path"/>
+	<fail unless="ios.certificate.path"/>
+	<fail unless="ios.certificate.password"/>
+	
+	<fail unless="android.certificate.path"/>
+	<fail unless="android.certificate.password"/>
+
+	<target name="build" depends="build-web,copy"/>
+
+	<target name="prepare">
+		<delete dir="${output.path}"/>
+	</target>
+
+	<target name="build-web" depends="prepare">
+		<echo message="Building ${AppName}Web.swf"/>
+		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
+			<arg line="--target-player=${player.version}"/>
+			<arg line="--debug=true"/>
+			<arg line="--swf-version=${swf.version}"/>
+			<arg line="--source-path+='${source.path}'"/>
+			<arg line="--source-path+='${main.path}'"/>
+			<arg line="--source-path+='${feathers.root}'"/>
+			<arg line="--source-path+='${assets.path}'"/>
+			<arg line="--library-path+='${assets.path}'"/>
+			<arg line="--library-path+='${lib.path}'"/>
+			<arg line="${main.path}/Main.as"/>
+			<arg line="--output ${output.path}/${AppName}Web.swf"/>
+		</exec>
+	</target>
+	<target name="build-air-swf" depends="prepare">
+		<echo message="Building ${AppName}.swf"/>
+		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
+			<arg line="+configname=air"/>
+			<arg line="--debug=true"/>
+			<arg line="--target-player=${player.version}"/>
+			<arg line="--swf-version=${swf.version}"/>
+			<arg line="--compress=false"/>
+			<arg line="--source-path+='${source.path}'"/>
+			<arg line="--source-path+='${main.path}'"/>
+			<arg line="--library-path+='${starling.root}'"/>
+			<arg line="--source-path+='${feathers.root}'"/>
+			<arg line="--source-path+='${assets.path}'"/>
+			<arg line="--library-path+='${assets.path}'"/>
+			<arg line="--library-path+='${lib.path}'"/>
+			<arg line="${main.path}/Main.as"/>
+			<arg line="--output ${output.path}/${AppName}.swf"/>
+
+
+		</exec>
+	</target>
+	<target name="build-ios" depends="build-air-swf">
+		<echo message="Packaging ${AppName}.ipa"/>
+		<exec executable="${adt}" dir="${basedir}" failonerror="true">
+			<arg line="-package"/>
+			<arg line="-target ipa-app-store"/>
+			<arg line="-provisioning-profile ${ios.provision.path}"/>
+			<arg line="-keystore ${ios.certificate.path}"/>
+			<arg line="-storetype pkcs12"/>
+			<arg line="-storepass ${ios.certificate.password}"/>
+			<arg line="${output.path}/${AppName}.ipa"/>
+			<arg line="${source.path}/${AppName}-app.xml"/>
+			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
+			<arg line="-C ${output.path}"/>
+			<arg line="${AppName}.swf"/>
+		</exec>
+	</target>
+	<target name="build-android" depends="build-air-swf">
+		<echo message="Packaging ${AppName}.apk"/>
+		<exec executable="${adt}" dir="${basedir}" failonerror="true">
+			<arg line="-package"/>
+			<arg line="-target apk"/>
+			<!--  ( apk | apk-debug | apk-emulator | apk-captive-runtime ) -->
+			<arg line="-storetype pkcs12"/>
+			<arg line="-keystore ${android.certificate.path}"/>
+			<arg line="-storepass ${android.certificate.password}"/>
+			<arg line="${output.path}/${AppName}.apk"/>
+			<arg line="${source.path}/${AppName}-app.xml"/>
+			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
+			<arg line="-C ${output.path}"/>
+			<arg line="${AppName}.swf"/>
+		</exec>
+	</target>
+	
+	<target name="copy">
+		<copy todir="./bin">
+		    <fileset dir="${output.path}" excludes="**/*.fla,**/Thumbs.db"/>
+		</copy>
+	</target>
+	
+</project>

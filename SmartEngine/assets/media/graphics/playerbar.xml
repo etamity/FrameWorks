@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:ef3c9e055ce187de58ec1767e469b4e5$ -->
+<TextureAtlas imagePath="playerbar.png">
+    <SubTexture name="IconClock" x="2" y="58" width="27" height="31" frameX="-4" frameY="0" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="IconMoney" x="31" y="87" width="27" height="27" frameX="-5" frameY="-3" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="icon-coin-small" x="31" y="58" width="27" height="27" frameX="-6" frameY="-2" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="icon-snow-small" x="2" y="91" width="27" height="29" frameX="-5" frameY="-1" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="loading-panel" x="2" y="2" width="235" height="54" frameX="-1" frameY="-1" frameWidth="237" frameHeight="56"/>
+</TextureAtlas>
