@@ -8,7 +8,6 @@
 
 package com.smart.engine.display {
 
-	import com.smart.engine.SmartEngine;
 	import com.smart.engine.starling.HitMovieClip;
 	import com.smart.engine.utils.GridBool;
 	import com.smart.engine.utils.Point3D;
@@ -135,7 +134,7 @@ package com.smart.engine.display {
 				return;
 			}
 			_display.play();
-			SmartEngine.engine.juggler.add(_display);
+			//SmartEngine.engine.juggler.add(_display);
 		}
 
 	
@@ -200,7 +199,7 @@ package com.smart.engine.display {
 
 		public function stop():void {
 			_display.stop();
-			SmartEngine.engine.juggler.remove(_display);
+			//SmartEngine.engine.juggler.remove(_display);
 		}
 	}
 

@@ -73,18 +73,15 @@ package com.smart.views.srceens
 			_exitBtn.label= Language.EXIT;
 	
 			
+			var _reloadBtn:Button=new Button();
+			_reloadBtn.addEventListener(Event.TRIGGERED, backButton_triggeredHandler);
+			_reloadBtn.label= Language.RELOAD;
+			_reloadBtn.paddingRight=30;
+			_reloadBtn.height=_header.height-20;
 			
+			addItem(_reloadBtn,RIGHT);
 			addItem(_exitBtn,RIGHT);
 			
-			/*var mQuadBatch:QuadBatch = new QuadBatch();
-			mQuadBatch.y=200;
-			addChild(mQuadBatch);
-			var image1:Image = new Image(assets.getTexture("icon-snow-small"));
-			
-			var image2:Image=new Image(assets.getTexture("IconMoney"));
-			image1.x+=100;
-			mQuadBatch.addImage(image1);
-			mQuadBatch.addImage(image2);*/
 				
 		}
 		
@@ -99,7 +96,6 @@ package com.smart.views.srceens
 		private function backButton_triggeredHandler(event:Event):void
 		{
 			const button:Button = Button(event.currentTarget);
-			Debug.log(button,button.label, event.data, " triggered.");
 			this.dispatchEventWith(button.label);
 			
 		}

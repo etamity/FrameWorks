@@ -12,7 +12,9 @@ package com.smart.engine.plugins {
 	import com.smart.engine.core.IPlugin;
 	import com.smart.engine.core.IPluginEngine;
 	import com.smart.engine.core.Plugin;
+	import com.smart.engine.display.ILayerDisplay;
 	import com.smart.engine.display.LayerBatchDisplay;
+	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.display.SmartImage;
 	import com.smart.engine.loaders.TextureAtlasLoader;
 	import com.smart.engine.tmxdata.TMXLayer;
@@ -23,23 +25,33 @@ package com.smart.engine.plugins {
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.utils.State;
 	
+	import flash.geom.Point;
+	import flash.utils.Dictionary;
+	
 	import starling.display.Sprite;
 
 	public class TMXBatchPlugin extends Plugin implements IPlugin {
 		private static const TILE_PROPERTY_HIT_MAP:String       = "hitmap";
 		private static const TILE_PROPERTY_HIT_MAP_VALUE:String = "true";
-
-		public function TMXBatchPlugin(tmx:TMXParser = null) {
-			super();
-			name = "TMXBatchPlugin";
-			this.tmx = tmx;
-			linkedLayer = new <LayerBatchDisplay>[];
-		}
+		
+		private var layers:Vector.<ILayerDisplay>; 
+		private var layersHash:Dictionary; 
+		private var container:Sprite;
 
 		private var iSprite:int                                 = 1;
 		private var linkedLayer:Vector.<LayerBatchDisplay>;
 		private var steps:int                                   = 0; 
 		private var tmx:TMXParser;
+		
+		public function TMXBatchPlugin(tmx:TMXParser = null) {
+			super();
+			layers = new <ILayerDisplay>[];
+			layersHash = new Dictionary();
+			container= new Sprite();
+		
+			this.tmx = tmx;
+			linkedLayer = new <LayerBatchDisplay>[];
+		}
 
 		public function addObjects():void {
 			var layer:LayerBatchDisplay;
@@ -52,8 +64,71 @@ package com.smart.engine.plugins {
 				addObjectsToLayer(layer, objectGroup);
 			}
 		}
-
+		
 	
+		
+		public function getLayerByIndex(index:int):ILayerDisplay {
+			return layers[index];
+		}
+		
+		public function getLayerByName(name:String):ILayerDisplay {
+			return layersHash[name];
+		}
+		public function getSpriteByLayerIndex(layerIndex:int, spriteName:String):SmartDisplayObject {
+			var layer:ILayerDisplay = layers[layerIndex];
+			return layer.getByName(spriteName);
+		}
+		public function getSpriteByLayerName(layerName:String, spriteName:String):SmartDisplayObject {
+			var layer:ILayerDisplay        = getLayerByName(layerName);
+			if (layer == null) {
+				return null;
+			}
+			var result:SmartDisplayObject = layer.getByName(spriteName);
+			return result;
+		}
+		public function gridInLayerPt(pt:Point):Point3D {
+			var currentGrid:Point3D = this.layers[0].gridToLayerPt(pt.x, pt.y);
+			return currentGrid;
+		}
+		public function get numChildrenSprites():int {
+			var num:int = 0;
+			for each (var layer:ILayerDisplay in layers) {
+				num += layer.numChildrenSprites;
+			}
+			
+			return num;
+		}
+		
+		public function get numberOfLayers():int {
+			return layers.length;
+		}
+		
+		public function objectInGridPt(val:Point3D):Point {
+			var pt:Point3D        = val;
+			var currentGrid:Point = this.layers[0].layerToGridPt(pt.x, pt.y);
+			return currentGrid;
+		}
+		public function addLayer(index:int, layer:ILayerDisplay):void {
+			if (layer.name == "" || layer.name == null) {
+				throw new Error("invalid layer name");
+			}
+			if (layersHash[layer.name] != null) {
+				throw new Error("layer " + layer.name + " already added");
+			}
+			for (var i:int = 0; i <= index; i++) {
+				if (i == index) {
+					layers[i] = layer;
+					break;
+				}
+				else if (i == layers.length) {
+					layers.push(null);
+				}
+			}
+			layersHash[layer.name] = layer;
+			if (layer != null) {
+				container.addChild(layer.display);
+			}
+		}
 		public function addObjectsToLayer(grid:LayerBatchDisplay, group:TMXObjectgroup):void {
 			var tile:TMXTileset;
 			var name:String;
@@ -66,7 +141,7 @@ package com.smart.engine.plugins {
 				 name           =  String(obj.gid);
 				 assetID        = tmx.getImgSrc(obj.gid);
 				 
-				 trace("Objs: "+assetID, name, new Point3D(obj.x, obj.y));
+				 //trace("Objs: "+assetID, name, new Point3D(obj.x, obj.y));
 				 sprite = new SmartImage(assetID, name, new Point3D(obj.x, obj.y));
 					if (obj.name == "") {
 						obj.name = name;
@@ -99,33 +174,66 @@ package com.smart.engine.plugins {
 
 		override public function onRegister(engine:IPluginEngine):void {
 			super.onRegister(engine);
+			this.engine.addDisplay(this.container);
+			if (this.tmx!=null){
 			makeEmptyGrid();
 			loadTiles();
 			makeLayer();
 			addObjects();
+			}
 		}
 
 
 		override public function onRemove():void {
 			super.onRemove();
 
-			engine.removeAllLayers();
+			removeAllLayers();
 
 			
 		}
 
 	
 		override public function onTrigger(time:Number):void {
-
+			
+			
+			container.x=engine.positionX;
+			container.y=engine.positionY;
+			for each (var layer:ILayerDisplay in layers) {
+				if (layer != null) {
+					if (layer.autoPosition) {
+						layer.moveTo(engine.positionX, engine.positionY);
+					}
+					layer.onTrigger(time, engine);
+				}
+			}
 		}
 
+		public function removeLayer(layer:ILayerDisplay):void {
+			var index:int = layers.indexOf(layer);
+			layers.splice(index, 1);
+			delete layersHash[layer.name];
+			container.removeChild(layer.display);
+		}
+		
+		public function removeAllLayers():void{
+			
+			for each(var layer:ILayerDisplay in layers) {
+				removeLayer(layer);
+			}
+		}
 		public function get tmxData():TMXParser {
 			return tmx;
 		}
 
 		public function set tmxData(data:TMXParser):void{
 			tmx=data;
-			
+			if (this.tmx!=null){
+				removeAllLayers();
+				makeEmptyGrid();
+				loadTiles();
+				makeLayer();
+				addObjects();
+			}
 		}
 		
 		
@@ -147,7 +255,7 @@ package com.smart.engine.plugins {
 				layerName  = layer.name;
 				grid = makeEmptyGridOfSize(i, layerName);
 				grid.flatten(); 
-				engine.addLayer(i, grid); 
+				addLayer(i, grid); 
 			}
 
 		}
@@ -172,13 +280,13 @@ package com.smart.engine.plugins {
 				if (_cell == 0 || isNaN(_cell)) {
 					continue;
 				}
-				grid     = linkedLayer[i];
-				pt3           = grid.gridToLayerPt(cellX, cellY);
-				//var name:String           = tmx.getImgSrc(_cell) + "_" + (iSprite++);
-				name           =  String(_cell);   //String(iSprite++);
-				assetID        =  tmx.getImgSrc(_cell);
+				grid = linkedLayer[i];
+				pt3  = grid.gridToLayerPt(cellX, cellY);
+				name= tmx.getImgSrc(_cell) + "_" + (iSprite++);
+				//name           =  String(_cell);   //String(iSprite++);
+				assetID=  tmx.getImgSrc(_cell);
 				
-				trace(assetID, name, pt3, new State("", 0, 0, true));
+				//trace(assetID, name, pt3, new State("", 0, 0, true));
 				
 				sprite = new SmartImage(assetID, name, pt3, new State("", 0, 0, true)); 
 				//sprite.currentFrame = tmx.getImgFrame(_cell);

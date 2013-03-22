@@ -8,18 +8,15 @@
 
 package com.smart.engine.display {
 
-	import flash.geom.Point;
-	import flash.utils.Dictionary;
-	
 	import com.smart.engine.SmartEngine;
-	import com.smart.engine.components.IComponent;
-	import com.smart.engine.core.IPlugin;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.viewport.IProjection;
 	import com.smart.engine.viewport.MapViewport;
 	
+	import flash.geom.Point;
+	import flash.utils.Dictionary;
+	
 	import starling.display.DisplayObject;
-	import starling.display.Image;
 	import starling.display.Sprite;
 
 	public class LayerDisplay implements ILayerDisplay {

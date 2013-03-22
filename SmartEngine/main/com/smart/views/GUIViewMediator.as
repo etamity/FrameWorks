@@ -59,7 +59,9 @@ package com.smart.views
 			var main:MainMenuScreen=new MainMenuScreen();
 			var eventObject:Object=new Object();
 			eventObject[Language.STARTGAME]=ScreenConst.GAME_SCREEN;
-			eventObject[Language.EXIT]=reloadMap;
+			eventObject[Language.EXIT]=ScreenConst.MAINMENU_SCREEN;
+			eventObject[Language.RELOAD]=reloadMap;
+			
 			
 			_navigator.addScreen(ScreenConst.MAINMENU_SCREEN, new ScreenNavigatorItem(MenuScreen,eventObject));
 			_navigator.addScreen(ScreenConst.GAME_SCREEN, new ScreenNavigatorItem(GameScreen,eventObject));

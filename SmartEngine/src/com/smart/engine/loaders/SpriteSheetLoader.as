@@ -52,14 +52,6 @@ package com.smart.engine.loaders {
 		
 		}
 
-		public function getImage():Image {
-			if (proxyTexture == null) {
-				proxyTexture = new <Texture>[Texture.empty(25, 25)];
-			}
-			var image:Image = new Image(proxyTexture[0]);
-			image.smoothing = TextureSmoothing.NONE;
-			return image;
-		}
 		public function get id():String {
 			return url;
 		}
@@ -71,7 +63,6 @@ package com.smart.engine.loaders {
 
 	
 		public function load():void {
-			trace(url);
 			ImgLoader.instance.getBitmapData(url, onLoad);
 		}
 

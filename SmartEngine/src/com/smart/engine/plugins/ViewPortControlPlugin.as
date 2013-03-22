@@ -8,33 +8,21 @@
 
 package com.smart.engine.plugins {
 
-	import flash.events.MouseEvent;
+	import com.smart.engine.core.IPluginEngine;
+	import com.smart.engine.core.Plugin;
+	import com.smart.engine.utils.Point3D;
+	
 	import flash.ui.Keyboard;
-	import com.smart.engine.*;
+	
 	import starling.animation.Tween;
-	import starling.core.Starling;
 	import starling.display.Stage;
-	import starling.events.Event;
 	import starling.events.KeyboardEvent;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
-	//import starling.events.WheelEvent;
-	import com.smart.engine.utils.Point3D;
-	import com.smart.engine.core.Plugin;
-	import com.smart.engine.core.IPluginEngine;
 
+	
 	public class ViewPortControlPlugin extends Plugin {
-
-		public function ViewPortControlPlugin(hitArea:Number = 10, speed:Number = 4) {
-			super();
-
-			this.hitArea = hitArea;
-			this.speed = speed;
-
-			velocity = new Point3D(0, 0, 0);
-		}
-
+		
 		public var speed:Number;
 		public var zoom:Number       = .05;
 		private var hitArea:Number;
@@ -42,10 +30,20 @@ package com.smart.engine.plugins {
 		private var tw:Tween;
 		private var velocity:Point3D;
 		private var zoomDelta:Number = 0.006;
+		private var camera:CameraPlugin;
+		public function ViewPortControlPlugin(hitArea:Number = 10, speed:Number = 4) {
+			super();
+
+			this.hitArea = hitArea;
+			this.speed = speed;
+			velocity = new Point3D(0, 0, 0);
+		}
 
 		override public function onRegister(engine:IPluginEngine):void {
 			super.onRegister(engine);
 			this.stage = this.engine.stage;
+			camera = this.engine.getPlugin(CameraPlugin);
+			
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);
 			stage.addEventListener("mouseLeave", onMouseOut);
 			stage.addEventListener("mouseOut", onMouseOut);
@@ -58,10 +56,10 @@ package com.smart.engine.plugins {
 		}
 
 		override public function onTrigger(time:Number):void {
-			var fasterPanWithZoom:Number = Math.max(CameraPlugin.instance.position.z, 1);
-			CameraPlugin.instance.position.x += velocity.x;
-			CameraPlugin.instance.position.y += velocity.y;
-			CameraPlugin.instance.position.z += velocity.z;
+			var fasterPanWithZoom:Number = Math.max(camera.position.z, 1);
+			camera.position.x += velocity.x;
+			camera.position.y += velocity.y;
+			camera.position.z += velocity.z;
 			if (velocity.z > 0) {
 				velocity.z -= zoomDelta;
 			}

@@ -10,12 +10,16 @@ package com.smart.engine.core {
 
 	public interface IPluginEngine {
 		
-		function getPluginByName(val:String):IPlugin;
+		function getPluginByName(val:String):*;
+		
+		function getPlugin(val:*):*;
 		
 		function removePlugin(plugin:IPlugin):void;
 		
 		function addPlugin(plugin:IPlugin):void;
 		
 		function get EngineClass():Class;
+
+		
 	}
 }

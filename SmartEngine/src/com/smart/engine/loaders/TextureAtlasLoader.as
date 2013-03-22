@@ -54,21 +54,11 @@ package com.smart.engine.loaders {
 			if (proxyTexture == null) {
 				proxyTexture = new <Texture>[Texture.empty(25, 25)];
 			}
-			var mc:HitMovieClip = new HitMovieClip(proxyTexture);
-			mc.smoothing = TextureSmoothing.NONE;
-		
-			return mc;
-		
-		}
-
-		public function getImage():Image {
-			if (proxyTexture == null) {
-				proxyTexture = new <Texture>[Texture.empty(25, 25)];
-			}
 			var image:Image = new Image(proxyTexture[0]);
 			image.smoothing = TextureSmoothing.NONE;
 			return image;
 		}
+
 		public function get id():String {
 			return url;
 		}
@@ -118,24 +108,7 @@ package com.smart.engine.loaders {
 			trace(newxml);
 			
 			_textureAtlas = new TextureAtlas(bigTexture, newxml);
-			
 
-
-			
-			
-			
-			
-
-			/*textures = new <Texture>[];
-			var texture:Texture;
-			for each (var frame:Rectangle in frames) {
-				texture = Texture.fromTexture(bigTexture, frame);
-				textures.push(texture);
-				if (hitMap != null) {
-					hitMap.push(GridBool.fromBitMapDataAlpha(bd, frame));
-				}
-				i++;
-			}*/
 			bd.dispose();
 		}
 	}

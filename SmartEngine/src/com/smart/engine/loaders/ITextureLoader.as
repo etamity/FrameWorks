@@ -23,8 +23,6 @@ package com.smart.engine.loaders {
 		function load():void;
 
 		function setTexture(sprite:SmartDisplayObject):void;
-		
-		function getImage():Image;
 	}
 
 }

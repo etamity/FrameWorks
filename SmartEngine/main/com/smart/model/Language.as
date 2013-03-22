@@ -10,6 +10,9 @@ package com.smart.model {
 		public static var LEADERBOARD:String="LEADERBOARD";
 		public static var EXIT:String="EXIT";
 		
+		
+		public static var RELOAD:String="RELOAD";
+		
 		public static var GAMETITLE:String="MAD WORLD";
 		
 		public static var HEALTH:String="Health";

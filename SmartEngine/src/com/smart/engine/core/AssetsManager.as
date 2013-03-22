@@ -8,10 +8,9 @@
 
 package com.smart.engine.core {
 
-	import flash.utils.Dictionary;
 	import com.smart.engine.loaders.ITextureLoader;
-	import starling.display.DisplayObject;
-	import starling.display.Image;
+	
+	import flash.utils.Dictionary;
 
 	public class AssetsManager {
 
@@ -34,22 +33,13 @@ package com.smart.engine.core {
 			loader.load();
 		}
 
-		public function getDisplay(id:String):DisplayObject {
+		public function getDisplay(id:String):* {
 			var loader:ITextureLoader = assetLoaders[id];
 			if (loader == null) {
 				throw new Error("loader not added for asset ID: " + id);
 			}
 			return loader.getDisplay();
 		}
-
-		public function getImage(id:String):Image {
-			var loader:ITextureLoader = assetLoaders[id];
-			if (loader == null) {
-				throw new Error("loader not added for asset ID: " + id);
-			}
-			return loader.getImage();
-		}
-		
 		public function getLoader(id:String):ITextureLoader {
 			return assetLoaders[id];
 		}

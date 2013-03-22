@@ -8,26 +8,17 @@
 
 package com.smart.engine.plugins {
 
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.ui.Keyboard;
-	import flash.utils.Timer;
-	
-	import com.smart.engine.SmartEngine;
 	import com.smart.engine.core.IPlugin;
 	import com.smart.engine.core.IPluginEngine;
 	import com.smart.engine.core.Plugin;
-	import com.smart.engine.display.LayerDisplay;
-	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.display.SmartMovieClip;
 	import com.smart.engine.utils.Point3D;
 	
-	import starling.animation.Tween;
-	import starling.core.Starling;
+	import flash.events.TimerEvent;
+	import flash.geom.Point;
+	import flash.ui.Keyboard;
+	
 	import starling.display.Stage;
-	import starling.events.Event;
 	import starling.events.KeyboardEvent;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -58,10 +49,10 @@ package com.smart.engine.plugins {
 		private var walkSteps:int              = 0;
 		
 		private var touchPoint :Point;
-		
+		private var tmxmap:TMXBatchPlugin;
+
 		public function SpriteControlPlugin(obj:SmartMovieClip = null) {
 			super();
-			name = "SpriteControlPlugin";
 			sprite = obj;
 			targetPt = sprite.position;
 			spritePt = sprite.position;
@@ -87,7 +78,7 @@ package com.smart.engine.plugins {
 		}
 		
 		public function get currentInGrid():Point{
-			return engine.objectInGridPt(sprite.position);
+			return tmxmap.objectInGridPt(sprite.position);
 		}
 		
 		
@@ -126,7 +117,7 @@ package com.smart.engine.plugins {
 			}
 
 			totalFrame = distance / stepLong;
-			var newPt3D:Point3D   = engine.gridInLayerPt(currentInGrid);
+			var newPt3D:Point3D   = tmxmap.gridInLayerPt(currentInGrid);
 
 			targetPt = newPt3D;
 		}
@@ -134,6 +125,9 @@ package com.smart.engine.plugins {
 		override public function onRegister(engine:IPluginEngine):void {
 			super.onRegister(engine);
 			stage = this.engine.stage;
+			
+			tmxmap = this.engine.getPlugin(TMXBatchPlugin);
+			
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -141,7 +135,7 @@ package com.smart.engine.plugins {
 			var plugin:TMXPlugin  = getClass(getPlugin("TMXPlugin"))(getPlugin("TMXPlugin"));
 			_mapWidth  = plugin.tmxData.width - 1;
 			_mapHeight  = plugin.tmxData.height - 1;
-			touchPoint = this.engine.objectInGridPt(sprite.position);
+			touchPoint = tmxmap.objectInGridPt(sprite.position);
 			
 		}
 
@@ -327,20 +321,20 @@ package com.smart.engine.plugins {
 			var mouseX:Number = pt.x;
 			var mouseY:Number = pt.y;
 			if (touch.phase == TouchPhase.BEGAN) {
-				var ptgo:Point3D = engine.getLayerByIndex(0).screenToLayer(pt);
+				var ptgo:Point3D = tmxmap.getLayerByIndex(0).screenToLayer(pt);
 				//engine.sprites.getSpriteAt(0).pt=
 				//engine.getLayerByIndex(0).fromScreenToLayerPt(ptgo.x,ptgo.y);
 				//engine.sprites.getSpriteAt(0).addComponent(new
 				//SpriteXRayLayers());	
-				var ptva1:Point  = engine.getLayerByIndex(0).layerToGridPt(mouseX, mouseY);
+				var ptva1:Point  = tmxmap.getLayerByIndex(0).layerToGridPt(mouseX, mouseY);
 				
-				var ptva:Point3D = engine.getLayerByIndex(0).gridToLayerPt(ptva1.x, ptva1.y);
+				var ptva:Point3D = tmxmap.getLayerByIndex(0).gridToLayerPt(ptva1.x, ptva1.y);
 				
-				var screen:Point = engine.getLayerByIndex(0).gridToSreenPt(ptva1.x, ptva1.y);
+				var screen:Point = tmxmap.getLayerByIndex(0).gridToSreenPt(ptva1.x, ptva1.y);
 				
-				touchPoint = engine.getLayerByIndex(0).screenToGridPt(pt);
+				touchPoint = tmxmap.getLayerByIndex(0).screenToGridPt(pt);
 				
-				var spriteGrid: Point = engine.objectInGridPt(sprite.position);
+				var spriteGrid: Point = tmxmap.objectInGridPt(sprite.position);
 				if (spriteGrid.equals(touchPoint)==false)
 				{
 					moving = true;

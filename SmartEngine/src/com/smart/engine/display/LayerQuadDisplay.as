@@ -14,20 +14,22 @@ package com.smart.engine.display {
 	import com.smart.engine.viewport.MapViewport;
 	
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
-	import starling.display.QuadBatch;
 	import starling.display.Sprite;
+	import starling.events.Event;
+	import starling.extensions.QuadtreeSprite;
 	
-	public class LayerBatchDisplay implements ILayerDisplay {
+	public class LayerQuadDisplay implements ILayerDisplay {
 		
 		public var _autoPosition:Boolean   = true; 
 		
 		public var _display:Sprite;
 
-		public var _quadBatch:QuadBatch;
+		public var _quadBatch:QuadtreeSprite;
 		
 		public var _name:String;
 		
@@ -48,8 +50,9 @@ package com.smart.engine.display {
 		
 		private var tileWidthOffset:int   = 1;
 		private var w:int                 = 0;
-		
-		public function LayerBatchDisplay(_name:String, w:int, h:int, cellwidth:Number, cellheight:Number, projectionType:String) {
+		private var _worldBounds:Rectangle;
+		private static const WORLD_BOUND:int = 100;
+		public function LayerQuadDisplay(_name:String, w:int, h:int, cellwidth:Number, cellheight:Number, projectionType:String) {
 			this._name = _name;
 			this.w = w;
 			this.h = h;
@@ -70,15 +73,19 @@ package com.smart.engine.display {
 			sqEdgeSize = tileHeightOffset;
 			
 			_display = new Sprite();
-			_quadBatch=new QuadBatch();
+			_worldBounds = new Rectangle(-WORLD_BOUND, -WORLD_BOUND, WORLD_BOUND * 2, WORLD_BOUND * 2);
+			_quadBatch=new QuadtreeSprite(_worldBounds);
+			_quadBatch.visibleViewport=new Rectangle(0,0,100,100);
 			_display.addChild(_quadBatch);
 			data = new Vector.<Vector.<SmartDisplayObject>>(w * h, true);
 			flatData = new <SmartDisplayObject>[];
 			
 			this.projection = new MapViewport(projectionType, cellwidth, cellheight);
 			this.projection.onSetup(this);
-			
+			//_display.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		}
+		
+		
 		
 		public function get name():String{
 			return this._name;
@@ -191,7 +198,6 @@ package com.smart.engine.display {
 		
 		public function onTrigger(time:Number, engine:SmartEngine):void {
 			var first:SmartDisplayObject;
-			_quadBatch.reset();
 			for each (var layer:Vector.<SmartDisplayObject> in data) {
 				if (layer != null) {
 					for each (var sprite:SmartDisplayObject in layer) {
@@ -201,7 +207,7 @@ package com.smart.engine.display {
 						projection.perSprite(sprite);
 						updateLocation(sprite);
 						sprite.onTrigger(time);
-						_quadBatch.addImage(Image(sprite.display));
+			
 						
 					}
 				}
@@ -306,6 +312,7 @@ package com.smart.engine.display {
 			if (wasFlat) {
 				_display.unflatten();
 			}
+			_quadBatch.addChild(image);
 			forceUpdate();
 		}
 		
