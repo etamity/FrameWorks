@@ -108,6 +108,10 @@ package com.smart.engine.plugins {
 
 		override public function onRemove():void {
 			super.onRemove();
+
+			engine.removeAllLayers();
+
+			
 		}
 
 	
@@ -119,6 +123,12 @@ package com.smart.engine.plugins {
 			return tmx;
 		}
 
+		public function set tmxData(data:TMXParser):void{
+			tmx=data;
+			
+		}
+		
+		
 		private function loadTiles():void {
 			var loader:TextureAtlasLoader;
 			var i:int;
@@ -172,7 +182,6 @@ package com.smart.engine.plugins {
 				
 				sprite = new SmartImage(assetID, name, pt3, new State("", 0, 0, true)); 
 				//sprite.currentFrame = tmx.getImgFrame(_cell);
-				//Sprite(grid.display).addChild(sprite.display);
 				grid.add(sprite);
 			}
 		}

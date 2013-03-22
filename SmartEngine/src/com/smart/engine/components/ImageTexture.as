@@ -9,13 +9,8 @@
 package com.smart.engine.components {
 	
 	import com.smart.engine.core.AssetsManager;
-	import com.smart.engine.components.IComponent;
 	import com.smart.engine.display.SmartDisplayObject;
-	import com.smart.engine.display.SmartSprite;
 	import com.smart.engine.loaders.ITextureLoader;
-	import starling.display.Image;
-	import starling.textures.Texture;
-	import starling.textures.TextureSmoothing;
 	
 	public class ImageTexture implements IComponent {
 		private static var I:int = 0; 

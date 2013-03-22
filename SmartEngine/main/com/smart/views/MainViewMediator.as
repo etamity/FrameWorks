@@ -39,7 +39,7 @@ package com.smart.views
 		{
 
 			init();
-			signalBus.add(ScreenEventConst.LOADMAP_EVENT,loadScene,true);
+			signalBus.add(ScreenEventConst.LOADMAP_EVENT,loadScene);
 			
 		}
 		
@@ -49,7 +49,6 @@ package com.smart.views
 		}
 		
 		public function loadScene(map:String):void{
-
 			_scene.loadMap(map);
 			
 			
@@ -61,7 +60,7 @@ package com.smart.views
 
 		public function init():void
 		{  
-			_scene= new BaseScene();
+			_scene= new BaseScene(assets);
 			view.addChild(_scene);
 			registerCommand()
 		}

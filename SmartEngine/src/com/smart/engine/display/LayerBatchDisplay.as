@@ -191,6 +191,7 @@ package com.smart.engine.display {
 		
 		public function onTrigger(time:Number, engine:SmartEngine):void {
 			var first:SmartDisplayObject;
+			_quadBatch.reset();
 			for each (var layer:Vector.<SmartDisplayObject> in data) {
 				if (layer != null) {
 					for each (var sprite:SmartDisplayObject in layer) {
@@ -200,6 +201,7 @@ package com.smart.engine.display {
 						projection.perSprite(sprite);
 						updateLocation(sprite);
 						sprite.onTrigger(time);
+						_quadBatch.addImage(Image(sprite.display));
 					}
 				}
 			}
@@ -303,11 +305,7 @@ package com.smart.engine.display {
 			if (wasFlat) {
 				_display.unflatten();
 			}
-			//_display.addChild(image);
-			//var mc:MovieClip= image as MovieClip;
-			var img:Image=Image(image);
-			_quadBatch.addImage(img);
-			//_quadBatch.reset();
+			/*_display.addChild(image);*/
 			forceUpdate();
 		}
 		

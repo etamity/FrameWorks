@@ -53,7 +53,6 @@ package com.smart.engine.display {
 
 		public function setImageTexture(offset:Point, val:TextureAtlas):void {
 			_display.texture = val.getTexture(name);
-			trace(name, _display.texture);
 			if (!offset.y) {
 				offset.y = 0;
 			}

@@ -9,9 +9,8 @@
 package com.smart.views {
 
 	import com.smart.engine.SmartEngine;
+	import com.smart.engine.core.AssetsManager;
 	import com.smart.engine.core.PluginCenter;
-	import com.smart.engine.display.SmartImage;
-	import com.smart.engine.display.SmartSprite;
 	import com.smart.engine.plugins.CameraPlugin;
 	import com.smart.engine.plugins.SpriteControlPlugin;
 	import com.smart.engine.plugins.TMXBatchPlugin;
@@ -21,16 +20,21 @@ package com.smart.views {
 	import com.smart.engine.utils.Point3D;
 	import com.smart.tiled.TMXTileMap;
 	
+	import starling.display.Image;
+	import starling.display.QuadBatch;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.utils.AssetManager;
 
 	public class BaseScene extends Sprite {
 		protected var engine:SmartEngine;
 		protected var pluginCenter:PluginCenter
 		protected var tmx:TMXParser;
-
+		private var _assets:AssetManager;
 		private var tmxmap:TMXTileMap;
-		public function BaseScene() {
+		private var tmxPlugin:TMXBatchPlugin;
+		public function BaseScene(assets:AssetManager) {
+			_assets = assets
 			pluginCenter = PluginCenter.getInstance();
 			addEventListener(Event.ADDED_TO_STAGE, onStageAdded); 
 		}
@@ -40,6 +44,7 @@ package com.smart.views {
 			tmxmap = new TMXTileMap();
 			tmxmap.y= 64;
 			addChild(tmxmap);
+			setup();
 		}
 		
 		public function loadMap(map:String):void{
@@ -49,52 +54,24 @@ package com.smart.views {
 		
 		private function onTMXLoad(tmx:TMXParser):void {
 			this.tmx = tmx;
-			setup();
+			
+			if (tmxPlugin)
+				engine.removePlugin(tmxPlugin);
+			
+			tmxPlugin= new TMXBatchPlugin(tmx);
+			
+			
+			engine.addPlugin(tmxPlugin);
 		}
 		protected function registerPlugin(pluginClass:Class):void {
 			pluginCenter.register(BaseScene);
 		}
 		private function addPlugins(engine:SmartEngine):void {
-			
-			addChild(engine);
-			
-			var tmxPlugin:TMXBatchPlugin= new TMXBatchPlugin(tmx);
-			engine.addPlugin(tmxPlugin);
-			
-			/*var sprite:SmartMovieClip = SmartMovieClip(engine.getSpriteByLayerName("Ground", "Joey"));
-			trace("sprite.name::" + sprite);
-			engine.addPlugin(new SpriteControlPlugin(sprite));*/
-			
+	
+
 			engine.addPlugin(new CameraPlugin(new Point3D(0,0,1)));
 			
 			engine.addPlugin(new ViewPortControlPlugin());
-			
-			
-			
-			
-			
-			
-			
-			
-			var sprite:SmartSprite =new  SmartSprite("./Monopoly/tileSet.png","12");
-			addChild(sprite.display);
-			
-			for (var a:int= 1; a<=10 ;a ++)
-				for (var b:int =1 ; b<=10;b++)
-				{
-					var index:int = a*b;
-					if (index<30)
-					{
-						sprite =new  SmartSprite("./Monopoly/tileSet.png",String(index));
-						sprite.x= a*32;
-						sprite.y= b*32;
-						addChild(sprite.display);
-					}
-					
-					
-				}
-			
-			
 			
 			
 		}
@@ -107,9 +84,10 @@ package com.smart.views {
 		
 		private function setup():void {
 			engine = new SmartEngine();
+			addChild(engine);
 			addPlugins(engine);
 			engine.start();
-			
+		
 		}
 	}
 }

@@ -11,6 +11,7 @@ package com.smart.engine {
 	import com.smart.engine.core.IPlugin;
 	import com.smart.engine.core.IPluginEngine;
 	import com.smart.engine.display.ILayerDisplay;
+	import com.smart.engine.display.LayerBatchDisplay;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.utils.Point3D;
 	
@@ -24,6 +25,7 @@ package com.smart.engine {
 	import starling.core.Starling;
 	import starling.display.Sprite;
 	import starling.events.Event;
+
 	public class SmartEngine extends Sprite implements IAnimatable, IPluginEngine {
 		
 		private var _juggler:Juggler;
@@ -205,6 +207,14 @@ package com.smart.engine {
 			delete layersHash[layer.name];
 			container.removeChild(layer.display);
 		}
+		
+		public function removeAllLayers():void{
+			
+			for each(var alayer:ILayerDisplay in layersHash) {
+				engine.removeLayer(alayer);
+			}
+		}
+		
 
 		public function removePlugin(plugin:IPlugin):void {
 			var index:int = plugins.indexOf(plugin);

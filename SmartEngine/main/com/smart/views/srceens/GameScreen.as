@@ -67,9 +67,9 @@ package com.smart.views.srceens
 			addItem(_health);
 			
 			
-			//_exitBtn.height=_header.height-20;
+			_exitBtn.height=_header.height-20;
 			_exitBtn.addEventListener(Event.TRIGGERED, backButton_triggeredHandler);
-			//_exitBtn.paddingRight=30;
+			_exitBtn.paddingRight=30;
 			_exitBtn.label= Language.EXIT;
 	
 			
@@ -108,6 +108,7 @@ package com.smart.views.srceens
 			leftItems.push(display);
 			else if (direct==RIGHT)
 			rightItems.push(display);
+			
 		}
 	}
 }

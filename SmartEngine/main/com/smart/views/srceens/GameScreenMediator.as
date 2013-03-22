@@ -27,7 +27,7 @@ package com.smart.views.srceens
 			//view.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			//view.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			view.initAssets(assets);
-			signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map1.tmx");
+			signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
 		}
 	}
 }

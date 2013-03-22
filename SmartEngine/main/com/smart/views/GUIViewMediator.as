@@ -2,6 +2,8 @@ package com.smart.views
 {
 	import com.smart.model.Language;
 	import com.smart.model.ScreenConst;
+	import com.smart.model.SignalBus;
+	import com.smart.views.signals.ScreenEventConst;
 	import com.smart.views.srceens.GameScreen;
 	import com.smart.views.srceens.MainMenuScreen;
 	import com.smart.views.srceens.MenuScreen;
@@ -20,6 +22,8 @@ package com.smart.views
 		public var view:GUIView;
 		[Inject]
 		public var assets:AssetManager;
+		[Inject]
+		public var signalBus:SignalBus;
 		
 		private var _navigator:ScreenNavigator;
 		
@@ -55,7 +59,7 @@ package com.smart.views
 			var main:MainMenuScreen=new MainMenuScreen();
 			var eventObject:Object=new Object();
 			eventObject[Language.STARTGAME]=ScreenConst.GAME_SCREEN;
-			eventObject[Language.EXIT]=ScreenConst.MAINMENU_SCREEN;
+			eventObject[Language.EXIT]=reloadMap;
 			
 			_navigator.addScreen(ScreenConst.MAINMENU_SCREEN, new ScreenNavigatorItem(MenuScreen,eventObject));
 			_navigator.addScreen(ScreenConst.GAME_SCREEN, new ScreenNavigatorItem(GameScreen,eventObject));
@@ -66,6 +70,11 @@ package com.smart.views
 			
 			_navigator.showScreen(ScreenConst.MAINMENU_SCREEN);	
 			
+		}
+		
+		public function reloadMap():void{
+			trace(Language.EXIT +" reloadMap");
+			signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
 		}
 		
 	}

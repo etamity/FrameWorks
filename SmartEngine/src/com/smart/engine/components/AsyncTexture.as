@@ -27,7 +27,7 @@ package com.smart.engine.components {
 		public function onRegister(sprite:SmartDisplayObject):void {
 			this.sprite = sprite;
 			if (!sprite.display) {
-				sprite.display = AssetsManager.instance.getDisplay(assetManagerKey);
+				sprite.display = AssetsManager.instance.getImage(assetManagerKey);
 			}
 			onTrigger(0);
 		}
