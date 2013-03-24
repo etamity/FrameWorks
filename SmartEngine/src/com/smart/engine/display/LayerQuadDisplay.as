@@ -9,6 +9,7 @@
 package com.smart.engine.display {
 	
 	import com.smart.engine.SmartEngine;
+	import com.smart.engine.plugins.CameraPlugin;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.viewport.IProjection;
 	import com.smart.engine.viewport.MapViewport;
@@ -18,9 +19,7 @@ package com.smart.engine.display {
 	import flash.utils.Dictionary;
 	
 	import starling.display.DisplayObject;
-	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.events.Event;
 	import starling.extensions.QuadtreeSprite;
 	
 	public class LayerQuadDisplay implements ILayerDisplay {
@@ -39,7 +38,6 @@ package com.smart.engine.display {
 		private var h:int                 = 0;
 		
 		private var projection:IProjection;
-		private var ratio:Point           = new Point(1, 1); 
 		private var spriteHash:Dictionary = new Dictionary(true);
 		
 		private var sqEdgeSize:Number;
@@ -51,7 +49,9 @@ package com.smart.engine.display {
 		private var tileWidthOffset:int   = 1;
 		private var w:int                 = 0;
 		private var _worldBounds:Rectangle;
-		private static const WORLD_BOUND:int = 100;
+		private static const WORLD_BOUND:int = 10000;
+		private var ratio:Point = new Point(1, 1); 
+		
 		public function LayerQuadDisplay(_name:String, w:int, h:int, cellwidth:Number, cellheight:Number, projectionType:String) {
 			this._name = _name;
 			this.w = w;
@@ -71,11 +71,11 @@ package com.smart.engine.display {
 			}
 			
 			sqEdgeSize = tileHeightOffset;
-			
 			_display = new Sprite();
 			_worldBounds = new Rectangle(-WORLD_BOUND, -WORLD_BOUND, WORLD_BOUND * 2, WORLD_BOUND * 2);
 			_quadBatch=new QuadtreeSprite(_worldBounds);
-			_quadBatch.visibleViewport=new Rectangle(0,0,100,100);
+			_quadBatch.visibleViewport=new Rectangle(0,0,960,640);
+			//_display.visibleViewport=new Rectangle(0,100,960,440);
 			_display.addChild(_quadBatch);
 			data = new Vector.<Vector.<SmartDisplayObject>>(w * h, true);
 			flatData = new <SmartDisplayObject>[];
@@ -110,9 +110,18 @@ package com.smart.engine.display {
 			addStarlingChild(val.display);
 			return val;
 		}
-		
+		private function addStarlingChild(image:DisplayObject):void {
+			var wasFlat:Boolean = _display.isFlattened;
+			if (wasFlat) {
+				_display.unflatten();
+			}
+			_quadBatch.addChild(image);
+			_display.unflatten();
+			//forceUpdate();
+			
+		}
 		public function flatten():void {
-			sort = false;
+			 sort = false;
 			_display.flatten();
 		}
 		
@@ -151,7 +160,7 @@ package com.smart.engine.display {
 		}
 		
 		public function gridToLayerPt(gridX:int, gridY:int, z:int = 1):Point3D {
-			return new Point3D(gridX * sqEdgeSize, gridY * sqEdgeSize, z);
+			return new Point3D(gridX * sqEdgeSize, gridY * sqEdgeSize, z * sqEdgeSize);
 		}
 		
 		public function gridToSreenPt(gridX:int, gridY:int, z:int = 1):Point {
@@ -179,8 +188,25 @@ package com.smart.engine.display {
 		}
 		
 		public function moveTo(x:Number, y:Number):void {
-			_display.x = x * ratio.x;
-			_display.y = y * ratio.y;
+			_quadBatch.x =x * ratio.x;
+			_quadBatch.y =y * ratio.x;
+			updatePosition();
+	
+		}
+		private function updatePosition():void{
+			
+			
+			_quadBatch.x = Math.min(Math.max(_worldBounds.left + _display.stage.stageWidth, _quadBatch.x), _worldBounds.right);
+			_quadBatch.y = Math.min(Math.max(_worldBounds.top + _display.stage.stageHeight, _quadBatch.y), _worldBounds.bottom);
+
+			
+			
+			var newViewPort:Rectangle = _quadBatch.visibleViewport.clone();
+			newViewPort.x = -_quadBatch.x;
+			newViewPort.y = -_quadBatch.y;
+			
+			_quadBatch.visibleViewport = newViewPort;
+			
 		}
 		
 		public function get numChildren():int {
@@ -192,12 +218,13 @@ package com.smart.engine.display {
 		}
 		
 		public function offset(x:Number, y:Number):void {
-			_display.x += x * ratio.x;
-			_display.y += y * ratio.y;
+			_quadBatch.x += x * ratio.x;
+			_quadBatch.y += y * ratio.y;
 		}
 		
 		public function onTrigger(time:Number, engine:SmartEngine):void {
 			var first:SmartDisplayObject;
+		
 			for each (var layer:Vector.<SmartDisplayObject> in data) {
 				if (layer != null) {
 					for each (var sprite:SmartDisplayObject in layer) {
@@ -207,31 +234,13 @@ package com.smart.engine.display {
 						projection.perSprite(sprite);
 						updateLocation(sprite);
 						sprite.onTrigger(time);
-			
 						
 					}
 				}
 			}
-			
 			if (sort) {
 				sortSystem(time);
 			}
-		}
-		
-		public function get positionX():Number {
-			return _display.x;
-		}
-		
-		public function set positionX(val:Number):void {
-			_display.x = val;
-		}
-		
-		public function get positionY():Number {
-			return _display.y;
-		}
-		
-		public function set positionY(val:Number):void {
-			_display.y = val;
 		}
 		
 		public function remove(val:SmartDisplayObject):SmartDisplayObject {
@@ -307,14 +316,7 @@ package com.smart.engine.display {
 		}
 		
 		private var countNum:int=0;
-		private function addStarlingChild(image:DisplayObject):void {
-			var wasFlat:Boolean = _display.isFlattened;
-			if (wasFlat) {
-				_display.unflatten();
-			}
-			_quadBatch.addChild(image);
-			forceUpdate();
-		}
+
 		
 		private function removeFromGridData(val:SmartDisplayObject):void {
 			if (val.layerIndex == -1) {
@@ -382,7 +384,7 @@ package com.smart.engine.display {
 			}
 			collection.push(val);
 			val.layerIndex = index;
-		
+
 		}
 	}
 	
