@@ -3,24 +3,15 @@ package
 	import com.smart.Game;
 	import com.smart.device.Device;
 	import com.smart.logs.Debug;
-	import com.smart.views.ProgressBar;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
-
-	import flash.geom.Rectangle;
-	import flash.system.Capabilities;
 	
 	import starling.core.Starling;
-	import starling.display.Image;
 	import starling.events.Event;
-	import starling.textures.Texture;
-	import starling.utils.AssetManager;
-	import starling.utils.RectangleUtil;
-	import starling.utils.ScaleMode;
 
-	[SWF(width="960",height="640",frameRate="60",backgroundColor="#2f2f2f")]
+	[SWF(width="960",height="640",frameRate="60",backgroundColor="#2f2f2f", mode="direct")]
 	public class Main extends Sprite
 	{
 
@@ -72,7 +63,7 @@ package
 			Starling.multitouchEnabled = true;
 			mStarling = new Starling(Game, stage);
 			mStarling.antiAliasing = 1;
-			mStarling.showStatsAt("right","top",1);
+			mStarling.showStatsAt("right","top",2);
 			mStarling.start();
 
 			

@@ -11,12 +11,11 @@ package com.smart.views {
 	import com.smart.engine.SmartEngine;
 	import com.smart.engine.core.PluginCenter;
 	import com.smart.engine.plugins.CameraPlugin;
-	import com.smart.engine.plugins.SpriteControlPlugin;
 	import com.smart.engine.plugins.TMXQuadPlugin;
-	import com.smart.engine.plugins.ViewPortControlPlugin;
-	import com.smart.engine.plugins.XRayLayersPlugin;
-	import com.smart.engine.tmxdata.TMXParser;
+	import com.smart.engine.plugins.ViewportControlPlugin;
+	import com.smart.engine.tmxdata.TMXMap;
 	import com.smart.engine.utils.Point3D;
+	import com.smart.engine.plugins.ViewportPlugin;
 	import com.smart.tiled.TMXTileMap;
 	
 	import starling.display.Sprite;
@@ -26,7 +25,7 @@ package com.smart.views {
 	public class BaseScene extends Sprite {
 		protected var engine:SmartEngine;
 		protected var pluginCenter:PluginCenter
-		protected var tmx:TMXParser;
+		protected var tmx:TMXMap;
 		private var _assets:AssetManager;
 		private var tmxmap:TMXTileMap;
 		private var tmxPlugin:TMXQuadPlugin;
@@ -38,44 +37,44 @@ package com.smart.views {
 
 		public function onStageAdded(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, onStageAdded);
-			tmxmap = new TMXTileMap();
+			tmxmap = new TMXTileMap(stage);
 			tmxmap.y= 64;
 			addChild(tmxmap);
-			setup();
-
+			
 		}
 		
 		public function loadMap(map:String):void{
-			TMXParser.loadTMX(map, onTMXLoad);
+			TMXMap.loadTMX(map, onTMXLoad);
 			//tmxmap.load(map);
 		}
 		
-		private function onTMXLoad(tmx:TMXParser):void {
+		private function onTMXLoad(tmx:TMXMap):void {
 			this.tmx = tmx;
-			tmxPlugin.tmxData=tmx;
+			setup();
 		
-		}
-		protected function registerPlugin(pluginClass:Class):void {
-			pluginCenter.register(BaseScene);
 		}
 		private function addPlugins(engine:SmartEngine):void {
 	
-			tmxPlugin= new TMXQuadPlugin();
+			tmxPlugin= new TMXQuadPlugin(tmx);
 			engine.addPlugin(tmxPlugin);
-			engine.addPlugin(new CameraPlugin(new Point3D(0,0,1)));
-			engine.addPlugin(new ViewPortControlPlugin());
+	
 			
-		}
-		private function registerPlugins():void {
-			registerPlugin(TMXQuadPlugin);
-			registerPlugin(CameraPlugin);
-			registerPlugin(XRayLayersPlugin);
-			registerPlugin(SpriteControlPlugin);
-		}
+			engine.addPlugin(new CameraPlugin(new Point3D(0,0,1)))
+			      .addPlugin(new ViewportControlPlugin(stage));
+	
+	
+			tmxPlugin.onCompelete= setupSpirte;
+
 		
+			function setupSpirte():void{
+				//var sprite:SmartImage = SmartImage(tmxPlugin.getSpriteByLayerName("Ground", "Joey"));
+				//engine.addPlugin(new SpriteControlPlugin(sprite));		
+			
+			}
+		}
 		private function setup():void {
-			engine = new SmartEngine();
-			addChild(engine);
+			engine = new SmartEngine(stage);
+			addChild(engine.display);
 			addPlugins(engine);
 			engine.start();
 		

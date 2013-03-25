@@ -75,7 +75,7 @@ package com.smart.views
 		}
 		
 		public function reloadMap():void{
-			trace(Language.EXIT +" reloadMap");
+			trace(Language.EXIT +" reloadMap" +"./Monopoly/map0.tmx");
 			signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
 		}
 		
