@@ -42,8 +42,20 @@ package com.smart.engine.core
 				plugins.splice(index, 1);
 			}
 			plugin.onRemove();
+			plugin.removeAllPlugins();
 			delete pluginsHash[plugin.name];
 		}
+		
+		
+		public function removeAllPlugins():void{
+			for each (var plugin:IPlugin in plugins)
+			{
+				removePlugin(plugin);
+			}
+			plugins=new <IPlugin>[];
+			pluginsHash=new Dictionary();
+		}
+		
 		public function get stage():Stage{
 			return _stage;
 		}

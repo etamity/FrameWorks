@@ -32,6 +32,8 @@ package com.smart.engine.plugins
 		//private var _tmx:TMXMap;
 		private var engine:TMXQuadPlugin;
 
+		private var _cellH:Number;
+		
 		//private var sortSprite:SmartDisplayObject;
 		
 		public function ViewportPlugin(projectionType :String ,cellwidth:Number, cellheight:Number)
@@ -39,6 +41,7 @@ package com.smart.engine.plugins
 			var type:String=projectionType;
 			var cellWidth:Number=cellwidth;
 			var cellHeight:Number=cellheight;
+			_cellH=cellHeight;
 			pt=new Point();
 			projection=new Matrix();
 			
@@ -69,7 +72,12 @@ package com.smart.engine.plugins
 			projectionInverse.invert();
 			projection.translate(-cellHeight, cellHeight);
 		}
-
+		public function get width():int{
+			return stage.stageWidth;
+		}
+		public function get height():int{
+			return stage.stageHeight;
+		}
 		override public function onTrigger(time:Number):void {
 
 		}
@@ -95,17 +103,17 @@ package com.smart.engine.plugins
 
 		}
 
-		public function perSprite(sprite:SmartDisplayObject):void
+		public function update(sprite:SmartDisplayObject):void
 		{
 				
 			var isoPt:Point=sprite.position;
 			var image:DisplayObject=sprite.display;
 			pt=projection.transformPoint(isoPt);
-			//pt = isoPt;
-			image.x=pt.x;
-			image.y=pt.y;
+			//pt = isoPt;s
+			image.x=pt.x - sprite.display.width /2;
+			//image.y=pt.y;
 			/*image.x = pt.x-sprite.position.z;*/
-			image.y=pt.y - (sprite.display.height + sprite.position.z);
+			image.y=pt.y - (sprite.display.height) +_cellH ;
 			
 			/*if ((sortSprite!= null) && (sprite.index> sortSprite.index))
 			{

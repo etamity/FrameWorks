@@ -15,10 +15,13 @@ package com.smart.engine.plugins {
 	import flash.geom.Point;
 
 	public interface IViewPort {
-		function layerToScreen(pt:Point3D):Point
+		function layerToScreen(pt:Point3D):Point;
 		function onSetup(grid:ILayerDisplay):void;
-		function perSprite(sprite:SmartDisplayObject):void;
-		function screenToLayer(pt:Point):Point3D
+		function update(sprite:SmartDisplayObject):void;
+		function screenToLayer(pt:Point):Point3D;
+		function get width():int;
+		function get height():int;
+		
 	}
 
 }

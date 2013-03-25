@@ -13,6 +13,7 @@ package com.smart.engine.core
 	public class MapAssetsManager extends AssetManager
 	{
 		private var _tmx:TMXMap;
+		private var _tilesetXML:Dictionary;
 		public static var instance:MapAssetsManager=new MapAssetsManager();
 
 		public function MapAssetsManager(tmx:TMXMap=null)
@@ -22,13 +23,13 @@ package com.smart.engine.core
 		}
 
 		public function loadTmx(tmx:TMXMap, onProgress:Function=null):void
-		{
+		{   purge();
+			_tilesetXML=new Dictionary();
 			if (tmx != null)
 			{
 				_tmx=tmx;
 				var atlasName:String;
 				var atlasPath:String;
-				var _tilesetXML:Dictionary=new Dictionary();
 				for each (var tileset:TMXTileset in tmx.uniqueTilesets)
 				{
 					if (tileset.firstgid <= tmx.maxGid)
@@ -54,6 +55,7 @@ package com.smart.engine.core
 			else
 				throw new Error(getQualifiedClassName(tmx) + "Object is Null: ");
 			
+			
 			function loadAtlas(atlasXML:Dictionary):void
 			{
 				var atlas:TextureAtlas;
@@ -66,9 +68,9 @@ package com.smart.engine.core
 					atlas=new TextureAtlas(texture, XML(_tilesetXML[atlasName]));
 					addTextureAtlas(atlasName, atlas);
 				}
-				var sNames:Vector.<String> = new <String>[];
+				/*var sNames:Vector.<String> = new <String>[];
 				getTextureNames("",sNames);
-				trace("ALLNAME:",sNames);
+				trace("ALLNAME:",sNames);*/
 				
 			}
 
@@ -78,17 +80,16 @@ package com.smart.engine.core
 
 				var imagePath:String=_tmx.getImgPath(tile.firstgid);
 				var imageSrc:String=_tmx.getImgSrc(tile.firstgid);
-				
 				xml.appendChild(<TextureAtlas imagePath={imagePath}></TextureAtlas>);
 				var id:int=tile.firstgid;
 				for (var i:int=0; i < tile.areas.length; i++)
 				{
 					//xml.child("TextureAtlas").appendChild(<SubTexture name={imageSrc + "_" + id} x = {tile.areas[i].x} y={tile.areas[i].y} width={tile.areas[i].width} height={tile.areas[i].height}/>);
-					xml.child("TextureAtlas").appendChild(<SubTexture name={id} x = {tile.areas[i].x} y={tile.areas[i].y} width={tile.areas[i].width} height={tile.areas[i].height}/>);
+					xml.child("TextureAtlas").appendChild(<SubTexture name={imageSrc+"_"+id} x = {tile.areas[i].x} y={tile.areas[i].y} width={tile.areas[i].width} height={tile.areas[i].height}/>);
 					id++;
 				}
 				var atlasXML:XML=XML(xml.TextureAtlas);
-				trace(atlasXML);
+				/*trace(atlasXML);*/
 				return atlasXML;
 			}
 		}

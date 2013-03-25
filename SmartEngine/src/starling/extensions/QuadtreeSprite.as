@@ -92,6 +92,20 @@ package starling.extensions
             return _children[index];
         }
 
+		
+		override public function dispose():void{
+			for (var i:int = 0; i < dynamicNumChildren; ++i) {
+				var object:DisplayObject = dynamicGetChildAt(i);
+				this.removeChild(object);
+			}
+			for each (var Object:DisplayObject in _quadtree.root.objects)
+				_quadtree.root.removeObject(Object);
+				
+			_children=null;
+			_quadtree=null;
+			super.dispose();
+		}
+		
         override public function removeChild(child:DisplayObject, dispose:Boolean=false):DisplayObject
         {
             var index:int = _children.indexOf(child);

@@ -17,7 +17,7 @@ package com.smart.engine.core {
 		function onRegister(engine:IPlugin):void;
 	
 		function onRemove():void;
-
+		function removeAllPlugins():void;
 		function onTrigger(time:Number):void;
 		
 		function get enabled():Boolean;

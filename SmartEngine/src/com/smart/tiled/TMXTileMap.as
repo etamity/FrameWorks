@@ -89,6 +89,9 @@ package com.smart.tiled
 			_juggler=new Juggler();
 			Starling.juggler.add(this);
 			advanceTime(0);
+			
+			position.x =stage.stageWidth * .5;
+			//position.y =-stage.stageHeight * .5;
 		}
 
 		public function advanceTime(time:Number):void
@@ -125,19 +128,11 @@ package com.smart.tiled
 				trace("newViewPort::",newViewPort);
 				layer.visibleViewport = newViewPort;
 				}*/
-			/*	var newViewPort:Rectangle=layer.visibleViewport.clone();
-				if (layer.worldBounds.containsRect(newViewPort))
-				{
+				var newViewPort:Rectangle=layer.visibleViewport.clone();
+				newViewPort.x = -layer.x;
+				newViewPort.y = -layer.y;
 
-					newViewPort.x = -layer.x;
-					newViewPort.y = -layer.y;
-
-					//newViewPort.offset(layer.x, layer.y);
-			
-
-
-				}
-				layer.visibleViewport=newViewPort;*/
+				layer.visibleViewport=newViewPort;
 			}
 
 			moveTo(velocity.x, velocity.y);

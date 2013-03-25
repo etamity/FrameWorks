@@ -1,15 +1,12 @@
 package com.smart.engine.display
 {
-	import flash.geom.Point;
-	
 	import com.smart.engine.SmartEngine;
-	import com.smart.engine.utils.Point3D;
 	
 	import starling.display.DisplayObject;
 	public interface ILayerDisplay
 	{
 		function add(val:SmartDisplayObject):SmartDisplayObject;
-		//function remove(val:SmartDisplayObject):SmartDisplayObject;
+		function remove(val:SmartDisplayObject):SmartDisplayObject;
 		//function forceUpdate():void;
 
 		function get name():String;
@@ -18,6 +15,8 @@ package com.smart.engine.display
 		function get numChildrenSprites():int;
 		function get autoPosition():Boolean;
 		function moveTo(x:Number, y:Number):void;
+		function offset(x:Number, y:Number):void;
+		function dispose():void;
 /*		function screenToLayer(pt:Point):Point3D;
 		function screenToGridPt(pt:Point):Point;
 		function layerToGridPt(x:Number, y:Number):Point;

@@ -30,7 +30,7 @@ package com.smart.engine.plugins {
 		private var velocity:Point3D;
 		private var zoomDelta:Number = 0.006;
 		private var engine:CameraPlugin;
-		public function ViewportControlPlugin(hitArea:Number = 10, speed:Number = 4) {
+		public function ViewportControlPlugin(hitArea:Number = 10, speed:Number = 8) {
 			super();
 			this.hitArea = hitArea;
 			this.speed = speed;

@@ -39,7 +39,7 @@ package com.smart.engine {
 
 			position = new Point(1, 1);
 			
-			setSize(stage.stageWidth ,stage.stageHeight);
+			//setSize(stage.stageWidth ,stage.stageHeight);
 		}
 
 	   public function addDisplay(child:DisplayObject):DisplayObject{
@@ -99,8 +99,8 @@ package com.smart.engine {
 		}
 
 		public function setSize(width:Number, height:Number):void {
-				position.x = width * .5;
-				position.y = height * .5;
+			displayArea.x = width * .5;
+			displayArea.y = height * .5;
 		}
 
 		public function start():void {

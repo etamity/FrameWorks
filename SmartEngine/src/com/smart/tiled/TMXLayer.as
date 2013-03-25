@@ -9,17 +9,18 @@ package com.smart.tiled
 	/**
 	 * @author shaun.mitchell
 	 */
-	public class TMXLayer extends Sprite
+	public class TMXLayer extends QuadtreeSprite
 	{
 		private var _layerData:Array = new Array();
 		private static const WORLD_BOUND:int = 10000;
 		
 		private var _worldBounds:Rectangle;
-		public function TMXLayer(worldSpace:Rectangle=null)
+		public function TMXLayer(worldSpace:Rectangle=null,  maintainOrder:Boolean = true)
 		{
+			
 			_worldBounds = new Rectangle(-WORLD_BOUND, -WORLD_BOUND, WORLD_BOUND * 2, WORLD_BOUND * 2);
-			//super(_worldBounds);
-			//visibleViewport=new Rectangle(100,110,660,440);
+			super(_worldBounds,maintainOrder);
+			visibleViewport=new Rectangle(0,0,960,440);
 			
 			
 		}

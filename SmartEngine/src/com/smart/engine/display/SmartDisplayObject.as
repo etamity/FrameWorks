@@ -79,11 +79,11 @@ package com.smart.engine.display {
 			}
 		}
 
-		/*public function remove():void {
+		public function remove():void {
 			if (layer != null) {
 				layer.remove(this);
 			}
-		}*/
+		}
 
 		public function get index():int{
 			return this.layerIndex;
