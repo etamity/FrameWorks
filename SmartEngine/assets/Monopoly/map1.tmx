@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="90" height="90" tilewidth="60" tileheight="30">
+ <tileset firstgid="1" name="tileSet" tilewidth="60" tileheight="40">
+  <image source="tileSet.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="61" name="objectSetSmall" tilewidth="60" tileheight="40">
+  <image source="objectSetSmall.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="121" name="objectSetMega" tilewidth="60" tileheight="160">
+  <image source="objectSetMega.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="131" name="objectSetMedium2" tilewidth="60" tileheight="80">
+  <image source="objectSetMedium2.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="161" name="objectSetMedium" tilewidth="60" tileheight="80">
+  <image source="objectSetMedium.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="191" name="addTileSet" tilewidth="60" tileheight="40">
+  <image source="addTileSet.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="251" name="objectSetLarge" tilewidth="60" tileheight="120">
+  <image source="objectSetLarge.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="271" name="objectSetMega2" tilewidth="180" tileheight="160">
+  <tileoffset x="-60" y="10"/>
+  <image source="objectSetMega2.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="274" name="role" tilewidth="70" tileheight="124">
+  <image source="role.png" width="280" height="992"/>
+ </tileset>
+ <layer name="Ground" width="90" height="90">
+  <data encoding="base64" compression="zlib">
+   eJzt0DENwDAQwMAHEADljzQUoi5V3Bu8W7dmZul1z2Fff94eZ86lOHMuxZlzKc6cS3HmXIoz51KcOZfizLkUZ86lOHMuxZlzKc6cS3HmXIoz51KcOZfizLkUZ86lOHMuxZlzKc6cS3HmXIoz51KcOZfizLkUZ86lOHMuxZlzKc6cS3HmXIoz51KcOZfizLkUZ86lOHMuxZlzKc6cS3HmXIoz51KcOZc6dZYkSZIk/bMNQz3LcA==
+  </data>
+ </layer>
+ <layer name="Road1" width="90" height="90">
+  <data encoding="base64" compression="zlib">
+   eJztmz2PHEUQhsvSipTLfNnpTo79DxBkjhwiB4gQWSKCkITPDZysJf7CIXQCBAYhWSss+GMQcCVPaWvfqaru3o/Zmdl6pdL09PTO7jxd83bNnL0iouv7WHVxDYF9q2DsMWIuurqPGxWrwr70Sb/wuCzEuXOWvFx04eWwl9PymYjlJdXPB87NXLQi2wu8fo472o/zLW3m1Yu5ceZrQV8QP9CMpf3ug/05l7xijpyZFV/Tgvo5rFkuoP0axvA5ltTGmefMas+VswTL8gxZ86w10vN0ia9pw+xbqvPlOXLWjLAP40JtL1S/5Cm372jD+Iv7+Ipsr7iA0Pk+Z86ldTBaL/+lDWfN8kuyPfkZ2bk/d87CyNpK2wo8hp9rCbkP5sxZ8vIR7Zbber3k7T/d52T7N9m5+4Q2bM+Js1c3W23sw+0nZLP9pgv0inPhjJy+I5vpn0a/NyfWemetf8z0JzoPztprtW/WeoY1Nv15I53L/KyAXtsSwkdzLj37nVO9gZw/om1+T2Hf83O8L8R/uP9OxR9G8Jg1zZ+z5qP5YQ2CnL3azntGXBt9z7vtZzRvzpJHyNHz5+vCmM+pz74l5spZ8vIF9fno3P6F+nPB8THZ84TvnjieO/vYr883B+l8Zl6Yz1j3eflt5fV7MKZ1PZR8ngNrXOe9ZxFr7VvTNmd9zPLt2rDON/XcxvxBnjU1tPjGj85xfc6/yM5fWR8vaXN/effQFMXXwu8hNOf3qZ/L+j18bT2Nc9biF55vTJW1vj4Mz1s9X0DOeB70BmsOcYxI851ibsv1LWj7uq371vJRL5fx76p6vmqeEz8lu65DxlPhXbp/kaU3Xq+N0Voqf7v6oAudz7xlvhIlzlPgKxJ/Fl/m7UvacP6e+nVbibUV1r2g44lzrpKmwjryZ+Ssr9/jW/p3GbVRm7dT5Pyya/N7pEV3XHP23pdifzR3rc/fNXk9BdZSu2rOHK9gjJXL7zzw6znh/F/XftQYwllk8V46/WNUqQZ4RX3Gnkc/o+2/ZetnzNZAzkT2nHIsVYxVFufoHT8fv+raVxCa05L6nHfxDS3JW4/pmFnz9f9MfY/19lfOGFw/Pc56LiVYN0a/HENviFiOlbVVm/H2tdrntlULPOz2H6pjJc6Wj/D6cGP0S/1s+XKkMbLG69UeLG3NWJjqOs7irLly/EY+Zw7h/CG99fjf1e9A1TAcK2frnUSplvO8Q4T9j6n/fI+ccS3dlXPLuCGEfoE1sPccXfMsrvNZWP7qjPV8o4Xz0okxiK9F3htLHW097+n9W9r2F/HRWzXmB9qunzVnrJWR8xv47hrWUf0xBtbI0asvrPDeXegQzvxvSq3/NyDx2Oi7Ur8zWgtL+Y3tU8jKV+0Ja7Lv5zXZ3uGN13n6Jhizdn5nlNO4tcZ4x4fUymjXvL8Z6v2kd37M1SivCcaeQshZs7M44rFTcWbVMEb/0NshFXHGMTgH2HcM1XD2juHWYj6kSjnq1XTkjD/k74p8I8pnr847JWdWyXO9uRjCO1DI1qrzLJ5RfT1U3R1xjp5ThvJpLY9rC7/a++EYauV5qrxuZUmwtWrrmnrlkKpZC71xQ7O29kueHPEdinVNHnt8rfaxVcrp0vNgy9p4SNYWy1r/sNrHVilf9bblHNHYQyjiFbHV+6esPaL1MPq8tS2N30ee35Zy2PrskPI4E8W8S/dC9F37quQHY6nttCK+EbtoPk7BuqamOBVjUbQOYts6VvOZUv8uivwjGnsq1dYalo9ENWL0fYdSjR+MgTGrVA97a2PEfSjOWmPzZFTrGugdr61XjsV5CvJyOsrhUi4P9Yw4JUW5GM1Bi6foY+csi11U0yXn3eXVaKWwzpOcfXn8orrP4xx9Ryp+bonynYIxeP7UW7V4RXLeXzU1cZT/1thUXzV57dUb3vlStiK/IKpnXDqWylweUrVe3dKfstX6vEJBf6peEV8qHEu1qyW/U6lUKpVKpVKpVCqVSqVSqVQqlUqlUofT/wlD4Tk=
+  </data>
+ </layer>
+</map>
