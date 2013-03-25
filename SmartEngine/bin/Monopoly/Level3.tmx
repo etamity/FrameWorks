@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="40" height="40" tilewidth="60" tileheight="30">
+ <tileset firstgid="1" name="tileSet" tilewidth="60" tileheight="40">
+  <image source="tileSet.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="61" name="objectSetMega" tilewidth="60" tileheight="160">
+  <image source="objectSetMega.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="71" name="objectSetMedium2" tilewidth="60" tileheight="80">
+  <image source="objectSetMedium2.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="101" name="objectSetMedium" tilewidth="60" tileheight="80">
+  <image source="objectSetMedium.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="131" name="addTileSet" tilewidth="60" tileheight="40">
+  <image source="addTileSet.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="191" name="objectSetLarge" tilewidth="60" tileheight="120">
+  <image source="objectSetLarge.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="211" name="objectSetMega2" tilewidth="180" tileheight="160">
+  <tileoffset x="-60" y="10"/>
+  <image source="objectSetMega2.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="214" name="role" tilewidth="70" tileheight="124">
+  <image source="role.png" width="280" height="992"/>
+ </tileset>
+ <tileset firstgid="246" name="king" tilewidth="90" tileheight="137">
+  <image source="king.png" width="720" height="1096"/>
+ </tileset>
+ <layer name="Ground" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmDtOxDAQhqdImYKOdBFoa26AhHgEChq4A0iIAiQKJJSGXIytabkQsWRLs2Zm7PEjS5Hil/MY219+zzjZ7QGg/cfqZx1nyI3TBZTL2VjFxn9YPtdHYui84xK8kp4z+R6V80nr5nRWkE/rR2fn2SJevOaUKL6bynySn5xC/l2iewOk5R8XP6LjA0KhMU5nXSR6Ro19n9j/i2E4n3VUiC9XJ8r4FM4NkhQn1Y3RZONc+5np35K6ssod55q5/q4ch6orv7ZyctBfa01ulcw/0+cHqRH47oDPPXP/FcWWygsNH+enO8d8XJ6k8I2JfNhX005MbAu7e36sxkz/qLZG/t0SfDjmxV57s+cDyHwt/M3PFnbf9Rr/wPOQ46O84PhK1kcT4JNyCfPVeL/h/HM+huZovP5PlbybGD5Ork59vodKfNy6aPlqfr/4NeXzxcwhfdP4Y5fwU1MrVM1Q54NiLJx/poVMvprrG8q/WL7Qt6v2fwDOL2ovlPZmypdS/lHvX0p+v2/Un3vmrT3eQPzvh1X11QvaB89hIvfSjFgx8Y4z9vlq8lLax1qvWrWUfgGcLJ8S
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt2FsKwyAQQFF34k7y1313D24ozEdAppNEMz5uqBdKa6FwUNOmhjC3mD1o5a5a39d4L7k0v3l8o4qBvcZSiS+p59HpebS8s2xHtPXVHqJPX8Mko8e13YxbFE9e9yqFumtM+54YPw8+U2rUJtLeO2oxhz17y3dMPqa1fL7esAevxrOj+yS6cfl8WR6S0frtJfkkuk+3fGXR916v+9KW5ya958t7zjNiPWv/SxDOrqz799kmHdEkEU0S1fWP7R7nFLg=
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="40" height="40">
+  <object name="Joey" type="Hero" gid="214" x="420" y="360"/>
+  <object name="Kato" type="Hero" gid="246" x="180" y="120"/>
+ </objectgroup>
+</map>

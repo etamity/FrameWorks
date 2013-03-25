@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="80" height="80" tilewidth="60" tileheight="30">
+ <tileset firstgid="1" name="tileSet" tilewidth="60" tileheight="40">
+  <image source="tileSet.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="61" name="objectSetSmall" tilewidth="60" tileheight="40">
+  <image source="objectSetSmall.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="121" name="objectSetMega" tilewidth="60" tileheight="160">
+  <image source="objectSetMega.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="131" name="objectSetMedium2" tilewidth="60" tileheight="80">
+  <image source="objectSetMedium2.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="161" name="objectSetMedium" tilewidth="60" tileheight="80">
+  <image source="objectSetMedium.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="191" name="addTileSet" tilewidth="60" tileheight="40">
+  <image source="addTileSet.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="251" name="objectSetLarge" tilewidth="60" tileheight="120">
+  <image source="objectSetLarge.png" width="600" height="240"/>
+ </tileset>
+ <tileset firstgid="271" name="objectSetMega2" tilewidth="180" tileheight="160">
+  <tileoffset x="-60" y="10"/>
+  <image source="objectSetMega2.png" width="600" height="240"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="80" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztwzENAAAMBKHb37/feugMCaumqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqvh6v9RMQ
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="80" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztwSEBAAAAAiCP+f+WH8xAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALwGOWgAPg==
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="80" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztzjEBAAAMAiBrr/1CePhAAhIatw4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw9ROBAHo=
+  </data>
+ </layer>
+ <layer name="Tile Layer 4" width="80" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztzjEBAAAMAiC7r/hCePhAAhLYuXUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACg9EtuAIQ=
+  </data>
+ </layer>
+ <layer name="Tile Layer 5" width="80" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztzgENAAAIwKD3b2FTYzg3SEABX811AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAHvxACi
+  </data>
+ </layer>
+ <layer name="Tile Layer 6" width="80" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztzgENAAAIA6D3j2kSY3xTSEAC8NO0AwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAnLBG7ADj
+  </data>
+ </layer>
+ <layer name="Tile Layer 7" width="80" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztziEBAAAIA7D3r4whwxWILcESAOjNdQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4IkFVKQA/A==
+  </data>
+ </layer>
+ <layer name="Tile Layer 8" width="80" height="80">
+  <data encoding="base64" compression="zlib">
+   eJztzkERAAAEADAS6N/VQwl3HrYEiwD4q68DvFV5PQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtgyx3AEN
+  </data>
+ </layer>
+</map>

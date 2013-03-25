@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="20" height="20" tilewidth="60" tileheight="30">
+ <tileset firstgid="1" name="tileSet" tilewidth="60" tileheight="40">
+  <image source="tileSet.png" width="600" height="240"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJyTYGBgkABiJiphCRzmSRCBB4N5pOgZSuZRI4xoYR6laYyBDuYR6096mEdInph8MZDmUTv+qWkeNTAtzBvMYQYAeQ8QKw==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtAZSSHiwAoERZJ4AEeZJUNG+kQTEkfAoGP4AAHVZAPw=
+  </data>
+ </layer>
+</map>
