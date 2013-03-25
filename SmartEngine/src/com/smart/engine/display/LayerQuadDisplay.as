@@ -148,7 +148,7 @@ package com.smart.engine.display {
 		
 		
 
-		private function addStarlingChild(val:SmartDisplayObject):void {
+		public function addStarlingChild(val:SmartDisplayObject):void {
 			/*var wasFlat:Boolean = _display.isFlattened;
 			if (wasFlat) {
 				_display.unflatten();

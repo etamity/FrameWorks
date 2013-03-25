@@ -218,9 +218,9 @@ package com.smart.engine.plugins
 			}*/
 			
 			makeEmptyGrid();
-			makeLayers();
+			makeLayer();
 			addObjects();
-			renderMap();
+			//renderMap();
 			onCompelete();
 		}
 		
@@ -305,7 +305,10 @@ package com.smart.engine.plugins
 						
 						//setTimeout(add,delay*100,x,y,sprite,grid);
 						sprite.index= layer.getCellIndex(x, y);
+						
+						
 						grid.add(sprite);
+						trace("cell:",_cell ,"index:", sprite.index," x,y :" ,x, y,"layer.name",grid.name );
 					}
 				}
 				
@@ -463,12 +466,13 @@ package com.smart.engine.plugins
 				
 				sprite.index= layer.getCellIndex(cellX, cellY);
 			
-				setTimeout(add,delay*100,cellX,cellY,sprite,grid);
+				setTimeout(add,delay*100,_cell,cellX,cellY,sprite,grid);
 				delay++;
 			}
-			function add(x:int,y:int,sp:SmartDisplayObject,lay:LayerQuadDisplay):void{
+			function add(cell:int, x:int,y:int,sp:SmartDisplayObject,lay:LayerQuadDisplay):void{
 				grid.add(sp);
-				trace("cell:",_cell ,"index:", sprite.index," x,y :" ,x, y,"layer.name",grid.name );
+				grid.addStarlingChild(sp);
+				trace("cell:",cell ,"index:", sp.index," x,y :" ,x, y,"layer.name",lay.name );
 			}	
 		
 		}	

@@ -125,7 +125,7 @@ package com.smart.tiled
 				trace("newViewPort::",newViewPort);
 				layer.visibleViewport = newViewPort;
 				}*/
-				var newViewPort:Rectangle=layer.visibleViewport.clone();
+			/*	var newViewPort:Rectangle=layer.visibleViewport.clone();
 				if (layer.worldBounds.containsRect(newViewPort))
 				{
 
@@ -137,7 +137,7 @@ package com.smart.tiled
 
 
 				}
-				layer.visibleViewport=newViewPort;
+				layer.visibleViewport=newViewPort;*/
 			}
 
 			moveTo(velocity.x, velocity.y);

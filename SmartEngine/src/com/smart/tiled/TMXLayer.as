@@ -3,12 +3,13 @@ package com.smart.tiled
 	import flash.geom.Rectangle;
 	
 	import starling.display.Image;
+	import starling.display.Sprite;
 	import starling.extensions.QuadtreeSprite;
 
 	/**
 	 * @author shaun.mitchell
 	 */
-	public class TMXLayer extends QuadtreeSprite
+	public class TMXLayer extends Sprite
 	{
 		private var _layerData:Array = new Array();
 		private static const WORLD_BOUND:int = 10000;
@@ -17,8 +18,8 @@ package com.smart.tiled
 		public function TMXLayer(worldSpace:Rectangle=null)
 		{
 			_worldBounds = new Rectangle(-WORLD_BOUND, -WORLD_BOUND, WORLD_BOUND * 2, WORLD_BOUND * 2);
-			super(_worldBounds);
-			visibleViewport=new Rectangle(100,110,660,440);
+			//super(_worldBounds);
+			//visibleViewport=new Rectangle(100,110,660,440);
 			
 			
 		}
