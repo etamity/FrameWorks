@@ -14,6 +14,7 @@ package com.smart.views
 	
 	import org.robotlegs.mvcs.StarlingMediator;
 	
+	import starling.events.Event;
 	import starling.utils.AssetManager;
 	
 	public class GUIViewMediator extends StarlingMediator
@@ -60,8 +61,8 @@ package com.smart.views
 			var eventObject:Object=new Object();
 			eventObject[Language.STARTGAME]=ScreenConst.GAME_SCREEN;
 			eventObject[Language.EXIT]=ScreenConst.MAINMENU_SCREEN;
-			eventObject[Language.RELOAD]=reloadMap;
-			
+			eventObject[Language.MAPGRID]=reloadMap;
+			eventObject[Language.MAPISO]=reloadMap;
 			
 			_navigator.addScreen(ScreenConst.MAINMENU_SCREEN, new ScreenNavigatorItem(MenuScreen,eventObject));
 			_navigator.addScreen(ScreenConst.GAME_SCREEN, new ScreenNavigatorItem(GameScreen,eventObject));
@@ -74,9 +75,16 @@ package com.smart.views
 			
 		}
 		
-		public function reloadMap():void{
-			trace(Language.EXIT +" reloadMap" +"./Monopoly/map0.tmx");
-			signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
+		public function reloadMap(evt:Event):void{
+			var name:String= String(evt.data);
+			switch (name){
+				case Language.MAPGRID:
+					signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./TiledMap/map0.tmx");
+					break;
+				case Language.MAPISO:
+					signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
+					break;
+			}
 		}
 		
 	}

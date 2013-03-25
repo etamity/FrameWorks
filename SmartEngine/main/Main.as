@@ -10,7 +10,6 @@ package
 	
 	import starling.core.Starling;
 	import starling.events.Event;
-
 	[SWF(width="960",height="640",frameRate="60",backgroundColor="#2f2f2f", mode="direct")]
 	public class Main extends Sprite
 	{
@@ -20,7 +19,7 @@ package
 
 		public function Main()
 		{
-	
+
 			if (stage) start();
 			else
 			addEventListener(Event.ADDED_TO_STAGE, addedHandler);
@@ -46,11 +45,12 @@ package
 		
 		private function start():void
 		{
+			
 			this.graphics.clear();
 			if(this.stage)
 			{
 				this.stage.align = StageAlign.TOP_LEFT;
-				this.stage.scaleMode = StageScaleMode.NO_SCALE;
+				this.stage.scaleMode = StageScaleMode.SHOW_ALL;
 			}
 			_device= new Device(stage);
 			_device.setDevice(Device.IPHONE);

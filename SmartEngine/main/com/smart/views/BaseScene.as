@@ -15,6 +15,7 @@ package com.smart.views {
 	import com.smart.engine.plugins.SpriteControlPlugin;
 	import com.smart.engine.plugins.TMXQuadPlugin;
 	import com.smart.engine.plugins.ViewportControlPlugin;
+	import com.smart.engine.plugins.ViewportPlugin;
 	import com.smart.engine.tmxdata.TMXMap;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.tiled.TMXTileMap;
@@ -44,21 +45,29 @@ package com.smart.views {
 			
 		}
 		
-		public function loadMap(map:String):void{
-			TMXMap.loadTMX(map, onTMXLoad);
-			//tmxmap.load(map);
+		private function setup():void {
+			
+			if (engine != null)
+			{
+				engine.stop();
+				engine.removeAllPlugins();
+				removeChild(engine.display);
+			
+			}
+			
+				engine = new SmartEngine(stage);
+				addChild(engine.display);
+				addPlugins(engine);
+				engine.start();
+			
+	
+			
 		}
-		
-		private function onTMXLoad(tmx:TMXMap):void {
-			this.tmx = tmx;
-			setup();
-		
-		}
+
 		private function addPlugins(engine:SmartEngine):void {
-	
 			tmxPlugin= new TMXQuadPlugin(tmx);
-			engine.addPlugin(tmxPlugin);
-	
+			engine.addPlugin(tmxPlugin)
+				  .addPlugin(new ViewportPlugin(tmx.orientation,tmx.tileWidth, tmx.tileHeight));
 			
 			engine.addPlugin(new CameraPlugin(new Point3D(0,0,1)))
 			      .addPlugin(new ViewportControlPlugin());
@@ -66,20 +75,26 @@ package com.smart.views {
 	
 			tmxPlugin.onCompelete= setupSpirte;
 
-		
+			
 			function setupSpirte():void{
 				var sprite:SmartImage = SmartImage(tmxPlugin.getObjectByName("Joey"));
 				//tmxPlugin.addPlugin(new SpriteControlPlugin(sprite));		
 			
 			}
 		}
-		private function setup():void {
-			engine = new SmartEngine(stage);
-			addChild(engine.display);
-			addPlugins(engine);
-			engine.start();
+		
+		public function loadMap(map:String):void{
+			TMXMap.loadTMX(map, onTMXLoad);
+			//tmxmap.load(map);
 		
 		}
+		
+		private function onTMXLoad(tmx:TMXMap):void {
+			this.tmx=tmx;
+			setup();
+			//tmxPlugin.tmxData=tmx;
+		}
+
 	}
 }
 

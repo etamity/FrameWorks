@@ -5,6 +5,7 @@ package com.smart.views.srceens
 	import com.smart.services.ThemeService;
 	import com.smart.views.BaseScene;
 	import com.smart.views.components.PlayerBarView;
+	import com.smart.views.signals.ScreenEventConst;
 	
 	import flash.text.TextFormat;
 	
@@ -75,17 +76,36 @@ package com.smart.views.srceens
 			
 			var _reloadBtn:Button=new Button();
 			_reloadBtn.addEventListener(Event.TRIGGERED, backButton_triggeredHandler);
-			_reloadBtn.label= Language.RELOAD;
+			_reloadBtn.label= Language.MAPISO;
 			_reloadBtn.paddingRight=30;
 			_reloadBtn.height=_header.height-20;
+
+			var _mapgirdBtn:Button=new Button();
+			_mapgirdBtn.addEventListener(Event.TRIGGERED, backButton_triggeredHandler);
+			_mapgirdBtn.label= Language.MAPGRID;
+			_mapgirdBtn.paddingRight=30;
+			_mapgirdBtn.height=_header.height-20;
 			
+			
+			addItem(_mapgirdBtn,RIGHT);
 			addItem(_reloadBtn,RIGHT);
 			addItem(_exitBtn,RIGHT);
 			
 				
 		}
 		
-		
+		/*private function loadMapEventDispatch(evt:Event):void{
+			const button:Button = Button(evt.currentTarget);
+			signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
+			switch (button.label){
+				case Language.MAPGRID:
+					break;
+				case Language.MAPISO:
+					break;
+			}
+			
+			
+		}*/
 		override protected function initialize():void{
 	
 			
@@ -96,7 +116,8 @@ package com.smart.views.srceens
 		private function backButton_triggeredHandler(event:Event):void
 		{
 			const button:Button = Button(event.currentTarget);
-			this.dispatchEventWith(button.label);
+			trace(button.label +" Button Click");
+			this.dispatchEventWith(button.label,false,button.label);
 			
 		}
 		public function addItem(display:DisplayObject,direct:String=LEFT):void {
