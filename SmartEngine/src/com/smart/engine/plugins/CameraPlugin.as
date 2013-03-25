@@ -35,6 +35,7 @@ package com.smart.engine.plugins {
 		}
 
 		override public function onTrigger(time:Number):void {
+			super.onTrigger(time);
 			position.update(time); 
 
 			engine.moveTo(-position.x, -position.y);

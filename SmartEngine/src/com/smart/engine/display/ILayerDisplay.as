@@ -9,8 +9,8 @@ package com.smart.engine.display
 	public interface ILayerDisplay
 	{
 		function add(val:SmartDisplayObject):SmartDisplayObject;
-		function remove(val:SmartDisplayObject):SmartDisplayObject;
-		function forceUpdate():void;
+		//function remove(val:SmartDisplayObject):SmartDisplayObject;
+		//function forceUpdate():void;
 
 		function get name():String;
 		function get display():DisplayObject;

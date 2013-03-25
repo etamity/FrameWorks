@@ -16,6 +16,7 @@ package com.smart.engine.display {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;
+	import flash.utils.setTimeout;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
@@ -25,7 +26,7 @@ package com.smart.engine.display {
 		
 		public var _autoPosition:Boolean   = true; 
 		
-		public var _display:Sprite;
+		//public var _display:Sprite;
 
 		public var _quadBatch:QuadtreeSprite;
 		
@@ -38,7 +39,7 @@ package com.smart.engine.display {
 		
 		//private var projection:IProjection;
 		private var spriteHash:Dictionary = new Dictionary(true);
-		
+		private var spriteList:Vector.<SmartDisplayObject>;
 		private var sqEdgeSize:Number;
 		private var tileHeight:int        = 1;
 		
@@ -53,6 +54,9 @@ package com.smart.engine.display {
 		
 		private var viewport:IViewPort;
 		
+		private var countNum:int=0;
+
+		private var sortSprite:DisplayObject;
 		public function LayerQuadDisplay(_name:String, w:int, h:int, cellwidth:Number, cellheight:Number, projectionType:String) {
 			this._name = _name;
 			this.w = w;
@@ -63,12 +67,13 @@ package com.smart.engine.display {
 			tileWidthOffset = tileWidth;
 			tileHeightOffset = tileHeight;
 
+			spriteList =new Vector.<SmartDisplayObject>();
 			
 			sqEdgeSize = tileHeightOffset;
 			//_display = new Sprite();
 			_worldBounds = new Rectangle(-WORLD_BOUND, -WORLD_BOUND, WORLD_BOUND * 2, WORLD_BOUND * 2);
 			_quadBatch=new QuadtreeSprite(_worldBounds);
-			_quadBatch.visibleViewport=new Rectangle(0,0,560,440);
+			_quadBatch.visibleViewport=new Rectangle(0,0,760,540);
 			//_display.visibleViewport=new Rectangle(0,100,960,440);
 			//_display.addChild(_quadBatch);
 			data = new Vector.<Vector.<SmartDisplayObject>>(w * h, true);
@@ -98,19 +103,61 @@ package com.smart.engine.display {
 			if (val.textureName == "" || val.textureName == null) {
 				throw new Error("adding sprite with no _name");
 			}
-			
-			updateLocation(val);
-			spriteHash[val.textureName] = val;
+			//updateLocation(val);
+			spriteHash[val.name] = val;
+			spriteList.push(val);
+
 			val.layer = this;
-			addStarlingChild(val.display);
+			
+			viewport.perSprite(val);
+			//updateLocation(val);
+			//addStarlingChild(val);
+			
+
+
 			return val;
 		}
-		private function addStarlingChild(image:DisplayObject):void {
+		private function sortIndex(p1:SmartDisplayObject, p2:SmartDisplayObject): int
+		{
+			var index1:int =p1.index;
+			var index2:int =p2.index;
+			if (index1 < index2)
+			{
+				return -1;
+			}
+			else if (index1 >index2)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		public function render():void{
+			//spriteList= spriteList.sort(sortIndex);
+			for each (var sprite:SmartDisplayObject in spriteList) {
+				if (sprite == null) {
+					continue;
+				}
+				_quadBatch.addChild(sprite.display);
+
+
+			}
+		}
+		
+		
+
+		private function addStarlingChild(val:SmartDisplayObject):void {
 			/*var wasFlat:Boolean = _display.isFlattened;
 			if (wasFlat) {
 				_display.unflatten();
 			}*/
-			_quadBatch.addChild(image);
+
+				_quadBatch.addChild(val.display);	
+
+			
+			//_quadBatch.addChild(image);	
 			//_display.unflatten();
 			//forceUpdate();
 			
@@ -119,19 +166,20 @@ package com.smart.engine.display {
 			 sort = false;
 			_display.flatten();
 		}
-		*/
+		
 		public function forceUpdate():void {
-			/*if (_display.isFlattened == false) {
+			if (_display.isFlattened == false) {
 				return;
 			}
 			_display.unflatten();
-			_display.flatten();*/
+			_display.flatten();
 		}
-		
+		*/
 		public function getByName(_name:String):SmartDisplayObject {
 			return spriteHash[_name];
 		}
 		
+		/*
 		public function getCell(x:int, y:int):Vector.<SmartDisplayObject> {
 			if (x >= w) {
 				x = w - 1;
@@ -150,7 +198,7 @@ package com.smart.engine.display {
 			return data[index];
 		}
 		
-		/*public function getChildAtIndex(index:int):SmartDisplayObject {
+		public function getChildAtIndex(index:int):SmartDisplayObject {
 			return flatData[index];
 		}
 		*/
@@ -183,24 +231,23 @@ package com.smart.engine.display {
 		}*/
 		
 		public function moveTo(x:Number, y:Number):void {
-			/*_quadBatch.x =x * ratio.x;
-			_quadBatch.y =y * ratio.x;*/
-			updatePosition();
+			_quadBatch.x =x * ratio.x;
+			_quadBatch.y =y * ratio.x;
 	
 		}
 		private function updatePosition():void{
 			
 			
-			//_quadBatch.x = Math.min(Math.max(_worldBounds.left + _display.stage.stageWidth, _quadBatch.x), _worldBounds.right);
-			//_quadBatch.y = Math.min(Math.max(_worldBounds.top + _display.stage.stageHeight, _quadBatch.y), _worldBounds.bottom);
+			//_quadBatch.x = Math.min(Math.max(_worldBounds.left + _quadBatch.stage.stageWidth, _quadBatch.x), _worldBounds.right);
+			//_quadBatch.y = Math.min(Math.max(_worldBounds.top + _quadBatch.stage.stageHeight, _quadBatch.y), _worldBounds.bottom);
 			var newViewPort:Rectangle = _quadBatch.visibleViewport.clone();
 			//if (_worldBounds.containsRect(newViewPort))
 			{
 
-			/*newViewPort.x = -_quadBatch.x;
-			newViewPort.y = -_quadBatch.y;*/
-			
-			newViewPort.offset(-_quadBatch.x,-_quadBatch.y);
+			newViewPort.x = -_quadBatch.x;
+			newViewPort.y = -_quadBatch.y
+			/*
+			newViewPort.offset(-_quadBatch.x,-_quadBatch.y);;*/
 			
 			
 			}
@@ -213,7 +260,7 @@ package com.smart.engine.display {
 		}*/
 		
 		public function get numChildrenSprites():int {
-			return _display.numChildren;
+			return _quadBatch.numChildren;
 		}
 		
 		public function offset(x:Number, y:Number):void {
@@ -224,25 +271,36 @@ package com.smart.engine.display {
 		public function onTrigger(time:Number, engine:SmartEngine):void {
 			var first:SmartDisplayObject;
 			
-			for each (var layer:Vector.<SmartDisplayObject> in data) {
+			/*for each (var layer:Vector.<SmartDisplayObject> in data) {
 				if (layer != null) {
 					for each (var sprite:SmartDisplayObject in layer) {
 						if (sprite == null) {
 							continue;
 						}
-						viewport.perSprite(sprite);
+						//viewport.perSprite(sprite);
+						updatePosition();
 						updateLocation(sprite);
 						sprite.onTrigger(time);
 						
 					}
 				}
 			}
+			*/
 			
+			for each (var sprite:SmartDisplayObject in spriteList) {
+				if (sprite == null) {
+					continue;
+				}
+				updatePosition();
+				//updateLocation(sprite);
+				sprite.onTrigger(time);
+				
+			}
 			/*if (sort) {
 				sortSystem(time);
 			}*/
 		}
-		
+		/*	
 		public function remove(val:SmartDisplayObject):SmartDisplayObject {
 			if (val.layerIndex == -1 || val.layer == null) {
 				return val;
@@ -254,7 +312,7 @@ package com.smart.engine.display {
 			delete spriteHash[val.textureName];
 			return val;
 		}
-		/*
+	
 		public function screenToGridPt(pt:Point):Point {
 			var pt3d:Point3D = screenToLayer(pt);
 			var result:Point = layerToGridPt(pt3d.x, pt3d.y);
@@ -279,7 +337,7 @@ package com.smart.engine.display {
 			ratio.setTo(xRatio, yRatio);
 		}
 		
-		public function toMap(func:Function):Array {
+		/*public function toMap(func:Function):Array {
 			if (func == null) {
 				throw new Error("null function");
 			}
@@ -304,7 +362,7 @@ package com.smart.engine.display {
 				result += "\n";
 			}
 			return result;
-		}
+		}*/
 		
 		/*public function unflatten():void {
 			sort = true;
@@ -314,10 +372,34 @@ package com.smart.engine.display {
 		public function get width():int {
 			return w;
 		}
+		private function sorterDisplay(f:DisplayObject, s:DisplayObject):Boolean {
+			var key:Number  = f.y;
+			var key2:Number = s.y;
+			return key > key2;
+		}
 		
-		private var countNum:int=0;
-
+		private function sortSystem(time:Number):void {
+			var f:DisplayObject;
+			var numSprites:int = _quadBatch.numChildren;
+			var c:DisplayObject;
+			for (var i:int = 0; i < numSprites; i++) {
+				c = _quadBatch.getChildAt(i);
+				if (f != null && sorterDisplay(f, c)) {
+					_quadBatch.swapChildren(f, c);
+				}
+				f = c;
+			}
+		}
 		
+		private function sortAllSprite(sprite:DisplayObject):void {
+			var c:DisplayObject=sprite;
+				if (sortSprite != null && sorterDisplay(sortSprite, c)) {
+					_quadBatch.swapChildren(sortSprite, c);
+				}
+				sortSprite = c;
+			
+		}
+	
 		private function removeFromGridData(val:SmartDisplayObject):void {
 			if (val.layerIndex == -1) {
 				return;
@@ -336,25 +418,9 @@ package com.smart.engine.display {
 			arr.splice(index, 1);
 			val.layerIndex = -1;
 		}
+   
 		
-		private function sortSystem(time:Number):void {
-			var f:DisplayObject;
-			var numSprites:int = _display.numChildren;
-			var c:DisplayObject;
-			for (var i:int = 0; i < numSprites; i++) {
-				c = _display.getChildAt(i);
-				if (f != null && sorterDisplay(f, c)) {
-					_display.swapChildren(f, c);
-				}
-				f = c;
-			}
-		}
-		
-		private function sorterDisplay(f:DisplayObject, s:DisplayObject):Boolean {
-			var key:Number  = f.y;
-			var key2:Number = s.y;
-			return key > key2;
-		}
+
 		
 		private function updateLocation(val:SmartDisplayObject):void {
 			var x:int                                  = Math.floor(val.position.x / sqEdgeSize);

@@ -148,10 +148,11 @@ package com.smart.engine.tmxdata
 				}
 
 				maxGid=Math.max(layer.maxGid, maxGid);
-			    trace("maxGid",maxGid);
+
 				layersArray[y++]=layer;
 				layersHash[name]=layer;
 				layer.name=name;
+
 			}
 		}
 

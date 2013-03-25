@@ -26,15 +26,12 @@ package com.smart.engine.plugins {
 		public var speed:Number;
 		public var zoom:Number       = .05;
 		private var hitArea:Number;
-		private var stage:Stage;
 		private var tw:Tween;
 		private var velocity:Point3D;
 		private var zoomDelta:Number = 0.006;
 		private var engine:CameraPlugin;
-		private var _stage:Stage;
-		public function ViewportControlPlugin(stage:Stage,hitArea:Number = 10, speed:Number = 4) {
+		public function ViewportControlPlugin(hitArea:Number = 10, speed:Number = 4) {
 			super();
-			this.stage=stage;
 			this.hitArea = hitArea;
 			this.speed = speed;
 			velocity = new Point3D(0, 0, 0);

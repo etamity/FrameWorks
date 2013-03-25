@@ -30,7 +30,10 @@ package com.smart.engine.utils {
 			var index:int = y * width + x; 
 			return data[index];
 		}
-
+		public function getCellIndex(x:int, y:int):int {
+			var index:int = y * width + x; 
+			return index;
+		}
 
 		public function setCell(x:int, y:int, value:int):int {
 			var index:int = y * width + x; 

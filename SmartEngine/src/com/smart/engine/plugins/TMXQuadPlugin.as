@@ -27,6 +27,7 @@ package com.smart.engine.plugins
 	
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
+	import flash.utils.setTimeout;
 	
 	import starling.display.Sprite;
 
@@ -81,6 +82,10 @@ package com.smart.engine.plugins
 		public function getLayerByIndex(index:int):ILayerDisplay
 		{
 			return layers[index];
+		}
+
+		public function getObjectByName(name:String):SmartDisplayObject{
+			return linkedLayer[0].getByName(name);
 		}
 
 		public function getLayerByName(name:String):ILayerDisplay
@@ -181,6 +186,7 @@ package com.smart.engine.plugins
 				{
 					obj.name=assetID;
 				}
+				trace("Object:" , name , grid.name);
 				sprite.name=name;
 				sprite.type=obj.type;
 				//sprite.currentFrame = tmx.getImgFrame(obj.gid);
@@ -201,16 +207,115 @@ package com.smart.engine.plugins
 			}
 			return linkedLayer[tmxLayerIndex]=layer;
 		}
-
+		private function loadTiles():void
+		{
+			/*var loader:TextureAtlasLoader;
+			var i:int;
+			for each (var tile:TMXTileset in tmx.uniqueTilesets) {
+			trace("Image Path:",tmx.getImgPath(tile.firstgid));
+			loader = new TextureAtlasLoader(tmx.getImgPath(tile.firstgid), tile, null, tile.getPropsByID(TILE_PROPERTY_HIT_MAP) == TILE_PROPERTY_HIT_MAP_VALUE);
+			AssetsManager.instance.addLoader(loader);
+			}*/
+			
+			makeEmptyGrid();
+			makeLayers();
+			addObjects();
+			renderMap();
+			onCompelete();
+		}
+		
+		private function renderMap():void{
+			var layer:TMXLayer;
+			var grid:LayerQuadDisplay;
+			for (var i:int=0; i < tmx.layersArray.length; i++)
+			{
+				layer=tmx.layersArray[i];
+				if (layer == null)
+				{
+					continue;
+				}
+				grid=linkedLayer[i];
+				grid.render();
+			}
+		}
+		
 		public function makeLayer():void
 		{
+			for (var y:int=0; y < tmx.height; y++)
+			{
 			for (var x:int=0; x < tmx.width; x++)
 			{
-				for (var y:int=0; y < tmx.height; y++)
+			makeTiles(x, y);
+			}
+			}
+			
+		}
+		
+		
+		
+		public function makeLayers():void
+		{
+			/*for (var y:int=0; y < tmx.height; y++)
+			{
+				for (var x:int=0; x < tmx.width; x++)
 				{
 					makeTiles(x, y);
 				}
+			}*/
+			
+			
+			var layer:TMXLayer;
+			var _cell:int;
+			var grid:LayerQuadDisplay;
+			var pt3:Point3D;
+			
+			var assetID:String;
+			var sprite:SmartImage;
+			
+			for (var i:int=0; i < tmx.layersArray.length; i++)
+			{
+				layer=tmx.layersArray[i];
+				if (layer == null)
+				{
+					continue;
+				}
+			
+				for (var y:int=0; y < tmx.height; y++)
+				{
+					for (var x:int=0; x < tmx.width; x++)
+					{
+						//makeTiles(x, y);
+						_cell=layer.getCell(x, y);
+						
+						if (_cell == 0 || isNaN(_cell))
+						{
+							continue;
+						}
+						grid=linkedLayer[i];
+						
+						pt3=grid.gridToLayerPt(x, y);
+						//name = tmx.getImgSrc(_cell) + "_" + String(_cell);
+						assetID=String(_cell); //String(iSprite++);
+						//assetID = tmx.getImgSrc(_cell);
+						
+						//trace("object: ", name, pt3, new State("", 0, 0, true));
+						
+						sprite=new SmartImage(assetID, pt3, new State("", 0, 0, true));
+						//sprite.currentFrame = tmx.getImgFrame(_cell);
+						
+						//setTimeout(add,delay*100,x,y,sprite,grid);
+						sprite.index= layer.getCellIndex(x, y);
+						grid.add(sprite);
+					}
+				}
+				
+				
 			}
+			
+			function add(xx:int,xy:int,sp:SmartDisplayObject,lay:LayerQuadDisplay):void{
+				grid.add(sp);
+				trace("cell:",_cell ,"index:", sprite.index," x,y :" ,xx, xy,"layer.name",grid.name );
+			}	
 		}
 
 		override public function onRegister(engine:IPlugin):void
@@ -243,8 +348,8 @@ package com.smart.engine.plugins
 
 		override public function onTrigger(time:Number):void
 		{
-			//container.x=engine.positionX;
-			//container.y=engine.positionY;
+			container.x=engine.positionX;
+			container.y=engine.positionY;
 			for each (var layer:ILayerDisplay in layers)
 			{
 				if (layer != null)
@@ -290,22 +395,7 @@ package com.smart.engine.plugins
 		}
 
 
-		private function loadTiles():void
-		{
-			/*var loader:TextureAtlasLoader;
-			var i:int;
-			for each (var tile:TMXTileset in tmx.uniqueTilesets) {
-				trace("Image Path:",tmx.getImgPath(tile.firstgid));
-				loader = new TextureAtlasLoader(tmx.getImgPath(tile.firstgid), tile, null, tile.getPropsByID(TILE_PROPERTY_HIT_MAP) == TILE_PROPERTY_HIT_MAP_VALUE);
-				AssetsManager.instance.addLoader(loader);
-			}*/
 
-			makeEmptyGrid();
-			makeLayer();
-			addObjects();
-			
-			onCompelete();
-		}
 
 
 		private function onProgress(ratio:Number):void
@@ -332,6 +422,9 @@ package com.smart.engine.plugins
 			}
 
 		}
+		
+		
+
 
 		private function makeTiles(cellX:int, cellY:int):void
 		{
@@ -367,9 +460,19 @@ package com.smart.engine.plugins
 
 				sprite=new SmartImage(assetID, pt3, new State("", 0, 0, true));
 				//sprite.currentFrame = tmx.getImgFrame(_cell);
-				grid.add(sprite);
+				
+				sprite.index= layer.getCellIndex(cellX, cellY);
+			
+				setTimeout(add,delay*100,cellX,cellY,sprite,grid);
+				delay++;
 			}
-		}
+			function add(x:int,y:int,sp:SmartDisplayObject,lay:LayerQuadDisplay):void{
+				grid.add(sp);
+				trace("cell:",_cell ,"index:", sprite.index," x,y :" ,x, y,"layer.name",grid.name );
+			}	
+		
+		}	
+		private var delay:int=0;
 	}
 
 }

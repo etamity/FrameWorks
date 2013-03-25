@@ -7,12 +7,11 @@
 //##########################################################
 
 package com.smart.engine.core {
-
 	public class Plugin extends PluginEngine {
+		
 		public function Plugin() {
 
 		}
-		
 		
 		
 	

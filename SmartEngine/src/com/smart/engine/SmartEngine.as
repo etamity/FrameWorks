@@ -19,20 +19,16 @@ package com.smart.engine {
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	import starling.display.Stage;
+	import starling.events.Event;
 
 	public class SmartEngine extends Plugin implements IAnimatable {
 		
 		private var _juggler:Juggler;
 
 		private var displayArea:Sprite;
-
-
-		//private var layers:Vector.<ILayerDisplay>; 
-		//private var layersHash:Dictionary; 
-
+		
 		private var position:Point;
 
-		public var stage:Stage;
 		public function SmartEngine(stage:Stage) {
 			
 			this.stage=stage;
@@ -42,8 +38,10 @@ package com.smart.engine {
 			_juggler = new Juggler();
 
 			position = new Point(1, 1);
+			
+			setSize(stage.stageWidth ,stage.stageHeight);
 		}
-		
+
 	   public function addDisplay(child:DisplayObject):DisplayObject{
 			displayArea.addChild(child);
 			return child;

@@ -32,6 +32,8 @@ package com.smart.engine.plugins
 		//private var _tmx:TMXMap;
 		private var engine:TMXQuadPlugin;
 
+		//private var sortSprite:SmartDisplayObject;
+		
 		public function ViewportPlugin(projectionType :String ,cellwidth:Number, cellheight:Number)
 		{
 			var type:String=projectionType;
@@ -95,14 +97,22 @@ package com.smart.engine.plugins
 
 		public function perSprite(sprite:SmartDisplayObject):void
 		{
+				
 			var isoPt:Point=sprite.position;
 			var image:DisplayObject=sprite.display;
 			pt=projection.transformPoint(isoPt);
+			//pt = isoPt;
 			image.x=pt.x;
 			image.y=pt.y;
 			/*image.x = pt.x-sprite.position.z;*/
 			image.y=pt.y - (sprite.display.height + sprite.position.z);
-			trace(sprite.textureName);
+			
+			/*if ((sortSprite!= null) && (sprite.index> sortSprite.index))
+			{
+				sprite.display.parent.swapChildren(sortSprite.display, sortSprite.display);
+				
+			}
+			sortSprite = sprite;*/
 		}
 
 		public function screenToLayer(pt:Point):Point3D

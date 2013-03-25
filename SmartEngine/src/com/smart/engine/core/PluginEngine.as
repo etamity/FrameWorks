@@ -3,6 +3,8 @@ package com.smart.engine.core
 	import flash.utils.Dictionary;
 	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
+	
+	import starling.display.Stage;
 
 	public class PluginEngine implements IPlugin
 	{
@@ -10,6 +12,7 @@ package com.smart.engine.core
 		protected var pluginsHash:Dictionary;
 		protected var _name:String = "Plugin";
 		protected var _enabled:Boolean=true;
+		private var _stage:Stage;
 		public function PluginEngine()
 		{
 			name= this.getClassName(this);
@@ -41,10 +44,16 @@ package com.smart.engine.core
 			plugin.onRemove();
 			delete pluginsHash[plugin.name];
 		}
-
+		public function get stage():Stage{
+			return _stage;
+		}
+		public function set stage(val:Stage):void{
+			_stage = val;
+		}
 		public function addPlugin(plugin:IPlugin):IPlugin
 		{
 			plugins.push(plugin);
+			plugin.stage=_stage;
 			plugin.onRegister(this);
 			pluginsHash[plugin.name]=plugin;
 			return plugin;
@@ -79,6 +88,10 @@ package com.smart.engine.core
 			return ClassDef;
 		}
 		public function onTrigger(time:Number):void {
+			for each (var plugin:IPlugin in plugins) {
+				if (plugin.enabled)
+					plugin.onTrigger(time);
+			}
 		}
 		
 		public function toString():String {

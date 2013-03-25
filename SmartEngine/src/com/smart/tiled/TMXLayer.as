@@ -18,7 +18,7 @@ package com.smart.tiled
 		{
 			_worldBounds = new Rectangle(-WORLD_BOUND, -WORLD_BOUND, WORLD_BOUND * 2, WORLD_BOUND * 2);
 			super(_worldBounds);
-			visibleViewport=new Rectangle(0,0,960,640);
+			visibleViewport=new Rectangle(100,110,660,440);
 			
 			
 		}

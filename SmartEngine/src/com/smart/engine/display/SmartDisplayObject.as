@@ -79,14 +79,18 @@ package com.smart.engine.display {
 			}
 		}
 
-		public function remove():void {
+		/*public function remove():void {
 			if (layer != null) {
 				layer.remove(this);
 			}
+		}*/
+
+		public function get index():int{
+			return this.layerIndex;
 		}
-
-	
-
+		public function set index(val:int):void{
+			layerIndex =val;
+		}
 		public function get x():Number {
 			return position.x;
 		}

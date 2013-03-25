@@ -62,9 +62,9 @@ package com.smart.engine.display {
 			_display.readjustSize();
 			_display.pivotY = _display.height + offset.y;
 			_display.pivotX = 0 + offset.x;
-			if (layer) {
+			/*if (layer) {
 				layer.forceUpdate();
-			}
+			}*/
 		}
 	}
 }

@@ -11,7 +11,6 @@ package com.smart.engine.plugins {
 	import com.smart.engine.core.IPlugin;
 	import com.smart.engine.core.Plugin;
 	import com.smart.engine.display.SmartDisplayObject;
-	import com.smart.engine.display.SmartMovieClip;
 	import com.smart.engine.utils.Point3D;
 	
 	import flash.events.TimerEvent;
@@ -22,7 +21,7 @@ package com.smart.engine.plugins {
 	import starling.events.KeyboardEvent;
 	import starling.events.TouchEvent;
 
-	public class SpriteControlPlugin extends Plugin implements IPlugin {
+	public class SpriteControlPlugin extends Plugin {
 
 		private var _mapWidth: int =0;
 		private var _mapHeight: int =0;
@@ -40,7 +39,6 @@ package com.smart.engine.plugins {
 
 		private var spritePt:Point3D;
 
-		private var stage:Stage;
 		private var stepLong:int               = 2;
 		private var targetPt:Point3D;
 		private var totalFrame:int;
@@ -143,7 +141,7 @@ package com.smart.engine.plugins {
 			var xpt:Number = targetPt.x;
 			var ypt:Number = targetPt.y;
 
-			SmartMovieClip(sprite).currentFrame = imageFrame;
+			//SmartMovieClip(sprite).currentFrame = imageFrame;
 			if (moving) {
 				//move(currentDirection);
 				moveTo(touchPoint.x,touchPoint.y);

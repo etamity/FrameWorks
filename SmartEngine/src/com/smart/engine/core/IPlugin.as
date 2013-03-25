@@ -7,6 +7,7 @@
 //##########################################################
 
 package com.smart.engine.core {
+	import starling.display.Stage;
 
 	
 	public interface IPlugin extends IPluginEngine{
@@ -21,6 +22,9 @@ package com.smart.engine.core {
 		
 		function get enabled():Boolean;
 		function set enabled(val:Boolean):void;
+		
+		function get stage():Stage;
+		function set stage(val:Stage):void;
 	}
 
 }
