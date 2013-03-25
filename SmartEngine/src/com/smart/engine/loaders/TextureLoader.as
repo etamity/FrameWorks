@@ -74,7 +74,7 @@ package com.smart.engine.loaders {
 				return;
 			}
 			if (!(sprite is SmartSprite)) {
-				throw new Error("sprite " + sprite.name + " was created as a " + sprite + " but it's asset was for an SmartSprite");
+				throw new Error("sprite " + sprite.textureName + " was created as a " + sprite + " but it's asset was for an SmartSprite");
 			}
 			SmartSprite(sprite).setTexture(offset, texture);
 			SmartSprite(sprite).setHitmap(hitMap);

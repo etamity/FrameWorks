@@ -8,41 +8,46 @@
 
 package com.smart.engine.components {
 
-	import com.smart.engine.core.AssetsManager;
+	import com.smart.engine.core.MapAssetsManager;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.loaders.ITextureLoader;
+	
+	import starling.display.Image;
 
 	public class AsyncTexture implements IComponent {
 		private static var I:int = 0; 
 
-		public function AsyncTexture(assetManagerKey:String) {
+		public function AsyncTexture(textureName:String) {
 			i = ++I;
-			this.assetManagerKey = assetManagerKey;
+			this.assetManagerKey = textureName;
 		}
 
 		private var assetManagerKey:String;
 		private var i:int        = 0; 
 		private var sprite:SmartDisplayObject;
-
+		private var loader:ITextureLoader;
 		public function onRegister(sprite:SmartDisplayObject):void {
 			this.sprite = sprite;
 			if (!sprite.display) {
-				sprite.display = AssetsManager.instance.getDisplay(assetManagerKey);
+				sprite.display=new Image(MapAssetsManager.instance.getTexture(sprite.textureName));
+				trace("sprite.name::",sprite.textureName);
 			}
-			onTrigger(0);
+			//loader = AssetsManager.instance.getLoader(assetManagerKey);
+			//onTrigger(0);
+			sprite.removeComponent(this);
 		}
 
 		public function onRemove():void {
 		}
 
 		public function onTrigger(time:Number):void {
-			var loader:ITextureLoader = AssetsManager.instance.getLoader(assetManagerKey);
-			if (loader.isLoaded == false) {
+			/*if (loader.isLoaded == false) {
 				return;
 			}
+
 			loader.setTexture(sprite);
 
-			sprite.removeComponent(this);
+			sprite.removeComponent(this);*/
 		}
 	}
 

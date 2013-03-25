@@ -20,8 +20,8 @@ package com.smart.engine.display {
 	import starling.textures.TextureAtlas;
 
 	public class SmartImage extends SmartDisplayObject {
-		public function SmartImage(assetID:String, name:String, pt:Point3D = null, state:State = null) {
-			super(assetID, name, pt, state);
+		public function SmartImage(name:String, pt:Point3D = null, state:State = null) {
+			super(name, pt, state);
 		}
 
 		private var _display:Image;
@@ -52,7 +52,7 @@ package com.smart.engine.display {
 		}
 
 		public function setImageTexture(offset:Point, val:TextureAtlas):void {
-			_display.texture = val.getTexture(name);
+			_display.texture = val.getTexture(textureName);
 			if (!offset.y) {
 				offset.y = 0;
 			}
@@ -62,9 +62,9 @@ package com.smart.engine.display {
 			_display.readjustSize();
 			_display.pivotY = _display.height + offset.y;
 			_display.pivotX = 0 + offset.x;
-			if (layer) {
+			/*if (layer) {
 				layer.forceUpdate();
-			}
+			}*/
 		}
 		public function setTexture(offset:Point, val:Texture):void {
 			_display.texture = val;
@@ -77,9 +77,9 @@ package com.smart.engine.display {
 			_display.readjustSize();
 			_display.pivotY = _display.height + offset.y;
 			_display.pivotX = 0 + offset.x;
-			if (layer) {
+			/*if (layer) {
 				layer.forceUpdate();
-			}
+			}*/
 		}
 	}
 }

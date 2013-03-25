@@ -8,28 +8,26 @@
 
 package com.smart.engine.plugins {
 
+	import com.smart.engine.SmartEngine;
 	import com.smart.engine.core.IPlugin;
 	import com.smart.engine.core.IPluginEngine;
 	import com.smart.engine.core.Plugin;
 	import com.smart.engine.utils.Point3D;
 
 	public class CameraPlugin extends Plugin implements IPlugin {
-		public static var instance:CameraPlugin;
-
 		private static const ZOOM_IN_LIMIT:Number  = 5;
 		private static const ZOOM_OUT_LIMIT:Number = .1;
 
-		
+		private var engine:SmartEngine;		
 		public function CameraPlugin(position:Point3D = null) {
 			super();
 			this.position = position;
-			CameraPlugin.instance = this;
 		}
 
 		public var position:Point3D;
 
-		override public function onRegister(engine:IPluginEngine):void {
-			super.onRegister(engine);
+		override public function onRegister(engine:IPlugin):void {
+			this.engine = engine as SmartEngine;
 		}
 
 		override public function onRemove():void {

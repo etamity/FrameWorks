@@ -6,16 +6,15 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine.viewport {
+package com.smart.engine.plugins {
 
-	import flash.geom.Point;
-	import com.smart.engine.display.LayerDisplay;
-	import com.smart.engine.display.SmartDisplayObject;
-	import com.smart.engine.display.SmartSprite;
-	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.display.ILayerDisplay;
+	import com.smart.engine.display.SmartDisplayObject;
+	import com.smart.engine.utils.Point3D;
+	
+	import flash.geom.Point;
 
-	public interface IProjection {
+	public interface IViewPort {
 		function layerToScreen(pt:Point3D):Point
 		function onSetup(grid:ILayerDisplay):void;
 		function perSprite(sprite:SmartDisplayObject):void;

@@ -10,13 +10,17 @@ package com.smart.engine.display {
 
 	import com.smart.engine.components.AsyncTexture;
 	import com.smart.engine.components.IComponent;
+	import com.smart.engine.core.MapAssetsManager;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.utils.State;
 	
 	import starling.display.DisplayObject;
+	import starling.display.Image;
 
-	public class SmartDisplayObject {
+	public class SmartDisplayObject{
+		public var textureName:String;
 		public var name:String;
+		
 		public var position:Point3D;
 		public var state:State;
 		public var type:String;
@@ -25,14 +29,22 @@ package com.smart.engine.display {
 		private var async:AsyncTexture;
 		private var components:Vector.<IComponent>; 
 		public var _assetID:String;
-		public function SmartDisplayObject(assetID:String, name:String, pt:Point3D = null, state:State = null) {
-			this.name = name;
+		public function SmartDisplayObject(textureName:String, pt:Point3D = null, state:State = null) {
+			this.textureName = textureName;
 			this.state = state != null ? state : new State();
 			this.position = pt != null ? pt : new Point3D();
-			_assetID=assetID;
-			changeTo(assetID);
+			changeTo(textureName);
 		}
-		
+		public function removeComponent(component:IComponent):void {
+			component.onRemove();
+			var index:int = components.indexOf(component);
+			if (index != -1) {
+				components.splice(index, 1);
+			}
+			if (component == async) {
+				async = null;
+			}
+		}
 		public function addComponent(c:IComponent):IComponent {
 			if (components == null) {
 				components = new Vector.<IComponent>();
@@ -42,11 +54,14 @@ package com.smart.engine.display {
 			return c;
 		}
 
-		public function changeTo(assetID:String):void {
+		public function changeTo(textureName:String):void {
 			if (async) {
 				removeComponent(async);
 			}
-			addComponent(async = new AsyncTexture(assetID));
+			//addComponent(async = new AsyncTexture(textureName));
+			display=new Image(MapAssetsManager.instance.getTexture(textureName));
+			/*display.x=position.x;
+			display.y=position.y;*/
 		}
 
 		public function get display():DisplayObject {
@@ -70,16 +85,7 @@ package com.smart.engine.display {
 			}
 		}
 
-		public function removeComponent(component:IComponent):void {
-			component.onRemove();
-			var index:int = components.indexOf(component);
-			if (index != -1) {
-				components.splice(index, 1);
-			}
-			if (component == async) {
-				async = null;
-			}
-		}
+	
 
 		public function get x():Number {
 			return position.x;

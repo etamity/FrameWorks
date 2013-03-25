@@ -9,10 +9,9 @@
 package com.smart.engine.display {
 	
 	import com.smart.engine.SmartEngine;
-	import com.smart.engine.plugins.CameraPlugin;
+	import com.smart.engine.plugins.IViewPort;
+	import com.smart.engine.plugins.ViewportPlugin;
 	import com.smart.engine.utils.Point3D;
-	import com.smart.engine.viewport.IProjection;
-	import com.smart.engine.viewport.MapViewport;
 	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -33,11 +32,11 @@ package com.smart.engine.display {
 		public var _name:String;
 		
 		public var sort:Boolean           = true;
-		private var data:Vector.<Vector.<SmartDisplayObject>>;
-		private var flatData:Vector.<SmartDisplayObject>;
+		public var data:Vector.<Vector.<SmartDisplayObject>>;
+		//private var flatData:Vector.<SmartDisplayObject>;
 		private var h:int                 = 0;
 		
-		private var projection:IProjection;
+		//private var projection:IProjection;
 		private var spriteHash:Dictionary = new Dictionary(true);
 		
 		private var sqEdgeSize:Number;
@@ -52,40 +51,36 @@ package com.smart.engine.display {
 		private static const WORLD_BOUND:int = 10000;
 		private var ratio:Point = new Point(1, 1); 
 		
+		private var viewport:IViewPort;
+		
 		public function LayerQuadDisplay(_name:String, w:int, h:int, cellwidth:Number, cellheight:Number, projectionType:String) {
 			this._name = _name;
 			this.w = w;
 			this.h = h;
 			this.tileWidth = cellwidth;
 			this.tileHeight = cellheight;
-			
-			if (projectionType == MapViewport.TYPE_ISOMETRIC)
-			{
-				tileWidthOffset = tileWidth;
-				tileHeightOffset = tileHeight;
-			}
-			else if (projectionType == MapViewport.TYPE_ORTHOGONAL)
-			{
-				tileWidthOffset = tileWidth;
-				tileHeightOffset = tileHeight;	
-			}
+
+			tileWidthOffset = tileWidth;
+			tileHeightOffset = tileHeight;
+
 			
 			sqEdgeSize = tileHeightOffset;
-			_display = new Sprite();
+			//_display = new Sprite();
 			_worldBounds = new Rectangle(-WORLD_BOUND, -WORLD_BOUND, WORLD_BOUND * 2, WORLD_BOUND * 2);
 			_quadBatch=new QuadtreeSprite(_worldBounds);
-			_quadBatch.visibleViewport=new Rectangle(0,0,960,640);
+			_quadBatch.visibleViewport=new Rectangle(0,0,560,440);
 			//_display.visibleViewport=new Rectangle(0,100,960,440);
-			_display.addChild(_quadBatch);
+			//_display.addChild(_quadBatch);
 			data = new Vector.<Vector.<SmartDisplayObject>>(w * h, true);
-			flatData = new <SmartDisplayObject>[];
+			//flatData = new <SmartDisplayObject>[];
 			
-			this.projection = new MapViewport(projectionType, cellwidth, cellheight);
-			this.projection.onSetup(this);
+			/*this.projection = new MapViewport(projectionType, cellwidth, cellheight);
+			this.projection.onSetup(this);*/
 			//_display.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
+			
+			viewport=new ViewportPlugin(projectionType,cellwidth, cellheight);
 		}
-		
-		
+	
 		
 		public function get name():String{
 			return this._name;
@@ -94,43 +89,43 @@ package com.smart.engine.display {
 			return this._autoPosition;
 		}
 		public function get display():DisplayObject{
-			return this._display;
+			return this._quadBatch;
 		}
 		public function add(val:SmartDisplayObject):SmartDisplayObject {
 			if (val == null) {
 				return val;
 			}
-			if (val.name == "" || val.name == null) {
+			if (val.textureName == "" || val.textureName == null) {
 				throw new Error("adding sprite with no _name");
 			}
 			
 			updateLocation(val);
-			spriteHash[val.name] = val;
+			spriteHash[val.textureName] = val;
 			val.layer = this;
 			addStarlingChild(val.display);
 			return val;
 		}
 		private function addStarlingChild(image:DisplayObject):void {
-			var wasFlat:Boolean = _display.isFlattened;
+			/*var wasFlat:Boolean = _display.isFlattened;
 			if (wasFlat) {
 				_display.unflatten();
-			}
+			}*/
 			_quadBatch.addChild(image);
-			_display.unflatten();
+			//_display.unflatten();
 			//forceUpdate();
 			
 		}
-		public function flatten():void {
+		/*public function flatten():void {
 			 sort = false;
 			_display.flatten();
 		}
-		
+		*/
 		public function forceUpdate():void {
-			if (_display.isFlattened == false) {
+			/*if (_display.isFlattened == false) {
 				return;
 			}
 			_display.unflatten();
-			_display.flatten();
+			_display.flatten();*/
 		}
 		
 		public function getByName(_name:String):SmartDisplayObject {
@@ -155,63 +150,67 @@ package com.smart.engine.display {
 			return data[index];
 		}
 		
-		public function getChildAtIndex(index:int):SmartDisplayObject {
+		/*public function getChildAtIndex(index:int):SmartDisplayObject {
 			return flatData[index];
 		}
-		
+		*/
 		public function gridToLayerPt(gridX:int, gridY:int, z:int = 1):Point3D {
 			return new Point3D(gridX * sqEdgeSize, gridY * sqEdgeSize, z * sqEdgeSize);
 		}
 		
-		public function gridToSreenPt(gridX:int, gridY:int, z:int = 1):Point {
+		/*public function gridToSreenPt(gridX:int, gridY:int, z:int = 1):Point {
 			var pt3d:Point3D = gridToLayerPt(gridX, gridY);
 			var result:Point = layerToScreen(pt3d);
 			return result;
-		}
+		}*/
 		
 		public function get height():int {
 			return h;
 		}
 		
-		public function get isFlattened():Boolean {
+		/*public function get isFlattened():Boolean {
 			return _display.isFlattened;
-		}
+		}*/
 		
 		public function layerToGridPt(x:Number, y:Number):Point {
 			var pt:Point = new Point(Math.floor(x / sqEdgeSize), Math.floor(y / sqEdgeSize));
 			return pt;
 		}
 		
-		public function layerToScreen(pt:Point3D):Point {
+		/*public function layerToScreen(pt:Point3D):Point {
 			var answer:Point = projection.layerToScreen(pt);
 			return _display.localToGlobal(answer);
-		}
+		}*/
 		
 		public function moveTo(x:Number, y:Number):void {
-			_quadBatch.x =x * ratio.x;
-			_quadBatch.y =y * ratio.x;
+			/*_quadBatch.x =x * ratio.x;
+			_quadBatch.y =y * ratio.x;*/
 			updatePosition();
 	
 		}
 		private function updatePosition():void{
 			
 			
-			_quadBatch.x = Math.min(Math.max(_worldBounds.left + _display.stage.stageWidth, _quadBatch.x), _worldBounds.right);
-			_quadBatch.y = Math.min(Math.max(_worldBounds.top + _display.stage.stageHeight, _quadBatch.y), _worldBounds.bottom);
-
-			
-			
+			//_quadBatch.x = Math.min(Math.max(_worldBounds.left + _display.stage.stageWidth, _quadBatch.x), _worldBounds.right);
+			//_quadBatch.y = Math.min(Math.max(_worldBounds.top + _display.stage.stageHeight, _quadBatch.y), _worldBounds.bottom);
 			var newViewPort:Rectangle = _quadBatch.visibleViewport.clone();
-			newViewPort.x = -_quadBatch.x;
-			newViewPort.y = -_quadBatch.y;
+			//if (_worldBounds.containsRect(newViewPort))
+			{
+
+			/*newViewPort.x = -_quadBatch.x;
+			newViewPort.y = -_quadBatch.y;*/
 			
+			newViewPort.offset(-_quadBatch.x,-_quadBatch.y);
+			
+			
+			}
 			_quadBatch.visibleViewport = newViewPort;
 			
 		}
 		
-		public function get numChildren():int {
+		/*public function get numChildren():int {
 			return flatData.length;
-		}
+		}*/
 		
 		public function get numChildrenSprites():int {
 			return _display.numChildren;
@@ -224,23 +223,24 @@ package com.smart.engine.display {
 		
 		public function onTrigger(time:Number, engine:SmartEngine):void {
 			var first:SmartDisplayObject;
-		
+			
 			for each (var layer:Vector.<SmartDisplayObject> in data) {
 				if (layer != null) {
 					for each (var sprite:SmartDisplayObject in layer) {
 						if (sprite == null) {
 							continue;
 						}
-						projection.perSprite(sprite);
+						viewport.perSprite(sprite);
 						updateLocation(sprite);
 						sprite.onTrigger(time);
 						
 					}
 				}
 			}
-			if (sort) {
+			
+			/*if (sort) {
 				sortSystem(time);
-			}
+			}*/
 		}
 		
 		public function remove(val:SmartDisplayObject):SmartDisplayObject {
@@ -251,22 +251,22 @@ package com.smart.engine.display {
 			
 			removeFromGridData(val);
 			val.layer = null;
-			delete spriteHash[val.name];
+			delete spriteHash[val.textureName];
 			return val;
 		}
-		
+		/*
 		public function screenToGridPt(pt:Point):Point {
 			var pt3d:Point3D = screenToLayer(pt);
 			var result:Point = layerToGridPt(pt3d.x, pt3d.y);
 			return result;
-		}
+		}*/
 		
-		public function screenToLayer(pt:Point):Point3D {
+		/*public function screenToLayer(pt:Point):Point3D {
 			var localPt:Point = _display.globalToLocal(pt);
 			var pt3:Point3D   = projection.screenToLayer(localPt);
 			
 			return pt3;
-		}
+		}*/
 		
 		public function setCell(val:Vector.<SmartDisplayObject>):Vector.<SmartDisplayObject> {
 			for each (var sprite:SmartDisplayObject in val) {
@@ -306,10 +306,10 @@ package com.smart.engine.display {
 			return result;
 		}
 		
-		public function unflatten():void {
+		/*public function unflatten():void {
 			sort = true;
 			_display.unflatten();
-		}
+		}*/
 		
 		public function get width():int {
 			return w;
@@ -330,7 +330,7 @@ package com.smart.engine.display {
 			
 			var index:int                       = arr.indexOf(val);
 			if (index == -1) {
-				trace("Sprite '" + val.name + "' not found on array layer: " + name + ",  hash has:" + spriteHash[val.name]);
+				trace("Sprite '" + val.textureName + "' not found on array layer: " + name + ",  hash has:" + spriteHash[val.textureName]);
 				return;
 			}
 			arr.splice(index, 1);

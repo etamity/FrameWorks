@@ -9,13 +9,11 @@
 package com.smart.engine.core {
 
 	
-	public interface IPlugin {
+	public interface IPlugin extends IPluginEngine{
 		function get name():String;
 		function set name(val:String):void;
 		
-		function get className():String;
-		
-		function onRegister(engine:IPluginEngine):void;
+		function onRegister(engine:IPlugin):void;
 	
 		function onRemove():void;
 

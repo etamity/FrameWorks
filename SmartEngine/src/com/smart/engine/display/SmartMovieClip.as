@@ -21,8 +21,8 @@ package com.smart.engine.display {
 	import starling.textures.Texture;
 
 	public class SmartMovieClip extends SmartDisplayObject {
-		public function SmartMovieClip(id:String, name:String, pt:Point3D = null, state:State = null) {
-			super(id, name, pt, state);
+		public function SmartMovieClip(name:String, pt:Point3D = null, state:State = null) {
+			super(name, pt, state);
 			_display.stop();
 			frameCallbacks = new Dictionary();
 			frameCallbacks[-1] = []; 

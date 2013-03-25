@@ -8,7 +8,7 @@
 
 package com.smart.engine.plugins {
 
-	import com.smart.engine.core.IPluginEngine;
+	import com.smart.engine.core.IPlugin;
 	import com.smart.engine.core.Plugin;
 	import com.smart.engine.utils.Point3D;
 	
@@ -21,7 +21,7 @@ package com.smart.engine.plugins {
 	import starling.events.TouchEvent;
 
 	
-	public class ViewPortControlPlugin extends Plugin {
+	public class ViewportControlPlugin extends Plugin {
 		
 		public var speed:Number;
 		public var zoom:Number       = .05;
@@ -30,19 +30,18 @@ package com.smart.engine.plugins {
 		private var tw:Tween;
 		private var velocity:Point3D;
 		private var zoomDelta:Number = 0.006;
-		private var camera:CameraPlugin;
-		public function ViewPortControlPlugin(hitArea:Number = 10, speed:Number = 4) {
+		private var engine:CameraPlugin;
+		private var _stage:Stage;
+		public function ViewportControlPlugin(stage:Stage,hitArea:Number = 10, speed:Number = 4) {
 			super();
-
+			this.stage=stage;
 			this.hitArea = hitArea;
 			this.speed = speed;
 			velocity = new Point3D(0, 0, 0);
 		}
 
-		override public function onRegister(engine:IPluginEngine):void {
-			super.onRegister(engine);
-			this.stage = this.engine.stage;
-			camera = this.engine.getPlugin(CameraPlugin);
+		override public function onRegister(engine:IPlugin):void {
+			this.engine =engine as CameraPlugin;  //this.EngineClass(engine);
 			
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);
 			stage.addEventListener("mouseLeave", onMouseOut);
@@ -56,10 +55,10 @@ package com.smart.engine.plugins {
 		}
 
 		override public function onTrigger(time:Number):void {
-			var fasterPanWithZoom:Number = Math.max(camera.position.z, 1);
-			camera.position.x += velocity.x;
-			camera.position.y += velocity.y;
-			camera.position.z += velocity.z;
+			var fasterPanWithZoom:Number = Math.max(engine.position.z, 1);
+			engine.position.x += velocity.x;
+			engine.position.y += velocity.y;
+			engine.position.z += velocity.z;
 			if (velocity.z > 0) {
 				velocity.z -= zoomDelta;
 			}

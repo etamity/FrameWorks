@@ -9,14 +9,13 @@
 package com.smart.engine.plugins {
 
 	import com.smart.engine.core.IPlugin;
-	import com.smart.engine.core.IPluginEngine;
 	import com.smart.engine.core.Plugin;
 
 	public class XRayLayersPlugin extends Plugin implements IPlugin {
 		public static const SPEED:int = 2;
 		public static const DEFAULT_XRAYLAYERS_PLUGIN: String="DEFAULT_XRAYLAYERS_PLUGIN";
 		
-		private var tmxmap:TMXBatchPlugin;
+		private var engine:TMXQuadPlugin;
 		public function XRayLayersPlugin() {
 			super();
 			name = DEFAULT_XRAYLAYERS_PLUGIN;
@@ -28,9 +27,8 @@ package com.smart.engine.plugins {
 		public var layerIndex:int;
 		public var paused:Boolean     = true;
 
-		override public function onRegister(engine:IPluginEngine):void {
-			super.onRegister(engine);
-			tmxmap = this.engine.getPlugin(TMXBatchPlugin);
+		override public function onRegister(engine:IPlugin):void {
+			this.engine = engine as TMXQuadPlugin //this.EngineClass(engine)
 			
 		}
 
@@ -40,12 +38,12 @@ package com.smart.engine.plugins {
 
 		override public function onTrigger(time:Number):void {
 			if (layerIndex == -1) {
-				layerIndex = tmxmap.numberOfLayers - 1;
+				layerIndex = engine.numberOfLayers - 1;
 				alpha = 1;
 				return;
 			}
 			
-			tmxmap.getLayerByIndex(layerIndex).display.alpha = alpha;
+			engine.getLayerByIndex(layerIndex).display.alpha = alpha;
 			counter += 1;
 			if (paused && counter < SPEED) {
 				return;
@@ -54,7 +52,7 @@ package com.smart.engine.plugins {
 			counter = 0;
 			alpha -= .01;
 			if (alpha <= -.4) {
-				tmxmap.getLayerByIndex(layerIndex).display.alpha = 1;
+				engine.getLayerByIndex(layerIndex).display.alpha = 1;
 				layerIndex--;
 				alpha = 1;
 				paused = true;

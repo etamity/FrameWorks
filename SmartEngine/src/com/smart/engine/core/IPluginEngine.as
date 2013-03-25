@@ -7,7 +7,6 @@
 //##########################################################
 
 package com.smart.engine.core {
-
 	public interface IPluginEngine {
 		
 		function getPluginByName(val:String):*;
@@ -16,10 +15,11 @@ package com.smart.engine.core {
 		
 		function removePlugin(plugin:IPlugin):void;
 		
-		function addPlugin(plugin:IPlugin):void;
+		function addPlugin(plugin:IPlugin):IPlugin;
 		
 		function get EngineClass():Class;
-
+		
+		function getClassName(val:*):String;
 		
 	}
 }

@@ -19,8 +19,8 @@ package com.smart.engine.display {
 	import starling.textures.Texture;
 
 	public class SmartSprite extends SmartDisplayObject {
-		public function SmartSprite(assetID:String, name:String, pt:Point3D = null, state:State = null) {
-			super(assetID, name, pt, state);
+		public function SmartSprite(name:String, pt:Point3D = null, state:State = null) {
+			super(name, pt, state);
 		}
 
 		private var _display:HitImage;

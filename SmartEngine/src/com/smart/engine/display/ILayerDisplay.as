@@ -11,17 +11,19 @@ package com.smart.engine.display
 		function add(val:SmartDisplayObject):SmartDisplayObject;
 		function remove(val:SmartDisplayObject):SmartDisplayObject;
 		function forceUpdate():void;
-		function screenToGridPt(pt:Point):Point;
+
 		function get name():String;
 		function get display():DisplayObject;
 		function getByName(name:String):SmartDisplayObject;
 		function get numChildrenSprites():int;
 		function get autoPosition():Boolean;
 		function moveTo(x:Number, y:Number):void;
-		function screenToLayer(pt:Point):Point3D;
+/*		function screenToLayer(pt:Point):Point3D;
+		function screenToGridPt(pt:Point):Point;
 		function layerToGridPt(x:Number, y:Number):Point;
 		function gridToLayerPt(gridX:int, gridY:int, z:int = 1):Point3D;
-		function gridToSreenPt(gridX:int, gridY:int, z:int = 1):Point;
+		function gridToSreenPt(gridX:int, gridY:int, z:int = 1):Point;*/
 		function onTrigger(time:Number, engine:SmartEngine):void;
+		//function get layerData():Vector.<Vector.<SmartDisplayObject>>;
 	}
 }

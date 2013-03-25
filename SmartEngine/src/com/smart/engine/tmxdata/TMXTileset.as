@@ -12,6 +12,18 @@ package com.smart.engine.tmxdata {
 	import flash.utils.Dictionary;
 
 	public class TMXTileset {
+		public var areas:Vector.<Rectangle>;
+		
+		
+		public var firstgid:int;
+		public var loaded:Boolean;
+		public var name:String;
+		
+		public var source:TMXSource;
+		public var tileHeight:int;
+		public var tileWidth:int;
+		
+		private var tileProperties:Object = {};
 
 		public function TMXTileset(data:XML) {
 			firstgid = int(data.@firstgid);
@@ -46,19 +58,7 @@ package com.smart.engine.tmxdata {
 			}
 		}
 
-		public var areas:Vector.<Rectangle>;
-
-
-		public var firstgid:int;
-		public var loaded:Boolean;
-		public var name:String;
-
-		public var source:TMXSource;
-		public var tileHeight:int;
-		public var tileWidth:int;
-
-		private var tileProperties:Object = {};
-
+		
 		public function getProps(gid:int):Object {
 			return getPropsByID(int(gid - firstgid).toString());
 		}
