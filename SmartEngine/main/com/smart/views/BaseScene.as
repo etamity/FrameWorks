@@ -10,12 +10,13 @@ package com.smart.views {
 
 	import com.smart.engine.SmartEngine;
 	import com.smart.engine.core.PluginCenter;
+	import com.smart.engine.display.SmartImage;
 	import com.smart.engine.plugins.CameraPlugin;
+	import com.smart.engine.plugins.SpriteControlPlugin;
 	import com.smart.engine.plugins.TMXQuadPlugin;
 	import com.smart.engine.plugins.ViewportControlPlugin;
 	import com.smart.engine.tmxdata.TMXMap;
 	import com.smart.engine.utils.Point3D;
-	import com.smart.engine.plugins.ViewportPlugin;
 	import com.smart.tiled.TMXTileMap;
 	
 	import starling.display.Sprite;
@@ -38,7 +39,7 @@ package com.smart.views {
 		public function onStageAdded(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, onStageAdded);
 			tmxmap = new TMXTileMap(stage);
-			tmxmap.y= 64;
+			//tmxmap.y= 64;
 			addChild(tmxmap);
 			
 		}
@@ -60,15 +61,15 @@ package com.smart.views {
 	
 			
 			engine.addPlugin(new CameraPlugin(new Point3D(0,0,1)))
-			      .addPlugin(new ViewportControlPlugin(stage));
+			      .addPlugin(new ViewportControlPlugin());
 	
 	
 			tmxPlugin.onCompelete= setupSpirte;
 
 		
 			function setupSpirte():void{
-				//var sprite:SmartImage = SmartImage(tmxPlugin.getSpriteByLayerName("Ground", "Joey"));
-				//engine.addPlugin(new SpriteControlPlugin(sprite));		
+				var sprite:SmartImage = SmartImage(tmxPlugin.getObjectByName("Joey"));
+				//tmxPlugin.addPlugin(new SpriteControlPlugin(sprite));		
 			
 			}
 		}
