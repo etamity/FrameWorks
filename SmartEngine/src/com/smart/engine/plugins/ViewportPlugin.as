@@ -72,6 +72,11 @@ package com.smart.engine.plugins
 			projectionInverse.invert();
 			projection.translate(-cellHeight, cellHeight);
 		}
+		
+		public function get renderType():String{
+			return null;
+		}
+		
 		public function get width():int{
 			return stage.stageWidth;
 		}

@@ -10,7 +10,6 @@ package com.smart.engine.display {
 	
 	import com.smart.engine.SmartEngine;
 	import com.smart.engine.plugins.IViewPort;
-	import com.smart.engine.plugins.ViewportPlugin;
 	import com.smart.engine.tmxdata.TMXMap;
 	import com.smart.engine.utils.Point3D;
 	
@@ -19,18 +18,14 @@ package com.smart.engine.display {
 	import flash.utils.Dictionary;
 	
 	import starling.display.DisplayObject;
-	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.extensions.QuadtreeSprite;
-	import starling.utils.Color;
 	
 	public class LayerQuadDisplay implements ILayerDisplay {
 		
 		public var _autoPosition:Boolean   = true; 
 		
 		public var _display:Sprite;
-
-		public var _quadBatch:QuadtreeSprite;
 		
 		public var _name:String;
 		
@@ -60,6 +55,9 @@ package com.smart.engine.display {
 		private var tmx:TMXMap;
 		
 		private var viewport:IViewPort;
+		
+		
+		public var _quadBatch:QuadtreeSprite;
 		
 		private var sortSprite:DisplayObject;
 		public function LayerQuadDisplay(_name:String, tmx:TMXMap, viewport:IViewPort) {

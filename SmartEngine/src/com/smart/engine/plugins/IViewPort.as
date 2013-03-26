@@ -22,6 +22,8 @@ package com.smart.engine.plugins {
 		function get width():int;
 		function get height():int;
 		
+		function get renderType():String;
+		
 	}
 
 }
