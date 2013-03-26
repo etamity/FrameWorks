@@ -42,10 +42,15 @@ package com.smart.engine.core
 				plugins.splice(index, 1);
 			}
 			plugin.onRemove();
-			plugin.removeAllPlugins();
+			plugin.dispose();
 			delete pluginsHash[plugin.name];
 		}
 		
+		public function dispose():void{
+			removeAllPlugins();
+			plugins=null;
+			pluginsHash=null;
+		}
 		
 		public function removeAllPlugins():void{
 			for each (var plugin:IPlugin in plugins)

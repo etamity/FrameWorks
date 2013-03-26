@@ -18,8 +18,6 @@ package com.smart.engine {
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
-	import starling.display.Stage;
-	import starling.events.Event;
 
 	public class SmartEngine extends Plugin implements IAnimatable {
 		
@@ -29,9 +27,9 @@ package com.smart.engine {
 		
 		private var position:Point;
 
-		public function SmartEngine(stage:Stage) {
+		public function SmartEngine(root:Sprite) {
 			
-			this.stage=stage;
+			this.stage=root.stage;
 			
 			displayArea= new Sprite();
 
@@ -39,7 +37,7 @@ package com.smart.engine {
 
 			position = new Point(1, 1);
 			
-			//setSize(stage.stageWidth ,stage.stageHeight);
+			root.addChild(displayArea);
 		}
 
 	   public function addDisplay(child:DisplayObject):DisplayObject{
@@ -47,6 +45,14 @@ package com.smart.engine {
 			return child;
 		}
 		
+	   override public function dispose():void{
+		   super.dispose();
+		   this.stop();
+		   if (displayArea.parent!=null)
+			   displayArea.parent.removeChild(displayArea);
+		   displayArea.dispose();
+		   _juggler = null;
+	   }
 	   public function get display():DisplayObject{
 		   return displayArea;
 	   }

@@ -75,6 +75,17 @@ package com.smart.engine.tmxdata
 		}
 
 
+		public function dispose():void{
+			layersArray=null;
+			layersHash=null;
+			
+			objectsArray=null;
+			objectsHash=null;
+
+			data=null;
+			tilesets=null;
+			uniqueTilesets=null;
+		}
 
 		public function getImgFrame(gid:int):int
 		{

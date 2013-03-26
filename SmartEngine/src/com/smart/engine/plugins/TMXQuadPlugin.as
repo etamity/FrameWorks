@@ -347,10 +347,6 @@ package com.smart.engine.plugins
 		override public function onRemove():void
 		{
 			super.onRemove();
-
-			removeAllLayers();
-
-
 		}
 
 		public function moveTo(x:Number, y:Number):void
@@ -390,6 +386,11 @@ package com.smart.engine.plugins
 			layer.dispose();
 			layer=null;
 		}
+		override public function dispose():void{
+			super.dispose();
+			removeAllLayers();
+			tmx.dispose();
+		}
 
 		public function removeAllLayers():void
 		{
@@ -399,11 +400,13 @@ package com.smart.engine.plugins
 			}
 			layers=null;
 			layersHash=null;
-			container.parent.removeChild(container);
+			if (container!=null)
+			{
 			container.removeChildren();
 			container.dispose();
 			
 			container=null;
+			}
 
 		}
 
