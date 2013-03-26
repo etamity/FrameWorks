@@ -1,8 +1,12 @@
 package com.smart.engine.display
 {
 	import com.smart.engine.SmartEngine;
+	import com.smart.engine.utils.Point3D;
+	
+	import flash.geom.Point;
 	
 	import starling.display.DisplayObject;
+
 	public interface ILayerDisplay
 	{
 		function add(val:SmartDisplayObject):SmartDisplayObject;
@@ -19,9 +23,9 @@ package com.smart.engine.display
 		function dispose():void;
 /*		function screenToLayer(pt:Point):Point3D;
 		function screenToGridPt(pt:Point):Point;
-		function layerToGridPt(x:Number, y:Number):Point;
+		function layerToGridPt(x:Number, y:Number):Point;*/
 		function gridToLayerPt(gridX:int, gridY:int, z:int = 1):Point3D;
-		function gridToSreenPt(gridX:int, gridY:int, z:int = 1):Point;*/
+		//function gridToSreenPt(gridX:int, gridY:int, z:int = 1):Point;
 		function onTrigger(time:Number, engine:SmartEngine):void;
 		//function get layerData():Vector.<Vector.<SmartDisplayObject>>;
 	}
