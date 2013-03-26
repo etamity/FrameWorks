@@ -21,13 +21,13 @@
 	<fail unless="android.certificate.path"/>
 	<fail unless="android.certificate.password"/>
 
-	<target name="build" depends="build-web,copy"/>
+	<target name="build" depends="build-web"/>
 
 	<target name="prepare">
 		<delete dir="${output.path}"/>
 	</target>
 
-	<target name="build-web" depends="prepare">
+	<target name="build-web">
 		<echo message="Building ${AppName}Web.swf"/>
 		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
 			<arg line="--target-player=${player.version}"/>
@@ -40,10 +40,10 @@
 			<arg line="--library-path+='${assets.path}'"/>
 			<arg line="--library-path+='${lib.path}'"/>
 			<arg line="${main.path}/Main.as"/>
-			<arg line="--output ${output.path}/${AppName}Web.swf"/>
+			<arg line="--output ${release.path}/${AppName}Web.swf"/>
 		</exec>
 	</target>
-	<target name="build-air-swf" depends="prepare">
+	<target name="build-air-swf">
 		<echo message="Building ${AppName}.swf"/>
 		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
 			<arg line="+configname=air"/>
@@ -53,7 +53,6 @@
 			<arg line="--compress=false"/>
 			<arg line="--source-path+='${source.path}'"/>
 			<arg line="--source-path+='${main.path}'"/>
-			<arg line="--library-path+='${starling.root}'"/>
 			<arg line="--source-path+='${feathers.root}'"/>
 			<arg line="--source-path+='${assets.path}'"/>
 			<arg line="--library-path+='${assets.path}'"/>
@@ -65,7 +64,7 @@
 		</exec>
 	</target>
 	<target name="build-ios" depends="build-air-swf">
-		<echo message="Packaging ${AppName}.ipa"/>
+		<echo message="Packaging ${AppName}.ipa" />
 		<exec executable="${adt}" dir="${basedir}" failonerror="true">
 			<arg line="-package"/>
 			<arg line="-target ipa-app-store"/>
@@ -74,10 +73,11 @@
 			<arg line="-storetype pkcs12"/>
 			<arg line="-storepass ${ios.certificate.password}"/>
 			<arg line="${output.path}/${AppName}.ipa"/>
-			<arg line="${source.path}/${AppName}-app.xml"/>
+			<arg line="${main.path}/${AppName}-app.xml"/>
 			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
 			<arg line="-C ${output.path}"/>
 			<arg line="${AppName}.swf"/>
+			<arg line="TiledMap"/>
 		</exec>
 	</target>
 	<target name="build-android" depends="build-air-swf">
@@ -98,7 +98,7 @@
 	</target>
 	
 	<target name="copy">
-		<copy todir="./bin">
+		<copy todir="${release.path}">
 		    <fileset dir="${output.path}" excludes="**/*.fla,**/Thumbs.db"/>
 		</copy>
 	</target>
