@@ -44,19 +44,24 @@ package com.smart.views {
 			addChild(tmxmap);
 			
 		}
+		public function loadMap(map:String):void{
+			TMXMap.loadTMX(map, onTMXLoad);
+			//tmxmap.load(map);
+			
+		}
 		
+		private function onTMXLoad(tmx:TMXMap):void {
+			this.tmx=tmx;
+			setup();
+			//tmxPlugin.tmxData=tmx;
+		}
+
 		private function setup():void {
 			
 			if (engine != null)
-			{
-				engine.stop();
-				engine.removeAllPlugins();
-				removeChild(engine.display);
-			
-			}
-			
-				engine = new SmartEngine(stage);
-				addChild(engine.display);
+				engine.dispose();
+
+				engine = new SmartEngine(this);
 				addPlugins(engine);
 				engine.start();
 			
@@ -83,17 +88,6 @@ package com.smart.views {
 			}
 		}
 		
-		public function loadMap(map:String):void{
-			TMXMap.loadTMX(map, onTMXLoad);
-			//tmxmap.load(map);
-		
-		}
-		
-		private function onTMXLoad(tmx:TMXMap):void {
-			this.tmx=tmx;
-			setup();
-			//tmxPlugin.tmxData=tmx;
-		}
 
 	}
 }
