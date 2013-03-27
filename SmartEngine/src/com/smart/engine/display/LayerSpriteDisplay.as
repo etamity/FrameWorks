@@ -10,7 +10,7 @@ package com.smart.engine.display {
 
 	import com.smart.Engine;
 	import com.smart.engine.plugins.IViewPort;
-	import com.smart.engine.tmxdata.TMXMap;
+	import com.smart.engine.tmxdata.TMXMapModel;
 	import com.smart.engine.utils.Point3D;
 	
 	import flash.geom.Point;
@@ -33,7 +33,7 @@ package com.smart.engine.display {
 		private var h:int                 = 0;
 		
 		private var viewport:IViewPort;
-		private var tmx:TMXMap;
+		private var tmx:TMXMapModel;
 		
 		private var ratio:Point           = new Point(1, 1); 
 		private var spriteHash:Dictionary = new Dictionary(true);
@@ -47,7 +47,7 @@ package com.smart.engine.display {
 		private var tileWidthOffset:int   = 1;
 		private var w:int                 = 0;
 		
-		public function LayerSpriteDisplay(_name:String, tmx:TMXMap, viewport:IViewPort) {
+		public function LayerSpriteDisplay(_name:String, tmx:TMXMapModel, viewport:IViewPort) {
 			this._name = _name;
 			this.tmx=tmx;
 			this.viewport=viewport;

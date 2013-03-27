@@ -21,7 +21,6 @@ package com.smart.core {
 		
 		}
 		override public function onRemove():void {
-			super.onRemove;
 		}
 			
 	}

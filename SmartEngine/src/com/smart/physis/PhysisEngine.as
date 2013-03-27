@@ -4,6 +4,9 @@ package com.smart.physis
 	import com.smart.core.Plugin;
 	
 	import nape.geom.Vec2;
+	import nape.phys.Body;
+	import nape.phys.BodyType;
+	import nape.shape.Polygon;
 	import nape.space.Space;
 	
 	public class PhysisEngine extends Plugin
@@ -22,8 +25,21 @@ package com.smart.physis
 		override public function onTrigger(time:Number):void{
 			space.step(time);
 		}
+		
+		
+		public function addWall():void{
+			var w:int = stage.stageWidth;
+			var h:int = stage.stageHeight;
+			
+			var floor:Body = new Body(BodyType.STATIC);
+			floor.shapes.add(new Polygon(Polygon.rect(50, (h - 50), (w - 100), 1)));
+			floor.space = space;
+		}
+		
 		override public function onRegister(engine:IPlugin):void{
 			
+			
+			addWall();
 			
 		}
 		

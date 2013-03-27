@@ -10,7 +10,7 @@ package com.smart.engine.display {
 	
 	import com.smart.Engine;
 	import com.smart.engine.plugins.IViewPort;
-	import com.smart.engine.tmxdata.TMXMap;
+	import com.smart.engine.tmxdata.TMXMapModel;
 	import com.smart.engine.utils.Point3D;
 	
 	import flash.geom.Point;
@@ -51,7 +51,7 @@ package com.smart.engine.display {
 		
 		private var countNum:int=0;
 		
-		private var tmx:TMXMap;
+		private var tmx:TMXMapModel;
 		
 		private var viewport:IViewPort;
 		
@@ -59,7 +59,7 @@ package com.smart.engine.display {
 		public var _quadBatch:QuadtreeSprite;
 		
 		private var sortSprite:DisplayObject;
-		public function LayerQuadDisplay(_name:String, tmx:TMXMap, viewport:IViewPort) {
+		public function LayerQuadDisplay(_name:String, tmx:TMXMapModel, viewport:IViewPort) {
 			this._name = _name;
 			this.tmx=tmx;
 			this.viewport=viewport;

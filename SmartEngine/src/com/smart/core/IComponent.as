@@ -6,13 +6,11 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine.components {
+package com.smart.core {
 
-	import com.smart.engine.display.SmartDisplayObject;
-	import com.smart.engine.display.SmartSprite;
 
 	public interface IComponent {
-		function onRegister(sprite:SmartDisplayObject):void;
+		function onRegister(object:SmartObject):void;
 		function onRemove():void;
 		function onTrigger(time:Number):void;
 	}

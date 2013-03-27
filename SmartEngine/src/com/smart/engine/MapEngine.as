@@ -18,7 +18,7 @@ package com.smart.engine
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.display.SmartImage;
 	import com.smart.engine.tmxdata.TMXLayer;
-	import com.smart.engine.tmxdata.TMXMap;
+	import com.smart.engine.tmxdata.TMXMapModel;
 	import com.smart.engine.tmxdata.TMXObject;
 	import com.smart.engine.tmxdata.TMXObjectgroup;
 	import com.smart.engine.tmxdata.TMXTileset;
@@ -43,7 +43,7 @@ package com.smart.engine
 		private var iSprite:int=1;
 		private var linkedLayer:Vector.<ILayerDisplay> = new <ILayerDisplay>[];
 		private var steps:int=0;
-		private var tmx:TMXMap;
+		private var tmx:TMXMapModel;
 
 		private var position:Point=new Point();
 		private var ratio:Point=new Point(1, 1);
@@ -54,7 +54,7 @@ package com.smart.engine
 		private var viewport:ViewportPlugin;
 		
 		
-		public function MapEngine(tmx:TMXMap=null)
+		public function MapEngine(tmx:TMXMapModel=null)
 		{
 			super();
 			layers=new <ILayerDisplay>[];
@@ -342,12 +342,12 @@ package com.smart.engine
 
 		}
 
-		public function get tmxData():TMXMap
+		public function get tmxData():TMXMapModel
 		{
 			return tmx;
 		}
 
-		public function set tmxData(data:TMXMap):void
+		public function set tmxData(data:TMXMapModel):void
 		{
 			
 			tmx=data;

@@ -13,7 +13,7 @@ package com.smart.engine.plugins
 	import com.smart.core.Plugin;
 	import com.smart.engine.display.ILayerDisplay;
 	import com.smart.engine.display.SmartDisplayObject;
-	import com.smart.engine.tmxdata.TMXMap;
+	import com.smart.engine.tmxdata.TMXMapModel;
 	import com.smart.engine.utils.Point3D;
 	
 	import flash.geom.Matrix;

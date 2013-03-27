@@ -15,7 +15,7 @@ package com.smart.engine.tmxdata
 	
 	import flash.utils.Dictionary;
 
-	public class TMXMap
+	public class TMXMapModel
 	{
 		public var data:XML;
 
@@ -46,11 +46,11 @@ package com.smart.engine.tmxdata
 			trace("mapfile:",file,basePath );
 			ImgLoader.instance.getXML(file, function(val:XML):void
 			{
-				tmxCallback(new TMXMap(val, basePath));
+				tmxCallback(new TMXMapModel(val, basePath));
 			});
 		}
 
-		public function TMXMap(data:*, url:String)
+		public function TMXMapModel(data:*, url:String)
 		{
 			this.data=XML(data);
 			this.imgsURL=url;

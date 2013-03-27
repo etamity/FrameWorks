@@ -1,6 +1,6 @@
 package com.smart.core
 {
-	import com.smart.engine.tmxdata.TMXMap;
+	import com.smart.engine.tmxdata.TMXMapModel;
 	import com.smart.engine.tmxdata.TMXTileset;
 	
 	import flash.utils.Dictionary;
@@ -12,17 +12,17 @@ package com.smart.core
 
 	public class AssetsManager extends AssetManager
 	{
-		private var _tmx:TMXMap;
+		private var _tmx:TMXMapModel;
 		private var _tilesetXML:Dictionary;
 		public static var instance:AssetsManager=new AssetsManager();
 
-		public function AssetsManager(tmx:TMXMap=null)
+		public function AssetsManager(tmx:TMXMapModel=null)
 		{
 			if (tmx)
 				loadTmx(tmx);
 		}
 
-		public function loadTmx(tmx:TMXMap, onProgress:Function=null):void
+		public function loadTmx(tmx:TMXMapModel, onProgress:Function=null):void
 		{   purge();
 			_tilesetXML=new Dictionary();
 			if (tmx != null)

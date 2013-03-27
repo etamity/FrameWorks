@@ -8,18 +8,18 @@
 
 package com.smart.engine.display {
 
-	import com.smart.engine.components.AsyncTexture;
-	import com.smart.engine.components.IComponent;
 	import com.smart.core.AssetsManager;
+	import com.smart.core.IComponent;
+	import com.smart.core.SmartObject;
+	import com.smart.engine.components.AsyncTexture;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.utils.State;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 
-	public class SmartDisplayObject{
+	public class SmartDisplayObject extends SmartObject{
 		public var textureName:String;
-		public var name:String;
 		
 		public var position:Point3D;
 		public var state:State;
@@ -35,28 +35,17 @@ package com.smart.engine.display {
 			this.position = pt != null ? pt : new Point3D();
 			changeTo(textureName);
 		}
-		public function removeComponent(component:IComponent):void {
-			component.onRemove();
-			var index:int = components.indexOf(component);
-			if (index != -1) {
-				components.splice(index, 1);
-			}
+		override public function remove(component:IComponent):void {
+			super.remove(component);
 			if (component == async) {
 				async = null;
 			}
 		}
-		public function addComponent(c:IComponent):IComponent {
-			if (components == null) {
-				components = new Vector.<IComponent>();
-			}
-			c.onRegister(this);
-			components.push(c);
-			return c;
-		}
+
 
 		public function changeTo(textureName:String):void {
 			if (async) {
-				removeComponent(async);
+				remove(async);
 			}
 			//addComponent(async = new AsyncTexture(textureName));
 			display=new Image(AssetsManager.instance.getTexture(textureName));
@@ -70,19 +59,6 @@ package com.smart.engine.display {
 
 		public function set display(val:DisplayObject):void {
 			throw new Error("method set display() must be overridden");
-		}
-
-		public function onTrigger(time:Number):void {
-			var component:IComponent;
-			for each (component in components) {
-				component.onTrigger(time); 
-			}
-		}
-
-		public function remove():void {
-			if (layer != null) {
-				layer.remove(this);
-			}
 		}
 
 		public function get index():int{

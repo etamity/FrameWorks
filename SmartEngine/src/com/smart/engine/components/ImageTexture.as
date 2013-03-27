@@ -11,6 +11,7 @@ package com.smart.engine.components {
 	import com.smart.core.AssetsManager;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.loaders.ITextureLoader;
+	import com.smart.core.IComponent;
 	
 	public class ImageTexture implements IComponent {
 		private static var I:int = 0; 
@@ -42,7 +43,7 @@ package com.smart.engine.components {
 			}
 			loader.setTexture(sprite);
 			
-			sprite.removeComponent(this);
+			sprite.remove(this);
 		}
 	}
 	

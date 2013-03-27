@@ -9,6 +9,8 @@
 package com.smart.engine.components {
 
 	import com.smart.core.AssetsManager;
+	import com.smart.core.IComponent;
+	import com.smart.core.SmartObject;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.loaders.ITextureLoader;
 	
@@ -26,15 +28,15 @@ package com.smart.engine.components {
 		private var i:int        = 0; 
 		private var sprite:SmartDisplayObject;
 		private var loader:ITextureLoader;
-		public function onRegister(sprite:SmartDisplayObject):void {
-			this.sprite = sprite;
-			if (!sprite.display) {
-				sprite.display=new Image(AssetsManager.instance.getTexture(sprite.textureName));
-				trace("sprite.name::",sprite.textureName);
+		public function onRegister(sprite:SmartObject):void {
+			this.sprite = sprite as SmartDisplayObject;
+			if (!this.sprite.display) {
+				this.sprite.display=new Image(AssetsManager.instance.getTexture(this.sprite.textureName));
+				trace("sprite.name::",this.sprite.textureName);
 			}
 			//loader = AssetsManager.instance.getLoader(assetManagerKey);
 			//onTrigger(0);
-			sprite.removeComponent(this);
+			sprite.remove(this);
 		}
 
 		public function onRemove():void {
