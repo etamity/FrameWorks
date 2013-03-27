@@ -20,6 +20,7 @@ package com.smart.engine.plugins {
 	import starling.display.Stage;
 	import starling.events.KeyboardEvent;
 	import starling.events.TouchEvent;
+	import com.smart.engine.MapEngine;
 
 	public class SpriteControlPlugin extends Plugin {
 
@@ -45,7 +46,7 @@ package com.smart.engine.plugins {
 		private var walkSteps:int              = 0;
 		
 		private var touchPoint :Point;
-		private var engine:TMXPlugin;
+		private var engine:MapEngine;
 		public function SpriteControlPlugin(obj:SmartDisplayObject = null) {
 			super();
 			sprite = obj;
@@ -121,7 +122,7 @@ package com.smart.engine.plugins {
 
 		override public function onRegister(engine:IPlugin):void {
 
-			this.engine =engine as TMXPlugin; // this.EngineClass(engine);
+			this.engine =engine as MapEngine; // this.EngineClass(engine);
 			
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);

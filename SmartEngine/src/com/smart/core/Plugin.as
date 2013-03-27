@@ -13,8 +13,17 @@ package com.smart.core {
 
 		}
 		
+		override public function onTrigger(time:Number):void{
+			super.onTrigger(time);
+		}
 		
-	
+		override public function onRegister(engine:IPlugin):void{
+		
+		}
+		override public function onRemove():void {
+			super.onRemove;
+		}
+			
 	}
 }
 

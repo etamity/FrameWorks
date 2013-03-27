@@ -9,7 +9,7 @@
 package com.smart {
 
 	import com.smart.core.IPlugin;
-	import com.smart.core.Plugin;
+	import com.smart.core.PluginEngine;
 	
 	import flash.geom.Point;
 	
@@ -19,7 +19,7 @@ package com.smart {
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 
-	public class SmartEngine extends Plugin implements IAnimatable {
+	public class Engine extends PluginEngine implements IAnimatable {
 		
 		private var _juggler:Juggler;
 
@@ -27,7 +27,7 @@ package com.smart {
 		
 		private var position:Point;
 
-		public function SmartEngine(root:Sprite) {
+		public function Engine(root:Sprite) {
 			
 			this.stage=root.stage;
 			

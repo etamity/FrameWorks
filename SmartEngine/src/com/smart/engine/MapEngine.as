@@ -6,10 +6,10 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine.plugins
+package com.smart.engine
 {
 
-	import com.smart.SmartEngine;
+	import com.smart.Engine;
 	import com.smart.core.IPlugin;
 	import com.smart.core.AssetsManager;
 	import com.smart.core.Plugin;
@@ -29,8 +29,9 @@ package com.smart.engine.plugins
 	import flash.utils.Dictionary;
 	
 	import starling.display.Sprite;
+	import com.smart.engine.plugins.ViewportPlugin;
 
-	public class TMXPlugin extends Plugin
+	public class MapEngine extends Plugin
 	{
 		private static const TILE_PROPERTY_HIT_MAP:String="hitmap";
 		private static const TILE_PROPERTY_HIT_MAP_VALUE:String="true";
@@ -47,13 +48,13 @@ package com.smart.engine.plugins
 		private var position:Point=new Point();
 		private var ratio:Point=new Point(1, 1);
 
-		private var engine:SmartEngine;
+		private var engine:Engine;
 		public var onCompelete:Function;
 		
 		private var viewport:ViewportPlugin;
 		
 		
-		public function TMXPlugin(tmx:TMXMap=null)
+		public function MapEngine(tmx:TMXMap=null)
 		{
 			super();
 			layers=new <ILayerDisplay>[];
@@ -268,7 +269,7 @@ package com.smart.engine.plugins
 
 		override public function onRegister(engine:IPlugin):void
 		{
-			this.engine=engine as SmartEngine; //this.EngineClass(engine); 
+			this.engine=engine as Engine; //this.EngineClass(engine); 
 			this.engine.addDisplay(this.container);
 	
 

@@ -20,6 +20,7 @@ package com.smart.engine.plugins
 	import flash.geom.Point;
 	
 	import starling.display.DisplayObject;
+	import com.smart.engine.MapEngine;
 
 
 	public class ViewportPlugin extends Plugin implements IViewPort
@@ -30,7 +31,7 @@ package com.smart.engine.plugins
 		private var projectionInverse:Matrix;
 		private var pt:Point;
 		//private var _tmx:TMXMap;
-		private var engine:TMXPlugin;
+		private var engine:MapEngine;
 
 		private var _cellH:Number;
 		
@@ -89,7 +90,7 @@ package com.smart.engine.plugins
 		
 		override public function onRegister(engine:IPlugin):void {
 			//super.onRegister(engine);
-			this.engine = engine as TMXPlugin;
+			this.engine = engine as MapEngine;
 
 			
 		}
