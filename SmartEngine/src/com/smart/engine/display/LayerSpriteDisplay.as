@@ -19,7 +19,7 @@ package com.smart.engine.display {
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 
-	public class LayerDisplay implements ILayerDisplay {
+	public class LayerSpriteDisplay implements ILayerDisplay {
 
 		public var _autoPosition:Boolean   = true; 
 
@@ -47,7 +47,7 @@ package com.smart.engine.display {
 		private var tileWidthOffset:int   = 1;
 		private var w:int                 = 0;
 		
-		public function LayerDisplay(_name:String, tmx:TMXMap, viewport:IViewPort) {
+		public function LayerSpriteDisplay(_name:String, tmx:TMXMap, viewport:IViewPort) {
 			this._name = _name;
 			this.tmx=tmx;
 			this.viewport=viewport;

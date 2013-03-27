@@ -8,7 +8,6 @@
 
 package com.smart.engine.display {
 
-	import com.smart.engine.starling.HitImage;
 	import com.smart.engine.utils.GridBool;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.utils.State;
@@ -16,6 +15,7 @@ package com.smart.engine.display {
 	import flash.geom.Point;
 	
 	import starling.display.DisplayObject;
+	import starling.display.Image;
 	import starling.textures.Texture;
 
 	public class SmartSprite extends SmartDisplayObject {
@@ -23,7 +23,7 @@ package com.smart.engine.display {
 			super(name, pt, state);
 		}
 
-		private var _display:HitImage;
+		private var _display:Image;
 
 		override public function get display():DisplayObject {
 			return _display;
@@ -34,7 +34,7 @@ package com.smart.engine.display {
 			if (val == null) {
 				throw new Error("img is null");
 			}
-			if (!(val is HitImage)) {
+			if (!(val is Image)) {
 				throw new Error("Starling DisplayObject is not an Image.");
 			}
 			if (_display != null && val != _display) {
@@ -42,12 +42,12 @@ package com.smart.engine.display {
 					_display.parent.removeChild(_display);
 				}
 			}
-			_display = HitImage(val);
+			_display = Image(val);
 		}
 
 
 		public function setHitmap(hitMap:GridBool):void {
-			_display.hitMap = hitMap;
+			//_display.hitMap = hitMap;
 		}
 
 

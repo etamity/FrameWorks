@@ -31,10 +31,9 @@ package com.smart.engine.display {
 		
 		public var sort:Boolean           = true;
 		public var data:Vector.<Vector.<SmartDisplayObject>>;
-		//private var flatData:Vector.<SmartDisplayObject>;
+		
 		private var h:int                 = 0;
 		
-		//private var projection:IProjection;
 		private var spriteHash:Dictionary = new Dictionary(true);
 		private var spriteList:Vector.<SmartDisplayObject>;
 		private var sqEdgeSize:Number;
@@ -86,11 +85,6 @@ package com.smart.engine.display {
 
 			_display.addChild(_quadBatch);
 			data = new Vector.<Vector.<SmartDisplayObject>>(w * h, true);
-			//flatData = new <SmartDisplayObject>[];
-			
-			/*this.projection = new MapViewport(projectionType, cellwidth, cellheight);
-			this.projection.onSetup(this);*/
-			//_display.addEventListener(Event.ADDED_TO_STAGE, onAddToStage);
 		
 		}
 		public function dispose():void{
@@ -128,7 +122,7 @@ package com.smart.engine.display {
 			val.layer = this;
 			viewport.update(val);
 			//updateLocation(val);
-			//addStarlingChild(val);
+			addStarlingChild(val);
 			
 
 
@@ -249,7 +243,7 @@ package com.smart.engine.display {
 			//_quadBatch.x = Math.min(Math.max(_worldBounds.left + _quadBatch.stage.stageWidth, _quadBatch.x), _worldBounds.right);
 			//_quadBatch.y = Math.min(Math.max(_worldBounds.top + _quadBatch.stage.stageHeight, _quadBatch.y), _worldBounds.bottom);
 			var newViewPort:Rectangle = _quadBatch.visibleViewport.clone();
-			if (_worldBounds.containsRect(newViewPort))
+			//if (_worldBounds.containsRect(newViewPort))
 			{
 				
 				newViewPort.x =-_quadBatch.x;
@@ -259,6 +253,22 @@ package com.smart.engine.display {
 				
 				
 			}
+			/*if (newViewPort.x+newViewPort.right > _worldBounds.right)
+			{
+				newViewPort.x = _worldBounds.right-newViewPort.right;
+		
+			}
+			
+			if (newViewPort.y+newViewPort.bottom > _worldBounds.bottom)
+			{
+				newViewPort.y = _worldBounds.bottom-newViewPort.bottom;
+			}
+			
+			if (newViewPort.x<0)
+				newViewPort.x=0;
+			if (newViewPort.y<0)
+				newViewPort.y=0;*/
+			
 			_quadBatch.visibleViewport = newViewPort;
 			
 		}
