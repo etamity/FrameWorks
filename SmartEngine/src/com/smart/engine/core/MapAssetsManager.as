@@ -89,7 +89,7 @@ package com.smart.engine.core
 					id++;
 				}
 				var atlasXML:XML=XML(xml.TextureAtlas);
-				/*trace(atlasXML);*/
+				trace(atlasXML);
 				return atlasXML;
 			}
 		}
