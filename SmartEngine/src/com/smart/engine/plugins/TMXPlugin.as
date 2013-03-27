@@ -14,7 +14,7 @@ package com.smart.engine.plugins
 	import com.smart.engine.core.MapAssetsManager;
 	import com.smart.engine.core.Plugin;
 	import com.smart.engine.display.ILayerDisplay;
-	import com.smart.engine.display.LayerQuadDisplay;
+	import com.smart.engine.display.LayerBatchDisplay;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.display.SmartImage;
 	import com.smart.engine.tmxdata.TMXLayer;
@@ -30,7 +30,7 @@ package com.smart.engine.plugins
 	
 	import starling.display.Sprite;
 
-	public class TMXQuadPlugin extends Plugin
+	public class TMXPlugin extends Plugin
 	{
 		private static const TILE_PROPERTY_HIT_MAP:String="hitmap";
 		private static const TILE_PROPERTY_HIT_MAP_VALUE:String="true";
@@ -40,7 +40,7 @@ package com.smart.engine.plugins
 		private var container:Sprite;
 
 		private var iSprite:int=1;
-		private var linkedLayer:Vector.<LayerQuadDisplay>;
+		private var linkedLayer:Vector.<ILayerDisplay> = new <ILayerDisplay>[];
 		private var steps:int=0;
 		private var tmx:TMXMap;
 
@@ -53,7 +53,7 @@ package com.smart.engine.plugins
 		private var viewport:ViewportPlugin;
 		
 		
-		public function TMXQuadPlugin(tmx:TMXMap=null)
+		public function TMXPlugin(tmx:TMXMap=null)
 		{
 			super();
 			layers=new <ILayerDisplay>[];
@@ -61,17 +61,17 @@ package com.smart.engine.plugins
 			container=new Sprite();
 
 			this.tmx=tmx;
-			linkedLayer=new <LayerQuadDisplay>[];
+			//linkedLayer=new <LayerQuadDisplay>[];
 			if (this.tmx != null)
 			{
 				MapAssetsManager.instance.loadTmx(tmx, onProgress);
 			}
 		}
 		
-		public function makeEmptyGridOfSize(tmxLayerIndex:int, name:String):LayerQuadDisplay
+		public function makeEmptyGridOfSize(tmxLayerIndex:int, name:String):ILayerDisplay
 		{
 			
-			var layer:LayerQuadDisplay=new LayerQuadDisplay(name,tmx,viewport);
+			var layer:ILayerDisplay=new LayerBatchDisplay(name,tmx,viewport);
 			for (var i:int=0; i <= tmxLayerIndex; i++)
 			{
 				if (i == linkedLayer.length)
@@ -84,7 +84,7 @@ package com.smart.engine.plugins
 		
 		public function addObjects():void
 		{
-			var layer:LayerQuadDisplay;
+			var layer:ILayerDisplay;
 			for each (var objectGroup:TMXObjectgroup in tmx.objectsArray)
 			{
 				if (objectGroup == null)
@@ -184,7 +184,7 @@ package com.smart.engine.plugins
 			}
 		}
 
-		public function addObjectsToLayer(grid:LayerQuadDisplay, group:TMXObjectgroup):void
+		public function addObjectsToLayer(grid:ILayerDisplay, group:TMXObjectgroup):void
 		{
 			var tile:TMXTileset;
 			var name:String;
@@ -238,9 +238,9 @@ package com.smart.engine.plugins
 			onCompelete();
 		}
 		
-		private function renderMap():void{
+		/*private function renderMap():void{
 			var layer:TMXLayer;
-			var grid:LayerQuadDisplay;
+			var grid:ILayerDisplay;
 			for (var i:int=0; i < tmx.layersArray.length; i++)
 			{
 				layer=tmx.layersArray[i];
@@ -251,7 +251,7 @@ package com.smart.engine.plugins
 				grid=linkedLayer[i];
 				grid.render();
 			}
-		}
+		}*/
 		
 		public function makeLayer():void
 		{
@@ -265,75 +265,6 @@ package com.smart.engine.plugins
 			
 		}
 		
-		
-		
-		public function makeLayers():void
-		{
-			/*for (var y:int=0; y < tmx.height; y++)
-			{
-				for (var x:int=0; x < tmx.width; x++)
-				{
-					makeTiles(x, y);
-				}
-			}*/
-			
-			
-			var layer:TMXLayer;
-			var _cell:int;
-			var grid:LayerQuadDisplay;
-			var pt3:Point3D;
-			
-			var assetID:String;
-			var sprite:SmartImage;
-			
-			for (var i:int=0; i < tmx.layersArray.length; i++)
-			{
-				layer=tmx.layersArray[i];
-				if (layer == null)
-				{
-					continue;
-				}
-			
-				for (var y:int=0; y < tmx.height; y++)
-				{
-					for (var x:int=0; x < tmx.width; x++)
-					{
-						//makeTiles(x, y);
-						_cell=layer.getCell(x, y);
-						
-						if (_cell == 0 || isNaN(_cell))
-						{
-							continue;
-						}
-						grid=linkedLayer[i];
-						
-						pt3=grid.gridToLayerPt(x, y);
-						//name = tmx.getImgSrc(_cell) + "_" + String(_cell);
-						assetID=String(_cell); //String(iSprite++);
-						//assetID = tmx.getImgSrc(_cell);
-						
-						//trace("object: ", name, pt3, new State("", 0, 0, true));
-						
-						sprite=new SmartImage(assetID, pt3, new State("", 0, 0, true));
-						//sprite.currentFrame = tmx.getImgFrame(_cell);
-						
-						//setTimeout(add,delay*100,x,y,sprite,grid);
-						sprite.index= layer.getCellIndex(x, y);
-						
-						
-						grid.add(sprite);
-						trace("cell:",_cell ,"index:", sprite.index," x,y :" ,x, y,"layer.name",grid.name );
-					}
-				}
-				
-				
-			}
-			
-			function add(xx:int,xy:int,sp:SmartDisplayObject,lay:LayerQuadDisplay):void{
-				grid.add(sp);
-				trace("cell:",_cell ,"index:", sprite.index," x,y :" ,xx, xy,"layer.name",grid.name );
-			}	
-		}
 
 		override public function onRegister(engine:IPlugin):void
 		{
@@ -442,7 +373,7 @@ package com.smart.engine.plugins
 		{
 			var layer:TMXLayer;
 			var layerName:String;
-			var grid:LayerQuadDisplay;
+			var grid:ILayerDisplay;
 			for (var i:int=0; i < tmx.layersArray.length; i++)
 			{
 				layer=tmx.layersArray[i];
@@ -461,7 +392,7 @@ package com.smart.engine.plugins
 		{
 			var layer:TMXLayer;
 			var _cell:int;
-			var grid:LayerQuadDisplay;
+			var grid:ILayerDisplay;
 			var pt3:Point3D;
     
 			var assetID:String;
@@ -495,13 +426,13 @@ package com.smart.engine.plugins
 				
 				sprite.index= layer.getCellIndex(cellX, cellY);
 				grid.add(sprite);
-				grid.addStarlingChild(sprite)
+				//grid.addStarlingChild(sprite)
 				/*setTimeout(add,delay*100,_cell,cellX,cellY,sprite,grid);
 				delay++;;*/
 			}
-			function add(cell:int, x:int,y:int,sp:SmartDisplayObject,lay:LayerQuadDisplay):void{
+			function add(cell:int, x:int,y:int,sp:SmartDisplayObject,lay:ILayerDisplay):void{
 				grid.add(sp);
-				grid.addStarlingChild(sp);
+				//grid.addStarlingChild(sp);
 				trace("cell:",cell ,"index:", sp.index," x,y :" ,x, y,"layer.name",lay.name );
 			}	
 		

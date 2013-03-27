@@ -45,7 +45,7 @@ package com.smart.engine.plugins {
 		private var walkSteps:int              = 0;
 		
 		private var touchPoint :Point;
-		private var engine:TMXQuadPlugin;
+		private var engine:TMXPlugin;
 		public function SpriteControlPlugin(obj:SmartDisplayObject = null) {
 			super();
 			sprite = obj;
@@ -121,7 +121,7 @@ package com.smart.engine.plugins {
 
 		override public function onRegister(engine:IPlugin):void {
 
-			this.engine =engine as TMXQuadPlugin; // this.EngineClass(engine);
+			this.engine =engine as TMXPlugin; // this.EngineClass(engine);
 			
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);

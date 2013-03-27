@@ -15,7 +15,7 @@ package com.smart.engine.plugins {
 		public static const SPEED:int = 2;
 		public static const DEFAULT_XRAYLAYERS_PLUGIN: String="DEFAULT_XRAYLAYERS_PLUGIN";
 		
-		private var engine:TMXQuadPlugin;
+		private var engine:TMXPlugin;
 		public function XRayLayersPlugin() {
 			super();
 			name = DEFAULT_XRAYLAYERS_PLUGIN;
@@ -28,7 +28,7 @@ package com.smart.engine.plugins {
 		public var paused:Boolean     = true;
 
 		override public function onRegister(engine:IPlugin):void {
-			this.engine = engine as TMXQuadPlugin //this.EngineClass(engine)
+			this.engine = engine as TMXPlugin //this.EngineClass(engine)
 			
 		}
 

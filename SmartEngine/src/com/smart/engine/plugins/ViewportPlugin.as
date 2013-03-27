@@ -30,7 +30,7 @@ package com.smart.engine.plugins
 		private var projectionInverse:Matrix;
 		private var pt:Point;
 		//private var _tmx:TMXMap;
-		private var engine:TMXQuadPlugin;
+		private var engine:TMXPlugin;
 
 		private var _cellH:Number;
 		
@@ -89,7 +89,7 @@ package com.smart.engine.plugins
 		
 		override public function onRegister(engine:IPlugin):void {
 			//super.onRegister(engine);
-			this.engine = engine as TMXQuadPlugin;
+			this.engine = engine as TMXPlugin;
 
 			
 		}
