@@ -13,7 +13,7 @@ package com.smart.views {
 	import com.smart.engine.display.SmartImage;
 	import com.smart.engine.plugins.CameraPlugin;
 	import com.smart.engine.plugins.SpriteControlPlugin;
-	import com.smart.engine.plugins.TMXQuadPlugin;
+	import com.smart.engine.plugins.TMXPlugin;
 	import com.smart.engine.plugins.ViewportControlPlugin;
 	import com.smart.engine.plugins.ViewportPlugin;
 	import com.smart.engine.tmxdata.TMXMap;
@@ -30,7 +30,7 @@ package com.smart.views {
 		protected var tmx:TMXMap;
 		private var _assets:AssetManager;
 		private var tmxmap:TMXTileMap;
-		private var tmxPlugin:TMXQuadPlugin;
+		private var tmxPlugin:TMXPlugin;
 		public function BaseScene(assets:AssetManager) {
 			_assets = assets
 			pluginCenter = PluginCenter.getInstance();
@@ -70,7 +70,7 @@ package com.smart.views {
 		}
 
 		private function addPlugins(engine:SmartEngine):void {
-			tmxPlugin= new TMXQuadPlugin(tmx);
+			tmxPlugin= new TMXPlugin(tmx);
 			engine.addPlugin(tmxPlugin)
 				  .addPlugin(new ViewportPlugin(tmx.orientation,tmx.tileWidth, tmx.tileHeight));
 			
