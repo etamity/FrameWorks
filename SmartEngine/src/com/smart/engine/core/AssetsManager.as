@@ -10,13 +10,13 @@ package com.smart.engine.core
 	import starling.textures.TextureAtlas;
 	import starling.utils.AssetManager;
 
-	public class MapAssetsManager extends AssetManager
+	public class AssetsManager extends AssetManager
 	{
 		private var _tmx:TMXMap;
 		private var _tilesetXML:Dictionary;
-		public static var instance:MapAssetsManager=new MapAssetsManager();
+		public static var instance:AssetsManager=new AssetsManager();
 
-		public function MapAssetsManager(tmx:TMXMap=null)
+		public function AssetsManager(tmx:TMXMap=null)
 		{
 			if (tmx)
 				loadTmx(tmx);

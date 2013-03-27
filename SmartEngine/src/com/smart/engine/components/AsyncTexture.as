@@ -8,7 +8,7 @@
 
 package com.smart.engine.components {
 
-	import com.smart.engine.core.MapAssetsManager;
+	import com.smart.engine.core.AssetsManager;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.loaders.ITextureLoader;
 	
@@ -29,7 +29,7 @@ package com.smart.engine.components {
 		public function onRegister(sprite:SmartDisplayObject):void {
 			this.sprite = sprite;
 			if (!sprite.display) {
-				sprite.display=new Image(MapAssetsManager.instance.getTexture(sprite.textureName));
+				sprite.display=new Image(AssetsManager.instance.getTexture(sprite.textureName));
 				trace("sprite.name::",sprite.textureName);
 			}
 			//loader = AssetsManager.instance.getLoader(assetManagerKey);

@@ -10,7 +10,7 @@ package com.smart.engine.display {
 
 	import com.smart.engine.components.AsyncTexture;
 	import com.smart.engine.components.IComponent;
-	import com.smart.engine.core.MapAssetsManager;
+	import com.smart.engine.core.AssetsManager;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.utils.State;
 	
@@ -59,7 +59,7 @@ package com.smart.engine.display {
 				removeComponent(async);
 			}
 			//addComponent(async = new AsyncTexture(textureName));
-			display=new Image(MapAssetsManager.instance.getTexture(textureName));
+			display=new Image(AssetsManager.instance.getTexture(textureName));
 			/*display.x=position.x;
 			display.y=position.y;*/
 		}

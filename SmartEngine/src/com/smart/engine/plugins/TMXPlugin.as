@@ -11,7 +11,7 @@ package com.smart.engine.plugins
 
 	import com.smart.engine.SmartEngine;
 	import com.smart.engine.core.IPlugin;
-	import com.smart.engine.core.MapAssetsManager;
+	import com.smart.engine.core.AssetsManager;
 	import com.smart.engine.core.Plugin;
 	import com.smart.engine.display.ILayerDisplay;
 	import com.smart.engine.display.LayerBatchDisplay;
@@ -64,7 +64,7 @@ package com.smart.engine.plugins
 			//linkedLayer=new <LayerQuadDisplay>[];
 			if (this.tmx != null)
 			{
-				MapAssetsManager.instance.loadTmx(tmx, onProgress);
+				AssetsManager.instance.loadTmx(tmx, onProgress);
 			}
 		}
 		
@@ -352,7 +352,7 @@ package com.smart.engine.plugins
 			tmx=data;
 			if (this.tmx != null)
 			{
-				MapAssetsManager.instance.loadTmx(tmx, onProgress);
+				AssetsManager.instance.loadTmx(tmx, onProgress);
 			}
 		}
 
