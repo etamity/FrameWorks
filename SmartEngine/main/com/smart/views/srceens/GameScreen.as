@@ -1,131 +1,64 @@
 package com.smart.views.srceens
 {
-	import com.smart.logs.Debug;
 	import com.smart.model.Language;
-	import com.smart.services.ThemeService;
-	import com.smart.views.BaseScene;
-	import com.smart.views.components.PlayerBarView;
-	import com.smart.views.signals.ScreenEventConst;
-	
-	import flash.text.TextFormat;
+	import com.smart.views.scenes.TiledMapScene;
 	
 	import feathers.controls.Button;
-	import feathers.controls.Header;
 	import feathers.controls.Label;
 	import feathers.controls.ProgressBar;
 	
-	import starling.display.DisplayObject;
 	import starling.display.Image;
-	import starling.display.QuadBatch;
 	import starling.events.Event;
-	import starling.utils.AssetManager;
-	import starling.utils.Color;
 
 	public class GameScreen extends BaseScreen
 	{	
-	
-		public var _assets:AssetManager;
-		public var _header:Header;
+
 		public var _money:Label;
 		public var _health:ProgressBar;
-		public var leftItems:Vector.<DisplayObject>;
-		public var rightItems:Vector.<DisplayObject>;
 		public var _exitBtn:Button;
-		
-		public const LEFT:String="LEFT";
-		public const RIGHT:String="RIGHT";
+		public var _scene:TiledMapScene;
 		public function GameScreen()
 		{
 			super();
 		
 		}
 		
-		public function initAssets(assets:AssetManager):void{
-			_assets= assets;
-			_header =new Header();
-			_header.nameList.add(ThemeService.HEADER_PLAYERBAR);
-			_header.height=64;
-			_money = new Label();
-			_money.nameList.add(ThemeService.HEADER_MONEY_LABEL);
-			_health= new ProgressBar();
-			_money.text= "1000.00";
+		
+		override protected function initialize():void{
 
-			_exitBtn=new Button();
+			_money = newLabel("1000.00");
+			_health= newProgressBar(100);
+			_exitBtn=newButton(Language.EXIT);
 			
-			leftItems=new Vector.<DisplayObject>();
-			rightItems=new Vector.<DisplayObject>();
-			_header.leftItems=leftItems;
-			_header.rightItems=rightItems;
-			addChild(_header);
-			this._header.width = this.stage.width;
-			
-			var image:Image=new Image(assets.getTexture("IconMoney"));
+			var image:Image=newImage("IconMoney");
 			addItem(image);
 			addItem(_money);
-			image =new Image(assets.getTexture("icon-snow-small"));
-			_health.value=100;
+			
+			image =newImage("icon-snow-small");
 			addItem(image);
 			addItem(_health);
-			
-			
-			_exitBtn.height=_header.height-20;
-			_exitBtn.addEventListener(Event.TRIGGERED, backButton_triggeredHandler);
-			_exitBtn.paddingRight=30;
-			_exitBtn.label= Language.EXIT;
-	
-			
-			var _reloadBtn:Button=new Button();
-			_reloadBtn.addEventListener(Event.TRIGGERED, backButton_triggeredHandler);
-			_reloadBtn.label= Language.MAPISO;
-			_reloadBtn.paddingRight=30;
-			_reloadBtn.height=_header.height-20;
 
-			var _mapgirdBtn:Button=new Button();
-			_mapgirdBtn.addEventListener(Event.TRIGGERED, backButton_triggeredHandler);
-			_mapgirdBtn.label= Language.MAPGRID;
-			_mapgirdBtn.paddingRight=30;
-			_mapgirdBtn.height=_header.height-20;
+			
+			var _reloadBtn:Button=newButton(Language.RELOAD,loadMap);
+			var _mapgirdBtn:Button=newButton(Language.MAPGRID);
 			
 			
 			addItem(_mapgirdBtn,RIGHT);
 			addItem(_reloadBtn,RIGHT);
 			addItem(_exitBtn,RIGHT);
-			
-				
-		}
+			_scene = new TiledMapScene();
+			addScene(_scene);
 		
-		/*private function loadMapEventDispatch(evt:Event):void{
-			const button:Button = Button(evt.currentTarget);
-			signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
-			switch (button.label){
-				case Language.MAPGRID:
-					break;
-				case Language.MAPISO:
-					break;
-			}
-			
-			
-		}*/
-		override protected function initialize():void{
-	
-			
-			
-			
 		}
-		
-		private function backButton_triggeredHandler(event:Event):void
+
+		override public function dispose():void{
+			removeChild(_scene);
+			_scene.dispose();
+			super.dispose();
+		}
+		private function loadMap(event:Event):void
 		{
-			const button:Button = Button(event.currentTarget);
-			trace(button.label +" Button Click");
-			this.dispatchEventWith(button.label,false,button.label);
-			
-		}
-		public function addItem(display:DisplayObject,direct:String=LEFT):void {
-			if (direct==LEFT)
-			leftItems.push(display);
-			else if (direct==RIGHT)
-			rightItems.push(display);
-			
+			_scene.loadMap("./TiledMap/map0.tmx");
 		}
 	}
 }

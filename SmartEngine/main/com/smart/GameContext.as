@@ -9,13 +9,9 @@ package com.smart
 	import com.smart.model.Language;
 	import com.smart.model.SignalBus;
 	import com.smart.services.ThemeService;
-	import com.smart.views.GUIView;
-	import com.smart.views.GUIViewMediator;
+	import com.smart.views.MainMediator;
 	import com.smart.views.MainView;
-	import com.smart.views.MainViewMediator;
 	import com.smart.views.ProgressBar;
-	import com.smart.views.srceens.GameScreen;
-	import com.smart.views.srceens.GameScreenMediator;
 	
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
@@ -25,7 +21,6 @@ package com.smart
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObjectContainer;
-	import starling.display.Image;
 	import starling.utils.AssetManager;
 	import starling.utils.RectangleUtil;
 	import starling.utils.ScaleMode;
@@ -61,17 +56,13 @@ package com.smart
 		}
 
 		private function mapViews():void{
-			
-			mediatorMap.mapView(MainView, MainViewMediator);	
-			mediatorMap.mapView(GameScreen, GameScreenMediator);
-			mediatorMap.mapView(GUIView, GUIViewMediator);
-		
+			mediatorMap.mapView(MainView, MainMediator);
 		}
 		
 		public function start():void{
 			_startup.dispatch();
 			var main:MainView= new MainView();
-			var gui:GUIView= new GUIView();
+			var gui:com.smart.views.MainView= new com.smart.views.MainView();
 			
 			contextView.addChild(main);
 			contextView.addChild(gui);

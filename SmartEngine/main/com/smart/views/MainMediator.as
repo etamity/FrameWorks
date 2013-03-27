@@ -1,11 +1,13 @@
 package com.smart.views
 {
+	import com.smart.logs.console.ConsoleCommand;
+	import com.smart.model.GameConfig;
 	import com.smart.model.Language;
 	import com.smart.model.ScreenConst;
 	import com.smart.model.SignalBus;
-	import com.smart.views.signals.ScreenEventConst;
+	import com.smart.views.srceens.PhysisScreen;
+	import com.smart.views.scenes.BaseScene;
 	import com.smart.views.srceens.GameScreen;
-	import com.smart.views.srceens.MainMenuScreen;
 	import com.smart.views.srceens.MenuScreen;
 	
 	import feathers.controls.ScreenNavigator;
@@ -17,22 +19,26 @@ package com.smart.views
 	import starling.events.Event;
 	import starling.utils.AssetManager;
 	
-	public class GUIViewMediator extends StarlingMediator
+	public class MainMediator extends StarlingMediator
 	{
 		[Inject]
-		public var view:GUIView;
+		public var view:MainView;
 		[Inject]
 		public var assets:AssetManager;
 		[Inject]
 		public var signalBus:SignalBus;
-		
+		[Inject]
+		public var commandManager:ConsoleCommand;
+		[Inject]
+		public var gameConfig:GameConfig;
+
 		private var _navigator:ScreenNavigator;
 		
 		private var _transitionManager:ScreenSlidingStackTransitionManager;
 
 		private var _scene:BaseScene;
 		
-		public function GUIViewMediator()
+		public function MainMediator()
 		{
 			super();
 		}
@@ -50,23 +56,24 @@ package com.smart.views
 		public function init():void{
 			
 			view.initAssets(assets);
-			
 
-			
-			
 			_navigator = new ScreenNavigator();
 			
 			view.addChild(_navigator);
-			var main:MainMenuScreen=new MainMenuScreen();
+			//var main:MainMenuScreen=new MainMenuScreen();
 			var eventObject:Object=new Object();
 			eventObject[Language.STARTGAME]=ScreenConst.GAME_SCREEN;
+			eventObject[Language.CONTINUE]=ScreenConst.PHYSIS_SCREEN;
 			eventObject[Language.EXIT]=ScreenConst.MAINMENU_SCREEN;
 			eventObject[Language.MAPGRID]=reloadMap;
 			eventObject[Language.MAPISO]=reloadMap;
 			
-			_navigator.addScreen(ScreenConst.MAINMENU_SCREEN, new ScreenNavigatorItem(MenuScreen,eventObject));
-			_navigator.addScreen(ScreenConst.GAME_SCREEN, new ScreenNavigatorItem(GameScreen,eventObject));
+			var properties :Object = {"assets":assets};
 			
+			_navigator.addScreen(ScreenConst.MAINMENU_SCREEN, new ScreenNavigatorItem(MenuScreen,eventObject,properties));
+			_navigator.addScreen(ScreenConst.GAME_SCREEN, new ScreenNavigatorItem(GameScreen,eventObject,properties));
+			
+			_navigator.addScreen(ScreenConst.PHYSIS_SCREEN, new ScreenNavigatorItem(PhysisScreen,eventObject,properties));
 			
 			_transitionManager = new ScreenSlidingStackTransitionManager(this._navigator);
 			_transitionManager.duration = 0.4;
@@ -77,14 +84,14 @@ package com.smart.views
 		
 		public function reloadMap(evt:Event):void{
 			var name:String= String(evt.data);
-			switch (name){
+			/*switch (name){
 				case Language.MAPGRID:
 					signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./TiledMap/map0.tmx");
 					break;
 				case Language.MAPISO:
 					signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
 					break;
-			}
+			}*/
 		}
 		
 	}
