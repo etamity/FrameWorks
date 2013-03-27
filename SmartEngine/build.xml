@@ -21,17 +21,18 @@
 	<fail unless="android.certificate.path"/>
 	<fail unless="android.certificate.password"/>
 
-	<target name="build" depends="build-web"/>
+	<target name="build" depends="build-swf"/>
 
 	<target name="prepare">
 		<delete dir="${output.path}"/>
 	</target>
 
-	<target name="build-web">
-		<echo message="Building ${AppName}Web.swf"/>
+	<target name="build-swf">
+		<echo message="Building swf ${AppName}.swf"/>
 		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
 			<arg line="--target-player=${player.version}"/>
 			<arg line="--debug=true"/>
+			<arg line="--optimize=true"/>
 			<arg line="--swf-version=${swf.version}"/>
 			<arg line="--source-path+='${source.path}'"/>
 			<arg line="--source-path+='${main.path}'"/>
@@ -40,14 +41,17 @@
 			<arg line="--library-path+='${assets.path}'"/>
 			<arg line="--library-path+='${lib.path}'"/>
 			<arg line="${main.path}/Main.as"/>
-			<arg line="--output ${release.path}/${AppName}Web.swf"/>
+			<arg line="--output ${release.path}/${AppName}.swf"/>
 		</exec>
 	</target>
 	<target name="build-air-swf">
-		<echo message="Building ${AppName}.swf"/>
+		<echo message="Building air ${AppName}.swf"/>
 		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
 			<arg line="+configname=air"/>
-			<arg line="--debug=true"/>
+			<arg line="--debug=false"/>
+			<arg line="--mobile=true"/>
+			<arg line="--optimize=true"/>
+			<arg line="--omit-trace-statements=true"/>
 			<arg line="--target-player=${player.version}"/>
 			<arg line="--swf-version=${swf.version}"/>
 			<arg line="--compress=false"/>
@@ -58,7 +62,7 @@
 			<arg line="--library-path+='${assets.path}'"/>
 			<arg line="--library-path+='${lib.path}'"/>
 			<arg line="${main.path}/Main.as"/>
-			<arg line="--output ${output.path}/${AppName}.swf"/>
+			<arg line="--output ${release.path}/${AppName}.swf"/>
 
 
 		</exec>
@@ -72,10 +76,10 @@
 			<arg line="-keystore ${ios.certificate.path}"/>
 			<arg line="-storetype pkcs12"/>
 			<arg line="-storepass ${ios.certificate.password}"/>
-			<arg line="${output.path}/${AppName}.ipa"/>
+			<arg line="${release.path}/${AppName}.ipa"/>
 			<arg line="${main.path}/${AppName}-app.xml"/>
 			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
-			<arg line="-C ${output.path}"/>
+			<arg line="-C ${release.path}"/>
 			<arg line="${AppName}.swf"/>
 			<arg line="TiledMap"/>
 		</exec>
@@ -89,10 +93,10 @@
 			<arg line="-storetype pkcs12"/>
 			<arg line="-keystore ${android.certificate.path}"/>
 			<arg line="-storepass ${android.certificate.password}"/>
-			<arg line="${output.path}/${AppName}.apk"/>
+			<arg line="${release.path}/${AppName}.apk"/>
 			<arg line="${source.path}/${AppName}-app.xml"/>
 			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
-			<arg line="-C ${output.path}"/>
+			<arg line="-C ${release.path}"/>
 			<arg line="${AppName}.swf"/>
 		</exec>
 	</target>
