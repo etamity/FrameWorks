@@ -6,7 +6,7 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine.core {
+package com.smart.core {
 	public class Plugin extends PluginEngine {
 		
 		public function Plugin() {

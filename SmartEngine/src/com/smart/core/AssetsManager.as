@@ -1,4 +1,4 @@
-package com.smart.engine.core
+package com.smart.core
 {
 	import com.smart.engine.tmxdata.TMXMap;
 	import com.smart.engine.tmxdata.TMXTileset;

@@ -9,10 +9,10 @@
 package com.smart.engine.plugins
 {
 
-	import com.smart.engine.SmartEngine;
-	import com.smart.engine.core.IPlugin;
-	import com.smart.engine.core.AssetsManager;
-	import com.smart.engine.core.Plugin;
+	import com.smart.SmartEngine;
+	import com.smart.core.IPlugin;
+	import com.smart.core.AssetsManager;
+	import com.smart.core.Plugin;
 	import com.smart.engine.display.ILayerDisplay;
 	import com.smart.engine.display.LayerBatchDisplay;
 	import com.smart.engine.display.SmartDisplayObject;

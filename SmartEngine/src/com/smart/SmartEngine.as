@@ -6,10 +6,10 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine {
+package com.smart {
 
-	import com.smart.engine.core.IPlugin;
-	import com.smart.engine.core.Plugin;
+	import com.smart.core.IPlugin;
+	import com.smart.core.Plugin;
 	
 	import flash.geom.Point;
 	

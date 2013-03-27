@@ -10,7 +10,7 @@ package com.smart.engine.display {
 
 	import com.smart.engine.components.AsyncTexture;
 	import com.smart.engine.components.IComponent;
-	import com.smart.engine.core.AssetsManager;
+	import com.smart.core.AssetsManager;
 	import com.smart.engine.utils.Point3D;
 	import com.smart.engine.utils.State;
 	

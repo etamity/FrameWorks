@@ -1,6 +1,6 @@
 package com.smart.engine.display
 {
-	import com.smart.engine.SmartEngine;
+	import com.smart.SmartEngine;
 	import com.smart.engine.utils.Point3D;
 	
 	import flash.geom.Point;

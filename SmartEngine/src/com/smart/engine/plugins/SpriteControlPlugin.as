@@ -8,8 +8,8 @@
 
 package com.smart.engine.plugins {
 
-	import com.smart.engine.core.IPlugin;
-	import com.smart.engine.core.Plugin;
+	import com.smart.core.IPlugin;
+	import com.smart.core.Plugin;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.utils.Point3D;
 	

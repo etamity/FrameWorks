@@ -7,7 +7,7 @@
 //##########################################################
 
 package com.smart.engine.plugins {
-	import com.smart.engine.core.Plugin;
+	import com.smart.core.Plugin;
 
 	public class SpriteAnimation extends Plugin {
 		public function SpriteAnimation() {

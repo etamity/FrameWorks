@@ -8,7 +8,7 @@
 
 package com.smart.engine.display {
 
-	import com.smart.engine.SmartEngine;
+	import com.smart.SmartEngine;
 	import com.smart.engine.plugins.IViewPort;
 	import com.smart.engine.tmxdata.TMXMap;
 	import com.smart.engine.utils.Point3D;

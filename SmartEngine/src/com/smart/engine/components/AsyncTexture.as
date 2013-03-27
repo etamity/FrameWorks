@@ -8,7 +8,7 @@
 
 package com.smart.engine.components {
 
-	import com.smart.engine.core.AssetsManager;
+	import com.smart.core.AssetsManager;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.loaders.ITextureLoader;
 	

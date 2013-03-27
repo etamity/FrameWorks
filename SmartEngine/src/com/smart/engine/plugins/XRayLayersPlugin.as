@@ -8,8 +8,8 @@
 
 package com.smart.engine.plugins {
 
-	import com.smart.engine.core.IPlugin;
-	import com.smart.engine.core.Plugin;
+	import com.smart.core.IPlugin;
+	import com.smart.core.Plugin;
 
 	public class XRayLayersPlugin extends Plugin implements IPlugin {
 		public static const SPEED:int = 2;

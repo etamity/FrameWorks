@@ -6,7 +6,7 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine.core {
+package com.smart.core {
 	import starling.display.Stage;
 
 	

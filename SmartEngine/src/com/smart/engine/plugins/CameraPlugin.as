@@ -8,10 +8,10 @@
 
 package com.smart.engine.plugins {
 
-	import com.smart.engine.SmartEngine;
-	import com.smart.engine.core.IPlugin;
-	import com.smart.engine.core.IPluginEngine;
-	import com.smart.engine.core.Plugin;
+	import com.smart.SmartEngine;
+	import com.smart.core.IPlugin;
+	import com.smart.core.IPluginEngine;
+	import com.smart.core.Plugin;
 	import com.smart.engine.utils.Point3D;
 
 	public class CameraPlugin extends Plugin implements IPlugin {
