@@ -62,10 +62,9 @@ package com.smart
 		public function start():void{
 			_startup.dispatch();
 			var main:MainView= new MainView();
-			var gui:com.smart.views.MainView= new com.smart.views.MainView();
-			
+	
 			contextView.addChild(main);
-			contextView.addChild(gui);
+	
 			contextView.addChild(new Console());
 		}
 		private function createInstance():void{

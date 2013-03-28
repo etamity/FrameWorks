@@ -21,7 +21,6 @@ package com.smart.views.scenes {
 		}
 		
 		override protected function initialize():void{
-			
 		}
 
 		override public function dispose():void{

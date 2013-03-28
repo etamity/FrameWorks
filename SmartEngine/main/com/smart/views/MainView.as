@@ -1,7 +1,6 @@
 package com.smart.views
 {
 	import starling.display.Sprite;
-	import starling.utils.AssetManager;
 
 	public class MainView extends Sprite
 	{
@@ -9,9 +8,6 @@ package com.smart.views
 		public function MainView()
 		{
 			super();
-		}
-		public function initAssets(assets:AssetManager):void{
-			
 		}
 	}
 }

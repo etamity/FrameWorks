@@ -101,6 +101,7 @@ package com.smart.views.srceens
 		public function addScene(scene:BaseScene):void{
 			scene.assets=assets;
 			addChild(scene);
+			scene.start();
 		}
 		public function addItem(display:DisplayObject, direct:String=LEFT):void
 		{

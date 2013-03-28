@@ -54,8 +54,6 @@ package com.smart.views
 		
 		
 		public function init():void{
-			
-			view.initAssets(assets);
 
 			_navigator = new ScreenNavigator();
 			
