@@ -1,10 +1,10 @@
 package com.smart.scenes
 {
 	import com.smart.SmartSystem;
-	import com.smart.physics.PhysicsEngine;
-	import com.smart.physics.plugins.DebugDrawPlugin;
-	import com.smart.physics.plugins.HandJointPlugin;
-	import com.smart.physics.plugins.PhysicsObjectFactoryPlugin;
+	import com.smart.engine.PhysicsEngine;
+	import com.smart.engine.physics.plugins.DebugDrawPlugin;
+	import com.smart.engine.physics.plugins.HandJointPlugin;
+	import com.smart.engine.physics.plugins.PhysicsObjectFactoryPlugin;
 
 	public class PhysicsScene extends BaseScene
 	{

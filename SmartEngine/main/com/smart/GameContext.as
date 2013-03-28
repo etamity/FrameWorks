@@ -3,6 +3,7 @@ package com.smart
 	import com.smart.controllers.commands.InitDataCommand;
 	import com.smart.controllers.commands.StartupCommand;
 	import com.smart.controllers.signals.SystemEventConst;
+	import com.smart.core.AssetsManager;
 	import com.smart.logs.console.Console;
 	import com.smart.logs.console.ConsoleCommand;
 	import com.smart.model.GameConfig;
@@ -83,7 +84,7 @@ package com.smart
 				new Rectangle(0, 0, Starling.current.nativeStage.fullScreenWidth, Starling.current.nativeStage.fullScreenHeight), 
 				ScaleMode.SHOW_ALL);
 			var scaleFactor:int = viewPort.width < 480 ? 1 : 2; 
-			assets =new AssetManager();
+			assets =new AssetsManager();
 			assets.verbose = Capabilities.isDebugger;
 			assets.enqueue(AssetEmbeds_3x);
 			

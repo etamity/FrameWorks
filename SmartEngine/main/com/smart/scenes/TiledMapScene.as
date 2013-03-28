@@ -2,12 +2,12 @@ package com.smart.scenes
 {
 	import com.smart.SmartSystem;
 	import com.smart.engine.MapEngine;
-	import com.smart.engine.display.SmartImage;
-	import com.smart.engine.plugins.CameraPlugin;
-	import com.smart.engine.plugins.ViewportControlPlugin;
-	import com.smart.engine.plugins.ViewportPlugin;
-	import com.smart.engine.tmxdata.TMXMapModel;
-	import com.smart.engine.utils.Point3D;
+	import com.smart.engine.map.display.SmartImage;
+	import com.smart.engine.map.plugins.CameraPlugin;
+	import com.smart.engine.map.plugins.ViewportControlPlugin;
+	import com.smart.engine.map.plugins.ViewportPlugin;
+	import com.smart.engine.map.tmxdata.TMXMapModel;
+	import com.smart.engine.map.utils.Point3D;
 	import com.smart.tiled.TMXTileMap;
 	
 	public class TiledMapScene extends BaseScene
