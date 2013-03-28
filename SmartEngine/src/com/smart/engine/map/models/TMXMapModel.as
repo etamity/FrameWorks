@@ -6,14 +6,18 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine.map.tmxdata
+package com.smart.engine.map.models
 {
 
-	import com.smart.engine.map.loaders.ImgLoader;
 	import com.smart.engine.map.utils.Base64;
 	import com.smart.engine.map.utils.StringUtils;
 	
+	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
+	
+	import org.assetloader.core.ILoader;
+	import org.assetloader.loaders.XMLLoader;
+	import org.assetloader.signals.LoaderSignal;
 
 	public class TMXMapModel
 	{
@@ -43,10 +47,19 @@ package com.smart.engine.map.tmxdata
 		{
 
 			var basePath:String=StringUtils.getPath(file);
-			ImgLoader.instance.getXML(file, function(val:XML):void
+			/*ImgLoader.instance.getXML(file, function(val:XML):void
 			{
 				tmxCallback(new TMXMapModel(val, basePath));
+			});*/
+			
+			trace("TMXMAP_XML",file);
+			var tmxXMLLoader : ILoader = new XMLLoader(new URLRequest(file),"TMXMAP_XML");
+			tmxXMLLoader.onComplete.add(function(signal:LoaderSignal,val:XML):void
+			{
+				trace("TMXMAP_XML",val);
+				tmxCallback(new TMXMapModel(val, basePath));
 			});
+			tmxXMLLoader.start();
 		}
 
 		public function TMXMapModel(data:*, url:String)

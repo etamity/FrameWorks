@@ -12,7 +12,7 @@ package com.smart {
 	import com.smart.core.IEngine;
 	import com.smart.core.IPlugin;
 	
-	import flash.geom.Point;
+	import flash.display.DisplayObjectContainer;
 	import flash.utils.Dictionary;
 	
 	import starling.animation.IAnimatable;
@@ -25,31 +25,22 @@ package com.smart {
 		
 		private var _juggler:Juggler;
 
-		private var displayArea:Sprite;
-		
-		private var position:Point;
-
 		protected var engines:Vector.<IEngine>;
 		protected var enginesHash:Dictionary;
-		
+		private var container:Sprite;
 		public function SmartSystem(root:Sprite) {
 			
 			this.stage=root.stage;
 			this.root=root;
-			displayArea= new Sprite();
-
+			container=root;
 			_juggler = new Juggler();
-
-			position = new Point(1, 1);
 			
 			engines=new <IEngine>[];
 			enginesHash=new Dictionary();
-			
-			root.addChild(displayArea);
 		}
 
 	   public function addDisplay(child:DisplayObject):DisplayObject{
-			displayArea.addChild(child);
+		    display.addChild(child);
 			return child;
 		}
 	   
@@ -65,45 +56,13 @@ package com.smart {
 	   override public function dispose():void{
 		   super.dispose();
 		   this.stop();
-		   if (displayArea.parent!=null)
-			   displayArea.parent.removeChild(displayArea);
-		   displayArea.dispose();
+		   display.removeChildren();
 		   _juggler = null;
 	   }
-	   public function get display():DisplayObject{
-		   return displayArea;
+	   public function get display():Sprite{
+		   return container;
 	   }
 	   
-	   public function moveTo(x:Number, y:Number):void {
-		   position.setTo(x, y);
-	   }
-	   
-	   public function get positionY():Number {
-		   return position.y;
-	   }
-	   
-	   public function set positionY(val:Number):void {
-		   position.y = val;
-	   }
-	   public function get positionX():Number {
-		   return position.x;
-	   }
-	   
-	   public function set positionX(val:Number):void {
-		   position.x = val;
-	   }
-	   
-	   public function offset(x:Number, y:Number):void {
-		   position.offset(x, y);
-	   }
-	   public function get currentZoom():Number {
-		   return displayArea.scaleX;
-	   }
-	   
-	   public function set currentZoom(val:Number):void {
-		   displayArea.scaleX = displayArea.scaleY = val;
-	   }
-
 		public function advanceTime(time:Number):void {
 			onTrigger(time);
 		}
@@ -127,8 +86,8 @@ package com.smart {
 		}
 
 		public function setSize(width:Number, height:Number):void {
-			displayArea.x = width * .5;
-			displayArea.y = height * .5;
+			display.x = width * .5;
+			display.y = height * .5;
 		}
 
 		public function start():void {

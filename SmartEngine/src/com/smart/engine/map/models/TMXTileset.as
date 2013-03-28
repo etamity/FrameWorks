@@ -6,7 +6,7 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine.map.tmxdata {
+package com.smart.engine.map.models {
 
 	import flash.geom.Rectangle;
 	import flash.utils.Dictionary;

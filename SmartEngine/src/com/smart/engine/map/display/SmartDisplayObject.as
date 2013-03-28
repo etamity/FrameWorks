@@ -8,10 +8,9 @@
 
 package com.smart.engine.map.display {
 
-	import com.smart.core.AssetsManager;
+	import com.smart.loaders.AssetsManager;
 	import com.smart.core.IComponent;
 	import com.smart.core.SmartObject;
-	import com.smart.engine.map.components.AsyncTexture;
 	import com.smart.engine.map.utils.Point3D;
 	import com.smart.engine.map.utils.State;
 	
@@ -27,7 +26,6 @@ package com.smart.engine.map.display {
 		public var type:String;
 		internal var layer:ILayerDisplay;
 		internal var layerIndex:int = -1;
-		private var async:AsyncTexture;
 		private var components:Vector.<IComponent>; 
 		public var _assetID:String;
 		public function SmartDisplayObject(textureName:String, pt:Point3D = null, state:State = null) {
@@ -38,22 +36,15 @@ package com.smart.engine.map.display {
 		}
 		override public function remove(component:IComponent):void {
 			super.remove(component);
-			if (component == async) {
-				async = null;
-			}
-		}
 
+		}
 
 		public function changeTo(textureName:String):void {
-			if (async) {
-				remove(async);
-			}
-			//addComponent(async = new AsyncTexture(textureName));
-			display=new Image(AssetsManager.instance.getTexture(textureName));
-			/*display.x=position.x;
-			display.y=position.y;*/
-		}
 
+			if (display==null)
+			display=new Image(AssetsManager.instance.getTexture(textureName));
+
+		}
 		public function get display():DisplayObject {
 			throw new Error("method get display() must be overridden");
 		}

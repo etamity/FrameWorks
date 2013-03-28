@@ -8,7 +8,7 @@
 
 package com.smart.engine.map.components {
 	
-	import com.smart.core.AssetsManager;
+	import com.smart.loaders.AssetsManager;
 	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.loaders.ITextureLoader;
 	import com.smart.core.IComponent;

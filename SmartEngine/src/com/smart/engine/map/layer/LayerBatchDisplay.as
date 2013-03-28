@@ -9,8 +9,9 @@
 package com.smart.engine.map.layer {
 	
 	import com.smart.SmartSystem;
+	import com.smart.engine.map.display.SmartDisplayObject;
+	import com.smart.engine.map.models.TMXMapModel;
 	import com.smart.engine.map.plugins.IViewPort;
-	import com.smart.engine.map.tmxdata.TMXMapModel;
 	import com.smart.engine.map.utils.Point3D;
 	
 	import flash.geom.Point;
@@ -20,7 +21,6 @@ package com.smart.engine.map.layer {
 	import starling.display.Image;
 	import starling.display.QuadBatch;
 	import starling.display.Sprite;
-	import com.smart.engine.map.display.SmartDisplayObject;
 	
 	public class LayerBatchDisplay implements ILayerDisplay {
 		
@@ -99,9 +99,8 @@ package com.smart.engine.map.layer {
 				throw new Error("adding sprite with no _name");
 			}
 			
-			updateLocation(val);
+
 			spriteHash[val.textureName] = val;
-			val.layer = this;
 			viewport.update(val);
 			addStarlingChild(val.display);
 			return val;
@@ -200,8 +199,7 @@ package com.smart.engine.map.layer {
 						if (sprite == null) {
 							continue;
 						}
-						
-						updateLocation(sprite);
+
 						sprite.onTrigger(time);
 					}
 				}
@@ -227,18 +225,7 @@ package com.smart.engine.map.layer {
 		public function set positionY(val:Number):void {
 			_display.y = val;
 		}
-		
-		public function remove(val:SmartDisplayObject):SmartDisplayObject {
-			if (val.layerIndex == -1 || val.layer == null) {
-				return val;
-			}
-			_display.removeChild(val.display);
-			
-			removeFromGridData(val);
-			val.layer = null;
-			delete spriteHash[val.textureName];
-			return val;
-		}
+
 
 		/*public function screenToGridPt(pt:Point):Point {
 			var pt3d:Point3D = screenToLayer(pt);
@@ -316,24 +303,6 @@ package com.smart.engine.map.layer {
 			forceUpdate();
 		}
 		
-		private function removeFromGridData(val:SmartDisplayObject):void {
-			if (val.layerIndex == -1) {
-				return;
-			}
-			var arr:Vector.<SmartDisplayObject> = data[val.layerIndex];
-			if (arr == null) {
-				val.layerIndex = -1;
-				return;
-			}
-			
-			var index:int                       = arr.indexOf(val);
-			if (index == -1) {
-				trace("Sprite '" + val.textureName + "' not found on array layer: " + name + ",  hash has:" + spriteHash[val.textureName]);
-				return;
-			}
-			arr.splice(index, 1);
-			val.layerIndex = -1;
-		}
 		
 		private function sortSystem(time:Number):void {
 			var f:DisplayObject;
@@ -354,35 +323,7 @@ package com.smart.engine.map.layer {
 			return key > key2;
 		}
 		
-		private function updateLocation(val:SmartDisplayObject):void {
-			var x:int                                  = Math.floor(val.position.x / sqEdgeSize);
-			var y:int                                  = Math.floor(val.position.y / sqEdgeSize);
-			if (x >= w) {
-				x = w - 1;
-			} 
-			else if (x < 0) {
-				x = 0;
-			}
-			if (y >= h) {
-				y = h - 1;
-			}
-			else if (y < 0) {
-				y = 0;
-			}
-			
-			var index:int                              = (y * w) + x;
-			if (index == val.layerIndex) {
-				return;
-			} 
-			removeFromGridData(val);
-			
-			var collection:Vector.<SmartDisplayObject> = data[index];
-			if (collection == null) {
-				collection = data[index] = new Vector.<SmartDisplayObject>();
-			}
-			collection.push(val);
-			val.layerIndex = index;
-		}
+
 	}
 	
 }

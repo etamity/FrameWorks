@@ -8,16 +8,16 @@
 
 package com.smart.engine.map.plugins {
 
-	import com.smart.SmartSystem;
 	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
+	import com.smart.engine.MapEngine;
 	import com.smart.engine.map.utils.Point3D;
 
 	public class CameraPlugin extends Plugin {
 		private static const ZOOM_IN_LIMIT:Number  = 5;
 		private static const ZOOM_OUT_LIMIT:Number = .1;
 
-		private var engine:SmartSystem;		
+		private var engine:MapEngine;		
 		public function CameraPlugin(position:Point3D = null) {
 			super();
 			this.position = position;
@@ -26,7 +26,7 @@ package com.smart.engine.map.plugins {
 		public var position:Point3D;
 
 		override public function onRegister(engine:IEngine):void {
-			this.engine = engine as SmartSystem;
+			this.engine = engine as MapEngine;
 		}
 
 		override public function onRemove():void {

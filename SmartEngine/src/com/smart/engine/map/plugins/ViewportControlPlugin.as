@@ -10,6 +10,7 @@ package com.smart.engine.map.plugins {
 
 	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
+	import com.smart.engine.MapEngine;
 	import com.smart.engine.map.utils.Point3D;
 	
 	import flash.ui.Keyboard;
@@ -28,7 +29,8 @@ package com.smart.engine.map.plugins {
 		private var tw:Tween;
 		private var velocity:Point3D;
 		private var zoomDelta:Number = 0.006;
-		private var engine:CameraPlugin;
+		private var engine:MapEngine;
+		private var camera:CameraPlugin;
 		public function ViewportControlPlugin(hitArea:Number = 40, speed:Number = 8) {
 			super();
 			this.hitArea = hitArea;
@@ -37,8 +39,8 @@ package com.smart.engine.map.plugins {
 		}
 
 		override public function onRegister(engine:IEngine):void {
-			this.engine =engine as CameraPlugin;  //this.EngineClass(engine);
-			
+			this.engine =engine as MapEngine;  //this.EngineClass(engine);
+			camera = engine.getPlugin(CameraPlugin);
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);
 			stage.addEventListener("mouseLeave", onMouseOut);
 			stage.addEventListener("mouseOut", onMouseOut);
@@ -51,10 +53,10 @@ package com.smart.engine.map.plugins {
 		}
 
 		override public function onTrigger(time:Number):void {
-			var fasterPanWithZoom:Number = Math.max(engine.position.z, 1);
-			engine.position.x += velocity.x;
-			engine.position.y += velocity.y;
-			engine.position.z += velocity.z;
+			var fasterPanWithZoom:Number = Math.max(camera.position.z, 1);
+			camera.position.x += velocity.x;
+			camera.position.y += velocity.y;
+			camera.position.z += velocity.z;
 			if (velocity.z > 0) {
 				velocity.z -= zoomDelta;
 			}

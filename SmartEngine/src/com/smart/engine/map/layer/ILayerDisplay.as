@@ -11,7 +11,7 @@ package com.smart.engine.map.layer
 	public interface ILayerDisplay
 	{
 		function add(val:SmartDisplayObject):SmartDisplayObject;
-		function remove(val:SmartDisplayObject):SmartDisplayObject;
+		//function remove(val:SmartDisplayObject):SmartDisplayObject;
 		//function forceUpdate():void;
 
 		function get name():String;

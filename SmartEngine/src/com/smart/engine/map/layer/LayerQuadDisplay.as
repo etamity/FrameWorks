@@ -10,7 +10,7 @@ package com.smart.engine.map.layer {
 	
 	import com.smart.SmartSystem;
 	import com.smart.engine.map.plugins.IViewPort;
-	import com.smart.engine.map.tmxdata.TMXMapModel;
+	import com.smart.engine.map.models.TMXMapModel;
 	import com.smart.engine.map.utils.Point3D;
 	
 	import flash.geom.Point;

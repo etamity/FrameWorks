@@ -10,7 +10,7 @@ package com.smart.engine
 {
 
 	import com.smart.SmartSystem;
-	import com.smart.core.AssetsManager;
+	import com.smart.loaders.AssetsManager;
 	import com.smart.core.Engine;
 	import com.smart.core.IEngine;
 	import com.smart.core.IPlugin;
@@ -19,11 +19,11 @@ package com.smart.engine
 	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.display.SmartImage;
 	import com.smart.engine.map.plugins.ViewportPlugin;
-	import com.smart.engine.map.tmxdata.TMXLayer;
-	import com.smart.engine.map.tmxdata.TMXMapModel;
-	import com.smart.engine.map.tmxdata.TMXObject;
-	import com.smart.engine.map.tmxdata.TMXObjectgroup;
-	import com.smart.engine.map.tmxdata.TMXTileset;
+	import com.smart.engine.map.models.TMXLayer;
+	import com.smart.engine.map.models.TMXMapModel;
+	import com.smart.engine.map.models.TMXObject;
+	import com.smart.engine.map.models.TMXObjectgroup;
+	import com.smart.engine.map.models.TMXTileset;
 	import com.smart.engine.map.utils.Point3D;
 	import com.smart.engine.map.utils.State;
 	
@@ -280,13 +280,6 @@ package com.smart.engine
 		override public function onRemove():void
 		{
 			super.onRemove();
-		}
-
-		public function moveTo(x:Number, y:Number):void
-		{
-			position.x=x * ratio.x;
-			position.y=y * ratio.y;
-
 		}
 
 		override public function onTrigger(time:Number):void

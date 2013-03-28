@@ -10,7 +10,7 @@ package com.smart.engine.map.utils {
 
 	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	import com.smart.engine.map.tmxdata.TMXLayer;
+	import com.smart.engine.map.models.TMXLayer;
 
 	public class Base64 {
 		private static const BASE64_CHARS:String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
