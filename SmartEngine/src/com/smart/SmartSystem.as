@@ -8,10 +8,12 @@
 
 package com.smart {
 
+	import com.smart.core.Engine;
+	import com.smart.core.IEngine;
 	import com.smart.core.IPlugin;
-	import com.smart.core.PluginEngine;
 	
 	import flash.geom.Point;
+	import flash.utils.Dictionary;
 	
 	import starling.animation.IAnimatable;
 	import starling.animation.Juggler;
@@ -19,7 +21,7 @@ package com.smart {
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 
-	public class Engine extends PluginEngine implements IAnimatable {
+	public class SmartSystem extends Engine implements IAnimatable {
 		
 		private var _juggler:Juggler;
 
@@ -27,15 +29,21 @@ package com.smart {
 		
 		private var position:Point;
 
-		public function Engine(root:Sprite) {
+		protected var engines:Vector.<IEngine>;
+		protected var enginesHash:Dictionary;
+		
+		public function SmartSystem(root:Sprite) {
 			
 			this.stage=root.stage;
-			
+			this.root=root;
 			displayArea= new Sprite();
 
 			_juggler = new Juggler();
 
 			position = new Point(1, 1);
+			
+			engines=new <IEngine>[];
+			enginesHash=new Dictionary();
 			
 			root.addChild(displayArea);
 		}
@@ -44,7 +52,16 @@ package com.smart {
 			displayArea.addChild(child);
 			return child;
 		}
-		
+	   
+	   public function addEngine(engine:IEngine):IEngine{
+		   engine.stage=stage;
+		   engine.root=root;
+		   engines.push(engine);
+		   engine.onRegister(this);
+		   enginesHash[engine.name]=engine;
+		   return engine;
+	   }
+	   
 	   override public function dispose():void{
 		   super.dispose();
 		   this.stop();
@@ -97,6 +114,11 @@ package com.smart {
 
 		override public function onTrigger(time:Number):void {
 			juggler.advanceTime(time);
+			for each (var engine:IEngine in engines) {
+				if (engine.enabled)
+					engine.onTrigger(time);
+			}
+			
 			for each (var plugin:IPlugin in plugins) {
 				if (plugin.enabled)
 					plugin.onTrigger(time);

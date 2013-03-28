@@ -9,14 +9,16 @@
 package com.smart.engine
 {
 
-	import com.smart.Engine;
-	import com.smart.core.IPlugin;
+	import com.smart.SmartSystem;
 	import com.smart.core.AssetsManager;
-	import com.smart.core.Plugin;
+	import com.smart.core.Engine;
+	import com.smart.core.IEngine;
+	import com.smart.core.IPlugin;
 	import com.smart.engine.display.ILayerDisplay;
 	import com.smart.engine.display.LayerBatchDisplay;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.display.SmartImage;
+	import com.smart.engine.plugins.ViewportPlugin;
 	import com.smart.engine.tmxdata.TMXLayer;
 	import com.smart.engine.tmxdata.TMXMapModel;
 	import com.smart.engine.tmxdata.TMXObject;
@@ -29,9 +31,8 @@ package com.smart.engine
 	import flash.utils.Dictionary;
 	
 	import starling.display.Sprite;
-	import com.smart.engine.plugins.ViewportPlugin;
 
-	public class MapEngine extends Plugin
+	public class MapEngine extends Engine
 	{
 		private static const TILE_PROPERTY_HIT_MAP:String="hitmap";
 		private static const TILE_PROPERTY_HIT_MAP_VALUE:String="true";
@@ -48,7 +49,7 @@ package com.smart.engine
 		private var position:Point=new Point();
 		private var ratio:Point=new Point(1, 1);
 
-		private var engine:Engine;
+		private var engine:SmartSystem;
 		public var onCompelete:Function;
 		
 		private var viewport:ViewportPlugin;
@@ -267,9 +268,9 @@ package com.smart.engine
 		}
 		
 
-		override public function onRegister(engine:IPlugin):void
+		override public function onRegister(engine:IEngine):void
 		{
-			this.engine=engine as Engine; //this.EngineClass(engine); 
+			this.engine=engine as SmartSystem; //this.EngineClass(engine); 
 			this.engine.addDisplay(this.container);
 	
 

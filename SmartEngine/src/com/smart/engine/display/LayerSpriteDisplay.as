@@ -8,7 +8,7 @@
 
 package com.smart.engine.display {
 
-	import com.smart.Engine;
+	import com.smart.SmartSystem;
 	import com.smart.engine.plugins.IViewPort;
 	import com.smart.engine.tmxdata.TMXMapModel;
 	import com.smart.engine.utils.Point3D;
@@ -186,7 +186,7 @@ package com.smart.engine.display {
 			_display.y += y * ratio.y;
 		}
 
-		public function onTrigger(time:Number, engine:Engine):void {
+		public function onTrigger(time:Number, engine:SmartSystem):void {
 			var first:SmartDisplayObject;
 			for each (var layer:Vector.<SmartDisplayObject> in data) {
 				if (layer != null) {

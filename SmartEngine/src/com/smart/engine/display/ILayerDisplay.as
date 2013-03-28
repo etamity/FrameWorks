@@ -1,6 +1,6 @@
 package com.smart.engine.display
 {
-	import com.smart.Engine;
+	import com.smart.SmartSystem;
 	import com.smart.engine.utils.Point3D;
 	
 	import flash.geom.Point;
@@ -26,7 +26,7 @@ package com.smart.engine.display
 		function layerToGridPt(x:Number, y:Number):Point;*/
 		function gridToLayerPt(gridX:int, gridY:int, z:int = 1):Point3D;
 		//function gridToSreenPt(gridX:int, gridY:int, z:int = 1):Point;
-		function onTrigger(time:Number, engine:Engine):void;
+		function onTrigger(time:Number, engine:SmartSystem):void;
 		//function get layerData():Vector.<Vector.<SmartDisplayObject>>;
 	}
 }

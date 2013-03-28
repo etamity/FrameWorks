@@ -7,7 +7,9 @@
 //##########################################################
 
 package com.smart.core {
-	public interface IPluginEngine {
+	
+
+	public interface IEngine extends IPlugin{
 		
 		function getPluginByName(val:String):*;
 		
@@ -15,11 +17,12 @@ package com.smart.core {
 		
 		function removePlugin(plugin:IPlugin):void;
 		
-		function addPlugin(plugin:IPlugin):IPlugin;
+		function addPlugin(plugin:IPlugin):IEngine;
 		
 		function get EngineClass():Class;
 		
 		function getClassName(val:*):String;
 		
+
 	}
 }

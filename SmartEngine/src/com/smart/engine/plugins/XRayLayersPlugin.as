@@ -8,11 +8,11 @@
 
 package com.smart.engine.plugins {
 
-	import com.smart.core.IPlugin;
+	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
 	import com.smart.engine.MapEngine;
 
-	public class XRayLayersPlugin extends Plugin implements IPlugin {
+	public class XRayLayersPlugin extends Plugin {
 		public static const SPEED:int = 2;
 		public static const DEFAULT_XRAYLAYERS_PLUGIN: String="DEFAULT_XRAYLAYERS_PLUGIN";
 		
@@ -28,7 +28,7 @@ package com.smart.engine.plugins {
 		public var layerIndex:int;
 		public var paused:Boolean     = true;
 
-		override public function onRegister(engine:IPlugin):void {
+		override public function onRegister(engine:IEngine):void {
 			this.engine = engine as MapEngine //this.EngineClass(engine)
 			
 		}

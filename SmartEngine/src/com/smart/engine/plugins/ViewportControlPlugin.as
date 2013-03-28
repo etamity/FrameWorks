@@ -8,14 +8,13 @@
 
 package com.smart.engine.plugins {
 
-	import com.smart.core.IPlugin;
+	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
 	import com.smart.engine.utils.Point3D;
 	
 	import flash.ui.Keyboard;
 	
 	import starling.animation.Tween;
-	import starling.display.Stage;
 	import starling.events.KeyboardEvent;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
@@ -37,7 +36,7 @@ package com.smart.engine.plugins {
 			velocity = new Point3D(0, 0, 0);
 		}
 
-		override public function onRegister(engine:IPlugin):void {
+		override public function onRegister(engine:IEngine):void {
 			this.engine =engine as CameraPlugin;  //this.EngineClass(engine);
 			
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);

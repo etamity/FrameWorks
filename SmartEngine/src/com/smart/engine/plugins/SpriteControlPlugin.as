@@ -8,8 +8,9 @@
 
 package com.smart.engine.plugins {
 
-	import com.smart.core.IPlugin;
+	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
+	import com.smart.engine.MapEngine;
 	import com.smart.engine.display.SmartDisplayObject;
 	import com.smart.engine.utils.Point3D;
 	
@@ -17,10 +18,8 @@ package com.smart.engine.plugins {
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
-	import starling.display.Stage;
 	import starling.events.KeyboardEvent;
 	import starling.events.TouchEvent;
-	import com.smart.engine.MapEngine;
 
 	public class SpriteControlPlugin extends Plugin {
 
@@ -120,7 +119,7 @@ package com.smart.engine.plugins {
 			targetPt = newPt3D;
 		}
 
-		override public function onRegister(engine:IPlugin):void {
+		override public function onRegister(engine:IEngine):void {
 
 			this.engine =engine as MapEngine; // this.EngineClass(engine);
 			
