@@ -1,6 +1,6 @@
 package com.smart.tiled
 {
-	import com.smart.engine.utils.StringUtils;
+	import com.smart.engine.map.utils.StringUtils;
 
 	import flash.display.Bitmap;
 	import flash.events.Event;

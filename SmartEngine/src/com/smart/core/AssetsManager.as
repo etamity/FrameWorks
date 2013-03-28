@@ -1,7 +1,7 @@
 package com.smart.core
 {
-	import com.smart.engine.tmxdata.TMXMapModel;
-	import com.smart.engine.tmxdata.TMXTileset;
+	import com.smart.engine.map.tmxdata.TMXMapModel;
+	import com.smart.engine.map.tmxdata.TMXTileset;
 	
 	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
@@ -89,7 +89,7 @@ package com.smart.core
 					id++;
 				}
 				var atlasXML:XML=XML(xml.TextureAtlas);
-				trace(atlasXML);
+				//trace(atlasXML);
 				return atlasXML;
 			}
 		}
