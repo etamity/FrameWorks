@@ -6,7 +6,7 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.engine.loaders {
+package com.smart.loaders {
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
