@@ -1,5 +1,7 @@
 package com.smart.services
 {
+	import com.smart.loaders.AssetsManager;
+	
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
 	
@@ -12,14 +14,13 @@ package com.smart.services
 	import org.robotlegs.mvcs.Actor;
 	
 	import starling.core.Starling;
-	import starling.utils.AssetManager;
 	import starling.utils.Color;
 
 	public class ThemeService extends Actor
 	{
 		private var _theme:MetalWorksMobileTheme;
 		[Inject]
-		public var assets:AssetManager;
+		public var assets:AssetsManager;
 		
 		public static const HEADER_MONEY_LABEL:String= "HEADER_MONEY_LABEL";
 		public static const HEADER_PLAYERBAR:String= "HEADER_PLAYERBAR";

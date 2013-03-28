@@ -6,7 +6,7 @@ package com.smart.scenes
 	import com.smart.engine.map.plugins.CameraPlugin;
 	import com.smart.engine.map.plugins.ViewportControlPlugin;
 	import com.smart.engine.map.plugins.ViewportPlugin;
-	import com.smart.engine.map.tmxdata.TMXMapModel;
+	import com.smart.engine.map.models.TMXMapModel;
 	import com.smart.engine.map.utils.Point3D;
 	import com.smart.tiled.TMXTileMap;
 	
@@ -37,17 +37,19 @@ package com.smart.scenes
 		}
 
 		override public function addPlugins(system:SmartSystem):void {
-			mapEngine= new MapEngine(tmxData);
-			system.addPlugin(mapEngine)
-				  .addPlugin(new ViewportPlugin(tmxData.orientation,tmxData.tileWidth, tmxData.tileHeight));
 			
-			system.addPlugin(new CameraPlugin(new Point3D(0,0,1)))
+			if (tmxData!=null)
+			{
+			mapEngine= new MapEngine(tmxData);
+			system.addEngine(mapEngine)
+				  .addPlugin(new ViewportPlugin(tmxData.orientation,tmxData.tileWidth, tmxData.tileHeight))
+				  .addPlugin(new CameraPlugin(new Point3D(0,0,1)))
 				  .addPlugin(new ViewportControlPlugin());
 			
 			
 			mapEngine.onCompelete= setupSpirte;
 			
-			
+			}
 			function setupSpirte():void{
 				var sprite:SmartImage = SmartImage(mapEngine.getObjectByName("Joey"));
 				//tmxPlugin.addPlugin(new SpriteControlPlugin(sprite));		

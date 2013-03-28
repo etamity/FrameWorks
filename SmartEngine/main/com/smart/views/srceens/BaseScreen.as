@@ -1,9 +1,9 @@
 package com.smart.views.srceens
 {
 
-	import com.smart.model.Language;
-	import com.smart.services.ThemeService;
+	import com.smart.loaders.AssetsManager;
 	import com.smart.scenes.BaseScene;
+	import com.smart.services.ThemeService;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Header;
@@ -21,7 +21,7 @@ package com.smart.views.srceens
 
 	public class BaseScreen extends Screen
 	{
-		private var _assets:AssetManager;
+		private var _assets:AssetsManager;
 		protected var leftItems:Vector.<DisplayObject>;
 		protected var rightItems:Vector.<DisplayObject>;
 		protected const LEFT:String="LEFT";
@@ -113,12 +113,12 @@ package com.smart.views.srceens
 
 		}
 
-		public function set assets(val:AssetManager):void
+		public function set assets(val:AssetsManager):void
 		{
 			_assets=val;
 		}
 
-		public function get assets():AssetManager
+		public function get assets():AssetsManager
 		{
 			return _assets;
 		}

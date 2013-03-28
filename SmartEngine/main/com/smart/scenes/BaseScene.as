@@ -9,14 +9,13 @@
 package com.smart.scenes {
 
 	import com.smart.SmartSystem;
+	import com.smart.loaders.AssetsManager;
 	
 	import feathers.controls.Screen;
-	
-	import starling.utils.AssetManager;
 
 	public class BaseScene extends Screen {
 		protected var system:SmartSystem;
-		private var _assets:AssetManager;
+		private var _assets:AssetsManager;
 		public function BaseScene() {
 		}
 		
@@ -42,12 +41,12 @@ package com.smart.scenes {
 			
 		}
 	
-		public function set assets(val:AssetManager):void
+		public function set assets(val:AssetsManager):void
 		{
 			_assets=val;
 		}
 		
-		public function get assets():AssetManager
+		public function get assets():AssetsManager
 		{
 			return _assets;
 		}

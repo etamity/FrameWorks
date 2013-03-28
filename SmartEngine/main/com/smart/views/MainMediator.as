@@ -1,14 +1,15 @@
 package com.smart.views
 {
+	import com.smart.loaders.AssetsManager;
 	import com.smart.logs.console.ConsoleCommand;
 	import com.smart.model.GameConfig;
 	import com.smart.model.Language;
 	import com.smart.model.ScreenConst;
 	import com.smart.model.SignalBus;
-	import com.smart.views.srceens.PhysisScreen;
 	import com.smart.scenes.BaseScene;
 	import com.smart.views.srceens.GameScreen;
 	import com.smart.views.srceens.MenuScreen;
+	import com.smart.views.srceens.PhysisScreen;
 	
 	import feathers.controls.ScreenNavigator;
 	import feathers.controls.ScreenNavigatorItem;
@@ -17,14 +18,13 @@ package com.smart.views
 	import org.robotlegs.mvcs.StarlingMediator;
 	
 	import starling.events.Event;
-	import starling.utils.AssetManager;
 	
 	public class MainMediator extends StarlingMediator
 	{
 		[Inject]
 		public var view:MainView;
 		[Inject]
-		public var assets:AssetManager;
+		public var assets:AssetsManager;
 		[Inject]
 		public var signalBus:SignalBus;
 		[Inject]
