@@ -1,6 +1,6 @@
-package com.smart.views.scenes
+package com.smart.scenes
 {
-	import com.smart.Engine;
+	import com.smart.SmartSystem;
 	import com.smart.engine.MapEngine;
 	import com.smart.engine.display.SmartImage;
 	import com.smart.engine.plugins.CameraPlugin;
@@ -36,13 +36,13 @@ package com.smart.views.scenes
 			//tmxPlugin.tmxData=tmx;
 		}
 
-		override public function addPlugins(engine:Engine):void {
+		override public function addPlugins(system:SmartSystem):void {
 			mapEngine= new MapEngine(tmxData);
-			engine.addPlugin(mapEngine)
-				.addPlugin(new ViewportPlugin(tmxData.orientation,tmxData.tileWidth, tmxData.tileHeight));
+			system.addPlugin(mapEngine)
+				  .addPlugin(new ViewportPlugin(tmxData.orientation,tmxData.tileWidth, tmxData.tileHeight));
 			
-			engine.addPlugin(new CameraPlugin(new Point3D(0,0,1)))
-				.addPlugin(new ViewportControlPlugin());
+			system.addPlugin(new CameraPlugin(new Point3D(0,0,1)))
+				  .addPlugin(new ViewportControlPlugin());
 			
 			
 			mapEngine.onCompelete= setupSpirte;

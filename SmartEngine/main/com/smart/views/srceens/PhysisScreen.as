@@ -1,9 +1,9 @@
 package com.smart.views.srceens
 {
-	import com.smart.Engine;
+	import com.smart.SmartSystem;
 	import com.smart.model.Language;
 	import com.smart.model.ScreenConst;
-	import com.smart.views.scenes.PhysisScene;
+	import com.smart.scenes.PhysicsScene;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ScreenNavigator;
@@ -46,7 +46,7 @@ package com.smart.views.srceens
 			
 			_transitionManager = new ScreenSlidingStackTransitionManager(_navigator);
 			_transitionManager.duration = 0.4;
-			var physisScene:PhysisScene=new PhysisScene();
+			var physisScene:PhysicsScene=new PhysicsScene();
 			addScene(physisScene);
 	
 			

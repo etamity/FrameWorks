@@ -6,7 +6,7 @@ package com.smart.views
 	import com.smart.model.ScreenConst;
 	import com.smart.model.SignalBus;
 	import com.smart.views.srceens.PhysisScreen;
-	import com.smart.views.scenes.BaseScene;
+	import com.smart.scenes.BaseScene;
 	import com.smart.views.srceens.GameScreen;
 	import com.smart.views.srceens.MenuScreen;
 	

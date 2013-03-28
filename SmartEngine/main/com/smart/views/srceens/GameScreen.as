@@ -1,7 +1,7 @@
 package com.smart.views.srceens
 {
 	import com.smart.model.Language;
-	import com.smart.views.scenes.TiledMapScene;
+	import com.smart.scenes.TiledMapScene;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;

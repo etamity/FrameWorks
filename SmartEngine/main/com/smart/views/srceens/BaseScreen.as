@@ -3,7 +3,7 @@ package com.smart.views.srceens
 
 	import com.smart.model.Language;
 	import com.smart.services.ThemeService;
-	import com.smart.views.scenes.BaseScene;
+	import com.smart.scenes.BaseScene;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Header;

@@ -6,16 +6,16 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart.views.scenes {
+package com.smart.scenes {
 
-	import com.smart.Engine;
+	import com.smart.SmartSystem;
 	
 	import feathers.controls.Screen;
 	
 	import starling.utils.AssetManager;
 
 	public class BaseScene extends Screen {
-		protected var engine:Engine;
+		protected var system:SmartSystem;
 		private var _assets:AssetManager;
 		public function BaseScene() {
 		}
@@ -25,20 +25,20 @@ package com.smart.views.scenes {
 
 		override public function dispose():void{
 			super.dispose();
-			if (engine != null)
-				engine.dispose();
+			if (system != null)
+				system.dispose();
 		}
 
 		public function start():void{
-			if (engine != null)
-				engine.dispose();
+			if (system != null)
+				system.dispose();
 			
-			engine = new Engine(this);
-			addPlugins(engine);
-			engine.start();
+			system = new SmartSystem(this);
+			addPlugins(system);
+			system.start();
 		}
 		
-		public function addPlugins(engine:Engine):void {
+		public function addPlugins(system:SmartSystem):void {
 			
 		}
 	
