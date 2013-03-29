@@ -10,22 +10,21 @@ package com.smart.engine
 {
 
 	import com.smart.SmartSystem;
-	import com.smart.loaders.AssetsManager;
 	import com.smart.core.Engine;
 	import com.smart.core.IEngine;
-	import com.smart.core.IPlugin;
-	import com.smart.engine.map.layer.ILayerDisplay;
-	import com.smart.engine.map.layer.LayerBatchDisplay;
 	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.display.SmartImage;
-	import com.smart.engine.map.plugins.ViewportPlugin;
+	import com.smart.engine.map.layer.ILayerDisplay;
+	import com.smart.engine.map.layer.LayerBatchDisplay;
 	import com.smart.engine.map.models.TMXLayer;
 	import com.smart.engine.map.models.TMXMapModel;
 	import com.smart.engine.map.models.TMXObject;
 	import com.smart.engine.map.models.TMXObjectgroup;
 	import com.smart.engine.map.models.TMXTileset;
+	import com.smart.engine.map.plugins.ViewportPlugin;
 	import com.smart.engine.map.utils.Point3D;
 	import com.smart.engine.map.utils.State;
+	import com.smart.loaders.AssetsManager;
 	
 	import flash.geom.Point;
 	import flash.utils.Dictionary;
@@ -69,6 +68,7 @@ package com.smart.engine
 				AssetsManager.instance.loadTmx(tmx, onProgress);
 			}
 		}
+		
 		
 		public function makeEmptyGridOfSize(tmxLayerIndex:int, name:String):ILayerDisplay
 		{
@@ -141,6 +141,27 @@ package com.smart.engine
 			}
 
 			return num;
+		}
+		
+		override public function onTrigger(time:Number):void
+		{
+			for each (var layer:ILayerDisplay in layers)
+			{
+				if (layer != null)
+				{
+					if (layer.autoPosition)
+					{
+						layer.moveTo(positionX, positionY);
+					}
+					
+					layer.onTrigger(time, engine);
+					
+					
+				}
+				
+			}
+			
+			super.onTrigger(time);
 		}
 
 		public function get numberOfLayers():int
@@ -277,32 +298,6 @@ package com.smart.engine
 		}
 
 
-		override public function onRemove():void
-		{
-			super.onRemove();
-		}
-
-		override public function onTrigger(time:Number):void
-		{
-			//container.x=engine.positionX;
-			//container.y=engine.positionY;
-			for each (var layer:ILayerDisplay in layers)
-			{
-				if (layer != null)
-				{
-					if (layer.autoPosition)
-					{
-						layer.moveTo(engine.positionX, engine.positionY);
-					}
-
-					layer.onTrigger(time, engine);
-
-
-				}
-
-			}
-		}
-
 		public function removeLayer(layer:ILayerDisplay):void
 		{
 			var index:int=layers.indexOf(layer);
@@ -316,6 +311,7 @@ package com.smart.engine
 			super.dispose();
 			removeAllLayers();
 			tmx.dispose();
+			AssetsManager.instance.purge();
 		}
 
 		public function removeAllLayers():void

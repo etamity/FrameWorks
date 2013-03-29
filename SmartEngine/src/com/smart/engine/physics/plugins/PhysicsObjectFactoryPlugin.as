@@ -8,7 +8,6 @@ package com.smart.engine.physics.plugins
 	import nape.phys.BodyType;
 	import nape.shape.Circle;
 	import nape.shape.Polygon;
-	import nape.shape.Shape;
 	
 	public class PhysicsObjectFactoryPlugin extends Plugin
 	{

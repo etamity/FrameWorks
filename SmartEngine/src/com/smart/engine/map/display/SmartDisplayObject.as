@@ -8,15 +8,15 @@
 
 package com.smart.engine.map.display {
 
-	import com.smart.loaders.AssetsManager;
 	import com.smart.core.IComponent;
 	import com.smart.core.SmartObject;
+	import com.smart.engine.map.layer.ILayerDisplay;
 	import com.smart.engine.map.utils.Point3D;
 	import com.smart.engine.map.utils.State;
+	import com.smart.loaders.AssetsManager;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
-	import com.smart.engine.map.layer.ILayerDisplay;
 
 	public class SmartDisplayObject extends SmartObject{
 		public var textureName:String;

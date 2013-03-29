@@ -8,7 +8,7 @@
 
 package com.smart.engine.map.components {
 	
-	import com.smart.loaders.AssetsManager;
+	import com.smart.loaders.ResourcesManager;
 	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.loaders.ITextureLoader;
 	import com.smart.core.IComponent;
@@ -28,7 +28,7 @@ package com.smart.engine.map.components {
 		public function onRegister(sprite:SmartDisplayObject):void {
 			this.sprite = sprite;
 			if (!sprite.display) {
-				sprite.display = AssetsManager.instance.getDisplay(assetManagerKey);
+				sprite.display = ResourcesManager.instance.getDisplay(assetManagerKey);
 			}
 			onTrigger(0);
 		}
@@ -37,7 +37,7 @@ package com.smart.engine.map.components {
 		}
 		
 		public function onTrigger(time:Number):void {
-			var loader:ITextureLoader = AssetsManager.instance.getLoader(assetManagerKey);
+			var loader:ITextureLoader = ResourcesManager.instance.getLoader(assetManagerKey);
 			if (loader.isLoaded == false) {
 				return;
 			}

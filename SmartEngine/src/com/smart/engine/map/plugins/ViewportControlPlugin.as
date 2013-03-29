@@ -13,6 +13,7 @@ package com.smart.engine.map.plugins {
 	import com.smart.engine.MapEngine;
 	import com.smart.engine.map.utils.Point3D;
 	
+	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
 	
 	import starling.animation.Tween;
@@ -42,14 +43,10 @@ package com.smart.engine.map.plugins {
 			this.engine =engine as MapEngine;  //this.EngineClass(engine);
 			camera = engine.getPlugin(CameraPlugin);
 			stage.addEventListener(TouchEvent.TOUCH, onTouch);
-			stage.addEventListener("mouseLeave", onMouseOut);
-			stage.addEventListener("mouseOut", onMouseOut);
+			stage.addEventListener(MouseEvent.MOUSE_OUT , onMouseOut);
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 			//stage.addEventListener(WheelEvent.SCROLL, onMouseWheel);
-		}
-
-		override public function onRemove():void {
 		}
 
 		override public function onTrigger(time:Number):void {

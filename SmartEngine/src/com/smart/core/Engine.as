@@ -91,7 +91,6 @@ package com.smart.core {
 			{
 				plugins.splice(index, 1);
 			}
-			plugin.onRemove();
 			plugin.dispose();
 			delete pluginsHash[plugin.name];
 		}

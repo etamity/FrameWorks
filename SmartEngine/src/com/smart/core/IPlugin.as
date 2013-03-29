@@ -19,7 +19,6 @@ package com.smart.core {
 		
 		function onRegister(engine:IEngine):void;
 	
-		function onRemove():void;
 		function dispose():void;
 		function onTrigger(time:Number):void;
 		

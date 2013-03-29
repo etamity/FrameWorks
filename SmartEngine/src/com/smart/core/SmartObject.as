@@ -16,6 +16,11 @@ package com.smart.core
 		public function set name(val:String):void {
 			_name = val;
 		}
+		
+		public function dispose():void{
+			
+		}
+		
 		public function remove(component:IComponent):void {
 			component.onRemove();
 			var index:int = components.indexOf(component);

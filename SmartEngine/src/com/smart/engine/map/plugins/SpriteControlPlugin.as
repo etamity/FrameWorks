@@ -133,9 +133,6 @@ package com.smart.engine.map.plugins {
 			
 		}
 
-		override public function onRemove():void {
-			super.onRemove();
-		}
 
 		override public function onTrigger(time:Number):void {
 			var xpt:Number = targetPt.x;

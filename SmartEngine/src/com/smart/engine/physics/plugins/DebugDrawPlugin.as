@@ -24,10 +24,14 @@ package com.smart.engine.physics.plugins
 			_debug.flush();
 		}
 
+		override public function dispose():void{
+			nativeStage.removeChild(_debug.display);
+			_debug=null;
+		}
 
 		override public function onRegister(engine:IEngine):void{
 			this.engine=engine as PhysicsEngine;
-			_debug= new BitmapDebug(stage.stageWidth, stage.stageHeight-root.y,0 ,true);
+			_debug= new BitmapDebug(stage.stageWidth, stage.stageHeight,0 ,true);
 			_debug.display.x =root.x;
 			_debug.display.y =root.y;
 			_debug.drawConstraints = true;

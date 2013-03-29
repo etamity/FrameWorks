@@ -93,11 +93,6 @@ package com.smart.engine.map.plugins
 
 			
 		}
-		override public function onRemove():void
-		{
-			super.onRemove();
-		}
-
 		public function layerToScreen(Pt3D:Point3D):Point
 		{
 			return projection.transformPoint(Pt3D);

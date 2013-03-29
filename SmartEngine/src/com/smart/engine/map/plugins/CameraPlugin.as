@@ -29,12 +29,7 @@ package com.smart.engine.map.plugins {
 			this.engine = engine as MapEngine;
 		}
 
-		override public function onRemove():void {
-			super.onRemove();
-		}
-
 		override public function onTrigger(time:Number):void {
-			super.onTrigger(time);
 			position.update(time); 
 
 			engine.moveTo(-position.x, -position.y);

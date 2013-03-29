@@ -52,10 +52,30 @@ package com.smart {
 		   enginesHash[engine.name]=engine;
 		   return engine;
 	   }
+	   public function removeEngine(engine:IEngine):void
+	   {
+		   var index:int=engines.indexOf(engine);
+		   if (index != -1)
+		   {
+			   engines.splice(index, 1);
+		   }
+		   engine.dispose();
+		   delete enginesHash[engine.name];
+	   }
+
+	   public function removeAllEngines():void{
+		   for each (var engine:IEngine in engines)
+		   {
+			   removeEngine(engine);
+		   }
+		   engines=new <IEngine>[];
+		   enginesHash=new Dictionary();
+	   }
 	   
 	   override public function dispose():void{
-		   super.dispose();
 		   this.stop();
+		   super.dispose();
+		   removeAllEngines();
 		   display.removeChildren();
 		   _juggler = null;
 	   }
