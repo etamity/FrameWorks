@@ -9,16 +9,17 @@
 package com.smart.scenes {
 
 	import com.smart.SmartSystem;
-	import com.smart.loaders.AssetsManager;
+	import com.smart.loaders.ResourcesManager;
 	
 	import feathers.controls.Screen;
 
 	public class BaseScene extends Screen {
 		protected var system:SmartSystem;
-		private var _assets:AssetsManager;
+		private var _assets:ResourcesManager;
 		public function BaseScene() {
+
 		}
-		
+
 		override protected function initialize():void{
 		}
 
@@ -41,12 +42,12 @@ package com.smart.scenes {
 			
 		}
 	
-		public function set assets(val:AssetsManager):void
+		public function set assets(val:ResourcesManager):void
 		{
 			_assets=val;
 		}
 		
-		public function get assets():AssetsManager
+		public function get assets():ResourcesManager
 		{
 			return _assets;
 		}

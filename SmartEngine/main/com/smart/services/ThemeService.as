@@ -1,6 +1,6 @@
 package com.smart.services
 {
-	import com.smart.loaders.AssetsManager;
+	import com.smart.loaders.ResourcesManager;
 	
 	import flash.geom.Rectangle;
 	import flash.text.TextFormat;
@@ -20,7 +20,7 @@ package com.smart.services
 	{
 		private var _theme:MetalWorksMobileTheme;
 		[Inject]
-		public var assets:AssetsManager;
+		public var assets:ResourcesManager;
 		
 		public static const HEADER_MONEY_LABEL:String= "HEADER_MONEY_LABEL";
 		public static const HEADER_PLAYERBAR:String= "HEADER_PLAYERBAR";

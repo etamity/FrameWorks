@@ -1,6 +1,6 @@
 package com.smart.views
 {
-	import com.smart.loaders.AssetsManager;
+	import com.smart.loaders.ResourcesManager;
 	import com.smart.logs.console.ConsoleCommand;
 	import com.smart.model.GameConfig;
 	import com.smart.model.Language;
@@ -13,6 +13,7 @@ package com.smart.views
 	
 	import feathers.controls.ScreenNavigator;
 	import feathers.controls.ScreenNavigatorItem;
+	import feathers.events.FeathersEventType;
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	
 	import org.robotlegs.mvcs.StarlingMediator;
@@ -24,7 +25,7 @@ package com.smart.views
 		[Inject]
 		public var view:MainView;
 		[Inject]
-		public var assets:AssetsManager;
+		public var assets:ResourcesManager;
 		[Inject]
 		public var signalBus:SignalBus;
 		[Inject]
@@ -44,11 +45,9 @@ package com.smart.views
 		}
 		override public function onRegister():void 
 		{
-			
 			//view.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			//view.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 			init();
-			
 			
 		}
 		
@@ -78,8 +77,8 @@ package com.smart.views
 			
 			_navigator.showScreen(ScreenConst.MAINMENU_SCREEN);	
 			
+			
 		}
-		
 		public function reloadMap(evt:Event):void{
 			var name:String= String(evt.data);
 			/*switch (name){

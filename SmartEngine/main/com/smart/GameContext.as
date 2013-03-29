@@ -3,7 +3,7 @@ package com.smart
 	import com.smart.controllers.commands.InitDataCommand;
 	import com.smart.controllers.commands.StartupCommand;
 	import com.smart.controllers.signals.SystemEventConst;
-	import com.smart.loaders.AssetsManager;
+	import com.smart.loaders.ResourcesManager;
 	import com.smart.logs.console.Console;
 	import com.smart.logs.console.ConsoleCommand;
 	import com.smart.model.GameConfig;
@@ -31,7 +31,7 @@ package com.smart
 	{
 		
 		private var _startup:Signal;
-		private var assets:AssetsManager;
+		private var assets:ResourcesManager;
 		public function GameContext(contextView:DisplayObjectContainer=null, autoStartup:Boolean=true) 
 		{
 			super(contextView, autoStartup);
@@ -82,7 +82,7 @@ package com.smart
 				new Rectangle(0, 0, Starling.current.nativeStage.fullScreenWidth, Starling.current.nativeStage.fullScreenHeight), 
 				ScaleMode.SHOW_ALL);
 			var scaleFactor:int = viewPort.width < 480 ? 1 : 2; 
-			assets =AssetsManager.instance;
+			assets =ResourcesManager.instance;
 			assets.verbose = Capabilities.isDebugger;
 			assets.enqueue(AssetEmbeds_3x);
 			
@@ -107,7 +107,7 @@ package com.smart
 			injector.mapSingleton(SignalBus);
 			injector.mapSingleton(Language);
 			injector.mapValue(ConsoleCommand,ConsoleCommand.getInstance());
-			injector.mapValue(AssetsManager,AssetsManager.instance);
+			injector.mapValue(ResourcesManager,ResourcesManager.instance);
 			injector.mapSingleton(ThemeService);
 		}
 		private function mapSignals():void{

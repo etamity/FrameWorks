@@ -20,10 +20,10 @@ package com.smart.views.srceens
 		public function GameScreen()
 		{
 			super();
-		
+
 		}
 		
-		
+
 		override protected function initialize():void{
 
 			_money = newLabel("1000.00");

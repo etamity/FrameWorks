@@ -1,7 +1,7 @@
 package com.smart.views.srceens
 {
 
-	import com.smart.loaders.AssetsManager;
+	import com.smart.loaders.ResourcesManager;
 	import com.smart.scenes.BaseScene;
 	import com.smart.services.ThemeService;
 	
@@ -14,14 +14,13 @@ package com.smart.views.srceens
 	import starling.display.DisplayObject;
 	import starling.display.Image;
 	import starling.events.Event;
-	import starling.utils.AssetManager;
 
 
 
 
 	public class BaseScreen extends Screen
 	{
-		private var _assets:AssetsManager;
+		private var _assets:ResourcesManager;
 		protected var leftItems:Vector.<DisplayObject>;
 		protected var rightItems:Vector.<DisplayObject>;
 		protected const LEFT:String="LEFT";
@@ -29,11 +28,16 @@ package com.smart.views.srceens
 		private var _header:Header;
 		public var headerHeight:int=64;
 
+		private var _scene:BaseScene;
 		public function BaseScreen()
 		{
 
 		}
-
+		override protected function screen_removedFromStageHandler(event:Event):void{
+			if (_scene!=null)
+			_scene.dispose();
+			super.screen_removedFromStageHandler(event);
+		}
 		public function get header():Header{
 			return _header;
 		}
@@ -99,9 +103,11 @@ package com.smart.views.srceens
 		}
 
 		public function addScene(scene:BaseScene):void{
+			_scene=scene;
 			scene.assets=assets;
 			addChild(scene);
 			scene.start();
+			
 		}
 		public function addItem(display:DisplayObject, direct:String=LEFT):void
 		{
@@ -113,12 +119,12 @@ package com.smart.views.srceens
 
 		}
 
-		public function set assets(val:AssetsManager):void
+		public function set assets(val:ResourcesManager):void
 		{
 			_assets=val;
 		}
 
-		public function get assets():AssetsManager
+		public function get assets():ResourcesManager
 		{
 			return _assets;
 		}
