@@ -13,7 +13,6 @@ package com.smart.views
 	
 	import feathers.controls.ScreenNavigator;
 	import feathers.controls.ScreenNavigatorItem;
-	import feathers.events.FeathersEventType;
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	
 	import org.robotlegs.mvcs.StarlingMediator;
