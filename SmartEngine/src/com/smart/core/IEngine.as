@@ -23,6 +23,8 @@ package com.smart.core {
 		
 		function getClassName(val:*):String;
 		
+		
+		function moveTo(x:Number, y:Number):void;
 
 	}
 }

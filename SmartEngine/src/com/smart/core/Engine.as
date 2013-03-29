@@ -16,6 +16,7 @@ package com.smart.core {
 		protected var pluginsHash:Dictionary;
 		
 		private var position:Point;
+		private var ratio:Point=new Point(1, 1);
 		
 		public function Engine() {
 			super();

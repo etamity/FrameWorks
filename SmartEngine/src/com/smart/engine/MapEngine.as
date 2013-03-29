@@ -26,7 +26,6 @@ package com.smart.engine
 	import com.smart.engine.map.utils.State;
 	import com.smart.loaders.AssetsManager;
 	
-	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	
 	import starling.display.Sprite;
@@ -45,8 +44,6 @@ package com.smart.engine
 		private var steps:int=0;
 		private var tmx:TMXMapModel;
 
-		private var position:Point=new Point();
-		private var ratio:Point=new Point(1, 1);
 
 		private var engine:SmartSystem;
 		public var onCompelete:Function;
@@ -246,13 +243,7 @@ package com.smart.engine
 
 		private function loadTiles():void
 		{
-			/*var loader:TextureAtlasLoader;
-			var i:int;
-			for each (var tile:TMXTileset in tmx.uniqueTilesets) {
-			trace("Image Path:",tmx.getImgPath(tile.firstgid));
-			loader = new TextureAtlasLoader(tmx.getImgPath(tile.firstgid), tile, null, tile.getPropsByID(TILE_PROPERTY_HIT_MAP) == TILE_PROPERTY_HIT_MAP_VALUE);
-			AssetsManager.instance.addLoader(loader);
-			}*/
+
 			viewport = this.getPlugin(ViewportPlugin);
 			makeEmptyGrid();
 			makeLayer();
@@ -260,22 +251,7 @@ package com.smart.engine
 			//renderMap();
 			onCompelete();
 		}
-		
-		/*private function renderMap():void{
-			var layer:TMXLayer;
-			var grid:ILayerDisplay;
-			for (var i:int=0; i < tmx.layersArray.length; i++)
-			{
-				layer=tmx.layersArray[i];
-				if (layer == null)
-				{
-					continue;
-				}
-				grid=linkedLayer[i];
-				grid.render();
-			}
-		}*/
-		
+
 		public function makeLayer():void
 		{
 			for (var y:int=0; y < tmx.height; y++)
