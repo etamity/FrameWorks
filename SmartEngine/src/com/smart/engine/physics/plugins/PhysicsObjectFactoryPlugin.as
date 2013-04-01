@@ -25,7 +25,7 @@ package com.smart.engine.physics.plugins
 			if (_addBoder)
 			addStageBorder();
 			
-			test1();
+			//test1();
 		}
 		
 		
@@ -37,7 +37,7 @@ package com.smart.engine.physics.plugins
 				var box:Body = new Body(BodyType.DYNAMIC);
 				//box.shapes.add(new Polygon(Polygon.box(16, 32)));
 				box.shapes.add(new Circle(20));
-				
+				box.shapes.add(new Circle(40));
 				box.position.setxy((w / 2), ((h - 50) - 32 * (i + 0.5)));
 				box.space = engine.space;
 			}

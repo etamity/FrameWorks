@@ -148,7 +148,7 @@ package com.smart.engine
 				{
 					if (layer.autoPosition)
 					{
-						layer.moveTo(positionX, positionY);
+						layer.moveTo(x, y);
 					}
 					
 					layer.onTrigger(time, engine);

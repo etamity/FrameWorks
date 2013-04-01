@@ -8,7 +8,7 @@
 
 package com.smart.engine.map.models {
 
-	import flash.display.BitmapData;
+	
 
 	public class TMXSource {
 

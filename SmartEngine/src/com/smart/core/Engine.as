@@ -67,18 +67,18 @@ package com.smart.core {
 			position.setTo(x, y);
 		}
 		
-		public function get positionY():Number {
+		public function get y():Number {
 			return position.y;
 		}
 		
-		public function set positionY(val:Number):void {
+		public function set y(val:Number):void {
 			position.y = val;
 		}
-		public function get positionX():Number {
+		public function get x():Number {
 			return position.x;
 		}
 		
-		public function set positionX(val:Number):void {
+		public function set x(val:Number):void {
 			position.x = val;
 		}
 		

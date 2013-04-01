@@ -12,7 +12,6 @@ package com.smart {
 	import com.smart.core.IEngine;
 	import com.smart.core.IPlugin;
 	
-	import flash.display.DisplayObjectContainer;
 	import flash.utils.Dictionary;
 	
 	import starling.animation.IAnimatable;
