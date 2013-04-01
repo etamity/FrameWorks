@@ -80,14 +80,15 @@ package com.smart.views
 		}
 		public function reloadMap(evt:Event):void{
 			var name:String= String(evt.data);
-			/*switch (name){
+			switch (name){
 				case Language.MAPGRID:
-					signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./TiledMap/map0.tmx");
+					//signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./TiledMap/map0.tmx");
+					_navigator.showScreen(ScreenConst.PHYSIS_SCREEN);	
 					break;
 				case Language.MAPISO:
-					signalBus.dispatchSignal(ScreenEventConst.LOADMAP_EVENT,"./Monopoly/map0.tmx");
+					_navigator.showScreen(ScreenConst.PHYSIS_SCREEN);	
 					break;
-			}*/
+			}
 		}
 		
 	}
