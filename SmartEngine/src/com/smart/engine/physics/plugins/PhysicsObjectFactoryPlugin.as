@@ -3,6 +3,9 @@ package com.smart.engine.physics.plugins
 	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
 	import com.smart.engine.PhysicsEngine;
+	import com.smart.engine.physics.core.PhysicsObject;
+	
+	import flash.geom.Point;
 	
 	import nape.phys.Body;
 	import nape.phys.BodyType;
@@ -25,9 +28,22 @@ package com.smart.engine.physics.plugins
 			if (_addBoder)
 			addStageBorder();
 			
-			//test1();
+			test2();
 		}
 		
+		public function test2():void{
+			var obj:PhysicsObject = new PhysicsObject();
+			var pts:Array= new Array();
+			pts.push(new Point(0,0));
+			pts.push(new Point(0,20));
+			pts.push(new Point(20,20));
+			pts.push(new Point(20,0));
+			
+			obj.body.shapes.add(new Polygon(Polygon.box(16, 32)));
+			obj.body.position.setxy(20, 200);
+			obj.points=pts;
+			engine.addObject(obj);
+		}
 		
 		public function test1():void{
 			var w:int = stage.stageWidth;
