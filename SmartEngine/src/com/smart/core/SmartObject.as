@@ -4,9 +4,44 @@ package com.smart.core
 	public class SmartObject
 	{
 		protected var _name:String = "SmartObject";
-		private var components:Vector.<IComponent>; 
-		public function SmartObject()
+		private var components:Vector.<IComponent>;
+		
+		protected var _params:Object;
+		public function SmartObject(params:Object = null)
 		{
+			_params = params;
+		}
+		public function initialize(params:Object = null):void {
+			
+			if (params)
+				_params = params;
+			
+			if (_params)
+				setParameters(this, _params);				
+		}
+		
+		public function get params():Object{
+			return _params;
+		}
+		
+		public function setParameters(object:Object, params:Object):void
+		{
+			for (var param:String in params)
+			{
+				try
+				{
+					if (params[param] == "true")
+						object[param] = true;
+					else if (params[param] == "false")
+						object[param] = false;
+					else
+						object[param] = params[param];
+				}
+				catch (e:Error)
+				{
+						trace("Warning: The parameter " + param + " does not exist on " + this);
+				}
+			}
 		}
 		
 		public function get name():String {
