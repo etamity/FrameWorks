@@ -28,7 +28,7 @@ package com.smart {
 		protected var enginesHash:Dictionary;
 		private var container:Sprite;
 		public function SmartSystem(root:Sprite) {
-			
+			super();
 			this.stage=root.stage;
 			this.root=root;
 			container=root;
@@ -51,6 +51,13 @@ package com.smart {
 		   enginesHash[engine.name]=engine;
 		   return engine;
 	   }
+	   
+	   public function getEngine(engine:*):*{
+		  var pluginName:String=getClassName(engine);
+		  return  enginesHash[pluginName];
+
+	   }
+	   
 	   public function removeEngine(engine:IEngine):void
 	   {
 		   var index:int=engines.indexOf(engine);
