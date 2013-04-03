@@ -6,6 +6,7 @@ package com.smart.core
 	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
+	import starling.display.DisplayObjectContainer;
 	import starling.display.Stage;
 
 	public class Plugin extends SmartObject implements IPlugin
@@ -14,17 +15,17 @@ package com.smart.core
 		protected var _enabled:Boolean=true;
 		private var _stage:starling.display.Stage;
 		
-		private var _root:DisplayObject;
+		private var _root:DisplayObjectContainer;
 		
 		public function Plugin()
 		{
 			name= this.getClassName(this);
 
 		}
-		public function get root():DisplayObject{
+		public function get root():DisplayObjectContainer{
 			return _root;
 		}
-		public function set root(val:DisplayObject):void{
+		public function set root(val:DisplayObjectContainer):void{
 			_root = val;
 		}
 		

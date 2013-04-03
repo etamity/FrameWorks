@@ -9,7 +9,7 @@
 package com.smart.core {
 	import flash.display.Stage;
 	
-	import starling.display.DisplayObject;
+	import starling.display.DisplayObjectContainer;
 	import starling.display.Stage;
 
 	
@@ -34,8 +34,8 @@ package com.smart.core {
 		function get nativeStage():flash.display.Stage;
 		
 		
-		function get root():DisplayObject;
-		function set root(val:DisplayObject):void;
+		function get root():DisplayObjectContainer;
+		function set root(val:DisplayObjectContainer):void;
 		
 	}
 

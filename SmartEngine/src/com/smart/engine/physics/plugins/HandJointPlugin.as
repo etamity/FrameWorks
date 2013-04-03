@@ -3,6 +3,7 @@ package com.smart.engine.physics.plugins
 	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
 	import com.smart.engine.PhysicsEngine;
+	import com.smart.engine.physics.core.TouchEventHandler;
 	
 	import flash.geom.Point;
 	
@@ -15,12 +16,11 @@ package com.smart.engine.physics.plugins
 		
 	{	private var handJoint:PivotJoint;
 		private var engine:PhysicsEngine;
-		private var touchEventPlugin:TouchEventPlugin;
+		private var touchEventHandler:TouchEventHandler;
 		public function HandJointPlugin()
 		{
 			super();
 		}
-		
 		
 		public function get active():Boolean{
 			return handJoint.active;
@@ -34,7 +34,7 @@ package com.smart.engine.physics.plugins
 		override public function onTrigger(time:Number):void{
 			
 			if (handJoint.active) {
-				handJoint.anchor1.setxy(touchEventPlugin.mouseX, touchEventPlugin.mouseY);
+				handJoint.anchor1.setxy(touchEventHandler.mouseX, touchEventHandler.mouseY);
 			}
 		}
 		
@@ -70,11 +70,12 @@ package com.smart.engine.physics.plugins
 		override public function onRegister(engine:IEngine):void{
 			this.engine=engine as PhysicsEngine;
 		
-			touchEventPlugin= engine.getPlugin(TouchEventPlugin);
+			touchEventHandler= new TouchEventHandler(engine.stage);
+			touchEventHandler.clear();
 			
-			touchEventPlugin.addTouchDown(mouseDownHandler);
-			touchEventPlugin.addTouchUp(mouseUpHandler);
-			touchEventPlugin.addTouchMove(mouseMoveHandler);
+			touchEventHandler.mouseDown=mouseDownHandler;
+			touchEventHandler.mouseUp=mouseUpHandler;
+			touchEventHandler.mouseMove=mouseMoveHandler;
 			
 			handJoint = new PivotJoint(this.engine.space.world, null, Vec2.weak(), Vec2.weak());
 			handJoint.space = this.engine.space;
