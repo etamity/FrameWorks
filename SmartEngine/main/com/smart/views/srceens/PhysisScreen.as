@@ -2,11 +2,11 @@ package com.smart.views.srceens
 {
 	import com.smart.SmartSystem;
 	import com.smart.engine.PhysicsEngine;
+	import com.smart.engine.physics.core.TouchEventHandler;
 	import com.smart.engine.physics.plugins.DebugDrawPlugin;
 	import com.smart.engine.physics.plugins.DrawBodyPlugin;
 	import com.smart.engine.physics.plugins.HandJointPlugin;
 	import com.smart.engine.physics.plugins.PhysicsObjectFactoryPlugin;
-	import com.smart.engine.physics.core.TouchEventHandler;
 	import com.smart.model.Language;
 	import com.smart.model.ScreenConst;
 	
@@ -42,10 +42,16 @@ package com.smart.views.srceens
 			_navigator.addScreen(ScreenConst.GAME_SCREEN, new ScreenNavigatorItem(GameScreen,eventObject,properties));
 			_navigator.addScreen(ScreenConst.PHYSIS_SCREEN, new ScreenNavigatorItem(PhysisScreen,eventObject,properties));
 			
-			var _newBtn:Button=newButton(Language.GAMETITLE);
+			var _newBtn:Button=newButton(Language.GAMETITLE,clearEngine);
 			addItem(_newBtn,LEFT);
 			var _backBtn:Button=newButton(Language.EXIT,showMenu);
 			addItem(_backBtn,RIGHT);
+			
+			
+			var _circle:Button=newButton("Circle",drawCricle);
+			addItem(_circle,LEFT);
+			var _draw:Button=newButton("Draw",drawPoly);
+			addItem(_draw,LEFT);
 			
 			addChild(_navigator);
 			
@@ -62,7 +68,20 @@ package com.smart.views.srceens
 			
 		}
 		
+		public function drawCricle(evt:Event):void{
+			var engine:PhysicsEngine= system.getEngine(PhysicsEngine);
+			var drawBodyPlugin:DrawBodyPlugin= engine.getPlugin(DrawBodyPlugin);
+			drawBodyPlugin.state=drawBodyPlugin.DRAW_CIRCLE;
+		}
+		public function drawPoly(evt:Event):void{
+			var engine:PhysicsEngine= system.getEngine(PhysicsEngine);
+			var drawBodyPlugin:DrawBodyPlugin= engine.getPlugin(DrawBodyPlugin);
+			drawBodyPlugin.state=drawBodyPlugin.DRAW_GEOMPOLY;
+		}
 		
+		public function clearEngine(evt:Event):void{
+			start();
+		}
 		public function showMainMenu(evt:Event):void{
 			this.dispatchEventWith(Language.EXIT);
 		}
