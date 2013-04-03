@@ -36,6 +36,8 @@ package com.smart.engine
 			return object;
 		}
 		override public function dispose():void{
+			this.removeAllPlugins();
+			
 			_space = new Space(_gravity);
 			_objectHash=new Dictionary();
 			_objects=new Vector.<PhysicsObject>();
