@@ -4,42 +4,51 @@ package com.smart.engine.physics.plugins
 	import com.smart.core.Plugin;
 	import com.smart.engine.PhysicsEngine;
 	
-	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	
 	import nape.constraint.PivotJoint;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
 	import nape.phys.BodyList;
-	
-	import starling.core.Starling;
-	
+
 	public class HandJointPlugin extends Plugin
 		
 	{	private var handJoint:PivotJoint;
 		private var engine:PhysicsEngine;
+		private var touchEventPlugin:TouchEventPlugin;
 		public function HandJointPlugin()
 		{
 			super();
 		}
 		
-		private function mouseUpHandler(ev:MouseEvent):void {
+		
+		public function get active():Boolean{
+			return handJoint.active;
+		}
+		
+		private function mouseUpHandler(point:Point):void {
+
 			handJoint.active = false;
 		}
+
 		override public function onTrigger(time:Number):void{
 			
 			if (handJoint.active) {
-				handJoint.anchor1.setxy(nativeStage.mouseX, nativeStage.mouseY);
+				handJoint.anchor1.setxy(touchEventPlugin.mouseX, touchEventPlugin.mouseY);
 			}
+		}
+		
+		private function mouseMoveHandler(point:Point):void {
+	
 	
 		}
-		private function mouseDownHandler(ev:MouseEvent):void {
-			
-			var mousePoint:Vec2 = Vec2.get(nativeStage.mouseX, nativeStage.mouseY);
-			
-			
+		
+		private function mouseDownHandler(point:Point):void {
+			var mousePoint:Vec2 = Vec2.get(point.x, point.y);
 			var bodies:BodyList = engine.space.bodiesUnderPoint(mousePoint);
+			var body:Body
 			for (var i:int = 0; i < bodies.length; i++) {
-				var body:Body = bodies.at(i);
+				body= bodies.at(i);
 				
 				if (!body.isDynamic()) {
 					continue;
@@ -60,9 +69,12 @@ package com.smart.engine.physics.plugins
 		
 		override public function onRegister(engine:IEngine):void{
 			this.engine=engine as PhysicsEngine;
-
-			Starling.current.nativeStage.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
-			Starling.current.nativeStage.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+		
+			touchEventPlugin= engine.getPlugin(TouchEventPlugin);
+			
+			touchEventPlugin.addTouchDown(mouseDownHandler);
+			touchEventPlugin.addTouchUp(mouseUpHandler);
+			touchEventPlugin.addTouchMove(mouseMoveHandler);
 			
 			handJoint = new PivotJoint(this.engine.space.world, null, Vec2.weak(), Vec2.weak());
 			handJoint.space = this.engine.space;
