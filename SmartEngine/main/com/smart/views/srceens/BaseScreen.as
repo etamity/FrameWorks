@@ -1,8 +1,8 @@
 package com.smart.views.srceens
 {
 
+	import com.smart.SmartSystem;
 	import com.smart.loaders.ResourcesManager;
-	import com.smart.scenes.BaseScene;
 	import com.smart.services.ThemeService;
 	
 	import feathers.controls.Button;
@@ -27,19 +27,46 @@ package com.smart.views.srceens
 		protected const RIGHT:String="RIGHT";
 		private var _header:Header;
 		public var headerHeight:int=64;
-
-		private var _scene:BaseScene;
+		protected var system:SmartSystem;
+		private var _data:Object;
+		
 		public function BaseScreen()
 		{
 
 		}
-		override protected function screen_removedFromStageHandler(event:Event):void{
-			if (_scene!=null)
-			_scene.dispose();
-			super.screen_removedFromStageHandler(event);
+		
+		override protected function initialize():void{
+			initUI();
+			initData();
+			start();
 		}
 		public function get header():Header{
 			return _header;
+		}
+		
+		override public function dispose():void{
+			super.dispose();
+			if (system != null)
+				system.dispose();
+		}
+		public function initUI():void{
+			
+		}
+		
+		public function initData():void{
+			
+		}
+		public function addPlugins(system:SmartSystem):void {
+			
+		}
+		
+		public function start():void{
+			if (system != null)
+				system.dispose();
+			
+			system = new SmartSystem(this);
+			addPlugins(system);
+			system.start();
 		}
 		protected function addHeader(title:String):Header
 		{
@@ -102,13 +129,6 @@ package com.smart.views.srceens
 
 		}
 
-		public function addScene(scene:BaseScene):void{
-			_scene=scene;
-			scene.assets=assets;
-			addChild(scene);
-			scene.start();
-			
-		}
 		public function addItem(display:DisplayObject, direct:String=LEFT):void
 		{
 			addHeader("");

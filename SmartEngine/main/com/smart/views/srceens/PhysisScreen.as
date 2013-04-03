@@ -1,9 +1,14 @@
 package com.smart.views.srceens
 {
 	import com.smart.SmartSystem;
+	import com.smart.engine.PhysicsEngine;
+	import com.smart.engine.physics.plugins.DebugDrawPlugin;
+	import com.smart.engine.physics.plugins.DrawBodyPlugin;
+	import com.smart.engine.physics.plugins.HandJointPlugin;
+	import com.smart.engine.physics.plugins.PhysicsObjectFactoryPlugin;
+	import com.smart.engine.physics.core.TouchEventHandler;
 	import com.smart.model.Language;
 	import com.smart.model.ScreenConst;
-	import com.smart.scenes.PhysicsScene;
 	
 	import feathers.controls.Button;
 	import feathers.controls.ScreenNavigator;
@@ -24,8 +29,8 @@ package com.smart.views.srceens
 		
 		}
 
-		override protected function initialize():void{
-	
+		
+		override public function initUI():void{
 			_navigator = new ScreenNavigator();
 			addChild(_navigator);
 			var eventObject:Object=new Object();
@@ -46,11 +51,17 @@ package com.smart.views.srceens
 			
 			_transitionManager = new ScreenSlidingStackTransitionManager(_navigator);
 			_transitionManager.duration = 0.4;
-			var physisScene:PhysicsScene=new PhysicsScene();
-			addScene(physisScene);
-	
+		}
+		
+		override public function addPlugins(system:SmartSystem):void{
+			system.addEngine(new PhysicsEngine(0,600))
+				.addPlugin(new PhysicsObjectFactoryPlugin())
+				.addPlugin(new HandJointPlugin())
+				.addPlugin(new DrawBodyPlugin())
+				.addPlugin(new DebugDrawPlugin());
 			
 		}
+		
 		
 		public function showMainMenu(evt:Event):void{
 			this.dispatchEventWith(Language.EXIT);

@@ -6,7 +6,6 @@ package com.smart.views
 	import com.smart.model.Language;
 	import com.smart.model.ScreenConst;
 	import com.smart.model.SignalBus;
-	import com.smart.scenes.BaseScene;
 	import com.smart.views.srceens.GameScreen;
 	import com.smart.views.srceens.MenuScreen;
 	import com.smart.views.srceens.PhysisScreen;
@@ -36,8 +35,6 @@ package com.smart.views
 		
 		private var _transitionManager:ScreenSlidingStackTransitionManager;
 
-		private var _scene:BaseScene;
-		
 		public function MainMediator()
 		{
 			super();

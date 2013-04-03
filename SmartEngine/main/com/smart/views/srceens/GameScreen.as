@@ -1,7 +1,13 @@
 package com.smart.views.srceens
 {
+	import com.smart.SmartSystem;
+	import com.smart.engine.MapEngine;
+	import com.smart.engine.map.models.TMXMapModel;
+	import com.smart.engine.map.plugins.CameraPlugin;
+	import com.smart.engine.map.plugins.ViewportControlPlugin;
+	import com.smart.engine.map.plugins.ViewportPlugin;
+	import com.smart.engine.map.utils.Point3D;
 	import com.smart.model.Language;
-	import com.smart.scenes.TiledMapScene;
 	
 	import feathers.controls.Button;
 	import feathers.controls.Label;
@@ -16,7 +22,7 @@ package com.smart.views.srceens
 		public var _money:Label;
 		public var _health:ProgressBar;
 		public var _exitBtn:Button;
-		public var _scene:TiledMapScene;
+		protected var tmxData:TMXMapModel;
 		public function GameScreen()
 		{
 			super();
@@ -24,7 +30,7 @@ package com.smart.views.srceens
 		}
 		
 
-		override protected function initialize():void{
+		override public function initUI():void{
 
 			_money = newLabel("1000.00");
 			_health= newProgressBar(100);
@@ -46,19 +52,27 @@ package com.smart.views.srceens
 			addItem(_mapgirdBtn,RIGHT);
 			addItem(_reloadBtn,RIGHT);
 			addItem(_exitBtn,RIGHT);
-			_scene = new TiledMapScene();
-			addScene(_scene);
 		
 		}
-
-		override public function dispose():void{
-			removeChild(_scene);
-			_scene.dispose();
-			super.dispose();
+		override public function addPlugins(system:SmartSystem):void {
+			
+			if (tmxData!=null)
+			{
+				system.addEngine(new MapEngine(tmxData))
+					.addPlugin(new ViewportPlugin(tmxData.orientation,tmxData.tileWidth, tmxData.tileHeight))
+					.addPlugin(new CameraPlugin(new Point3D(0,0,1)))
+					.addPlugin(new ViewportControlPlugin());
+			}
+			
+		}
+		
+		private function onTMXLoad(tmx:TMXMapModel):void {
+			this.tmxData=tmx;
+			start();
 		}
 		private function loadMap(event:Event):void
 		{
-			_scene.loadMap("./TiledMap/map0.tmx");
+			TMXMapModel.loadTMX("./TiledMap/map0.tmx",onTMXLoad);
 		}
 	}
 }
