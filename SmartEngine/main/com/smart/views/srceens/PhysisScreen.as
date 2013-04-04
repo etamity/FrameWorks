@@ -48,10 +48,16 @@ package com.smart.views.srceens
 			addItem(_backBtn,RIGHT);
 			
 			
-			var _circle:Button=newButton("Circle",drawCricle);
+			var _circle:Button=newButton("Circle",drawPoly);
 			addItem(_circle,LEFT);
 			var _draw:Button=newButton("Draw",drawPoly);
 			addItem(_draw,LEFT);
+			
+			var _box:Button=newButton("Box",drawPoly);
+			addItem(_box,LEFT);
+			
+			var _Regular:Button=newButton("Regular",drawPoly);
+			addItem(_Regular,LEFT);
 			
 			addChild(_navigator);
 			
@@ -68,15 +74,28 @@ package com.smart.views.srceens
 			
 		}
 		
-		public function drawCricle(evt:Event):void{
-			var engine:PhysicsEngine= system.getEngine(PhysicsEngine);
-			var drawBodyPlugin:DrawBodyPlugin= engine.getPlugin(DrawBodyPlugin);
-			drawBodyPlugin.state=drawBodyPlugin.DRAW_CIRCLE;
-		}
+
 		public function drawPoly(evt:Event):void{
+			const button:Button=Button(evt.currentTarget);
 			var engine:PhysicsEngine= system.getEngine(PhysicsEngine);
 			var drawBodyPlugin:DrawBodyPlugin= engine.getPlugin(DrawBodyPlugin);
-			drawBodyPlugin.state=drawBodyPlugin.DRAW_GEOMPOLY;
+
+			
+			switch (button.label){
+				case "Circle":
+					drawBodyPlugin.state=drawBodyPlugin.DRAW_CIRCLE;
+					break;
+				case "Draw":
+					drawBodyPlugin.state=drawBodyPlugin.DRAW_GEOMPOLY;
+					break;
+				case "Box":
+					drawBodyPlugin.state=drawBodyPlugin.DRAW_BOX;
+					break;
+				case "Regular":
+					drawBodyPlugin.state=drawBodyPlugin.DRAW_REGULAR;
+					break;
+			}
+			
 		}
 		
 		public function clearEngine(evt:Event):void{
