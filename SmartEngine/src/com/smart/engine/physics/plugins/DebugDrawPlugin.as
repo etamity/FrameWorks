@@ -33,9 +33,12 @@ package com.smart.engine.physics.plugins
 		override public function onRegister(engine:IEngine):void{
 			this.engine=engine as PhysicsEngine;
 			_debug= new BitmapDebug(stage.stageWidth, stage.stageHeight,0 ,true);
-			_debug.display.x =root.x;
-			_debug.display.y =root.y;
 			_debug.drawConstraints = true;
+			/*_debug.cullingEnabled=true;
+			_debug.drawFluidArbiters=true;
+			_debug.drawBodyDetail=true;
+			_debug.drawCollisionArbiters=true;
+			_debug.drawBodies=true;*/
 			nativeStage.addChild(_debug.display);
 
 		}

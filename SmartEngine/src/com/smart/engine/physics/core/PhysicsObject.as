@@ -8,7 +8,6 @@ package com.smart.engine.physics.core
 	import nape.geom.GeomPoly;
 	import nape.geom.GeomPolyList;
 	import nape.geom.Vec2;
-	import nape.geom.Vec2List;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
 	import nape.phys.Material;
@@ -43,7 +42,7 @@ package com.smart.engine.physics.core
 			_body.userData.myData=this;
 			_body.rotate(new Vec2(0, 0), _rotation);
 
-			//_material=new Material();
+			_material=new Material();
 			
 			
 		}

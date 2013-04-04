@@ -3,11 +3,11 @@ package com.smart.engine.physics.plugins
 	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
 	import com.smart.engine.PhysicsEngine;
+	import com.smart.engine.physics.core.Canvas;
 	import com.smart.engine.physics.core.TouchEventHandler;
 	
 	import flash.geom.Point;
 	
-	import starling.display.Shape;
 	import starling.utils.Color;
 	
 	public class DrawBodyPlugin extends Plugin
@@ -29,14 +29,14 @@ package com.smart.engine.physics.plugins
 		
 		private var _state:String="";
 		
-		private var canvas:Shape;
+		private var canvas:Canvas;
 		
 		public function DrawBodyPlugin()
 		{
 			super();
 
 			points=new Array();
-			canvas= new Shape();
+			canvas= new Canvas();
 		}
 		
 		public function get state():String{
@@ -99,7 +99,9 @@ package com.smart.engine.physics.plugins
 			var hh:Number= curPoint.y-prePoint.y;
 			var r:Number = Math.sqrt(ww*ww + hh*hh);
 			var mouseAngle:Number=Math.atan2(curPoint.y-prePoint.y, curPoint.x-prePoint.x);
+			if (distance >= 5) {
 			physicsObjectFactoryPlugin.createRegular(distance,mouseAngle,5,null,prePoint.x,prePoint.y);
+			}
 		}
 		private function mouseDownHandler_DrawRegular(point:Point):void {
 			if (handJointPlugin.active==false)
@@ -145,9 +147,12 @@ package com.smart.engine.physics.plugins
 			isDrawing=false;
 			canvas.graphics.clear();
 			curPoint = new Point(point.x, point.y);
+			var distance:Number = Point.distance(prePoint, curPoint);
 			var ww:Number= curPoint.x-prePoint.x;
 			var hh:Number= curPoint.y-prePoint.y;
+			if (distance >= 5) {
 			physicsObjectFactoryPlugin.createBox(ww,hh,null,prePoint.x+ww/2,prePoint.y+hh/2);
+			}
 		}
 		private function mouseDownHandler_DrawBox(point:Point):void {
 			if (handJointPlugin.active==false)
@@ -185,7 +190,9 @@ package com.smart.engine.physics.plugins
 			canvas.graphics.clear();
 			curPoint = new Point(point.x, point.y);
 			var distance:Number = Point.distance(prePoint, curPoint);
+			if (distance >= 5) {
 			physicsObjectFactoryPlugin.createCircle(distance,null,prePoint.x,prePoint.y);
+			}
 		}
 		private function mouseDownHandler_DrawCircle(point:Point):void {
 			if (handJointPlugin.active==false)
