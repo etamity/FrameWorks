@@ -33,11 +33,12 @@ package com.smart.engine
 		public function addObject(object:PhysicsObject):PhysicsObject{
 			_objects.push(object);
 			_objectHash[object.name]=object;
+			object.initialize();
 			object.body.space=_space;
 			return object;
 		}
 		override public function dispose():void{
-			this.removeAllPlugins();
+			super.removeAllPlugins();
 			_space.clear();
 			_space = new Space(_gravity);
 			_objectHash=new Dictionary();

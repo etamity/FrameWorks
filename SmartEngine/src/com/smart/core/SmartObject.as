@@ -11,10 +11,7 @@ package com.smart.core
 		{
 			_params = params;
 		}
-		public function initialize(params:Object = null):void {
-			
-			if (params)
-				_params = params;
+		public function initialize():void {
 			
 			if (_params)
 				setParameters(this, _params);				

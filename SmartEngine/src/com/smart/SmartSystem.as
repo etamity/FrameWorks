@@ -11,8 +11,8 @@ package com.smart {
 	import com.smart.core.Engine;
 	import com.smart.core.IEngine;
 	import com.smart.core.IPlugin;
-	import flash.system.System;
 	
+	import flash.system.System;
 	import flash.utils.Dictionary;
 	
 	import starling.animation.IAnimatable;
@@ -31,10 +31,10 @@ package com.smart {
 		public function SmartSystem(root:Sprite) {
 			super();
 			this.stage=root.stage;
-			this.root=root;
-			container=root;
+			container=new Sprite();
+			this.root=container;
 			_juggler = new Juggler();
-			
+			root.addChild(container);
 			engines=new <IEngine>[];
 			enginesHash=new Dictionary();
 		}
@@ -71,17 +71,17 @@ package com.smart {
 	   }
 
 	   public function removeAllEngines():void{
-		   for each (var engine:IEngine in engines)
+		   while (engines.length>0)
 		   {
-			   removeEngine(engine);
+			   removeEngine(engines[engines.length-1]);
 		   }
+		   
 		   engines=new <IEngine>[];
 		   enginesHash=new Dictionary();
 	   }
 	   
 	   override public function dispose():void{
-		   this.stop();
-		   super.dispose();
+		   stop();
 		   removeAllEngines();
 		   display.removeChildren();
 		   _juggler = null;

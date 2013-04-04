@@ -43,7 +43,9 @@ package com.smart.engine.physics.core
 			_body.userData.myData=this;
 			_body.rotate(new Vec2(0, 0), _rotation);
 
-			_material=new Material();
+			//_material=new Material();
+			
+			
 		}
 		public function get material():Material{
 			return _material;
@@ -74,14 +76,6 @@ package com.smart.engine.physics.core
 			shapes.add(obj);
 			return _body;
 		}
-
-		override public function initialize(params:Object=null):void
-		{
-			if (params)
-				super.initialize(params);
-
-		}
-
 
 		override public function dispose():void
 		{

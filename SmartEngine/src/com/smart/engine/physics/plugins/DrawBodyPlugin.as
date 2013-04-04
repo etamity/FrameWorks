@@ -3,12 +3,12 @@ package com.smart.engine.physics.plugins
 	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
 	import com.smart.engine.PhysicsEngine;
+	import com.smart.engine.physics.core.TouchEventHandler;
 	
 	import flash.geom.Point;
 	
 	import starling.display.Shape;
 	import starling.utils.Color;
-	import com.smart.engine.physics.core.TouchEventHandler;
 	
 	public class DrawBodyPlugin extends Plugin
 	{
@@ -42,12 +42,22 @@ package com.smart.engine.physics.plugins
 		public function get state():String{
 			return _state;
 		}
+		
+		override public function dispose():void{
+			touchEventHandler.clear();
+			touchEventHandler.dispose();
+			engine.root.removeChild(canvas);
+			canvas.dispose();
+			
+		}
+		
 		public function set state(val:String):void{
 			if (_state==val) return;
 			
 			_state=val;
 			touchEventHandler.clear();
-			
+			touchEventHandler.stop();
+			isDrawing=false;
 			switch (val){
 				case DRAW_GEOMPOLY:
 					touchEventHandler.mouseDown=mouseDownHandler;
@@ -61,11 +71,112 @@ package com.smart.engine.physics.plugins
 					
 					break;
 				case DRAW_BOX:
+					touchEventHandler.mouseDown=mouseDownHandler_DrawBox;
+					touchEventHandler.mouseUp=mouseUpHandler_DrawBox;
+					touchEventHandler.mouseMove=mouseMoveHandler_DrawBox;
+					
 					break;
 				case DRAW_REGULAR:
+					touchEventHandler.mouseDown=mouseDownHandler_DrawRegular;
+					touchEventHandler.mouseUp=mouseUpHandler_DrawRegular;
+					touchEventHandler.mouseMove=mouseMoveHandler_DrawRegular;
+					
+					
 					break;
 			}
+			touchEventHandler.start();
 		}	
+		
+		
+		private function mouseUpHandler_DrawRegular(point:Point):void {
+			
+			if(!isDrawing) return;
+			isDrawing=false;
+			canvas.graphics.clear();
+			curPoint = new Point(point.x, point.y);
+			var distance:Number = Point.distance(prePoint, curPoint);
+			var ww:Number= curPoint.x-prePoint.x;
+			var hh:Number= curPoint.y-prePoint.y;
+			var r:Number = Math.sqrt(ww*ww + hh*hh);
+			var mouseAngle:Number=Math.atan2(curPoint.y-prePoint.y, curPoint.x-prePoint.x);
+			physicsObjectFactoryPlugin.createRegular(distance,mouseAngle,5,null,prePoint.x,prePoint.y);
+		}
+		private function mouseDownHandler_DrawRegular(point:Point):void {
+			if (handJointPlugin.active==false)
+			{
+				isDrawing=true;
+				curPoint = new Point(point.x, point.y);
+				prePoint = curPoint.clone();
+				canvas.graphics.moveTo(point.x, point.y);
+			}
+		}
+		private function mouseMoveHandler_DrawRegular(point:Point):void {
+			if(!isDrawing) return;
+			
+			curPoint = new Point(point.x, point.y);
+			
+			canvas.graphics.clear();
+
+			var angle:Number = Math.PI*2/5;
+			var mouseAngle:Number=Math.atan2(curPoint.y-prePoint.y, curPoint.x-prePoint.x);
+			var x:Number, y:Number;
+			var ww:Number= curPoint.x-prePoint.x;
+			var hh:Number= curPoint.y-prePoint.y;
+			var r:Number = Math.sqrt(ww*ww + hh*hh);
+			canvas.graphics.moveTo(prePoint.x+r * Math.cos(mouseAngle), prePoint.y+r * Math.sin(mouseAngle));
+			if (r >= 5) {
+				for (var i:int=1; i<=5; i++){
+					x=prePoint.x + r * Math.cos( i*angle+mouseAngle);
+					y=prePoint.y + r * Math.sin( i*angle+mouseAngle);
+		
+					canvas.graphics.lineTo(x,y);
+				}
+				
+				
+			}
+			
+		}
+		
+		
+		private function mouseUpHandler_DrawBox(point:Point):void {
+			
+			if(!isDrawing) return;
+			
+			isDrawing=false;
+			canvas.graphics.clear();
+			curPoint = new Point(point.x, point.y);
+			var ww:Number= curPoint.x-prePoint.x;
+			var hh:Number= curPoint.y-prePoint.y;
+			physicsObjectFactoryPlugin.createBox(ww,hh,null,prePoint.x+ww/2,prePoint.y+hh/2);
+		}
+		private function mouseDownHandler_DrawBox(point:Point):void {
+			if (handJointPlugin.active==false)
+			{
+				isDrawing=true;
+				curPoint = new Point(point.x, point.y);
+				prePoint = curPoint.clone();
+				canvas.graphics.moveTo(point.x, point.y);
+			}
+		}
+		private function mouseMoveHandler_DrawBox(point:Point):void {
+			if(!isDrawing) return;
+			
+			curPoint = new Point(point.x, point.y);
+			var ww:Number= curPoint.x-prePoint.x;
+			var hh:Number= curPoint.y-prePoint.y;
+			canvas.graphics.clear();
+			var distance:Number = Point.distance(prePoint, curPoint);
+			if (distance >= 5) {
+				canvas.graphics.drawRect(prePoint.x,prePoint.y,ww,hh);
+
+			}
+			
+		}
+		
+		
+		
+		
+		
 		private function mouseUpHandler_DrawCircle(point:Point):void {
 			
 			if(!isDrawing) return;

@@ -15,10 +15,10 @@ package com.smart.engine.physics.plugins
 
 		public function DebugDrawPlugin()
 		{
+			super();
 		}
 		
 		override public function onTrigger(time:Number):void{
-	
 			_debug.clear();
 			_debug.draw(engine.space);
 			_debug.flush();
@@ -26,6 +26,7 @@ package com.smart.engine.physics.plugins
 
 		override public function dispose():void{
 			nativeStage.removeChild(_debug.display);
+			_debug.clear();
 			_debug=null;
 		}
 

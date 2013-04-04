@@ -14,11 +14,11 @@ package com.smart.engine.physics.core
 	{
 		private var _target:DisplayObject;
 
-		public var mouseUp:Function;
-		public var mouseDown:Function;
-		public var mouseMove:Function;
-		public var mouseHover:Function;
-		public var mouseClick:Function;
+		private var _mouseUp:Function;
+		private var _mouseDown:Function;
+		private var _mouseMove:Function;
+		private var _mouseHover:Function;
+		private var _mouseClick:Function;
 
 		private var _eventsHash:Dictionary;
 
@@ -35,21 +35,45 @@ package com.smart.engine.physics.core
 
 
 		}
-
+		public function stop():void{
+			_target.removeEventListener(TouchEvent.TOUCH, doTouchEvent);
+		}
+		
+		public function start():void{
+			_target.addEventListener(TouchEvent.TOUCH, doTouchEvent);
+		}
+		
+		public function set mouseUp(val:Function):void{
+			_mouseUp=val;
+		}
+		public function set mouseDown(val:Function):void{
+			_mouseDown=val;
+		}
+		public function set mouseMove(val:Function):void{
+			_mouseMove=val;
+		}
+		public function set mouseHover(val:Function):void{
+			_mouseHover=val;
+		}
+		public function set mouseClick(val:Function):void{
+			_mouseClick=val;
+		}
 	   override public function dispose():void
 		{
+		   	clear();
 			_target.removeEventListener(TouchEvent.TOUCH, doTouchEvent);
 			_target=null;
-			clear();
 		}
 
 		public function clear():void
 		{
-			mouseUp=null;
-			mouseDown=null;
-			mouseMove=null;
-			mouseHover=null;
-			mouseClick=null;
+			_target.removeEventListener(TouchEvent.TOUCH, doTouchEvent);
+			_mouseUp=null;
+			_mouseDown=null;
+			_mouseMove=null;
+			_mouseHover=null;
+			_mouseClick=null;
+			_target.addEventListener(TouchEvent.TOUCH, doTouchEvent);
 		}
 
 		public function get mouseX():Number
@@ -75,24 +99,24 @@ package com.smart.engine.physics.core
 				switch (touch.phase)
 				{
 					case TouchPhase.BEGAN:
-						if (mouseDown!=null)
-							mouseDown(currentPos);
+						if (_mouseDown!=null)
+							_mouseDown(currentPos);
 						break;
 					case TouchPhase.MOVED:
-						if (mouseMove!=null)
-							mouseMove(currentPos);
+						if (_mouseMove!=null)
+							_mouseMove(currentPos);
 						break;
 					case TouchPhase.ENDED:
-						if (mouseUp!=null)
-							mouseUp(currentPos);
+						if (_mouseUp!=null)
+							_mouseUp(currentPos);
 						break;
 					case TouchPhase.HOVER:
-						if (mouseHover!=null)
-							mouseHover(currentPos);
+						if (_mouseHover!=null)
+							_mouseHover(currentPos);
 						break;
 					case TouchPhase.STATIONARY:
-						if (mouseClick!=null)
-							mouseClick(currentPos);
+						if (_mouseClick!=null)
+							_mouseClick(currentPos);
 						break;
 				}
 			}

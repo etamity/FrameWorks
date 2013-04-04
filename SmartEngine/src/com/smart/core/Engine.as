@@ -41,9 +41,9 @@ package com.smart.core {
 			return getPluginByName(pluginName);
 		}
 		public function removeAllPlugins():void{
-			for each (var plugin:IPlugin in plugins)
+			while (plugins.length>0)
 			{
-				removePlugin(plugin);
+				removePlugin(plugins[plugins.length-1]);
 			}
 			plugins=new <IPlugin>[];
 			pluginsHash=new Dictionary();

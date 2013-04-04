@@ -20,11 +20,22 @@ package com.smart.engine.physics.plugins
 		public function HandJointPlugin()
 		{
 			super();
+			
 		}
 		
 		public function get active():Boolean{
 			return handJoint.active;
 		}
+		
+		override public function dispose():void{
+			super.dispose();
+			touchEventHandler.clear();
+			touchEventHandler.dispose();
+			touchEventHandler=null;
+			handJoint.space=null;
+			handJoint=null;
+		}
+		
 		
 		private function mouseUpHandler(point:Point):void {
 
@@ -76,11 +87,14 @@ package com.smart.engine.physics.plugins
 			touchEventHandler.mouseDown=mouseDownHandler;
 			touchEventHandler.mouseUp=mouseUpHandler;
 			touchEventHandler.mouseMove=mouseMoveHandler;
-			
+	
 			handJoint = new PivotJoint(this.engine.space.world, null, Vec2.weak(), Vec2.weak());
+			
 			handJoint.space = this.engine.space;
 			handJoint.active = false;
 			handJoint.stiff = false;
+			
+			
 		}
 		
 	}

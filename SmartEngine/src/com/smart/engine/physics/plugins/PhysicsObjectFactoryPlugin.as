@@ -7,6 +7,7 @@ package com.smart.engine.physics.plugins
 	
 	import nape.phys.Body;
 	import nape.phys.BodyType;
+	import nape.phys.FluidProperties;
 	import nape.phys.Material;
 	import nape.shape.Circle;
 	import nape.shape.Polygon;
@@ -39,12 +40,32 @@ package com.smart.engine.physics.plugins
 			for (var i:int = 0; i < 16; i++) {
 				createBox(24,24,null,(w / 2), ((h - 50) - 32 * (i + 0.5)));
 			}
-			createCircle(40);
+			
+			for (var a:int = 0; a < 16; a++) {
+				createCircle(20,null ,(w / 2)+50, ((h - 50) - 32 * (i + 0.5)));
+			}
+			
+			createWater(w-2,200,null,(w / 2)+1,h-220);
+			
 		}
+		
+		public function createWater(w:Number,h:Number,material:Material=null,x:Number=0,y:Number=0):PhysicsObject{
+			var obj:PhysicsObject = new PhysicsObject({"material":material,"type":BodyType.STATIC});
+			var shape:Polygon = new Polygon(Polygon.box(w, h),obj.material);
+			shape.fluidEnabled=true;
+			shape.fluidProperties= new FluidProperties(4, 10);
+			obj.shapes.add(shape);
+			obj.position.setxy(x, y);
+			engine.addObject(obj);
+			return obj;
+		
+		}
+		
 		
 		public function createBox(w:Number,h:Number,material:Material=null,x:Number=0,y:Number=0):PhysicsObject{
 			var obj:PhysicsObject = new PhysicsObject({"material":material});
-			obj.shapes.add(new Polygon(Polygon.box(w, h),obj.material));
+			var shape:Polygon =new Polygon(Polygon.box(w, h),obj.material);
+			obj.shapes.add(shape);
 			obj.position.setxy(x, y);
 			engine.addObject(obj);
 			return obj;
@@ -52,8 +73,9 @@ package com.smart.engine.physics.plugins
 		
 		public function createCircle(radius:Number,material:Material=null,x:Number=0,y:Number=0):PhysicsObject{
 			var obj:PhysicsObject = new PhysicsObject({"material":material});
-			obj.shapes.add(new Circle(radius,null,obj.material));
+			var shape:Circle =new Circle(radius,null,obj.material);
 			obj.position.setxy(x, y);
+			obj.shapes.add(shape);
 			engine.addObject(obj);
 			return obj;
 		}
@@ -68,9 +90,11 @@ package com.smart.engine.physics.plugins
 		
 		public function createRegular(radius:Number,rotation:Number=0,edgeCount:int=5,material:Material=null,x:Number=0,y:Number=0):PhysicsObject{
 			var obj:PhysicsObject = new PhysicsObject({"material":material});
-			var regularShape:Polygon=new Polygon(Polygon.regular(radius*2,radius*2,edgeCount),obj.material);
-			regularShape.rotate(rotation);
-			obj.addShape(regularShape);
+			var shape:Polygon=new Polygon(Polygon.regular(radius,radius,edgeCount),obj.material);
+			shape.rotate(rotation);
+			obj.position.setxy(x, y);
+			obj.shapes.add(shape);
+			engine.addObject(obj);
 			return obj;
 			
 		}
