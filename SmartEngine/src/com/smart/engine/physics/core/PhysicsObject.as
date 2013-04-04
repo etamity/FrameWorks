@@ -43,9 +43,29 @@ package com.smart.engine.physics.core
 			_body.userData.myData=this;
 			_body.rotate(new Vec2(0, 0), _rotation);
 
-			_material=new Material(0.65, 0.57, 1.2, 1, 0);
+			_material=new Material();
 		}
-
+		public function get material():Material{
+			return _material;
+		}
+		public function set material(val:Material):void{
+			 _material=val;
+			 setMaterial(_material.elasticity,_material.dynamicFriction,_material.staticFriction,_material.density,_material.rollingFriction);
+		}
+		
+		private function setMaterial(elastic:Number = 0, dynamicFriction:Number = 1, staticFriction:Number=1.2, density:Number = 1, rollingFriction:Number=0.001):void {
+			if (!_body) return;
+			var length:int =shapes.length;
+			for (var i:int = 0; i <length ; i++) {
+				var shape:Shape = shapes.at(i);
+				shape.material.elasticity = elastic;
+				shape.material.dynamicFriction = dynamicFriction;
+				shape.material.staticFriction = staticFriction;
+				shape.material.density = density;
+				shape.material.rollingFriction = rollingFriction;
+			}
+		}
+		
 		public function get shapes():ShapeList{
 			return _body.shapes;
 		}

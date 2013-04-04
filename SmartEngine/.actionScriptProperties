@@ -4,6 +4,7 @@
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="main"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="assets"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="${DOCUMENTS}/feathers/source"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -47,6 +48,10 @@
       <airSettings airCertificatePath="" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes/>
         <anePaths/>
+        <newLaunchParams/>
+        <modifiedLaunchParams/>
+        <newPackagingParams/>
+        <modifiedPackagingParams/>
       </airSettings>
       <actionScriptSettings version="1"/>
     </buildTarget>

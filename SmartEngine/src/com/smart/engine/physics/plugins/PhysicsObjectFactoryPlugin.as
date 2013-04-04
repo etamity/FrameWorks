@@ -7,6 +7,7 @@ package com.smart.engine.physics.plugins
 	
 	import nape.phys.Body;
 	import nape.phys.BodyType;
+	import nape.phys.Material;
 	import nape.shape.Circle;
 	import nape.shape.Polygon;
 	
@@ -36,38 +37,38 @@ package com.smart.engine.physics.plugins
 			var h:int = stage.stageHeight;
 			
 			for (var i:int = 0; i < 16; i++) {
-				createBox(24,24,(w / 2), ((h - 50) - 32 * (i + 0.5)));
+				createBox(24,24,null,(w / 2), ((h - 50) - 32 * (i + 0.5)));
 			}
 			createCircle(40);
 		}
 		
-		public function createBox(w:Number,h:Number,x:Number=0,y:Number=0):PhysicsObject{
-			var obj:PhysicsObject = new PhysicsObject();
-			obj.shapes.add(new Polygon(Polygon.box(w, h)));
+		public function createBox(w:Number,h:Number,material:Material=null,x:Number=0,y:Number=0):PhysicsObject{
+			var obj:PhysicsObject = new PhysicsObject({"material":material});
+			obj.shapes.add(new Polygon(Polygon.box(w, h),obj.material));
 			obj.position.setxy(x, y);
 			engine.addObject(obj);
 			return obj;
 		}
 		
-		public function createCircle(radius:Number,x:Number=0,y:Number=0):PhysicsObject{
-			var obj:PhysicsObject = new PhysicsObject();
-			obj.shapes.add(new Circle(radius));
+		public function createCircle(radius:Number,material:Material=null,x:Number=0,y:Number=0):PhysicsObject{
+			var obj:PhysicsObject = new PhysicsObject({"material":material});
+			obj.shapes.add(new Circle(radius,null,obj.material));
 			obj.position.setxy(x, y);
 			engine.addObject(obj);
 			return obj;
 		}
 		
-		public function createGeomPoly(points:Array,x:Number=0,y:Number=0):PhysicsObject{
-			var obj:PhysicsObject = new PhysicsObject();
+		public function createGeomPoly(points:Array,material:Material=null,x:Number=0,y:Number=0):PhysicsObject{
+			var obj:PhysicsObject = new PhysicsObject({"material":material});
 			obj.points=points;
 			obj.position.setxy(x, y);
 			engine.addObject(obj);
 			return obj;
 		}
 		
-		public function createRegular(radius:Number,rotation:Number=0,edgeCount:int=5,x:Number=0,y:Number=0):PhysicsObject{
-			var regularShape:Polygon=new Polygon(Polygon.regular(radius*2,radius*2,edgeCount));
-			var obj:PhysicsObject = new PhysicsObject();
+		public function createRegular(radius:Number,rotation:Number=0,edgeCount:int=5,material:Material=null,x:Number=0,y:Number=0):PhysicsObject{
+			var obj:PhysicsObject = new PhysicsObject({"material":material});
+			var regularShape:Polygon=new Polygon(Polygon.regular(radius*2,radius*2,edgeCount),obj.material);
 			regularShape.rotate(rotation);
 			obj.addShape(regularShape);
 			return obj;

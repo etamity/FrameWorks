@@ -74,7 +74,7 @@ package com.smart.engine.physics.plugins
 			canvas.graphics.clear();
 			curPoint = new Point(point.x, point.y);
 			var distance:Number = Point.distance(prePoint, curPoint);
-			physicsObjectFactoryPlugin.createCircle(distance,prePoint.x,prePoint.y);
+			physicsObjectFactoryPlugin.createCircle(distance,null,prePoint.x,prePoint.y);
 		}
 		private function mouseDownHandler_DrawCircle(point:Point):void {
 			if (handJointPlugin.active==false)

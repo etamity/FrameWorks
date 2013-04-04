@@ -11,6 +11,7 @@ package com.smart {
 	import com.smart.core.Engine;
 	import com.smart.core.IEngine;
 	import com.smart.core.IPlugin;
+	import flash.system.System;
 	
 	import flash.utils.Dictionary;
 	
@@ -84,6 +85,7 @@ package com.smart {
 		   removeAllEngines();
 		   display.removeChildren();
 		   _juggler = null;
+		   gc();
 	   }
 	   public function get display():Sprite{
 		   return container;
@@ -121,6 +123,10 @@ package com.smart {
 			Starling.juggler.add(this);
 		}
 
+		public function gc():void{
+			System.gc();
+		}
+		
 		public function stop():void {
 			Starling.juggler.remove(this);
 		}

@@ -5,6 +5,7 @@ package com.smart.engine
 	
 	import flash.utils.Dictionary;
 	
+	import nape.callbacks.InteractionListener;
 	import nape.geom.Vec2;
 	import nape.space.Space;
 	
@@ -37,7 +38,7 @@ package com.smart.engine
 		}
 		override public function dispose():void{
 			this.removeAllPlugins();
-			
+			_space.clear();
 			_space = new Space(_gravity);
 			_objectHash=new Dictionary();
 			_objects=new Vector.<PhysicsObject>();
@@ -63,6 +64,9 @@ package com.smart.engine
 			space.step(_frameRate);
 		}
 
+		public function addListener(val:InteractionListener):void{
+			space.listeners.add(val);
+		}
 		public function get frameRate():Number{
 			return _frameRate;
 		}
