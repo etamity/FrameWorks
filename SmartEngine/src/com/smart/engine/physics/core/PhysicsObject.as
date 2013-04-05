@@ -5,6 +5,7 @@ package com.smart.engine.physics.core
 	
 	import flash.geom.Point;
 	
+	import nape.constraint.Constraint;
 	import nape.geom.GeomPoly;
 	import nape.geom.GeomPolyList;
 	import nape.geom.Vec2;
@@ -41,11 +42,16 @@ package com.smart.engine.physics.core
 			_body=new Body(_bodyType, new Vec2(0, 0));
 			_body.userData.myData=this;
 			_body.rotate(new Vec2(0, 0), _rotation);
-
+			
 			_material=new Material();
-			
-			
 		}
+		
+		private function add(c:Constraint,obj:PhysicsObject):void {
+			
+			
+			_body.constraints.add(c);
+		}
+		
 		public function get material():Material{
 			return _material;
 		}

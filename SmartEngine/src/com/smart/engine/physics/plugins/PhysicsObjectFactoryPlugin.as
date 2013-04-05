@@ -29,7 +29,7 @@ package com.smart.engine.physics.plugins
 			addWall();
 			
 			
-			test1();
+			//test1();
 		}
 		
 		

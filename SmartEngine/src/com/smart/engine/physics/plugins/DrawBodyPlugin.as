@@ -26,7 +26,7 @@ package com.smart.engine.physics.plugins
 		public const DRAW_CIRCLE:String="DRAW_CIRCLE";
 		public const DRAW_BOX:String="DRAW_BOX";
 		public const DRAW_REGULAR:String="DRAW_REGULAR";
-		
+		public const DRAW_NONE:String="DRAW_NONE";
 		private var _state:String="";
 		
 		private var canvas:Canvas;
@@ -56,7 +56,6 @@ package com.smart.engine.physics.plugins
 			
 			_state=val;
 			touchEventHandler.clear();
-			touchEventHandler.stop();
 			isDrawing=false;
 			switch (val){
 				case DRAW_GEOMPOLY:
@@ -80,11 +79,13 @@ package com.smart.engine.physics.plugins
 					touchEventHandler.mouseDown=mouseDownHandler_DrawRegular;
 					touchEventHandler.mouseUp=mouseUpHandler_DrawRegular;
 					touchEventHandler.mouseMove=mouseMoveHandler_DrawRegular;
-					
-					
+					break;
+				case DRAW_NONE:
+				default:
+					touchEventHandler.stop();
 					break;
 			}
-			touchEventHandler.start();
+
 		}	
 		
 		

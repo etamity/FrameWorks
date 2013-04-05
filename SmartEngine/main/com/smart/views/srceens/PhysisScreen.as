@@ -2,7 +2,6 @@ package com.smart.views.srceens
 {
 	import com.smart.SmartSystem;
 	import com.smart.engine.PhysicsEngine;
-	import com.smart.engine.physics.core.TouchEventHandler;
 	import com.smart.engine.physics.plugins.DebugDrawPlugin;
 	import com.smart.engine.physics.plugins.DrawBodyPlugin;
 	import com.smart.engine.physics.plugins.HandJointPlugin;
@@ -93,6 +92,9 @@ package com.smart.views.srceens
 					break;
 				case "Regular":
 					drawBodyPlugin.state=drawBodyPlugin.DRAW_REGULAR;
+					break;
+				default:
+					drawBodyPlugin.state=drawBodyPlugin.DRAW_NONE;
 					break;
 			}
 			
