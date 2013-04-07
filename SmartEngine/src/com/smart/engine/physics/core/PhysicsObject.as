@@ -6,6 +6,7 @@ package com.smart.engine.physics.core
 	import flash.geom.Point;
 	
 	import nape.constraint.Constraint;
+	import nape.constraint.PivotJoint;
 	import nape.geom.GeomPoly;
 	import nape.geom.GeomPolyList;
 	import nape.geom.Vec2;
@@ -17,10 +18,11 @@ package com.smart.engine.physics.core
 	import nape.shape.Shape;
 	import nape.shape.ShapeList;
 	import nape.shape.ValidationResult;
+	import nape.space.Space;
 	
 	import starling.display.DisplayObject;
 
-	public class PhysicsObject extends SmartObject
+	dynamic	public class PhysicsObject extends SmartObject
 	{
 		private var _body:Body;
 		private var _engine:PhysicsEngine;
@@ -30,9 +32,9 @@ package com.smart.engine.physics.core
 		protected var _height:Number=1;
 		protected var _radius:Number=0;
 		protected var _bodyType:BodyType;
-
+		
 		public var _points:Array;
-
+		private var _pin:Boolean=false;
 		public function PhysicsObject(params:Object=null)
 		{
 			super(params);
@@ -46,12 +48,26 @@ package com.smart.engine.physics.core
 			_material=new Material();
 		}
 		
-		private function add(c:Constraint,obj:PhysicsObject):void {
-			
-			
-			_body.constraints.add(c);
+		public function set space(val:Space):void{
+			body.space=val;
 		}
-		
+		public function get space():Space{
+			return body.space;
+		}
+		public function set pinned(val:Boolean):void{
+			_pin=val;
+			if (val) {
+				var pin:PivotJoint = new PivotJoint(
+					body.space.world, body,
+					body.position,
+					Vec2.weak(0,0)
+				);
+				pin.space = body.space;
+			}
+		}
+		public function get pinned():Boolean{
+			return _pin;
+		}
 		public function get material():Material{
 			return _material;
 		}

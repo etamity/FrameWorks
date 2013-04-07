@@ -34,6 +34,7 @@ package com.smart.engine.physics.plugins
 			this.engine=engine as PhysicsEngine;
 			_debug= new BitmapDebug(stage.stageWidth, stage.stageHeight,0 ,true);
 			_debug.drawConstraints = true;
+
 			/*_debug.cullingEnabled=true;
 			_debug.drawFluidArbiters=true;
 			_debug.drawBodyDetail=true;

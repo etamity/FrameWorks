@@ -35,6 +35,7 @@ package com.smart.engine
 			_objectHash[object.name]=object;
 			object.initialize();
 			object.body.space=_space;
+			object.body.userData.name=object.name;
 			return object;
 		}
 		override public function dispose():void{

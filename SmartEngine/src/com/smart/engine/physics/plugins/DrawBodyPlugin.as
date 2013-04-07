@@ -26,7 +26,12 @@ package com.smart.engine.physics.plugins
 		public const DRAW_CIRCLE:String="DRAW_CIRCLE";
 		public const DRAW_BOX:String="DRAW_BOX";
 		public const DRAW_REGULAR:String="DRAW_REGULAR";
-		public const DRAW_NONE:String="DRAW_NONE";
+		public const NONE:String="NONE";
+		
+		public const PIVOTJOINT:String="PIVOTJOINT";
+		
+		
+		
 		private var _state:String="";
 		
 		private var canvas:Canvas;
@@ -73,14 +78,19 @@ package com.smart.engine.physics.plugins
 					touchEventHandler.mouseDown=mouseDownHandler_DrawBox;
 					touchEventHandler.mouseUp=mouseUpHandler_DrawBox;
 					touchEventHandler.mouseMove=mouseMoveHandler_DrawBox;
-					
 					break;
 				case DRAW_REGULAR:
 					touchEventHandler.mouseDown=mouseDownHandler_DrawRegular;
 					touchEventHandler.mouseUp=mouseUpHandler_DrawRegular;
 					touchEventHandler.mouseMove=mouseMoveHandler_DrawRegular;
 					break;
-				case DRAW_NONE:
+				case PIVOTJOINT:
+					touchEventHandler.mouseDown=mouseDownHandler_DrawRegular;
+					touchEventHandler.mouseUp=mouseUpHandler_DrawRegular;
+					touchEventHandler.mouseMove=mouseMoveHandler_DrawRegular;
+					break;
+				
+				case NONE:
 				default:
 					touchEventHandler.stop();
 					break;
