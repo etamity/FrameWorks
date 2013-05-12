@@ -8,10 +8,10 @@
 
 package com.smart.loaders {
 
-	import com.smart.engine.display.SmartDisplayObject;
+	import com.smart.engine.map.display.SmartDisplayObject;
 	
 	import starling.display.DisplayObject;
-	import starling.display.Image;
+
 	public interface ITextureLoader {
 
 		function getDisplay():DisplayObject;

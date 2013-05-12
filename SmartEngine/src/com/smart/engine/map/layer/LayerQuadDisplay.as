@@ -9,8 +9,9 @@
 package com.smart.engine.map.layer {
 	
 	import com.smart.SmartSystem;
-	import com.smart.engine.map.plugins.IViewPort;
+	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.models.TMXMapModel;
+	import com.smart.engine.map.plugins.IViewPort;
 	import com.smart.engine.map.utils.Point3D;
 	
 	import flash.geom.Point;
@@ -20,7 +21,6 @@ package com.smart.engine.map.layer {
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
 	import starling.extensions.QuadtreeSprite;
-	import com.smart.engine.map.display.SmartDisplayObject;
 	
 	public class LayerQuadDisplay implements ILayerDisplay {
 		

@@ -9,11 +9,10 @@
 package com.smart.loaders
 {
 
-	import com.smart.engine.display.SmartDisplayObject;
-	import com.smart.engine.display.SmartImage;
-	import com.smart.engine.starling.HitMovieClip;
-	import com.smart.engine.tmxdata.TMXTileset;
-	import com.smart.engine.utils.GridBool;
+	import com.smart.engine.map.display.SmartDisplayObject;
+	import com.smart.engine.map.display.SmartImage;
+	import com.smart.engine.map.models.TMXTileset;
+	import com.smart.engine.map.utils.GridBool;
 	
 	import flash.display.BitmapData;
 	import flash.geom.Point;

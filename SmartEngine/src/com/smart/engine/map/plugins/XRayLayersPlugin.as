@@ -33,10 +33,6 @@ package com.smart.engine.map.plugins {
 			
 		}
 
-		override public function onRemove():void {
-			super.onRemove();
-		}
-
 		override public function onTrigger(time:Number):void {
 			if (layerIndex == -1) {
 				layerIndex = engine.numberOfLayers - 1;

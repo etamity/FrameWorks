@@ -1,12 +1,10 @@
 package com.smart.engine.map.layer
 {
 	import com.smart.SmartSystem;
+	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.utils.Point3D;
 	
-	import flash.geom.Point;
-	
 	import starling.display.DisplayObject;
-	import com.smart.engine.map.display.SmartDisplayObject;
 
 	public interface ILayerDisplay
 	{

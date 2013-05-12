@@ -24,8 +24,8 @@ package com.smart.engine.map.display {
 		public var position:Point3D;
 		public var state:State;
 		public var type:String;
-		internal var layer:ILayerDisplay;
-		internal var layerIndex:int = -1;
+		public var layer:ILayerDisplay;
+		public var layerIndex:int = -1;
 		private var components:Vector.<IComponent>; 
 		public var _assetID:String;
 		public function SmartDisplayObject(textureName:String, pt:Point3D = null, state:State = null) {
