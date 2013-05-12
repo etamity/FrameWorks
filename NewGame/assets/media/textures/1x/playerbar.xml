@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:db4e1b9f24fa2c8f063366ef0d79170f$ -->
+<TextureAtlas imagePath="playerbar.png">
+    <SubTexture name="Dollar" x="83" y="2" width="42" height="56"/>
+    <SubTexture name="ExclamationSmall" x="82" y="130" width="31" height="29"/>
+    <SubTexture name="IconClock" x="53" y="71" width="27" height="31" frameX="-4" frameY="0" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="IconMoney" x="31" y="133" width="27" height="27" frameX="-5" frameY="-3" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="IconRespect" x="82" y="99" width="37" height="29" frameX="0" frameY="-2" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="Lock" x="2" y="71" width="49" height="57" frameX="-17" frameY="-3" frameWidth="83" frameHeight="63"/>
+    <SubTexture name="TopIncomeBucks" x="2" y="2" width="79" height="67" frameX="0" frameY="0" frameWidth="79" frameHeight="69"/>
+    <SubTexture name="icon-coin-small" x="2" y="130" width="27" height="27" frameX="-6" frameY="-2" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="icon-poker-chip-small" x="53" y="104" width="27" height="27" frameX="-6" frameY="-2" frameWidth="37" frameHeight="31"/>
+    <SubTexture name="loading-briefcase" x="83" y="60" width="38" height="37" frameX="-11" frameY="-5" frameWidth="62" frameHeight="47"/>
+</TextureAtlas>

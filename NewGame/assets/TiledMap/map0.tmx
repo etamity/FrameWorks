@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="001-Grassland01" tilewidth="32" tileheight="32">
+  <image source="tiles/001-Grassland01.png" width="256" height="576"/>
+ </tileset>
+ <tileset firstgid="145" name="010-CastleTown02" tilewidth="32" tileheight="32">
+  <image source="tiles/010-CastleTown02.png" width="256" height="736"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKH7/qUHy6Hgqqmqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqv8AX0MnEQ==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2FeO2zAUBVBtIAtJ7723SS9byxJSPtI+spF8Zj+5BsbAQCDA2JA4jHQOcCEb4Af5nkSZHgZ6czY5l5xPLswwnt1cTa4l15MbE40/mZxKTidnJpjjmtxN7iX3kwdDvZbj8SUXk0vJ5eTKpLNdvqfJQfIseT7UazkeX3IzuZXcTu5MPN+le5O8Td4l74d6LcfjN8bP1MPkUfI4eTLj3Ndgn1qOn6kXycvkVfJ6hjmuSamWtXeK/amt2jvF/tRW7f63P02rth+5/9uq7Uel+/9fz+nOhrvb531cOqeXau9suLt99qPSOb1Ue7+9drfP+7h0Ti/V3runjdI5vVR7v72Oj9qzRieOewLwn/LssCYfk08z5UvDdSzFt+T7TPmZ/G63lEX4MHP+tFvKIuhHX/SjL/rRF/3oi370RT/6oh990Y++6Edf9KMv2/8Tt9fPhzn6vfS5dt2M/dpwHUux/T9xe/1xmKPfS59r183YXw3XAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHP7C3JEDJA=
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1M1K3FAcxuHRoqBdqSvbK1FXrRfZ7uot+FHHVq39hm4qbvQqFDeKKBVfaQJhSKKmwwyU54EfyUlyYDgw/14PAAAAAAAAAAD+zU7D/b1++pVmJnq92fR8on0/3fxJt+k8fS6uSznr5bSSrovvDtJRmsuz+bSQfmd9mE7TWbG/fEY3UznX6XRVrO+vr7J+nVbT5MD/YDHrF+llOs76JF2ky+J9+Yzu1tNG2hzxXup9SB/TbrqpPK8768F51LSX7r6kr+lbelaZT3VnPTiPmvYyfA+dtVk1fHVnupXet7RdfGdWDV/dme6l/ZY+Fd+ZVcNXd6bf04+Wfo7hd/JXdZ6ZSeNXnWdm0vhV5xmj8Sa9rbkv9R/xrmnN071LazX3pYNHvGtaAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwP/gDotxaig=
+  </data>
+ </layer>
+</map>
