@@ -1,4 +1,4 @@
-package com.smart.mvsc.views.components
+package com.smart.mvsc.views.starlingviews.components
 {
     import flash.display.BitmapData;
     import flash.display.Shape;

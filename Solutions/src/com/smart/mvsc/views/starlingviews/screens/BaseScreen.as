@@ -1,4 +1,4 @@
-package com.smart.mvsc.views
+package com.smart.mvsc.views.starlingviews.screens
 {
 
 	import com.smart.SmartSystem;

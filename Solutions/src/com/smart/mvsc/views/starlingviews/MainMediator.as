@@ -1,13 +1,13 @@
-package solutions
+package com.smart.mvsc.views.starlingviews
 {
-	import solutions.srceens.ScreenOne;
-	import solutions.srceens.ScreenTwo;
+	import com.smart.mvsc.views.starlingviews.screens.ScreenOne;
+	import com.smart.mvsc.views.starlingviews.screens.ScreenTwo;
 	import com.smart.loaders.ResourcesManager;
 	import com.smart.logs.console.ConsoleCommand;
 	import com.smart.mvsc.model.ScreenConst;
 	import com.smart.mvsc.model.SignalBus;
-	import com.smart.mvsc.views.MainScreen;
-	import com.smart.mvsc.views.MenuScreen;
+	import com.smart.mvsc.views.starlingviews.screens.MainScreen;
+	import com.smart.mvsc.views.starlingviews.screens.MenuScreen;
 	
 	import robotlegs.extensions.starlingViewMap.impl.StarlingMediator;
 	

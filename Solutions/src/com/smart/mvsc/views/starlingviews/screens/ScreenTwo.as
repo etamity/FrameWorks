@@ -1,33 +1,25 @@
-package solutions.srceens
+package com.smart.mvsc.views.starlingviews.screens
 {
 	import com.smart.mvsc.model.Language;
 	import com.smart.mvsc.model.ScreenConst;
-	import com.smart.mvsc.views.BaseScreen;
 	
 	import feathers.controls.Button;
-	import feathers.controls.TextInput;
 	
-	public class ScreenOne extends BaseScreen
+	public class ScreenTwo extends BaseScreen
 	{
-		public function ScreenOne()
+		public function ScreenTwo()
 		{
 			super();
 
 		}
 		override public function initUI():void{
-			this.addHeader(Language.SOLUTION_1);
+			this.addHeader(Language.SOLUTION_2);
 			var exitBtn:Button=newButton(Language.EXIT,exitToMainMenu);
 			this.addItem(exitBtn,RIGHT);
-			var textInput:TextInput=newTextInput("Test");
-			textInput.x= 5;
-			textInput.y= this.headerHeight+5;
-			addChild(textInput);
-		}
-
-		public function exitToMainMenu():void{
-			
-			this.dispatchEventWith(ScreenConst.MENU_SCREEN);
 		}
 		
+		public function exitToMainMenu():void{
+			this.dispatchEventWith(ScreenConst.MENU_SCREEN);
+		}
 	}
 }

@@ -1,10 +1,10 @@
-package com.smart.mvsc.views
+package com.smart.mvsc.views.starlingviews
 {
 	import com.smart.mvsc.controllers.signals.SystemEvent;
 	import com.smart.loaders.ResourcesManager;
 	import com.smart.mvsc.model.SignalBus;
 	import com.smart.mvsc.services.ThemeService;
-	import com.smart.mvsc.views.components.ProgressBar;
+	import com.smart.mvsc.views.starlingviews.components.ProgressBar;
 	
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;

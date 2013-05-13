@@ -1,8 +1,8 @@
-package solutions
+package com.smart.mvsc.views.starlingviews
 {
 	import com.smart.mvsc.model.Language;
 	import com.smart.mvsc.model.ScreenConst;
-	import com.smart.mvsc.views.MenuScreen;
+	import com.smart.mvsc.views.starlingviews.screens.MenuScreen;
 	
 	import robotlegs.bender.framework.api.ILogger;
 	import robotlegs.extensions.starlingViewMap.impl.StarlingMediator;

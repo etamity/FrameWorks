@@ -7,7 +7,6 @@ package com.smart.mvsc
 		public function GameContent()
 		{
 			super();
-;
 		}
 	}
 }

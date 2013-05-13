@@ -1,4 +1,4 @@
-package com.smart.mvsc.views.components
+package com.smart.mvsc.views.starlingviews.components
 {
 	import com.smart.mvsc.model.Language;
 	

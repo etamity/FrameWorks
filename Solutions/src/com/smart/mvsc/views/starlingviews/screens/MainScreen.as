@@ -1,4 +1,4 @@
-package com.smart.mvsc.views
+package com.smart.mvsc.views.starlingviews.screens
 {
 	import feathers.controls.ScreenNavigator;
 	import feathers.controls.ScreenNavigatorItem;

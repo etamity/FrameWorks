@@ -4,7 +4,7 @@ package com.smart.mvsc
 	import com.smart.logs.console.Console;
 	import com.smart.mvsc.model.BaseSignal;
 	import com.smart.mvsc.model.SignalBus;
-	import com.smart.mvsc.views.MainScreen;
+	import com.smart.mvsc.views.starlingviews.screens.MainScreen;
 	
 	import robotlegs.extensions.starlingViewMap.impl.StarlingMediator;
 	
