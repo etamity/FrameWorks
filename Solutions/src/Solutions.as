@@ -1,14 +1,15 @@
 package
 {
-	import com.smart.mvsc.GameContent;
-	import configs.StarlingBundle;
-	import configs.StarlingConfig;
 	import com.smart.device.Device;
 	import com.smart.logs.Debug;
+	import com.smart.mvsc.GameContent;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	
+	import configs.StarlingBundle;
+	import configs.StarlingConfig;
 	
 	import robotlegs.bender.extensions.contextView.ContextView;
 	import robotlegs.bender.framework.api.IContext;

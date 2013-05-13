@@ -24,6 +24,9 @@ package solutions.srceens
 			addChild(textInput);
 		}
 		
+		public function add(a:Number,b:Number):Number{
+			return a+b;
+		}
 		public function exitToMainMenu():void{
 			
 			this.dispatchEventWith(ScreenConst.MENU_SCREEN);
