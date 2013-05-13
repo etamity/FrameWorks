@@ -7,7 +7,7 @@
 
 package suites
 {
-	import flexUnitTests.SolutionsOneTest;
+	import flexUnitTests.SolutionOneTest;
 
 	[RunWith("org.flexunit.runners.Suite")]
 	[Suite]
@@ -18,7 +18,7 @@ package suites
 		/* Public Properties                                                          */
 		/*============================================================================*/
 
-		public var solutionsOneTest:SolutionsOneTest;
+		public var solutionsOneTest:SolutionOneTest;
 
 	}
 }
