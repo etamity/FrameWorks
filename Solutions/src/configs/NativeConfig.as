@@ -9,9 +9,7 @@ package configs
 	
 	import org.swiftsuspenders.Injector;
 	
-	import robotlegs.bender.bundles.mvcs.MVCSBundle;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
-	import robotlegs.bender.extensions.signalCommandMap.SignalCommandMapExtension;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
 	import robotlegs.bender.framework.api.IContext;
