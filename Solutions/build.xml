@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Solutions" default="build" basedir=".">
+	
+	<!-- build.local.properties and sdk.local.proprties are optional files that
+		can be used to override the default properties. -->
+
+	<property name="RootDir" value="../" />
+	<property name="main.path" value="${basedir}/main" />
+	
+	<property file="${RootDir}/build/sdk.local.properties"/>
+	<property file="${RootDir}/build/sdk.properties"/>
+	<property file="${RootDir}/build/build.local.properties"/>
+	<property file="${RootDir}/build/build.properties"/>
+	
+	<fail unless="ios.provision.path"/>
+	<fail unless="ios.certificate.path"/>
+	<fail unless="ios.certificate.password"/>
+	
+	<fail unless="android.certificate.path"/>
+	<fail unless="android.certificate.password"/>
+
+	<target name="build" depends="build-swf"/>
+
+	<target name="prepare">
+		<delete dir="${output.path}"/>
+	</target>
+
+	<target name="build-swf">
+		<echo message="Building swf ${ant.project.name}.swf"/>
+		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
+			<arg line="--target-player=${player.version}"/>
+			<arg line="--debug=true"/>
+			<arg line="--optimize=true"/>
+			<arg line="--swf-version=${swf.version}"/>
+			<arg line="--source-path+='${src.path}'"/>
+			<arg line="--source-path+='${feathers.root}'"/>
+			<arg line="--source-path+='${assets.path}'"/>
+			<arg line="--library-path+='${assets.path}'"/>
+			<arg line="--library-path+='${libs.path}'"/>
+			<arg line="--library-path+='${engine.path}'"/>
+			<arg line="${src.path}/${ant.project.name}.as"/>
+			<arg line="--output ${bin.path}/${ant.project.name}.swf"/>
+		</exec>
+	</target>
+	<target name="build-air-swf">
+		<echo message="Building air ${ant.project.name}.swf"/>
+		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
+			<arg line="+configname=air"/>
+			<arg line="--debug=false"/>
+			<arg line="--mobile=true"/>
+			<arg line="--optimize=true"/>
+			<arg line="--omit-trace-statements=true"/>
+			<arg line="--target-player=${player.version}"/>
+			<arg line="--swf-version=${swf.version}"/>
+			<arg line="--compress=false"/>
+			<arg line="--source-path+='${src.path}'"/>
+			<arg line="--source-path+='${feathers.root}'"/>
+			<arg line="--source-path+='${assets.path}'"/>
+			<arg line="--library-path+='${assets.path}'"/>
+			<arg line="--library-path+='${libs.path}'"/>
+			<arg line="--library-path+='${engine.path}'"/>
+			<arg line="${src.path}/${ant.project.name}.as"/>
+			<arg line="--output ${bin.path}/${ant.project.name}.swf"/>
+
+
+		</exec>
+	</target>
+	<target name="build-ios" depends="build-air-swf">
+		<echo message="Packaging ${ant.project.name}.ipa" />
+		<exec executable="${adt}" dir="${basedir}" failonerror="true">
+			<arg line="-package"/>
+			<arg line="-target ipa-app-store"/>
+			<arg line="-provisioning-profile ${ios.provision.path}"/>
+			<arg line="-keystore ${ios.certificate.path}"/>
+			<arg line="-storetype pkcs12"/>
+			<arg line="-storepass ${ios.certificate.password}"/>
+			<arg line="${bin.path}/${ant.project.name}.ipa"/>
+			<arg line="${main.path}/${ant.project.name}-app.xml"/>
+			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
+			<arg line="-C ${bin.path}"/>
+			<arg line="${ant.project.name}.swf"/>
+			<!-- <arg line="TiledMap"/> -->
+		</exec>
+	</target>
+	<target name="build-android" depends="build-air-swf">
+		<echo message="Packaging ${ant.project.name}.apk"/>
+		<exec executable="${adt}" dir="${basedir}" failonerror="true">
+			<arg line="-package"/>
+			<arg line="-target apk"/>
+			<!--  ( apk | apk-debug | apk-emulator | apk-captive-runtime ) -->
+			<arg line="-storetype pkcs12"/>
+			<arg line="-keystore ${android.certificate.path}"/>
+			<arg line="-storepass ${android.certificate.password}"/>
+			<arg line="${bin.path}/${ant.project.name}.apk"/>
+			<arg line="${source.path}/${ant.project.name}-app.xml"/>
+			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
+			<arg line="-C ${bin.path}"/>
+			<arg line="${ant.project.name}.swf"/>
+		</exec>
+	</target>
+	
+	<target name="copy">
+		<copy todir="${bin.path}">
+		    <fileset dir="${output.path}" excludes="**/*.fla,**/Thumbs.db"/>
+		</copy>
+	</target>
+	
+</project>
