@@ -1,7 +1,7 @@
 package solutions
 {
-	import solutions.srceens.SolutionsOne;
-	import solutions.srceens.SolutionsTwo;
+	import solutions.srceens.ScreenOne;
+	import solutions.srceens.ScreenTwo;
 	import com.smart.loaders.ResourcesManager;
 	import com.smart.logs.console.ConsoleCommand;
 	import com.smart.mvsc.model.ScreenConst;
@@ -40,8 +40,8 @@ package solutions
 		
 		public function init():void{
 			view.addScreen(ScreenConst.MENU_SCREEN,MenuScreen);
-			view.addScreen(ScreenConst.SOLUTION_ONE,SolutionsOne);
-			view.addScreen(ScreenConst.SOLUTION_TWO,SolutionsTwo);
+			view.addScreen(ScreenConst.SOLUTION_ONE,ScreenOne);
+			view.addScreen(ScreenConst.SOLUTION_TWO,ScreenTwo);
 			view.showScreen(ScreenConst.MENU_SCREEN);	
 		}
 

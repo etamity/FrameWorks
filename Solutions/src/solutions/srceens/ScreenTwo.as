@@ -5,32 +5,22 @@ package solutions.srceens
 	import com.smart.mvsc.views.BaseScreen;
 	
 	import feathers.controls.Button;
-	import feathers.controls.TextInput;
 	
-	public class SolutionsOne extends BaseScreen
+	public class ScreenTwo extends BaseScreen
 	{
-		public function SolutionsOne()
+		public function ScreenTwo()
 		{
 			super();
 
 		}
 		override public function initUI():void{
-			this.addHeader(Language.SOLUTION_1);
+			this.addHeader(Language.SOLUTION_2);
 			var exitBtn:Button=newButton(Language.EXIT,exitToMainMenu);
 			this.addItem(exitBtn,RIGHT);
-			var textInput:TextInput=newTextInput("Test");
-			textInput.x= 5;
-			textInput.y= this.headerHeight+5;
-			addChild(textInput);
 		}
 		
-		public function add(a:Number,b:Number):Number{
-			return a+b;
-		}
 		public function exitToMainMenu():void{
-			
 			this.dispatchEventWith(ScreenConst.MENU_SCREEN);
 		}
-		
 	}
 }
