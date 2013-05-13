@@ -1,4 +1,4 @@
-package com.smart.mvsc.views.starlingviews.screens
+package solutions.views.starling.screens
 {
 	import flash.utils.Dictionary;
 	
@@ -7,6 +7,7 @@ package com.smart.mvsc.views.starlingviews.screens
 	import feathers.data.ListCollection;
 	
 	import starling.events.Event;
+	import com.smart.mvsc.views.starlingviews.screens.BaseScreen;
 	
 	public class MenuScreen extends BaseScreen
 	{

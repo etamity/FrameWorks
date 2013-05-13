@@ -28,15 +28,9 @@ package configs
 		public var context:IContext;
 		
 		protected var signalBus:SignalBus;
-		public function NativeConfig()
-		{
-		}
-		
 		public function configure():void
 		{
-			context.install(
-				MVCSBundle,
-				SignalCommandMapExtension);
+
 			
 		}
 		private function mapViews():void{

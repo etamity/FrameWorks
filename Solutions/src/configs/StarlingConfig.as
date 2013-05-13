@@ -10,11 +10,11 @@ package configs
 	import com.smart.mvsc.controllers.signals.SystemEvent;
 	import com.smart.mvsc.model.SignalBus;
 	import com.smart.mvsc.services.ThemeService;
-	import com.smart.mvsc.views.starlingviews.MainMediator;
-	import com.smart.mvsc.views.starlingviews.MenuMediator;
+	import solutions.views.starling.mediators.MainMediator;
+	import solutions.views.starling.mediators.MenuMediator;
 	import com.smart.mvsc.views.starlingviews.StageMediator;
-	import com.smart.mvsc.views.starlingviews.screens.MainScreen;
-	import com.smart.mvsc.views.starlingviews.screens.MenuScreen;
+	import solutions.views.starling.screens.MainScreen;
+	import solutions.views.starling.screens.MenuScreen;
 	
 	import org.swiftsuspenders.Injector;
 	
@@ -43,11 +43,6 @@ package configs
 		protected var signalBus:SignalBus;
 		public function configure() : void
 		{
-			context.install(
-				MVCSBundle,
-				StarlingViewMapExtension,
-				SignalCommandMapExtension);
-			
 			mapSingletons();
 			mapViews();
 			mapSignals();

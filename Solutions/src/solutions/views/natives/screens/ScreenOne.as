@@ -1,4 +1,4 @@
-package com.smart.mvsc.views.nativeviews
+package solutions.views.natives.screens
 {
 	import flash.display.Sprite;
 	

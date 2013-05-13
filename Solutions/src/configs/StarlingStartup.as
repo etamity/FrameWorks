@@ -9,10 +9,12 @@ package configs
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	
-	
+	import robotlegs.bender.bundles.mvcs.MVCSBundle;
 	import robotlegs.bender.extensions.contextView.ContextView;
+	import robotlegs.bender.extensions.signalCommandMap.SignalCommandMapExtension;
 	import robotlegs.bender.framework.api.IContext;
 	import robotlegs.bender.framework.impl.Context;
+	import robotlegs.extensions.starlingViewMap.StarlingViewMapExtension;
 	
 	import starling.core.Starling;
 	
@@ -37,7 +39,10 @@ package configs
 			device.setDevice(Device.IPHONE);
 			Debug.CONSOLE_OUTPUT = true;
 			const context:IContext = new Context()
-				.configure( StarlingConfig, 
+				.install(MVCSBundle,
+				StarlingViewMapExtension,
+				SignalCommandMapExtension)
+				.configure(StarlingConfig, 
 					new ContextView(this),
 					starling);
 			
