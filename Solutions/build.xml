@@ -35,11 +35,9 @@
 			<arg line="--optimize=true"/>
 			<arg line="--swf-version=${swf.version}"/>
 			<arg line="--source-path+='${src.path}'"/>
-			<arg line="--source-path+='${feathers.root}'"/>
 			<arg line="--source-path+='${assets.path}'"/>
 			<arg line="--library-path+='${assets.path}'"/>
 			<arg line="--library-path+='${libs.path}'"/>
-			<arg line="--library-path+='${engine.path}'"/>
 			<arg line="${src.path}/${ant.project.name}.as"/>
 			<arg line="--output ${bin.path}/${ant.project.name}.swf"/>
 		</exec>
@@ -56,11 +54,9 @@
 			<arg line="--swf-version=${swf.version}"/>
 			<arg line="--compress=false"/>
 			<arg line="--source-path+='${src.path}'"/>
-			<arg line="--source-path+='${feathers.root}'"/>
 			<arg line="--source-path+='${assets.path}'"/>
 			<arg line="--library-path+='${assets.path}'"/>
 			<arg line="--library-path+='${libs.path}'"/>
-			<arg line="--library-path+='${engine.path}'"/>
 			<arg line="${src.path}/${ant.project.name}.as"/>
 			<arg line="--output ${bin.path}/${ant.project.name}.swf"/>
 
