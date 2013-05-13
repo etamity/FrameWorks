@@ -62,11 +62,11 @@ package com.smart.uicore.controls
          */
         public static var minWidth:Number = 210;
         public static var paddingBottom:Number = 40;
-        public static var sureLabels:Array = ["确定"];
-        public static var customLabels2:Array = ["确定" , "取消"];
-        public static var customLabelsModify:Array = ["修改" , "取消"];
-        public static var customLabelsDel:Array = ["删除" , "取消"];
-        public static var customLabelsYesNo:Array = ["是" , "否"];
+        public static var sureLabels:Array = ["OK"];
+        public static var customLabels2:Array = ["OK" , "Cancel"];
+        public static var customLabelsModify:Array = ["Edit" , "Cancel"];
+        public static var customLabelsDel:Array = ["Delete" , "Cancel"];
+        public static var customLabelsYesNo:Array = ["Yes" , "No"];
 		
 		private static var mark:Sprite = new Sprite ();
 		protected static var _blurArray:Array = [];
@@ -179,7 +179,7 @@ package com.smart.uicore.controls
 			showMaxButton = false;
 			showMiniButton = false;
 			ableUserResizeWindow = false;
-			closeBtn.toolTip = "关闭消息";
+			closeBtn.toolTip = "Close Alert";
 		}
 
         /**

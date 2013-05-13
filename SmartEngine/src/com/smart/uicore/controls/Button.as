@@ -226,7 +226,7 @@ package com.smart.uicore.controls
 			txt.setTextFormat(tf);
 			txt.blendMode = BlendMode.LAYER;
 			txt.filters = DefaultStyle.buttonTextFilters;
-			label = "按钮";
+			label = "Button";
 			setSize(_compoWidth, _compoHeight);
 			this.addEventListener(MouseEvent.MOUSE_OVER, showOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, showOut);

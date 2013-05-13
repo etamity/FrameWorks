@@ -49,7 +49,7 @@ package com.smart.uicore.controls
 	public class DataGrid extends List
 	{
 		protected var title:DataGridTitle;
-		protected var _labels:Array =["标题","标题","标题","标题"];
+		protected var _labels:Array =["Title","Title","Title","Title"];
 		protected var _dataField:Array =["label","label2","labe3","labe4"];
 		protected var _columnWidths:Array =[-25,-25,-25,-25];
 		protected var _sortByNumberTypes:Array =[true,true,true,true,true,true,true,true,true,true,true,true,true,true];

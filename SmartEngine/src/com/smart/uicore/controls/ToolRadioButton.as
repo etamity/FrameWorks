@@ -24,7 +24,7 @@ package com.smart.uicore.controls
 		{
 			super();
 			groupName = "defaultToolRadioButtonGroup";
-			label = "工具";
+			label = "ToolRadioButtonGroup";
 		}
 		
 		override public function setDefaultSkin():void {

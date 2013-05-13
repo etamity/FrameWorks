@@ -44,7 +44,7 @@ package com.smart.uicore.controls
 			_isInitSkin = true; 
 			super();
 			
-			label = "单选";
+			label = "RadioButton";
 			styleSet[ ButtonStyle.TEXT_COLOR ] = DefaultStyle.checkBoxTextColor;
 			styleSet[ ButtonStyle.TEXT_OVER_COLOR ] = DefaultStyle.checkBoxTextOverColor;
 			styleSet[ ButtonStyle.TEXT_DOWN_COLOR ] = DefaultStyle.checkBoxTextColor;
