@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="Solutions" default="build" basedir=".">
+<project name="SolutionsMVC" default="build" basedir=".">
 	
 	<!-- build.local.properties and sdk.local.proprties are optional files that
 		can be used to override the default properties. -->
@@ -8,9 +8,9 @@
 	<property name="main.path" value="${basedir}/main" />
 	
 	<property file="${RootDir}/build/sdk.local.properties"/>
-	<property file="${RootDir}/build/sdk.properties"/>
+	<property file="${basedir}/sdk.properties"/>
 	<property file="${RootDir}/build/build.local.properties"/>
-	<property file="${RootDir}/build/build.properties"/>
+	<property file="${basedir}/build.properties"/>
 	
 	  <taskdef resource="flexUnitTasks.tasks" classpath="${libs.path}/flexUnitTasks-4.1.0-8.jar"/>
 	
@@ -35,6 +35,7 @@
 			<arg line="--optimize=true"/>
 			<arg line="--swf-version=${swf.version}"/>
 			<arg line="--source-path+='${src.path}'"/>
+			<arg line="--source-path+='${theme.root}'"/>
 			<arg line="--source-path+='${assets.path}'"/>
 			<arg line="--library-path+='${assets.path}'"/>
 			<arg line="--library-path+='${libs.path}'"/>
@@ -54,6 +55,7 @@
 			<arg line="--swf-version=${swf.version}"/>
 			<arg line="--compress=false"/>
 			<arg line="--source-path+='${src.path}'"/>
+			<arg line="--source-path+='${theme.root}'"/>
 			<arg line="--source-path+='${assets.path}'"/>
 			<arg line="--library-path+='${assets.path}'"/>
 			<arg line="--library-path+='${libs.path}'"/>
@@ -103,6 +105,9 @@
 	    <java jar="${flexsdk.root}/lib/mxmlc.jar" dir="${flexframework.root}" fork="true" failonerror="true">
 	      <arg value="${test.src.path}/${ant.project.name}Test.mxml"/>
 	      <arg value="-source-path=${src.path}"/>
+		  <arg value="-source-path+=${theme.root}"/>
+		  <arg value="-source-path+=${assets.path}"/>
+		  <arg value="-library-path+=${assets.path}"/>
 	<!-- Flash those sweet legs. Blink and you'll miss 'em. -->
 	      <arg value="-output=${bin.path}/TestRunner.swf"/>
 	      <arg value="-default-size=200,200"/>
@@ -117,7 +122,7 @@
 	    </java>
 	<!-- Execute TestRunner.swf as FlexUnit tests and publish reports -->
 	    <mkdir dir="${report.path}"/>
-	    <flexunit swf="bin/TestRunner.swf" toDir="${report.path}" haltonfailure="true" verbose="true" localTrusted="true"/>
+	    <flexunit swf="${bin.path}/TestRunner.swf" toDir="${report.path}" haltonfailure="true" verbose="true" localTrusted="true"/>
 	<!-- Generate readable JUnit-style reports -->
 	    <junitreport todir="${report.path}">
 	      <fileset dir="${report.path}">
