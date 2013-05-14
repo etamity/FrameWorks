@@ -33,7 +33,7 @@ package flexUnitTests
 		public function testAdd():void
 		{
 			
-			Assert.assertEquals(solutionOne.add(5,5),10);
+			Assert.assertEquals("5 + 5 = 10",solutionOne.add(5,5),10);
 			//Assert.fail("Test method Not yet implemented");
 		}
 	}
