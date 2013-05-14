@@ -7,9 +7,9 @@
 	<property name="RootDir" value="../" />
 	
 	<property file="${RootDir}/build/sdk.local.properties"/>
-	<property file="${RootDir}/build/sdk.properties"/>
+	<property file="${basedir}/sdk.properties"/>
 	<property file="${RootDir}/build/build.local.properties"/>
-	<property file="${RootDir}/build/build.properties"/>
+	<property file="${basedir}/build.properties"/>
 	
 	<fail unless="ios.provision.path"/>
 	<fail unless="ios.certificate.path"/>
@@ -18,13 +18,12 @@
 	<fail unless="android.certificate.path"/>
 	<fail unless="android.certificate.password"/>
 
-	<target name="build" depends="build-swf"/>
+	<target name="build" depends="build-swc"/>
 
 	<target name="prepare">
 		<delete dir="${output.path}"/>
 	</target>
-
-	<target name="build-swf">
+	<target name="build-swc">
 		<echo message="Building swf ${ant.project.name}.swc"/>
 		<exec executable="${compc}" dir="${basedir}" failonerror="true">
 			<arg line="--target-player=${player.version}"/>
@@ -32,8 +31,6 @@
 			<arg line="--optimize=true"/>
 			<arg line="--swf-version=${swf.version}"/>
 			<arg line="--include-sources+='${src.path}'"/>
-			<arg line="--source-path+='${assets.path}'"/>
-			<arg line="--library-path+='${assets.path}'"/>
 			<arg line="--library-path+='${libs.path}'"/>
 			<arg line="--output ${bin.path}/${ant.project.name}.swc"/>
 		</exec>
