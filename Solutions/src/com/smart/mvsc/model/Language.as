@@ -7,6 +7,8 @@ package com.smart.mvsc.model {
 		public static var LEADERBOARD:String="LEADERBOARD";
 		public static var EXIT:String="EXIT";
 		
+		public static var SCORE:String="SCORE";
+		public static var GAMETIME:String="TIME";
 		
 		public static var SOLUTION_1:String="SOLUTION 1";
 		public static var SOLUTION_2:String="SOLUTION 2";
