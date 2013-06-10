@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+  <testsuite errors="0" failures="0" hostname="DADI-PC" id="0" name="SolutionOneTest" package="flexUnitTests" skipped="0" tests="1" time="0.027" timestamp="2013-06-10T21:49:17">
+      <testcase classname="flexUnitTests::SolutionOneTest" name="testAdd" time="0.027" />
+
+  </testsuite>
+</testsuites>
