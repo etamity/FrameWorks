@@ -1,11 +1,11 @@
 package solutions.views.starling.screens
 {
-	import com.smart.mvsc.model.Language;
-	import com.smart.mvsc.model.ScreenConst;
+	import com.core.mvsc.model.Language;
+	import com.core.mvsc.model.ScreenConst;
 	
 	import feathers.controls.Button;
 	import feathers.controls.TextInput;
-	import com.smart.mvsc.views.starlingviews.screens.BaseScreen;
+	import com.core.mvsc.views.starlingviews.screens.BaseScreen;
 	
 	public class ScreenOne extends BaseScreen
 	{

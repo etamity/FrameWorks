@@ -4,8 +4,8 @@ package solutions.views.starling.mediators
 	import solutions.views.starling.screens.ScreenTwo;
 	import com.smart.loaders.ResourcesManager;
 	import com.smart.logs.console.ConsoleCommand;
-	import com.smart.mvsc.model.ScreenConst;
-	import com.smart.mvsc.model.SignalBus;
+	import com.core.mvsc.model.ScreenConst;
+	import com.core.mvsc.model.SignalBus;
 	import solutions.views.starling.screens.MainScreen;
 	import solutions.views.starling.screens.MenuScreen;
 	

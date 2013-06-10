@@ -1,7 +1,7 @@
 package solutions.views.starling.mediators
 {
-	import com.smart.mvsc.model.Language;
-	import com.smart.mvsc.model.ScreenConst;
+	import com.core.mvsc.model.Language;
+	import com.core.mvsc.model.ScreenConst;
 	import solutions.views.starling.screens.MenuScreen;
 	
 	import robotlegs.bender.framework.api.ILogger;

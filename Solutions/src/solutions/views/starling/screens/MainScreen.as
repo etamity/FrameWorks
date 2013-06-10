@@ -5,7 +5,7 @@ package solutions.views.starling.screens
 	import feathers.motion.transitions.ScreenSlidingStackTransitionManager;
 	
 	import starling.events.Event;
-	import com.smart.mvsc.views.starlingviews.screens.BaseScreen;
+	import com.core.mvsc.views.starlingviews.screens.BaseScreen;
 
 	public class MainScreen extends BaseScreen
 	{
