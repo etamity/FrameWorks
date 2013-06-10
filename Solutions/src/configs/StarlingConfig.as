@@ -2,17 +2,17 @@ package configs
 {
 	import com.smart.loaders.ResourcesManager;
 	import com.smart.logs.console.ConsoleCommand;
-	import com.smart.mvsc.GameContent;
-	import com.smart.mvsc.GameContentMediator;
-	import com.smart.mvsc.controllers.commands.DataInitCommand;
-	import com.smart.mvsc.controllers.commands.DataLoadedCommand;
-	import com.smart.mvsc.controllers.commands.StartupCommand;
-	import com.smart.mvsc.controllers.signals.SystemEvent;
-	import com.smart.mvsc.model.SignalBus;
-	import com.smart.mvsc.services.ThemeService;
+	import com.core.mvsc.GameContent;
+	import com.core.mvsc.GameContentMediator;
+	import com.core.mvsc.controllers.commands.DataInitCommand;
+	import com.core.mvsc.controllers.commands.DataLoadedCommand;
+	import com.core.mvsc.controllers.commands.StartupCommand;
+	import com.core.mvsc.controllers.signals.SystemEvent;
+	import com.core.mvsc.model.SignalBus;
+	import com.core.mvsc.services.ThemeService;
 	import solutions.views.starling.mediators.MainMediator;
 	import solutions.views.starling.mediators.MenuMediator;
-	import com.smart.mvsc.views.starlingviews.StageMediator;
+	import com.core.mvsc.views.starlingviews.StageMediator;
 	import solutions.views.starling.screens.MainScreen;
 	import solutions.views.starling.screens.MenuScreen;
 	

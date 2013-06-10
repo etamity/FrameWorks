@@ -1,11 +1,11 @@
 package configs
 {
 	import com.smart.logs.console.ConsoleCommand;
-	import com.smart.mvsc.controllers.commands.DataInitCommand;
-	import com.smart.mvsc.controllers.commands.DataLoadedCommand;
-	import com.smart.mvsc.controllers.commands.StartupCommand;
-	import com.smart.mvsc.controllers.signals.SystemEvent;
-	import com.smart.mvsc.model.SignalBus;
+	import com.core.mvsc.controllers.commands.DataInitCommand;
+	import com.core.mvsc.controllers.commands.DataLoadedCommand;
+	import com.core.mvsc.controllers.commands.StartupCommand;
+	import com.core.mvsc.controllers.signals.SystemEvent;
+	import com.core.mvsc.model.SignalBus;
 	
 	import org.swiftsuspenders.Injector;
 	

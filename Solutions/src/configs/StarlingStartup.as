@@ -2,7 +2,7 @@ package configs
 {
 	import com.smart.device.Device;
 	import com.smart.logs.Debug;
-	import com.smart.mvsc.GameContent;
+	import com.core.mvsc.GameContent;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
