@@ -2,9 +2,9 @@ package switcher.views.natives.views
 {
 	import flash.display.Sprite;
 	
-	public class CellsView extends Sprite
+	public class GridsView extends Sprite
 	{
-		public function CellsView()
+		public function GridsView()
 		{
 			super();
 			x=320;

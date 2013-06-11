@@ -15,10 +15,10 @@ package configs
 	import robotlegs.bender.framework.api.IContext;
 	
 	import switcher.models.GameModel;
-	import switcher.views.natives.views.CellsView;
-	import switcher.views.natives.views.StoneView;
-	import switcher.views.natives.views.mediators.CellsViewMediator;
-	import switcher.views.natives.views.mediators.StoneViewMediator;
+	import switcher.views.natives.views.GridsView;
+	import switcher.views.natives.views.CellView;
+	import switcher.views.natives.views.mediators.GridsViewMediator;
+	import switcher.views.natives.views.mediators.CellViewMediator;
 	
 	public class NativeConfig implements IConfig
 	{
@@ -48,11 +48,11 @@ package configs
 		private function setupViews():void{
 
 			contextView.view.addChild(new GameBGAsset());
-			contextView.view.addChild(new CellsView());
+			contextView.view.addChild(new GridsView());
 		}
 		private function mapViews():void{
-			mediatorMap.map(CellsView).toMediator(CellsViewMediator);
-			mediatorMap.map(StoneView).toMediator(StoneViewMediator);
+			mediatorMap.map(GridsView).toMediator(GridsViewMediator);
+			mediatorMap.map(CellView).toMediator(CellViewMediator);
 		}
 		private function mapSingletons():void {
 			signalBus=injector.getOrCreateNewInstance(SignalBus);

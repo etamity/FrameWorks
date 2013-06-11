@@ -1,6 +1,8 @@
 package switcher.models
 {
 	import flash.geom.Point;
+	
+	import switcher.views.natives.views.CellView;
 
 
 	public class GameModel
@@ -11,8 +13,9 @@ package switcher.models
 		
 		private var _grids:Array=[[]];
 		
-		public var stoneFirst:int=-1;
-		public var stoneLast:int=-1;
+		private var _cells:Array=[];
+		
+		public var selectedCell:CellView;
 		
 		private var _stoneData:Array=[
 			StoneType.BLUE,
@@ -36,19 +39,6 @@ package switcher.models
 			createCells();
 		}
 		
-		public function getSideStones(id:int):Array{
-			var stones:Array=new Array();
-			if (checkBoundsValid(id+1)==true)
-				stones.push(id+1);
-			if (checkBoundsValid(id-1)==true)
-				stones.push(id-1);
-			if (checkBoundsValid(id+rowCount)==true)
-				stones.push(id+rowCount);
-			if (checkBoundsValid(id-rowCount)==true)
-				stones.push(id-rowCount);
-			return stones;
-		}
-		
 		private function createCells():void{
 			for(var b:uint=0;b<_mapSize.y;b++){
 				_grids[b]=new Array();
@@ -60,6 +50,10 @@ package switcher.models
 		public function get grids():Array{
 			return _grids;
 		}
+		public function get cells():Array{
+			return _cells;
+		}
+		
 		public function get stoneData():Array{
 			return _stoneData;
 		}
@@ -73,15 +67,34 @@ package switcher.models
 			
 			return result;
 		}
+		
 		public function getIndex(x:int,y:int):int{
 			var index:int=y*_mapSize.y+x;
 			return index;
 		}
 		
-		public function checkBoundsValid(id:int):Boolean{
+		public function checkBoundsValid(a:int,b:int,direct:String):Boolean{
 			var result:Boolean=false;
-			if ((id>=0) && (id <=cellCount))
-				result = true;
+			switch (direct){
+				case "LEFT":
+					if (a-1>=0)
+						result = true;
+					break;
+				case "RIGHT":
+					if (a+1<rowCount)
+						result = true;
+					break;
+				case "DOWN":
+					if (b+1<colCount)
+						result = true;
+					break;
+				case "UP":
+					if (b-1>=0)
+						result = true;
+					break;
+				
+			}
+
 			return result;
 			
 		}

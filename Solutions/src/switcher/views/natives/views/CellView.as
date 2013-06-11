@@ -6,47 +6,61 @@ package switcher.views.natives.views
 	import caurina.transitions.Tweener;
 	
 	import org.osflash.signals.Signal;
-
-	public class StoneView extends MovieClip
-	{
-		private var _index:int;
-		private var _type:String;
-		private var _mc:MovieClip;
-		
-		public var clickSignal:Signal=new Signal();
-		public function StoneView()
-		{
 	
-		}
-		public function get index():int{
-			return _index;
-		}
-		public function get type():String{
-			return _type;
+	import switcher.models.Node;
+	import switcher.models.Stone;
+
+	public class CellView extends CellAsset
+	{
+		public var clickSignal:Signal=new Signal();
+		
+		public var node:Node=new Node();
+		
+		public var index:int;
+
+		public var cellx:int;
+		public var celly:int;
+		
+		private var _stone:Stone;
+		
+		public function CellView()
+		{
+			node.data=this;
+			this.alpha=0.8;
 		}
 
-		public function set index(val:int):void{
-			_index=val;
+		public function get stone():Stone{
+			return _stone;
 		}
-		public function set type(val:String):void{
-			_type =val;
+		public function set stone(val:Stone):void{
+			_stone=val;
+		}
+		public function exchangeStone(target:Node):void{
+			var temp:Stone=_stone;
+			
+			_stone= target.data.stone;
+			target.data.stone=temp;
+			
 		}
 		public function blinking(val:Boolean):void{
 			if (val)
 				blink();
 			else
-				Tweener.removeTweens(this);
+			{
+				Tweener.removeTweens(_stone);
+				_stone.alpha=1;
+			}
 		}
 		
 		private function blink():void{
 			function onFinishedFadeOut():void{
-				Tweener.addTween(this,{alpha:1,time:0.3,onComplete:onFinishedFadeIn});
+				Tweener.addTween(_stone,{alpha:1,time:0.3,onComplete:onFinishedFadeIn});
 			}
 			function onFinishedFadeIn():void{
 				blink();
 			}
-			this.alpha=1;
-			Tweener.addTween(this,{alpha:0.5,time:0.3,onComplete:onFinishedFadeOut});
+			_stone.alpha=1;
+			Tweener.addTween(_stone,{alpha:0.5,time:0.3,onComplete:onFinishedFadeOut});
 		}
 		
 		public function enableEvents(val:Boolean):void{
@@ -68,7 +82,7 @@ package switcher.views.natives.views
 			mc.removeEventListener(MouseEvent.CLICK,doClickEvent);
 		}
 		private function doClickEvent(evt:MouseEvent):void{
-			clickSignal.dispatch(this);
+			clickSignal.dispatch();
 		}
 	}
 }
