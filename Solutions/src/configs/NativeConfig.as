@@ -1,18 +1,24 @@
 package configs
 {
-	import com.smart.logs.console.ConsoleCommand;
-	import com.core.mvsc.controllers.commands.DataInitCommand;
-	import com.core.mvsc.controllers.commands.DataLoadedCommand;
+	import com.core.mvsc.controllers.commands.DataLoadCommand;
 	import com.core.mvsc.controllers.commands.StartupCommand;
 	import com.core.mvsc.controllers.signals.SystemEvent;
 	import com.core.mvsc.model.SignalBus;
+	import com.smart.logs.console.ConsoleCommand;
 	
 	import org.swiftsuspenders.Injector;
 	
+	import robotlegs.bender.extensions.contextView.ContextView;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.signalCommandMap.api.ISignalCommandMap;
 	import robotlegs.bender.framework.api.IConfig;
 	import robotlegs.bender.framework.api.IContext;
+	
+	import switcher.models.GameModel;
+	import switcher.views.natives.views.CellsView;
+	import switcher.views.natives.views.StoneView;
+	import switcher.views.natives.views.mediators.CellsViewMediator;
+	import switcher.views.natives.views.mediators.StoneViewMediator;
 	
 	public class NativeConfig implements IConfig
 	{
@@ -24,27 +30,42 @@ package configs
 		public var commandMap:ISignalCommandMap;
 		[Inject]
 		public var context:IContext;
-		
+		[Inject]
+		public var contextView:ContextView;
 		protected var signalBus:SignalBus;
 		public function configure():void
 		{
+			mapSingletons();
+			mapViews();
+			mapSignals();
+			setupViews();
+			context.afterInitializing(init);
+		}
+		public function init():void{
+			mediatorMap.mediate(contextView.view);
+			signalBus.dispatch(SystemEvent.STARTUP);
+		}
+		private function setupViews():void{
 
-			
+			contextView.view.addChild(new GameBGAsset());
+			contextView.view.addChild(new CellsView());
 		}
 		private function mapViews():void{
-
+			mediatorMap.map(CellsView).toMediator(CellsViewMediator);
+			mediatorMap.map(StoneView).toMediator(StoneViewMediator);
 		}
 		private function mapSingletons():void {
 			signalBus=injector.getOrCreateNewInstance(SignalBus);
 			injector.map(SignalBus).toValue(signalBus);
+			injector.map(GameModel).toSingleton(GameModel);
 			injector.map(ConsoleCommand).toValue(ConsoleCommand.getInstance());
 			
 		}
 		
 		private function mapSignals():void{
 			commandMap.mapSignal(signalBus.signal(SystemEvent.STARTUP),StartupCommand);
-			commandMap.mapSignal(signalBus.signal(SystemEvent.DATA_INIT),DataInitCommand);
-			commandMap.mapSignal(signalBus.signal(SystemEvent.DATA_LOADED),DataLoadedCommand);
+			commandMap.mapSignal(signalBus.signal(SystemEvent.DATA_INIT),DataLoadCommand);
+
 		}
 	}
 }

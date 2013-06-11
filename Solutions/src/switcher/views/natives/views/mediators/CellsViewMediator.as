@@ -6,6 +6,7 @@ package switcher.views.natives.views.mediators
 	import com.core.mvsc.model.SignalBus;
 	
 	import flash.display.MovieClip;
+	import flash.geom.Point;
 	
 	import caurina.transitions.Tweener;
 	
@@ -62,19 +63,18 @@ package switcher.views.natives.views.mediators
 			enableMouseStones(switchAbleArrary);
 		}
 		
-		private function clearEvents():void{
+		private function enableEvents(val:Boolean=true):void{
 			var stone:StoneView;
 			for (var i:int=0;i<_stones.length;i++)
 			{
 				stone=_stones[i];
-				stone.enableEvents(false);
+				stone.enableEvents(val);
 				
 			}
 		}
-		
 		private function enableMouseStones(arr:Array,enable:Boolean=true):void{
 			var stone:StoneView;
-			clearEvents();
+			enableEvents(false);
 			for (var i:int=0;i<arr.length;i++)
 			{
 				stone=_stones[arr[i]];
@@ -84,7 +84,11 @@ package switcher.views.natives.views.mediators
 		}
 		
 		private function switchStone(signal:BaseSignal):void{
-			Tweener.addTween();
+			var id2:int=signal.params.id2;
+			var switchStone:StoneView= _stones[id2];
+			var currentPt:Point=new Point(_currentSelected.x,_currentSelected.y);
+			Tweener.addTween(switchStone,{x:currentPt.x,y:currentPt.y,time:0.5});
+			Tweener.addTween(_currentSelected,{x:switchStone.x,y:switchStone.y,time:0.5});
 		}
 		private function setupModel(signal:BaseSignal):void {
 			generateCells(gameModel.rowCount,gameModel.colCount);
