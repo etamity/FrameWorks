@@ -7,7 +7,7 @@
 
 package suites
 {
-	import flexUnitTests.SolutionOneTest;
+	import flexUnitTests.switcher.models.GameModelTest;
 
 	[RunWith("org.flexunit.runners.Suite")]
 	[Suite]
@@ -18,7 +18,7 @@ package suites
 		/* Public Properties                                                          */
 		/*============================================================================*/
 
-		public var solutionsOneTest:SolutionOneTest;
+		public var gameModelTest:GameModelTest;
 
 	}
 }
