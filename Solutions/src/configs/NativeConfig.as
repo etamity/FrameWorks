@@ -4,6 +4,7 @@ package configs
 	import com.core.mvsc.controllers.commands.StartupCommand;
 	import com.core.mvsc.controllers.signals.SystemEvent;
 	import com.core.mvsc.model.SignalBus;
+	import com.core.mvsc.services.AnimationService;
 	import com.smart.logs.console.ConsoleCommand;
 	
 	import org.swiftsuspenders.Injector;
@@ -15,10 +16,10 @@ package configs
 	import robotlegs.bender.framework.api.IContext;
 	
 	import switcher.models.GameModel;
-	import switcher.views.natives.views.GridsView;
 	import switcher.views.natives.views.CellView;
-	import switcher.views.natives.views.mediators.GridsViewMediator;
+	import switcher.views.natives.views.GridsView;
 	import switcher.views.natives.views.mediators.CellViewMediator;
+	import switcher.views.natives.views.mediators.GridsViewMediator;
 	
 	public class NativeConfig implements IConfig
 	{
@@ -58,6 +59,7 @@ package configs
 			signalBus=injector.getOrCreateNewInstance(SignalBus);
 			injector.map(SignalBus).toValue(signalBus);
 			injector.map(GameModel).toSingleton(GameModel);
+			injector.map(AnimationService).toSingleton(AnimationService);
 			injector.map(ConsoleCommand).toValue(ConsoleCommand.getInstance());
 			
 		}
