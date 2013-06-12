@@ -43,7 +43,7 @@ package switcher.models
 			for(var b:uint=0;b<_mapSize.y;b++){
 				_grids[b]=new Array();
 				for(var a:uint=0;a<10;a++){
-					_grids[b][a]=0;
+					_grids[b][a]=new CellView();
 				}   
 			}
 		}
@@ -61,17 +61,11 @@ package switcher.models
 			return _stoneData[index];
 		}
 		
-		public function switchStoneData(a:int,b:int):Boolean{
-			var result:Boolean= false;
-			//var obj:Object= 
-			
-			return result;
-		}
-		
 		public function getIndex(x:int,y:int):int{
 			var index:int=y*_mapSize.y+x;
 			return index;
 		}
+
 		
 		public function checkBoundsValid(a:int,b:int,direct:String):Boolean{
 			var result:Boolean=false;

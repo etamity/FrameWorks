@@ -26,7 +26,7 @@ package switcher.views.natives.views
 		public function CellView()
 		{
 			node.data=this;
-			this.alpha=0.8;
+			this.alpha=0;
 		}
 
 		public function get stone():Stone{

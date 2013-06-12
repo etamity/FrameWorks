@@ -56,10 +56,10 @@ package switcher.views.natives.views.mediators
 			for (var b:int=0;b<col;b++)
 				for (var a:int=0;a<row;a++)
 				{
-					cell=new CellView();
+					cell=gameModel.grids[a][b];
 					stoneIndex= Math.random()* gameModel.stoneData.length;
 					cell.stone=new Stone(gameModel.getStone(stoneIndex));
-					cell.stone.x= a* 43+5;
+					cell.stone.x= a* 43+8;
 					cell.stone.y= b* 43+5;
 					cell.x= a* 43+5;
 					cell.y= b* 43+5;
@@ -68,16 +68,15 @@ package switcher.views.natives.views.mediators
 					cell.node.data=cell;
 					cell.index=gameModel.getIndex(a,b);
 					cell.addEvents(cell);
-					gameModel.grids[a][b]=cell.node;
 					gameModel.cells.push(cell);
 					view.addChild(cell.stone);
-					view.addChild(cell);
 			
 					
 				}
 			linkNodes(row,col);
 			view.addChild(_selectMc);
 			_selectMc.visible=false;
+
 		}
 
 		override public function initialize():void 
@@ -85,36 +84,91 @@ package switcher.views.natives.views.mediators
 			signalBus.add(SystemEvent.DATA_LOADED, doSetupModel);
 			signalBus.add(GameEvent.SWITCH, doSwitchEvent);
 			signalBus.add(GameEvent.SELECTED, doSelectEvent);
-
+		}
 		
+		public function getRemoveCollection():Array{
+			var count:int=0;
+			var result:Array=[];
+
+			var nexttype:String;
+			var currenttype:String;
+			for (var b:int=0;b<gameModel.colCount;b++)
+			{
+				for (var a:int=0;a<gameModel.rowCount;a++)
+				{
+					nexttype=gameModel.grids[a][b].stone.type;
+					if (currenttype!=nexttype){
+						currenttype=nexttype;
+						if (result.length<3)
+						{
+							result=[];
+							//result.push(gameModel.grids[a][b]);
+						}
+			
+					}
+					else
+					{
+						count++;
+						result.push(gameModel.grids[a][b]);
+			
+					}
+			
+						
+				}
+			}
+			
+			return result;
 		}
 		private function doSelectEvent(signal:BaseSignal):void{
 			var cell:CellView= signal.params.cell;
-			_currentSelected= cell.stone;
-			_selectMc.x=_currentSelected.x;
-			_selectMc.y=_currentSelected.y;
-			_selectMc.visible=true;
-			enableBlink(false);
-			enableMouseStones(cell.node);
 		
+			if (gameModel.selectedCell.stone!=_currentSelected)
+			{
+				_currentSelected= cell.stone;
+				_selectMc.x=_currentSelected.x;
+				_selectMc.y=_currentSelected.y;
+				_selectMc.visible=true;
+				enableBlink(false);
+				enableMouseStones(cell.node);
+			}
+			else
+			{
+				unSelectCell();
+			}
+		
+		}
+		private function unSelectCell():void{
+			enableBlink(false);
+			gameModel.selectedCell=null;
+			_currentSelected=null;
+			_selectMc.visible=false;
 		}
 		private function doSetupModel(signal:BaseSignal):void {
 			generateCells(gameModel.rowCount,gameModel.colCount);
 		}
 		
-
+		private function removeSameStone():void{
+			var cells:Array=getRemoveCollection();
+			var cell:CellView;
+			for (var i:int=0;i<cells.length;i++)
+			{
+				cell=cells[i];
+				cell.stone.visible=false;
+			}
+			
+		}
+		
 		private function doSwitchEvent(signal:BaseSignal):void{
 			function onFinished():void{
 				view.mouseEnabled=true;
 				view.mouseChildren=true;
-				enableBlink(false);
-				_selectMc.visible=false;
 				last.exchangeStone(gameModel.selectedCell.node);
-				gameModel.selectedCell=null;
-				_currentSelected=null;
+				unSelectCell();
+				removeSameStone();
 			}
 			view.mouseEnabled=false;
 			view.mouseChildren=false;
+			_selectMc.visible=false;
 			var last:CellView=signal.params.last;
 			var currentPt:Point=new Point(_currentSelected.x,_currentSelected.y);
 			Tweener.addTween(last.stone,{x:currentPt.x,y:currentPt.y,time:0.5});
@@ -158,20 +212,23 @@ package switcher.views.natives.views.mediators
 		
 		private function linkNodes(row:int=8,col:int=8):void{
 			var node:Node;
+			var cell:CellView;
 			for (var b:int=0;b<col;b++)
 				for (var a:int=0;a<row;a++)
 				{
-					node= gameModel.grids[a][b];
+					cell=gameModel.grids[a][b];
+					node=cell.node;
 					setupLinks(a,b,node);
+					view.addChild(cell);
 				}
 		}
 		
 		private function setupLinks(a:int,b:int,node:Node):void{
 
-			var left :Node= gameModel.checkBoundsValid(a,b,"LEFT")?gameModel.grids[a-1][b]:null;
-			var up :Node= gameModel.checkBoundsValid(a,b,"UP")?gameModel.grids[a][b-1]:null;
-			var down :Node= gameModel.checkBoundsValid(a,b,"DOWN")?gameModel.grids[a][b+1]:null;
-			var right :Node= gameModel.checkBoundsValid(a,b,"RIGHT")?gameModel.grids[a+1][b]:null;
+			var left :Node= gameModel.checkBoundsValid(a,b,Node.LEFT)?gameModel.grids[a-1][b].node:null;
+			var up :Node= gameModel.checkBoundsValid(a,b,Node.UP)?gameModel.grids[a][b-1].node:null;
+			var down :Node= gameModel.checkBoundsValid(a,b,Node.DOWN)?gameModel.grids[a][b+1].node:null;
+			var right :Node= gameModel.checkBoundsValid(a,b,Node.RIGHT)?gameModel.grids[a+1][b].node:null;
 			
 			node.left=left;
 			node.right=right;
