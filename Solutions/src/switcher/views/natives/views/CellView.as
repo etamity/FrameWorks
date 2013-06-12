@@ -37,11 +37,22 @@ package switcher.views.natives.views
 		}
 		public function exchangeStone(target:Node):void{
 			var temp:Stone=_stone;
-			
 			_stone= target.data.stone;
 			target.data.stone=temp;
 			
 		}
+		
+		public function moveDown():void{
+			var down:Node=node.down;
+			while (down.data.stone==null)
+			{
+				down.data.stone=node.data.stone;
+				node.data.stone=null;
+				node=down;
+				moveDown();
+			}
+		}
+		
 		public function blinking(val:Boolean):void{
 			if (val)
 				blink();

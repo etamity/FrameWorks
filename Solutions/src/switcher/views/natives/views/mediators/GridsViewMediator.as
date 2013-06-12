@@ -4,6 +4,7 @@ package switcher.views.natives.views.mediators
 	import com.core.mvsc.controllers.signals.SystemEvent;
 	import com.core.mvsc.model.BaseSignal;
 	import com.core.mvsc.model.SignalBus;
+	import com.core.mvsc.services.AnimationService;
 	
 	import flash.display.MovieClip;
 	import flash.geom.Point;
@@ -18,15 +19,9 @@ package switcher.views.natives.views.mediators
 	import switcher.models.Stone;
 	import switcher.views.natives.views.CellView;
 	import switcher.views.natives.views.GridsView;
+
 	public class GridsViewMediator extends Mediator
 	{
-		
-		public function GridsViewMediator()
-		{
-			super();
-		
-			
-		}
 		
 		[Inject]
 		public var contextView:ContextView;
@@ -40,11 +35,21 @@ package switcher.views.natives.views.mediators
 		public var view:GridsView;
 		
 		
+		[Inject]
+		public var animationService:AnimationService;
+		
 		private var _currentSelected:Stone;
-		
-		
+	
 		private var _selectMc :SelectAsset =new SelectAsset();
-
+		
+		
+		public function GridsViewMediator()
+		{
+			super();
+			
+			
+		}
+		
 		override public function destroy():void
 		{
 			
@@ -56,13 +61,13 @@ package switcher.views.natives.views.mediators
 			for (var b:int=0;b<col;b++)
 				for (var a:int=0;a<row;a++)
 				{
-					cell=gameModel.grids[a][b];
+					cell=gameModel.grids[b][a];
 					stoneIndex= Math.random()* gameModel.stoneData.length;
 					cell.stone=new Stone(gameModel.getStone(stoneIndex));
+					cell.x= a* 43+8;
+					cell.y= b* 43+5;
 					cell.stone.x= a* 43+8;
 					cell.stone.y= b* 43+5;
-					cell.x= a* 43+5;
-					cell.y= b* 43+5;
 					cell.cellx=a;
 					cell.celly=b;
 					cell.node.data=cell;
@@ -76,49 +81,109 @@ package switcher.views.natives.views.mediators
 			linkNodes(row,col);
 			view.addChild(_selectMc);
 			_selectMc.visible=false;
-
+			checkReGenerate();
 		}
-
+	
+		private function checkReGenerate():void{
+			var cells:Array=getClearList();
+			if (cells)
+				reGenerateCell(cells);
+		}
+		
+		private function reGenerateCell(cells:Array):void{
+			var cell:CellView;
+			var stoneIndex:int;
+			for (var i:int=0;i<cells.length;i++)
+			{
+				cell=cells[i];
+				stoneIndex= Math.random()* gameModel.stoneData.length;
+				view.removeChild(cell.stone);
+				cell.stone=new Stone(gameModel.getStone(stoneIndex));
+				view.addChild(cell.stone);
+			}
+			checkReGenerate();
+		}
+		
 		override public function initialize():void 
 		{
 			signalBus.add(SystemEvent.DATA_LOADED, doSetupModel);
 			signalBus.add(GameEvent.SWITCH, doSwitchEvent);
 			signalBus.add(GameEvent.SELECTED, doSelectEvent);
 		}
-		
-		public function getRemoveCollection():Array{
-			var count:int=0;
-			var result:Array=[];
-
-			var nexttype:String;
-			var currenttype:String;
-			for (var b:int=0;b<gameModel.colCount;b++)
-			{
-				for (var a:int=0;a<gameModel.rowCount;a++)
-				{
-					nexttype=gameModel.grids[a][b].stone.type;
-					if (currenttype!=nexttype){
-						currenttype=nexttype;
-						if (result.length<3)
-						{
-							result=[];
-							//result.push(gameModel.grids[a][b]);
-						}
-			
-					}
-					else
-					{
-						count++;
-						result.push(gameModel.grids[a][b]);
-			
-					}
-			
-						
+		public function getClearList():Array{
+			function addClearList(clearList:Array,checkList:Array):Array{
+				if(checkList.length >= 3){
+					clearList = clearList.concat(checkList)
 				}
+				return clearList;
+			}
+			var i:int;
+			var j:int;
+			var checkList:Array=[];
+			var stone:Stone;
+			var clearList:Array = [];
+			var list:Array= gameModel.grids;
+			//check left to right
+			for(i=0;i<gameModel.colCount;i++){
+				checkList = [list[i][0]];
+				for(j=1;j<gameModel.rowCount;j++){
+					if(checkList[checkList.length - 1].stone.type == list[i][j].stone.type ){
+						checkList.push(list[i][j]);
+					}else{
+						clearList = addClearList(clearList,checkList);
+						checkList = [list[i][j]];
+					}
+				}
+				clearList = addClearList(clearList,checkList);
+			}
+			// check up to down
+			for(i=0;i<gameModel.colCount;i++){
+				checkList = [list[0][i]];
+				for(j=1;j<gameModel.rowCount;j++){
+					if(checkList[checkList.length - 1].stone.type  == list[j][i].stone.type ){
+						checkList.push(list[j][i]);
+					}else{
+						clearList = addClearList(clearList,checkList);
+						checkList = [list[j][i]];
+					}
+				}
+				clearList = addClearList(clearList,checkList);
+			}
+			/*if(typeof direction == UNDEFINED || direction == ""){
+				return clearList;
+			}
+			if(clearList.length == 0){
+				mouse_down_obj.isMouseDown = false;
+				return;
+			}
+			preMove = {};
+			for(i=0;i<clearList.length;i++){
+				gem = clearList[i];
+				addBullet(gem,i==clearList.length-1);
 			}
 			
-			return result;
+			var plot = 1 + 0.5 * continuous;
+			continuous++;
+			var get = clearList.length*10;
+			if(clearList.length >= 4){
+				get += 10;
+			}
+			if(clearList.length >= 6){
+				get += 20;
+			}
+			if(clearList.length >= 8){
+				get += 30;
+			}
+			get = get*plot >>> 0;
+			var getpoint = new GetPoint(get,200,300);
+			getLayer.addChild(getpoint);
+			point.setPoint(point.num + get);
+			bulletLayer.addEventListener(LEvent.ENTER_FRAME,onBullet);*/
+			
+			return clearList;
 		}
+		
+		
 		private function doSelectEvent(signal:BaseSignal):void{
 			var cell:CellView= signal.params.cell;
 		
@@ -148,16 +213,76 @@ package switcher.views.natives.views.mediators
 		}
 		
 		private function removeSameStone():void{
-			var cells:Array=getRemoveCollection();
+			var cells:Array=getClearList();
 			var cell:CellView;
+			gameModel.bulletList=cells;
 			for (var i:int=0;i<cells.length;i++)
 			{
 				cell=cells[i];
 				cell.stone.visible=false;
+				//cell.stone.parent.removeChild(cell.stone);
+				//cell.stone=null;
 			}
-			
+			//sortList();
+			moveDownStone();
 		}
 		
+		private function moveDownStone():void{
+	
+		}
+		
+		private function checkHasMove():Boolean
+		{
+			var stone:Stone;
+			var wCount:int=8;
+			var hCount:int=8;
+			var hasmove:Boolean = false;
+			var stoneArr:Array=gameModel.grids;
+			
+			if (!hasmove)
+			for (var i:int = 0; i<hCount; i++) {
+				if (!hasmove)
+				for (var j:int = 0; j<wCount; j++) {
+					if (i<hCount-1){
+						stone = stoneArr[j];
+						stoneArr[j]=stoneArr[i+1][j];
+						stoneArr[i+1][j] = stone;
+						
+						stone = stoneArr[j];
+						stoneArr[j]=stoneArr[i+1][j];
+						stoneArr[i+1][j] = stone;
+
+						if (stoneArr.length > 0) {
+							hasmove = true;
+							break;
+						}
+					}
+				}
+			}
+		
+			
+			return hasmove;
+		}
+
+		public function sortList():void{
+			var i:int;
+			var j:int;
+			var k:int;
+			var list:Array= gameModel.grids;
+			var cell:CellView;
+			for(i=0;i<8;i++){
+				for(j=0;j<7;j++){
+					for(k=j+1;k<8;k++){
+						cell=list[j][i];
+						if(cell.stone.visible==false){
+							cell.stone = list[j][i].stone;
+							list[j][i].stone = list[k][i].stone;
+							list[k][i].stone = cell.stone;
+						}
+					}
+				}
+			}
+		}
 		private function doSwitchEvent(signal:BaseSignal):void{
 			function onFinished():void{
 				view.mouseEnabled=true;
@@ -170,9 +295,7 @@ package switcher.views.natives.views.mediators
 			view.mouseChildren=false;
 			_selectMc.visible=false;
 			var last:CellView=signal.params.last;
-			var currentPt:Point=new Point(_currentSelected.x,_currentSelected.y);
-			Tweener.addTween(last.stone,{x:currentPt.x,y:currentPt.y,time:0.5});
-			Tweener.addTween(_currentSelected,{x:last.stone.x,y:last.stone.y,time:0.5,onComplete:onFinished});
+			animationService.switchPosition(_currentSelected,last.stone,onFinished);
 		}
 		private function enableBlink(val:Boolean=true):void{
 			var cell:CellView;
@@ -182,6 +305,7 @@ package switcher.views.natives.views.mediators
 				cell.blinking(val);
 				
 			}
+			
 		}
 		
 		private function enableEvents(val:Boolean=true):void{
@@ -216,7 +340,7 @@ package switcher.views.natives.views.mediators
 			for (var b:int=0;b<col;b++)
 				for (var a:int=0;a<row;a++)
 				{
-					cell=gameModel.grids[a][b];
+					cell=gameModel.grids[b][a];
 					node=cell.node;
 					setupLinks(a,b,node);
 					view.addChild(cell);
@@ -225,10 +349,10 @@ package switcher.views.natives.views.mediators
 		
 		private function setupLinks(a:int,b:int,node:Node):void{
 
-			var left :Node= gameModel.checkBoundsValid(a,b,Node.LEFT)?gameModel.grids[a-1][b].node:null;
-			var up :Node= gameModel.checkBoundsValid(a,b,Node.UP)?gameModel.grids[a][b-1].node:null;
-			var down :Node= gameModel.checkBoundsValid(a,b,Node.DOWN)?gameModel.grids[a][b+1].node:null;
-			var right :Node= gameModel.checkBoundsValid(a,b,Node.RIGHT)?gameModel.grids[a+1][b].node:null;
+			var left :Node= gameModel.checkBoundsValid(a,b,Node.LEFT)?gameModel.grids[b][a-1].node:null;
+			var up :Node= gameModel.checkBoundsValid(a,b,Node.UP)?gameModel.grids[b-1][a].node:null;
+			var down :Node= gameModel.checkBoundsValid(a,b,Node.DOWN)?gameModel.grids[b+1][a].node:null;
+			var right :Node= gameModel.checkBoundsValid(a,b,Node.RIGHT)?gameModel.grids[b][a+1].node:null;
 			
 			node.left=left;
 			node.right=right;

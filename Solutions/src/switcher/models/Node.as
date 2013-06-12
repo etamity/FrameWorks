@@ -1,5 +1,7 @@
 package switcher.models
 {
+	import org.hamcrest.mxml.object.Null;
+
 	public class Node
 	{
 		
@@ -42,14 +44,23 @@ package switcher.models
 			return result;
 		}
 
+		public function copy(node:Node):void{
+			data=node.data;
+			left=node.left;
+			right=node.right;
+			up=node.up;
+			down=node.down;
+		}
 		public function clone():Node{
-			var node:Node=new Node();
-			node.data=data;
-			node.left=left;
-			node.right=right;
-			node.up=up;
-			node.down=down;
-			return node;
+
+				var node:Node=new Node();
+			
+				node.data=data;
+				node.left=left;
+				node.right=right;
+				node.up=up;
+				node.down=down;
+				return node;
 		}
 		
 	}

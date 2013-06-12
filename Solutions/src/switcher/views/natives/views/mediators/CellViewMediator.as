@@ -1,7 +1,11 @@
 package switcher.views.natives.views.mediators
 {
 	import com.core.mvsc.controllers.signals.GameEvent;
+	import com.core.mvsc.model.BaseSignal;
 	import com.core.mvsc.model.SignalBus;
+	import com.core.mvsc.services.AnimationService;
+	
+	import caurina.transitions.Tweener;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	
@@ -19,6 +23,10 @@ package switcher.views.natives.views.mediators
 		
 		[Inject]
 		public var signalBus:SignalBus;
+		
+		[Inject]
+		public var animationService:AnimationService;
+		
 		public function CellViewMediator()
 		{
 			super();
@@ -26,6 +34,7 @@ package switcher.views.natives.views.mediators
 		override public function initialize():void 
 		{
 			view.clickSignal.add(dispathSelected);
+			
 		}
 		public function checkSwitchAble():Boolean{
 			var first:Node=gameModel.selectedCell.node;
@@ -43,6 +52,16 @@ package switcher.views.natives.views.mediators
 		}
 		private function get node():Node{
 			return view.node;
+		}
+	
+		public function blinking(val:Boolean):void{
+			if (val)
+				animationService.blink(view.stone);
+			else
+			{
+				Tweener.removeTweens(view.stone);
+				view.stone.alpha=1;
+			}
 		}
 
 		private function dispathSelected():void{

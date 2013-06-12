@@ -15,6 +15,8 @@ package switcher.models
 		
 		private var _cells:Array=[];
 		
+		private var _bulletList:Array=[];
+		
 		public var selectedCell:CellView;
 		
 		private var _stoneData:Array=[
@@ -40,12 +42,18 @@ package switcher.models
 		}
 		
 		private function createCells():void{
-			for(var b:uint=0;b<_mapSize.y;b++){
+			for(var b:uint=0;b<colCount;b++){
 				_grids[b]=new Array();
-				for(var a:uint=0;a<10;a++){
+				for(var a:uint=0;a<rowCount;a++){
 					_grids[b][a]=new CellView();
 				}   
 			}
+		}
+		public function set bulletList(val:Array):void{
+			_bulletList=val;
+		}
+		public function get bulletList():Array{
+			return _bulletList;
 		}
 		public function get grids():Array{
 			return _grids;
