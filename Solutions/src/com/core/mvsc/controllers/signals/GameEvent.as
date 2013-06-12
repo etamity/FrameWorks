@@ -7,5 +7,7 @@ package com.core.mvsc.controllers.signals
 		
 		public static const SELECTED:String="GameEvent.SELECTED";
 		public static const SWITCH:String="GameEvent.SWITCH";
+		
+		public static const BLINK:String="GameEvent.BLINK";
 	}
 }
