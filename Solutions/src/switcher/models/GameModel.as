@@ -74,7 +74,17 @@ package switcher.models
 			return index;
 		}
 
-		
+		public function getGridCol(index:int):Array{
+			  return grids[index];
+		}
+		public function getGridRow(index:int):Array{
+			var tem:Array=[];
+			for (var i:int=0;i<rowCount;i++)
+			{
+				tem.push([index][i]);
+			}
+			return tem;
+		}
 		public function checkBoundsValid(a:int,b:int,direct:String):Boolean{
 			var result:Boolean=false;
 			switch (direct){

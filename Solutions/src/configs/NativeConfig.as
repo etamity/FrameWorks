@@ -17,8 +17,10 @@ package configs
 	
 	import switcher.models.GameModel;
 	import switcher.views.natives.views.CellView;
+	import switcher.views.natives.views.GamePanelView;
 	import switcher.views.natives.views.GridsView;
 	import switcher.views.natives.views.mediators.CellViewMediator;
+	import switcher.views.natives.views.mediators.GamePanelMediator;
 	import switcher.views.natives.views.mediators.GridsViewMediator;
 	
 	public class NativeConfig implements IConfig
@@ -50,10 +52,12 @@ package configs
 
 			contextView.view.addChild(new GameBGAsset());
 			contextView.view.addChild(new GridsView());
+			contextView.view.addChild(new GamePanelView());
 		}
 		private function mapViews():void{
 			mediatorMap.map(GridsView).toMediator(GridsViewMediator);
 			mediatorMap.map(CellView).toMediator(CellViewMediator);
+			mediatorMap.map(GamePanelView).toMediator(GamePanelMediator);
 		}
 		private function mapSingletons():void {
 			signalBus=injector.getOrCreateNewInstance(SignalBus);

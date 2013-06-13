@@ -35,7 +35,7 @@ package switcher.views.natives.views
 		public function set stone(val:Stone):void{
 			_stone=val;
 		}
-		public function exchangeStone(target:Node):void{
+		public function switchStone(target:Node):void{
 			var temp:Stone=_stone;
 			_stone= target.data.stone;
 			target.data.stone=temp;
@@ -58,20 +58,27 @@ package switcher.views.natives.views
 				blink();
 			else
 			{
+				if (_stone!=null)
+				{
 				Tweener.removeTweens(_stone);
 				_stone.alpha=1;
+				}
 			}
 		}
 		
 		private function blink():void{
+		
 			function onFinishedFadeOut():void{
 				Tweener.addTween(_stone,{alpha:1,time:0.3,onComplete:onFinishedFadeIn});
 			}
 			function onFinishedFadeIn():void{
 				blink();
 			}
+			if (_stone!=null)
+			{
 			_stone.alpha=1;
 			Tweener.addTween(_stone,{alpha:0.5,time:0.3,onComplete:onFinishedFadeOut});
+			}
 		}
 		
 		public function enableEvents(val:Boolean):void{

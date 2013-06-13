@@ -53,9 +53,8 @@ package com.core.mvsc.services
 			Tweener.addTween(mc,{alpha:0.5,time:blinkime,onComplete:onFinishedFadeOut});
 		}
 		
-		public function moveTo(mc:MovieClip,params:Object,complete:Function=null):void{
-			if (complete!=null)
-			params.onComplete=complete;
+		public function moveTo(mc:MovieClip,params:Object):void{
+			if (params.time==null)
 			params.time=moveime;
 			Tweener.addTween(mc,params);
 		}
