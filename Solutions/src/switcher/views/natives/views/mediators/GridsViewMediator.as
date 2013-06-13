@@ -258,7 +258,7 @@ package switcher.views.natives.views.mediators
 			trace("=================");
 			for(i=gameModel.colCount-1;i>=0;i--){
 				//trace("=================");
-				for(j=gameModel.rowCount-1;j>0;j--){
+				for(j=gameModel.rowCount-1;j>=0;j--){
 					cell=grid[j][i];
 					stone=cell.stone;
 					trace("===cell ",cell.index);
@@ -289,7 +289,7 @@ package switcher.views.natives.views.mediators
 			var i:int;
 			var j:int;
 			var cell:CellView;
-			var time:Number=0.6;
+			var time:Number=0.8;
 			for(i=0;i<gameModel.colCount;i++){
 				for(j=0;j<gameModel.rowCount;j++){
 					cell=grid[i][j];
@@ -299,18 +299,19 @@ package switcher.views.natives.views.mediators
 						cell.stone=new Stone(gameModel.getStone(stoneIndex));
 						cell.stone.x= cell.x;
 						cell.stone.y= 0;
+						cell.stone.alpha=0;
 						view.stoneView.addChild(cell.stone);
 						trace("generateStone.cell.index",cell.index);
 						if (cell.index==lastBullet.index)
 						{
-						animationService.moveTo(cell.stone,{y: cell.y,onComplete:function():void{
+						animationService.moveTo(cell.stone,{y: cell.y,alpha:1,time:time,onComplete:function():void{
 							var cells:Array=getClearList();
 							trace("animationService");
 							if (cells.length>0)
 								checkAndAction();
 						}});
 						} else
-							animationService.moveTo(cell.stone,{y: cell.y,time:time});
+							animationService.moveTo(cell.stone,{y: cell.y,alpha:1,time:time});
 					}
 				}
 			}
