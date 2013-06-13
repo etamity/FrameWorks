@@ -1,10 +1,15 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package  com.core.mvsc.model 
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.SimpleButton;
 	import flash.display.Sprite;
-	import flash.filters.ColorMatrixFilter;
 	import flash.text.TextField;
 	public class SMButton extends Sprite
 	{

@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.core.mvsc.controllers.signals
 {
 	public class GameEvent
@@ -17,5 +22,7 @@ package com.core.mvsc.controllers.signals
 		public static const ADDSCORE:String="GameEvent.ADDSCORE";
 		
 		public static const GAMEFINISHED:String="GameEvent.GAMEFINISHED";
+		
+		public static const ADDTIME:String="GameEvent.ADDTIME";
 	}
 }

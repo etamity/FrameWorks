@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package configs
 {
 	import com.core.mvsc.controllers.commands.DataLoadCommand;

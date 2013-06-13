@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package switcher.views.natives.views
 {
 	import flash.display.MovieClip;
@@ -22,6 +28,8 @@ package switcher.views.natives.views
 		public var celly:int;
 		
 		private var _stone:Stone;
+		
+		private var eventEnabled:Boolean=false;
 		
 		public function CellView()
 		{
@@ -92,10 +100,15 @@ package switcher.views.natives.views
 			blinking(val);
 		}
 		public function addEvents(mc:MovieClip):void{
+			if (eventEnabled==false)
+			{
+			eventEnabled=true;
 			mc.buttonMode=true;
 			mc.addEventListener(MouseEvent.CLICK,doClickEvent);
+			}
 		}
 		private function removeEvents(mc:MovieClip):void{
+			eventEnabled=false;
 			mc.buttonMode=false;
 			mc.removeEventListener(MouseEvent.CLICK,doClickEvent);
 		}

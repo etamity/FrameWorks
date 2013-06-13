@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package switcher.views.natives.views.mediators
 {
 	import com.core.mvsc.controllers.signals.GameEvent;

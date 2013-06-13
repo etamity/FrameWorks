@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package switcher.views.natives.views.mediators
 {
 	import com.core.mvsc.controllers.signals.GameEvent;
@@ -69,9 +75,18 @@ package switcher.views.natives.views.mediators
 			view.score=String(score);
 			view.bombMc.gotoAndStop(60-time);
 		}
+		private function doAddTime(signal:BaseSignal):void{
+			var seconds:int=signal.params.seconds;
+			if (time+seconds<60)
+				time+=seconds;
+			else
+				time=60;
+			refresh();
+		}
 		override public function initialize():void 
 		{	signalBus.add(GameEvent.REPLAY,doReplay);
 			signalBus.add(GameEvent.ADDSCORE,doAddScore);
+			signalBus.add(GameEvent.ADDTIME,doAddTime);
 			
 			spinBtn=new SMButton(view.spinBtn);
 			spinBtn.label="SPIN";
