@@ -54,39 +54,69 @@ package switcher.views.natives.views.mediators
 		}
 		public function generateCells(row:int=8,col:int=8):void{
 			var cell:CellView;
-			var stoneIndex:int;
 			var stoneMc:MovieClip;
 			for (var b:int=0;b<col;b++)
 				for (var a:int=0;a<row;a++)
 				{
 					cell=gameModel.grids[b][a];
-					stoneIndex= Math.random()* gameModel.stoneData.length;
-					cell.stone=new Stone(gameModel.getStone(stoneIndex));
-					cell.x= a* 43+8;
-					cell.y= b* 43+5;
-					cell.stone.x= a* 43+8;
-					cell.stone.y= b* 43+5;
+					cell.stone=new Stone();
+					cell.x= gameModel.getCellX(a);
+					cell.y= gameModel.getCellX(b);
+					cell.stone.x= cell.x;
+					cell.stone.y= cell.y;
 					cell.cellx=a;
 					cell.celly=b;
 					cell.node.data=cell;
 					cell.index=gameModel.getIndex(a,b);
 					cell.addEvents(cell);
 					gameModel.cells.push(cell);
-					view.stoneView.addChild(cell.stone);
-			
 					
 				}
-			linkNodes(row,col);
 			view.addChild(_selectMc);
 			_selectMc.visible=false;
-			//checkAndAction();
+			checkAndReGenerate();
+			addToView();
+			linkNodes(row,col);
 		}
+		
+		private function addToView():void{
+			var cell:CellView;
+			for (var i:int=0;i<gameModel.cells.length;i++)
+			{
+				cell=gameModel.cells[i];
+				cell.stone.x= cell.x;
+				cell.stone.y= cell.y;
+				view.stoneView.addChild(cell.stone);
+			}
+		}
+		
+		private function checkAndReGenerate():void{
+			var cells:Array=getClearList();
+			gameModel.bulletList=cells;
+			var cell:CellView;
+			var stoneIndex:int;
+			if (cells.length>0){
+				for (var i:int=0;i<cells.length;i++)
+				{
+					cell=cells[i];
+					if (cell.stone !=null)
+					{
+						stoneIndex= Math.random()* gameModel.stoneData.length;
+						cell.stone=new Stone(gameModel.getStone(stoneIndex));
+					}
+				}
+				checkAndReGenerate();
+			}
+		}
+		
 		
 		override public function initialize():void 
 		{
 			signalBus.add(SystemEvent.DATA_LOADED, doSetupModel);
 			signalBus.add(GameEvent.SWITCH, doSwitchEvent);
 			signalBus.add(GameEvent.SELECTED, doSelectEvent);
+			
+			view.addMask(gameModel.generateMask("GRIDSVIEWMASK"));
 		}
 		public function getClearList():Array{
 			function addClearList(clearList:Array,checkList:Array):Array{
@@ -201,7 +231,7 @@ package switcher.views.natives.views.mediators
 				cell=cells[i];
 				if (cell.stone !=null)
 				{
-					var highlightMc:SelectAsset=new SelectAsset();
+					var highlightMc:HighLightAsset=new HighLightAsset();
 					cell.stone.addChild(highlightMc);
 					animationService.blink(highlightMc);
 					setTimeout(function (stone:Stone):void{
@@ -255,23 +285,23 @@ package switcher.views.natives.views.mediators
 			var i:int;
 			var j:int;
 	
-			trace("=================");
+
+			//trace("=================");
 			for(i=gameModel.colCount-1;i>=0;i--){
-				//trace("=================");
+				
 				for(j=gameModel.rowCount-1;j>=0;j--){
 					cell=grid[j][i];
 					stone=cell.stone;
-					trace("===cell ",cell.index);
+					//trace("===cell ",cell.index);
 					if(stone==null ){
 
 						next =checkHasNodeWithStone(cell.node);
 						upStone=next.data.stone;
-						trace("next",next.data.index);
+						//trace("next",next.data.index);
 						if (upStone!=null)
 						{
-						animationService.moveTo(upStone,{y: cell.y,time:0.8});
+						animationService.moveTo(upStone,{y: cell.y});
 						cell.switchStone(next);
-						lastBullet=next.data as CellView;
 						}
 						upStone=null;
 						
@@ -284,34 +314,35 @@ package switcher.views.natives.views.mediators
 		}
 		
 		private function generateStone():void{
-			var stoneIndex:int;
 			var grid:Array=gameModel.grids;
 			var i:int;
 			var j:int;
 			var cell:CellView;
 			var time:Number=0.8;
+			var finishedBoolean:Boolean=false;
 			for(i=0;i<gameModel.colCount;i++){
 				for(j=0;j<gameModel.rowCount;j++){
 					cell=grid[i][j];
 					if (cell.stone==null)
 					{
-						stoneIndex= Math.random()* gameModel.stoneData.length;
-						cell.stone=new Stone(gameModel.getStone(stoneIndex));
+
+						cell.stone=new Stone();
 						cell.stone.x= cell.x;
-						cell.stone.y= 0;
+						cell.stone.y= gameModel.getCellY(-1);
 						cell.stone.alpha=0;
 						view.stoneView.addChild(cell.stone);
-						trace("generateStone.cell.index",cell.index);
-						if (cell.index==lastBullet.index)
+						//trace("generateStone.cell.index",cell.index);
+						if (finishedBoolean==false)
 						{
-						animationService.moveTo(cell.stone,{y: cell.y,alpha:1,time:time,onComplete:function():void{
+						animationService.moveTo(cell.stone,{y: cell.y,alpha:1,onComplete:function():void{
 							var cells:Array=getClearList();
-							trace("animationService");
+							//trace("animationService");
 							if (cells.length>0)
 								checkAndAction();
 						}});
+						finishedBoolean=true;
 						} else
-							animationService.moveTo(cell.stone,{y: cell.y,alpha:1,time:time});
+							animationService.moveTo(cell.stone,{y: cell.y,alpha:1});
 					}
 				}
 			}

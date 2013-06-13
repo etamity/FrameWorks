@@ -1,5 +1,6 @@
 package switcher.models
 {
+	import flash.display.Shape;
 	import flash.geom.Point;
 	
 	import switcher.views.natives.views.CellView;
@@ -19,6 +20,11 @@ package switcher.models
 		
 		public var selectedCell:CellView;
 		
+		public var cellWidth:int =43;
+		public var cellHeight:int =43;
+		public var cellOffetX:int =8;
+		public var cellOffetY:int =5;
+		
 		private var _stoneData:Array=[
 			StoneType.BLUE,
 			StoneType.RED,
@@ -26,6 +32,17 @@ package switcher.models
 			StoneType.PURPLE,
 			StoneType.YELLOW
 		];
+		
+		public function getCellX(val:int):int{
+			var x:int;
+			x=val * cellWidth+cellOffetX;
+			return x;
+		}
+		public function getCellY(val:int):int{
+			var y:int;
+			y=val * cellHeight+cellOffetY;
+			return y;
+		}
 		
 		public function get rowCount():int{
 			return _mapSize.x;
@@ -49,6 +66,18 @@ package switcher.models
 				}   
 			}
 		}
+		
+		private function get2Dgirds():Array{
+			var temp:Array=[[]];
+			for(var b:uint=0;b<colCount;b++){
+				temp[b]=new Array();
+				for(var a:uint=0;a<rowCount;a++){
+					temp[b][a]=0;
+				}   
+			}
+			return temp;
+		}
+		
 		public function set bulletList(val:Array):void{
 			_bulletList=val;
 		}
@@ -85,6 +114,27 @@ package switcher.models
 			}
 			return tem;
 		}
+		public function getStonesInCell():Array{
+			var stones:Array=get2Dgirds();
+			var cell:CellView;
+			for(var b:uint=0;b<colCount;b++){
+				for(var a:uint=0;a<rowCount;a++){
+					cell=_grids[b][a];
+					stones[b][a]=cell.stone;
+				}
+			}
+			
+			return stones;
+		}
+		public function generateMask(id:String, w:int=360, h:int=355):Shape {
+			var rectMask:Shape = new Shape();
+			rectMask.name = "mask" + id;
+			rectMask.graphics.beginFill(0xFF0000, 1);
+			rectMask.graphics.drawRect(0, 0, w, h);
+			rectMask.graphics.endFill();
+			return rectMask;
+		}
+		
 		public function checkBoundsValid(a:int,b:int,direct:String):Boolean{
 			var result:Boolean=false;
 			switch (direct){
