@@ -25,7 +25,7 @@ package switcher.models
 		public var cellOffetX:int =8;
 		public var cellOffetY:int =5;
 		
-		private var _stoneData:Array=[
+		public static var stoneDict:Array=[
 			StoneType.BLUE,
 			StoneType.RED,
 			StoneType.GREEN,
@@ -92,10 +92,10 @@ package switcher.models
 		}
 		
 		public function get stoneData():Array{
-			return _stoneData;
+			return stoneDict;
 		}
 		public function getStone(index:int):String{
-			return _stoneData[index];
+			return stoneDict[index];
 		}
 		
 		public function getIndex(x:int,y:int):int{

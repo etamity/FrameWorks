@@ -55,23 +55,37 @@ package com.core.mvsc.services
 			
 			
 			newGrid.concat(grid);
+			newGrid.push(newRow);
+			
 			for(i=col-1;i>=0;i--){
 				
 				for(j=row-1;j>=0;j--){
-					mc=grid[i][j];
+					mc=newGrid[i][j];
 					newY=gameModel.getCellY(i+1);
 					moveTo(mc,{y:newY,time:0.3,onComplete:onFinished});
-					grid[(col-1)-i][(row-1)-j]=newRow[j];
+					newGrid[(col-1)-i][(row-1)-j]=newRow[j];
 					
 				}
 			}
 		}
 		
 		public function fadeInCenter(mc:MovieClip):void{
-			fadeIn(mc,new Point(mc.stage.stageWidth/2,mc.stage.stageHeight/2));
+			fadeInOut(mc,new Point(mc.stage.stageWidth/2,mc.stage.stageHeight/2));
 		}
 		
-		public function fadeIn(mc:MovieClip,pt:Point):void{
+		
+		public function fadeIn(mc:MovieClip,pt:Point=null):void{
+			if (pt==null)
+				pt=new Point(mc.x,mc.y);
+			mc.alpha=0;
+			mc.visible=true;
+			mc.x=pt.x;
+			mc.y=pt.y;
+			setTimeout(function (mc:MovieClip):void{
+				fadeMove(mc,{x:pt.x,y:pt.y,alpha:1});
+			},1000,mc);
+		}
+		public function fadeInOut(mc:MovieClip,pt:Point=null):void{
 			function onFinished(mc:MovieClip):void{
 				setTimeout(function (mc:MovieClip):void{
 					fadeMove(mc,{alpha:0,x:pt.x,y:pt.y},function(mc:MovieClip):void{
@@ -79,6 +93,8 @@ package com.core.mvsc.services
 					});
 				},delayTime,mc);
 			}
+			if (pt==null)
+				pt=new Point(mc.x,mc.y);
 			mc.alpha=0;
 			mc.visible=true;
 			mc.x=pt.x;

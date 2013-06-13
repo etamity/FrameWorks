@@ -50,32 +50,12 @@ package  com.core.mvsc.model
 			if (val==false)
 			{
 			button.alpha= 0.8;
-			adjustFilterPro(button,0,0,-100,0);
 		
 			}
 			else
 			{
 			button.alpha= 1;
-			adjustFilterPro(button,0,0,0,0);
 			}
-		}
-		private function adjustFilterPro(mc:DisplayObject, brightness:int,contrast:int,saturation:int, hue:int):void {
-			//colors = hue:Number = 0, sat:Number = 0, brigh:Number = 0, con:Number = 0;
-			//var colors:Array            = findChipMatrixColor(val);
-			
-			//all 4 must contain a value of an integer, if one is not set, it will not work
-			var colorFilter:AdjustColor = new AdjustColor();
-			var mColorMatrix:ColorMatrixFilter;
-			var mMatrix:Array           = [];
-			
-			colorFilter.brightness = brightness;
-			colorFilter.contrast = contrast;
-			colorFilter.saturation = saturation;
-			colorFilter.hue = hue;
-			
-			mMatrix = colorFilter.CalculateFinalFlatArray();
-			mColorMatrix = new ColorMatrixFilter(mMatrix);
-			mc.filters = [mColorMatrix];
 		}
 		public function get enabled():Boolean{
 			return button.enabled;

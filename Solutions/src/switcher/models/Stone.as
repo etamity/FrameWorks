@@ -12,7 +12,7 @@ package switcher.models
 			if (stone=="")
 			{
 				var rn:int = Math.random()* 5 ;
-				stone=String(rn);
+				stone=GameModel.stoneDict[rn];
 			}
 				
 			addChild(createStoneMc(stone));
@@ -23,23 +23,18 @@ package switcher.models
 			var mc:MovieClip;
 			switch (stone){
 				case StoneType.BLUE:
-				case "0":
 					mc= new BlueAsset();
 					break;
 				case StoneType.GREEN:
-				case "1":
 					mc= new GreenAsset();
 					break;
 				case StoneType.PURPLE:
-				case "2":
 					mc= new PurpleAsset();
 					break;
 				case StoneType.RED:
-				case "3":
 					mc= new RedAsset();
 					break;
 				case StoneType.YELLOW:
-				case "4":
 					mc=new YellowAsset();
 					break;
 			}

@@ -7,6 +7,7 @@ package switcher.views.natives.views.mediators
 	import com.core.mvsc.services.AnimationService;
 	
 	import flash.display.MovieClip;
+	import flash.geom.Point;
 	import flash.utils.setTimeout;
 	
 	import robotlegs.bender.bundles.mvcs.Mediator;
@@ -41,6 +42,9 @@ package switcher.views.natives.views.mediators
 		private var _selectMc :SelectAsset =new SelectAsset();
 		
 		private var lastBullet:CellView;
+		
+		private var continuous:int=1;
+		
 		public function GridsViewMediator()
 		{
 			super();
@@ -115,12 +119,24 @@ package switcher.views.natives.views.mediators
 			signalBus.add(SystemEvent.DATA_LOADED, doSetupModel);
 			signalBus.add(GameEvent.SWITCH, doSwitchEvent);
 			signalBus.add(GameEvent.SELECTED, doSelectEvent);
+			signalBus.add(GameEvent.GAMEFINISHED, doGameFinishedEvent);
+			signalBus.add(GameEvent.REPLAY, doReplayEvent);
 			
 			view.addMask(gameModel.generateMask("GRIDSVIEWMASK"));
 		}
-		public function getClearList():Array{
+		private function doGameFinishedEvent(signal:BaseSignal):void{
+			view.mouseEnabled=false;
+			view.mouseChildren=false;
+		}
+		private function doReplayEvent(signal:BaseSignal):void{
+
+			view.mouseEnabled=true;
+			view.mouseChildren=true;
+		}
+		
+		public function getClearList(matchCount:int=3):Array{
 			function addClearList(clearList:Array,checkList:Array):Array{
-				if(checkList.length >= 3){
+				if(checkList.length >= matchCount){
 					clearList = clearList.concat(checkList)
 				}
 				return clearList;
@@ -190,9 +206,32 @@ package switcher.views.natives.views.mediators
 			point.setPoint(point.num + get);
 			bulletLayer.addEventListener(LEvent.ENTER_FRAME,onBullet);*/
 			
+			
+			
 			return clearList;
 		}
 		
+		
+		private function addScores(list:Array):void{
+			var point:int=0;
+			
+			var plot:int = 1 + 0.5 * continuous;
+			continuous++;
+			
+			point = list.length*10;
+			if(list.length >= 4){
+				point += 10;
+			}
+			if(list.length >= 6){
+				point += 20;
+			}
+			if(list.length >= 8){
+				point += 30;
+			}
+			point = point*plot >>> 0;
+			
+			signalBus.dispatch(GameEvent.ADDSCORE,{point:point});
+		}
 		
 		private function doSelectEvent(signal:BaseSignal):void{
 			var cell:CellView= signal.params.cell;
@@ -226,6 +265,7 @@ package switcher.views.natives.views.mediators
 			var cells:Array=getClearList();
 			gameModel.bulletList=cells;
 			var cell:CellView;
+			var finishedBool:Boolean=false;
 			for (var i:int=0;i<cells.length;i++)
 			{
 				cell=cells[i];
@@ -237,13 +277,21 @@ package switcher.views.natives.views.mediators
 					setTimeout(function (stone:Stone):void{
 						stone.parent.removeChild(stone);
 	
-						if (complete!=null)
+						if (complete!=null && finishedBool==false)
+						{
+							
+							if (cells.length>0)
+								addScores(cells);
+							
 							complete();
+							finishedBool=true;
+						}
 					},600,cell.stone);
 
 					cell.stone=null;
 				}
 			}
+
 		}
 		
 		private function checkAndAction():void{
@@ -339,6 +387,11 @@ package switcher.views.natives.views.mediators
 							//trace("animationService");
 							if (cells.length>0)
 								checkAndAction();
+							else
+							{
+								view.mouseEnabled=true;
+								view.mouseChildren=true;
+							}
 						}});
 						finishedBoolean=true;
 						} else
@@ -374,10 +427,7 @@ package switcher.views.natives.views.mediators
 
 		}
 		private function doSwitchEvent(signal:BaseSignal):void{
-			function onFinished():void{
-				view.mouseEnabled=true;
-				view.mouseChildren=true;
-	
+			function onFinished():void{	
 				if (switchAble)
 				{
 					unSelectCell();
@@ -386,9 +436,9 @@ package switcher.views.natives.views.mediators
 				{
 			
 					animationService.switchPosition(_currentSelected,last.stone,function():void{
+						unSelectCell();
 						view.mouseEnabled=true;
 						view.mouseChildren=true;
-						unSelectCell();
 					});
 					
 				}

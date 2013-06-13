@@ -8,10 +8,10 @@ package switcher.views.natives.views
 			bombMc.stop();
 		}
 		
-		public function time(val:String):void{
+		public function set time(val:String):void{
 			this.timeTxt.text=val;
 		}
-		public function score(val:String):void{
+		public function set score(val:String):void{
 			this.scoreTxt.text=val;
 		}
 	}
