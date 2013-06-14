@@ -80,24 +80,32 @@ package switcher.views.natives.views.mediators
 					gameModel.cells.push(cell);
 
 				}
-			view.cellsView.addChild(_selectMc);
-			_selectMc.visible=false;
+
+
 			checkAndReGenerate();
-			addToView();
-			linkNodes(row,col);
+			linkNodes(gameModel.grids,row,col);
+
 		}
 
 		private function addToView():void{
 			var cell:CellView;
+			clearView();
 			for (var i:int=0;i<gameModel.cells.length;i++)
 			{
 				cell=gameModel.cells[i];
 				cell.stone.x= cell.x;
 				cell.stone.y= cell.y;
 				view.stoneView.addChild(cell.stone);
+				view.cellsView.addChild(cell);
 			}
+			_selectMc.visible=false;
+			view.cellsView.addChild(_selectMc);
 		}
 
+		private function clearView():void{
+			view.cellsView.removeChildren();
+			view.stoneView.removeChildren();
+		}
 		private function checkAndReGenerate():void{
 			var cells:Array=getClearList();
 			gameModel.bulletList=cells;
@@ -255,9 +263,10 @@ package switcher.views.natives.views.mediators
 		private function startGame():void{
 			view.stoneView.removeChildren();
 			view.cellsView.removeChildren();
-			generateCells(gameModel.rowCount,gameModel.colCount);
 			view.mouseEnabled=true;
 			view.mouseChildren=true;
+			generateCells(gameModel.rowCount,gameModel.colCount);
+			addToView();
 		}
 		private function removeSameStone(complete:Function=null):void{
 			var cells:Array=getClearList();
@@ -295,7 +304,7 @@ package switcher.views.natives.views.mediators
 		private function checkAndAction():void{
 			removeSameStone(function ():void{
 				moveDownStone();
-				generateStone();
+				fillEmptyGridWithStone();
 			});
 
 		}
@@ -359,7 +368,7 @@ package switcher.views.natives.views.mediators
 			}
 		}
 
-		private function generateStone():void{
+		public function fillEmptyGridWithStone():void{
 			var grid:Array=gameModel.grids;
 			var i:int;
 			var j:int;
@@ -466,20 +475,19 @@ package switcher.views.natives.views.mediators
 				right.enableEvents(true);
 		}
 
-		private function linkNodes(row:int=8,col:int=8):void{
+		public function linkNodes(grids:Array,row:int=8,col:int=8):void{
 			var node:Node;
 			var cell:CellView;
 			for (var b:int=0;b<col;b++)
 				for (var a:int=0;a<row;a++)
 				{
-					cell=gameModel.grids[b][a];
+					cell=grids[b][a];
 					node=cell.node;
 					setupLinks(a,b,node);
-					view.cellsView.addChild(cell);
 				}
 		}
 
-		private function setupLinks(a:int,b:int,node:Node):void{
+		public function setupLinks(a:int,b:int,node:Node):void{
 
 			var left :Node= gameModel.checkBoundsValid(a,b,Node.LEFT)?gameModel.grids[b][a-1].node:null;
 			var up :Node= gameModel.checkBoundsValid(a,b,Node.UP)?gameModel.grids[b-1][a].node:null;
@@ -512,7 +520,6 @@ package switcher.views.natives.views.mediators
 				mc.x=gameModel.getCellX(index);
 				mc.y=gameModel.getCellY(-1);
 				view.addChild(mc);
-				length++;
 				return mc;
 			}
 			

@@ -27,8 +27,12 @@ package switcher.views.natives.views
 		}
 		public function addMask(shape:Shape):void{
 
-			this.mask=shape;
+			mask=shape;
 			addChild(shape);
+		}
+		public function removeMask():void{
+			if (mask!=null)
+				removeChild(mask);
 		}
 		
 	}

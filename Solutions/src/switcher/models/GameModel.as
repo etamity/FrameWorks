@@ -61,19 +61,24 @@ package switcher.models
 		}
 		public function GameModel()
 		{
-			createCells();
+			_grids=createCells();
 		}
 		
-		private function createCells():void{
+		public function createCells():Array{
+			var cells:Array=[[]];
+			var cell:CellView;
 			for(var b:uint=0;b<colCount;b++){
-				_grids[b]=new Array();
+				cells[b]=new Array();
 				for(var a:uint=0;a<rowCount;a++){
-					_grids[b][a]=new CellView();
-				}   
+						cell=new CellView();
+						cell.index=getIndex(a,b);
+						cells[b][a]=cell;
+				}
 			}
+			return cells;
 		}
 		
-		private function get2Dgirds():Array{
+		public function get2Dgirds():Array{
 			var temp:Array=[[]];
 			for(var b:uint=0;b<colCount;b++){
 				temp[b]=new Array();
@@ -135,7 +140,7 @@ package switcher.models
 			}
 			return tem;
 		}
-		public function getStonesInCell():Array{
+		public function getStonesFromGrids():Array{
 			var stones:Array=get2Dgirds();
 			var cell:CellView;
 			for(var b:uint=0;b<colCount;b++){

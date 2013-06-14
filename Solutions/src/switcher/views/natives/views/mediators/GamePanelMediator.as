@@ -45,7 +45,7 @@ package switcher.views.natives.views.mediators
 		}
 
 		private function doSpinEvent(evt:MouseEvent):void{
-			var stoneGrids:Array= gameModel.getStonesInCell();
+			var stoneGrids:Array= gameModel.getStonesFromGrids();
 			
 			//animationService.spinGrids(stoneGrids,gameModel.rowCount,gameModel.colCount);
 
