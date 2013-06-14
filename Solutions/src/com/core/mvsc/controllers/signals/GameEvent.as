@@ -24,5 +24,7 @@ package com.core.mvsc.controllers.signals
 		public static const GAMEFINISHED:String="GameEvent.GAMEFINISHED";
 		
 		public static const ADDTIME:String="GameEvent.ADDTIME";
+		
+		public static const SPIN:String="GameEvent.SPIN";
 	}
 }

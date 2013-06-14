@@ -10,13 +10,13 @@ package switcher.views.natives.views.mediators
 	import com.core.mvsc.model.BaseSignal;
 	import com.core.mvsc.model.SignalBus;
 	import com.core.mvsc.services.AnimationService;
-
+	
 	import flash.display.MovieClip;
 	import flash.utils.setTimeout;
-
+	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	import robotlegs.bender.extensions.contextView.ContextView;
-
+	
 	import switcher.models.GameModel;
 	import switcher.models.Node;
 	import switcher.models.Stone;
@@ -123,6 +123,8 @@ package switcher.views.natives.views.mediators
 			signalBus.add(GameEvent.SELECTED, doSelectEvent);
 			signalBus.add(GameEvent.GAMEFINISHED, doGameFinishedEvent);
 			signalBus.add(GameEvent.REPLAY, doReplayEvent);
+			signalBus.add(GameEvent.SPIN, doSpinEvent);
+			
 
 			view.addMask(gameModel.generateMask("GRIDSVIEWMASK"));
 		}
@@ -488,6 +490,66 @@ package switcher.views.natives.views.mediators
 			node.right=right;
 			node.up=up;
 			node.down=down;
+		}
+		public function doSpinEvent(signal:BaseSignal):void{
+			spinCol1(6);
+		}
+		public function spinCol1(index:int=0):void{
+			view.stoneView.visible=false;
+			var mc:MovieClip;
+			var topmc:MovieClip;
+			var newY:int;
+			var length:int=-1;
+			
+					//animationService.moveTo(topmc,{y:gameModel.getCellY(i),time:1,onComplete:onFinished,onCompleteParams:[topmc]});
+			
+			moveStepDown(createMC());
+
+			
+			function createMC():MovieClip{
+				var mc:MovieClip;
+				mc=new Stone();
+				mc.x=gameModel.getCellX(index);
+				mc.y=gameModel.getCellY(-1);
+				view.addChild(mc);
+				length++;
+				return mc;
+			}
+			
+			function moveStepDown(oneMc:MovieClip):void{
+				animationService.moveTo(oneMc,{y:gameModel.getCellY(length),time:1,onComplete:onFinished,onCompleteParams:[oneMc]});
+				
+			}
+			
+			function onFinished(mc:MovieClip):void{
+				moveStepDown(mc);
+				if (length==9)
+					view.removeChild(mc);
+				else{
+					moveStepDown(createMC());
+				}
+			}
+		}
+		
+		public function spinCol(col:Array,index:int=0):void{
+			var mc:MovieClip;
+			var topmc:MovieClip;
+			var newY:int;
+			var length:int=col.length;
+			function onFinished(mc:MovieClip):void{
+				view.stoneView.removeChild(mc);
+			}
+			for (var i:int=0;i<length;i++)
+			{
+				mc=col[i];
+				topmc=new Stone();
+				topmc.x=gameModel.getCellX(index);
+				topmc.y=gameModel.getCellY(i-length);
+				view.stoneView.addChild(topmc);
+				newY=gameModel.getCellY(i+8);
+				animationService.moveTo(topmc,{y:gameModel.getCellY(i),time:0.3,onComplete:onFinished,onCompleteParams:[topmc]});
+				//animationService.moveTo(mc,{y:newY,time:0.3,onComplete:onFinished});
+			}
 		}
 	}
 }

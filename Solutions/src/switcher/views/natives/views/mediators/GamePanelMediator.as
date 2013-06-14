@@ -12,6 +12,7 @@ package switcher.views.natives.views.mediators
 	import com.core.mvsc.model.SignalBus;
 	import com.core.mvsc.services.AnimationService;
 	
+	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -42,11 +43,13 @@ package switcher.views.natives.views.mediators
 			super();
 			timer.addEventListener(TimerEvent.TIMER,onTimerEvent);
 		}
+
 		private function doSpinEvent(evt:MouseEvent):void{
 			var stoneGrids:Array= gameModel.getStonesInCell();
 			
-			animationService.spinGrids(stoneGrids,gameModel.rowCount,gameModel.colCount);
-			
+			//animationService.spinGrids(stoneGrids,gameModel.rowCount,gameModel.colCount);
+
+			signalBus.dispatch(GameEvent.SPIN);
 		}
 		private function onTimerEvent(evt:TimerEvent):void{
 			time--;

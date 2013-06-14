@@ -108,7 +108,22 @@ package switcher.models
 			var index:int=y*_mapSize.y+x;
 			return index;
 		}
-
+		public function getGridColStone(index:int):Array{
+			var tem:Array=[];
+			for (var i:int=0;i<colCount;i++)
+			{
+				tem.push(grids[i][index].stone);
+			}
+			return tem;
+		}
+		public function getGridRowStone(index:int):Array{
+			var tem:Array=[];
+			for (var i:int=0;i<rowCount;i++)
+			{
+				tem.push(grids[index][i].stone);
+			}
+			return tem;
+		}
 		public function getGridCol(index:int):Array{
 			  return grids[index];
 		}

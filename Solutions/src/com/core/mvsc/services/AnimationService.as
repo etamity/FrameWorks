@@ -24,6 +24,9 @@ package com.core.mvsc.services
 			super();
 		}
 
+		
+
+		
 		public function spinGrids(grid:Array,row:int,col:int):void{
 			var i:int;
 			var j:int;
@@ -35,12 +38,10 @@ package com.core.mvsc.services
 			function getRandomRow():Array{
 				var x:int= Math.random() * row;
 				var y:int= Math.random() * col;
-				var stoneIndex:int;
 				var tempArr:Array=[];
 				for (var i:int=0;i<row;i++)
 				{
 					//mc=grid[y][x];
-					stoneIndex= Math.random()* gameModel.stoneData.length;
 					mc=new Stone();
 					tempArr.push(mc);
 					
@@ -54,14 +55,14 @@ package com.core.mvsc.services
 			}
 			
 			
-			newGrid.concat(grid);
-			newGrid.push(newRow);
+			newGrid=newGrid.concat(grid);
+			//newGrid.push(newRow);
 			
 			for(i=col-1;i>=0;i--){
 				
 				for(j=row-1;j>=0;j--){
-					mc=newGrid[i][j];
-					newY=gameModel.getCellY(i+1);
+					mc=newGrid[j][i];
+					newY=gameModel.getCellY(j+1);
 					moveTo(mc,{y:newY,time:0.3,onComplete:onFinished});
 					newGrid[(col-1)-i][(row-1)-j]=newRow[j];
 					

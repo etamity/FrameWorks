@@ -18,11 +18,14 @@ package
 		public const NATIVE_MODE:String="NATIVE";
 		
 		public const renderMode:String= NATIVE_MODE;   // Default Starling Rendering
+
 		public function Switcher()
 		{
 			switch (renderMode){
 				case STARLING_MODE: 
-					//addChild(new StarlingStartup()); // Starling Hardware Rendering
+					// Starling Hardware Rendering
+					
+					//addChild(new StarlingStartup()); 
 					break;
 				case NATIVE_MODE:
 					addChild(new NativeStartup()); // Native Displayobject Rendering
