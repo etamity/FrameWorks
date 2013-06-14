@@ -19,7 +19,7 @@ package flexUnitTests.switcher.models
 		}
 		
 		[BeforeClass]
-		public static function setUpBeforeClass():void
+		public static function  BeforeClass():void
 		{
 
 		}
@@ -40,7 +40,7 @@ package flexUnitTests.switcher.models
 			Assert.assertEquals("(6,3) = 30",gameModel.getIndex(6,3),30);
 			//Assert.fail("Test method Not yet implemented");
 		}
-		
+
 		[Test]
 		public function getStoneTest():void
 		{

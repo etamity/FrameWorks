@@ -8,6 +8,7 @@
 package suites
 {
 	import flexUnitTests.switcher.models.GameModelTest;
+	import flexUnitTests.switcher.views.natives.views.mediators.GridsViewMediatorTest;
 
 	[RunWith("org.flexunit.runners.Suite")]
 	[Suite]
@@ -19,6 +20,7 @@ package suites
 		/*============================================================================*/
 
 		public var gameModelTest:GameModelTest;
+		public var gridsViewMediatorTest:GridsViewMediatorTest;
 
 	}
 }
