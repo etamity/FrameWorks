@@ -511,7 +511,7 @@ package switcher.views.natives.views.mediators
 			
 					//animationService.moveTo(topmc,{y:gameModel.getCellY(i),time:1,onComplete:onFinished,onCompleteParams:[topmc]});
 			
-			moveStepDown(createMC());
+			moveStepDown(createMC(),length);
 
 			
 			function createMC():MovieClip{
@@ -523,17 +523,21 @@ package switcher.views.natives.views.mediators
 				return mc;
 			}
 			
-			function moveStepDown(oneMc:MovieClip):void{
-				animationService.moveTo(oneMc,{y:gameModel.getCellY(length),time:1,onComplete:onFinished,onCompleteParams:[oneMc]});
+			function moveStepDown(oneMc:MovieClip,grid:int):void{
+				grid++;
+				animationService.moveTo(oneMc,{y:gameModel.getCellY(grid),time:0.05,onComplete:onFinished,onCompleteParams:[oneMc,grid]});
 				
 			}
 			
-			function onFinished(mc:MovieClip):void{
-				moveStepDown(mc);
-				if (length==9)
-					view.removeChild(mc);
+			function onFinished(mc:MovieClip,grid:int):void{
+	
+				
+				if (grid<9){
+					moveStepDown(mc,grid);
+					moveStepDown(createMC(),length);
+				}
 				else{
-					moveStepDown(createMC());
+					view.removeChild(mc);
 				}
 			}
 		}
