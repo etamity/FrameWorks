@@ -6,9 +6,6 @@ package com.core.mvsc.services
 	import flash.utils.setTimeout;
 	
 	import caurina.transitions.Tweener;
-	
-	import switcher.models.GameModel;
-	import switcher.models.Stone;
 
 	public class AnimationService 
 	{
@@ -16,60 +13,12 @@ package com.core.mvsc.services
 		public var delayTime:int=4000;
 		public var moveime:Number=0.5;
 		public var blinkime:Number=0.3;
-		
-		[Inject]
-		public var gameModel:GameModel;
+
 		public function AnimationService()
 		{
 			super();
 		}
 
-		
-
-		
-		public function spinGrids(grid:Array,row:int,col:int):void{
-			var i:int;
-			var j:int;
-			var mc:MovieClip;
-			var newY:int;
-			var newGrid:Array=[];
-			var newRow:Array=getRandomRow();
-			
-			function getRandomRow():Array{
-				var x:int= Math.random() * row;
-				var y:int= Math.random() * col;
-				var tempArr:Array=[];
-				for (var i:int=0;i<row;i++)
-				{
-					//mc=grid[y][x];
-					mc=new Stone();
-					tempArr.push(mc);
-					
-				}
-				return tempArr;
-			}
-			
-		
-			function onFinished():void{
-				
-			}
-			
-			
-			newGrid=newGrid.concat(grid);
-			//newGrid.push(newRow);
-			
-			for(i=col-1;i>=0;i--){
-				
-				for(j=row-1;j>=0;j--){
-					mc=newGrid[j][i];
-					newY=gameModel.getCellY(j+1);
-					moveTo(mc,{y:newY,time:0.3,onComplete:onFinished});
-					newGrid[(col-1)-i][(row-1)-j]=newRow[j];
-					
-				}
-			}
-		}
-		
 		public function fadeInCenter(mc:MovieClip):void{
 			fadeInOut(mc,new Point(mc.stage.stageWidth/2,mc.stage.stageHeight/2));
 		}
