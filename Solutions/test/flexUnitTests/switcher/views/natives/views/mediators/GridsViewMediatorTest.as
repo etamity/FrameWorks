@@ -3,18 +3,12 @@ package flexUnitTests.switcher.views.natives.views.mediators
 	import com.core.mvsc.model.SignalBus;
 	import com.core.mvsc.services.AnimationService;
 	
-	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
 	import flexunit.framework.Assert;
 	
-	import org.flexunit.async.Async;
-	import org.fluint.uiImpersonation.UIImpersonator;
-	
 	import switcher.models.GameModel;
 	import switcher.models.Node;
-	import switcher.models.Stone;
-	import switcher.models.StoneType;
 	import switcher.views.natives.views.CellView;
 	import switcher.views.natives.views.GridsView;
 	import switcher.views.natives.views.mediators.GridsViewMediator;
@@ -54,7 +48,14 @@ package flexUnitTests.switcher.views.natives.views.mediators
 			Assert.assertEquals("Mathch Grids: 0",0,clearList.length);
 			
 		}
+		[Test]
+		public function checkAndReGenerateTest():void {
+			mediator.checkAndReGenerate();
+			var clearList:Array=mediator.getClearList();
+			Assert.assertEquals("Match Stones = 0 ",0,clearList.length);
 
+			
+		}
 		[Test]
 		public function testFillEmptyGridWithStone():void {
 			gameModel.grids[3][5].stone= null;
