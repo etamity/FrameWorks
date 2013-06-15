@@ -152,7 +152,7 @@ package switcher.models
 			
 			return stones;
 		}
-		public function generateMask(id:String, w:int=360, h:int=355):Shape {
+		public function generateMask(id:String, w:int=360, h:int=345):Shape {
 			var rectMask:Shape = new Shape();
 			rectMask.name = "mask" + id;
 			rectMask.graphics.beginFill(0xFF0000, 1);

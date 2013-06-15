@@ -16,20 +16,20 @@ package switcher.views.natives.views
 			super();
 			bombMc.stop();
 			
-			scoreTxt.visible=false;
+			/*scoreTxt.visible=false;
 			
 			
 			scoreLabel=new ScrollingText();
 			scoreLabel.x=scoreTxt.x;
 			scoreLabel.y=scoreTxt.y-7;
-			addChild(scoreLabel);
+			addChild(scoreLabel);*/
 		}
 		
 		public function set time(val:String):void{
 			this.timeTxt.text=val;
 		}
 		public function set score(val:String):void{
-			scoreLabel.score=int(val);
+			scoreTxt.text=val;
 		}
 	}
 }

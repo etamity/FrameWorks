@@ -26,5 +26,9 @@ package com.core.mvsc.controllers.signals
 		public static const ADDTIME:String="GameEvent.ADDTIME";
 		
 		public static const SPIN:String="GameEvent.SPIN";
+		
+		public static const MOUSEENABLED:String="GameEvent.MOUSEENABLED";
+		
+		public static const SPINBUTTON:String="GameEvent.SPINBUTTON";
 	}
 }

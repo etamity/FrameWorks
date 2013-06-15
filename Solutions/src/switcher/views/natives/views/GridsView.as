@@ -17,6 +17,8 @@ package switcher.views.natives.views
 		
 		public var cellsView:Sprite=new Sprite();
 		
+		public var spinView:Sprite=new Sprite();
+		
 		public function GridsView()
 		{
 			super();
@@ -24,6 +26,7 @@ package switcher.views.natives.views
 			y=100;
 			addChild(stoneView);
 			addChild(cellsView);
+			addChild(spinView);
 		}
 		public function addMask(shape:Shape):void{
 

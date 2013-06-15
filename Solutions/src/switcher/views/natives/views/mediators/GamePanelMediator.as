@@ -38,19 +38,55 @@ package switcher.views.natives.views.mediators
 		private var spinBtn:SMButton;
 		
 		private var score:int=0;
+		
+		private var spinCount:int=0;
+		
 		public function GamePanelMediator()
 		{
 			super();
 			timer.addEventListener(TimerEvent.TIMER,onTimerEvent);
 		}
-
+		override public function initialize():void 
+		{	signalBus.add(GameEvent.REPLAY,doReplay);
+			signalBus.add(GameEvent.ADDSCORE,doAddScore);
+			signalBus.add(GameEvent.ADDTIME,doAddTime);
+			signalBus.add(GameEvent.MOUSEENABLED,doMouseEnabled);
+			signalBus.add(GameEvent.SPINBUTTON,doSpinButton);
+			
+			spinBtn=new SMButton(view.spinBtn);
+			spinBtn.label="SPIN";
+			spinBtn.skin.addEventListener(MouseEvent.CLICK,doSpinEvent);
+			spinBtn.enabled=false;
+			timer.start();
+		}
+		private function doSpinButton(signal:BaseSignal):void{
+			spinCount+=signal.params.spinCount;
+			if (spinCount>0)
+			{
+				spinBtn.label="SPIN X " + String(spinCount);
+				spinBtn.enabled=true;
+			}
+		}
 		private function doSpinEvent(evt:MouseEvent):void{
 			var stoneGrids:Array= gameModel.getStonesFromGrids();
-			
-			//animationService.spinGrids(stoneGrids,gameModel.rowCount,gameModel.colCount);
-
 			signalBus.dispatch(GameEvent.SPIN);
+			
+			if (spinCount>0)
+			{
+				spinCount--;
+				spinBtn.label="SPIN X " + String(spinCount);
+				spinBtn.enabled=true;
+			
+			}
+			
+	
 		}
+		private function doMouseEnabled(signal:BaseSignal):void{
+			var bool:Boolean=signal.params.bool;
+			if (spinCount>0)
+			spinBtn.enabled=bool;
+		}
+		
 		private function onTimerEvent(evt:TimerEvent):void{
 			time--;
 			refresh();
@@ -86,15 +122,6 @@ package switcher.views.natives.views.mediators
 				time=60;
 			refresh();
 		}
-		override public function initialize():void 
-		{	signalBus.add(GameEvent.REPLAY,doReplay);
-			signalBus.add(GameEvent.ADDSCORE,doAddScore);
-			signalBus.add(GameEvent.ADDTIME,doAddTime);
-			
-			spinBtn=new SMButton(view.spinBtn);
-			spinBtn.label="SPIN";
-			spinBtn.skin.addEventListener(MouseEvent.CLICK,doSpinEvent);
-			timer.start();
-		}
+
 	}
 }
