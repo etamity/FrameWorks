@@ -12,7 +12,6 @@ package switcher.views.natives.views.mediators
 	import com.core.mvsc.model.SignalBus;
 	import com.core.mvsc.services.AnimationService;
 	
-	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
@@ -36,7 +35,7 @@ package switcher.views.natives.views.mediators
 		private var timer:Timer=new Timer(1000);
 		private var time:int=60;
 		private var spinBtn:SMButton;
-		
+		private var bombBtn:SMButton;
 		private var score:int=0;
 		
 		private var spinCount:int=0;
@@ -57,14 +56,22 @@ package switcher.views.natives.views.mediators
 			spinBtn.label="SPIN";
 			spinBtn.skin.addEventListener(MouseEvent.CLICK,doSpinEvent);
 			spinBtn.enabled=false;
+			
+			
+			bombBtn=new SMButton(view.bombBtn);
+			bombBtn.label="BOMB";
+			bombBtn.skin.addEventListener(MouseEvent.CLICK,doReplayEvent);
+			bombBtn.skin.visible=false;
 			timer.start();
+		}
+		private function doReplayEvent(evt:MouseEvent):void{
+			signalBus.dispatch(GameEvent.REPLAY);
 		}
 		private function doSpinButton(signal:BaseSignal):void{
 			spinCount+=signal.params.spinCount;
 			if (spinCount>0)
 			{
 				spinBtn.label="SPIN X " + String(spinCount);
-				spinBtn.enabled=true;
 			}
 		}
 		private function doSpinEvent(evt:MouseEvent):void{
@@ -74,12 +81,11 @@ package switcher.views.natives.views.mediators
 			if (spinCount>0)
 			{
 				spinCount--;
-				spinBtn.label="SPIN X " + String(spinCount);
-				spinBtn.enabled=true;
-			
+				spinBtn.enabled=false;
+		
 			}
 			
-	
+			refresh();
 		}
 		private function doMouseEnabled(signal:BaseSignal):void{
 			var bool:Boolean=signal.params.bool;
@@ -106,6 +112,9 @@ package switcher.views.natives.views.mediators
 		private function doReplay(signal:BaseSignal):void{
 			time=60;
 			score=0;
+			spinCount=0;
+			spinBtn.enabled=false;
+			spinBtn.label="SPIN";
 			refresh();
 			timer.start();
 		}
@@ -113,6 +122,10 @@ package switcher.views.natives.views.mediators
 			view.time=String(time);
 			view.score=String(score);
 			view.bombMc.gotoAndStop(60-time);
+			if (spinCount>0)
+				spinBtn.label="SPIN X " + String(spinCount);
+			else
+				spinBtn.label="SPIN";
 		}
 		private function doAddTime(signal:BaseSignal):void{
 			var seconds:int=signal.params.seconds;

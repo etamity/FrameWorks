@@ -12,7 +12,6 @@ package switcher.views.natives.views.mediators
 	import com.core.mvsc.services.AnimationService;
 	
 	import flash.display.MovieClip;
-	import flash.events.Event;
 	import flash.filters.BlurFilter;
 	import flash.utils.setTimeout;
 	
@@ -48,7 +47,7 @@ package switcher.views.natives.views.mediators
 		[Inject]
 		public var animationService:AnimationService;
 
-		private var _currentSelected:Stone;
+		private var _currentSelectedStone:Stone;
 
 		private var _selectMc:SelectAsset=new SelectAsset();
 
@@ -164,6 +163,7 @@ package switcher.views.natives.views.mediators
 		{
 			mouseEnabled(true);
 			gameFinishedBool=false;
+			startGame();
 		}
 
 		public function mouseEnabled(val:Boolean):void
@@ -249,21 +249,24 @@ package switcher.views.natives.views.mediators
 			if (length >= 6)
 			{
 				point+=20;
-				//For lucky man, when player macthed 6 or more, will get extra time
+
 				spinCount =int(length/3);
+				//For lucky man, when player macthed 6 or more, will get spin changes
 				signalBus.dispatch(GameEvent.SPINBUTTON, {spinCount:spinCount});
-				hint=hint+"+" + String(spinCount) + " FREE SPIN" + "<br />";
+				hint=hint+"<font color='#FF0000'> +" + String(spinCount) + " SPINS</font>" + "<br />";
 			}
 			if (length >= 8)
 			{
 				point+=30;
-				signalBus.dispatch(GameEvent.ADDTIME, {seconds: length});
-				hint=hint+"+" + String(length) + " SECONDS"+"<br />";
+				//For lucky man, when player macthed 8 or more, will get extra time
+				var time:int=int(length/4);
+				signalBus.dispatch(GameEvent.ADDTIME, {seconds:time });
+				hint=hint+"<font color='#00FF00'> +" + String(time) + " TIME</font>"+"<br />";
 			}
 			//point = point*plot >>> 0;
 			point=point * plot;
 			signalBus.dispatch(GameEvent.ADDSCORE, {point: point});
-			hint=hint+"+" + String(point) +"<br />"+ " SCORES";
+			hint=hint+"<font color='#00FFFF'> +" + String(point) + " SCORES</font>";
 			var pointMc:PointsAsset=new PointsAsset();
 			pointMc.label.htmlText=hint;
 			pointMc.x=160;
@@ -275,6 +278,7 @@ package switcher.views.natives.views.mediators
 				animationService.moveTo(pointMc, {y: 0, alpha: 0, time: 1, onComplete: function():void
 				{
 					view.removeChild(pointMc);
+					
 				}});
 
 			}});
@@ -285,11 +289,11 @@ package switcher.views.natives.views.mediators
 		{
 			var cell:CellView=signal.params.cell;
 
-			if (gameModel.selectedCell.stone != _currentSelected)
+			if (gameModel.selectedCell.stone != _currentSelectedStone)
 			{
-				_currentSelected=cell.stone;
-				_selectMc.x=_currentSelected.x;
-				_selectMc.y=_currentSelected.y;
+				_currentSelectedStone=cell.stone;
+				_selectMc.x=_currentSelectedStone.x;
+				_selectMc.y=_currentSelectedStone.y;
 				_selectMc.visible=true;
 				enableBlink(false);
 				enableMouseStones(cell.node);
@@ -305,24 +309,35 @@ package switcher.views.natives.views.mediators
 		{
 			enableBlink(false);
 			gameModel.selectedCell=null;
-			_currentSelected=null;
+			_currentSelectedStone=null;
 			_selectMc.visible=false;
 		}
 
 		private function doSetupModel(signal:BaseSignal):void
 		{
+			
 			startGame();
 		}
 
-		private function startGame():void
-		{
+		private function resetGame():void{
 			view.stoneView.removeChildren();
 			view.cellsView.removeChildren();
+			view.spinView.removeChildren();
 			view.mouseEnabled=true;
 			view.mouseChildren=true;
+			gameModel.reset();
+			unSelectCell();
+			gameFinishedBool=false;
+			enableBlink(false);
+		}
+		
+		
+		private function startGame():void
+		{
+			resetGame();
 			generateCells(gameModel.rowCount, gameModel.colCount);
 			addToView();
-			gameFinishedBool=false;
+
 		}
 
 		private function removeSameStone(complete:Function=null):void
@@ -502,7 +517,7 @@ package switcher.views.natives.views.mediators
 				else
 				{
 
-					animationService.switchPosition(_currentSelected, last.stone, function():void
+					animationService.switchPosition(_currentSelectedStone, last.stone, function():void
 					{
 						unSelectCell();
 				        mouseEnabled(true);
@@ -515,7 +530,7 @@ package switcher.views.natives.views.mediators
 			mouseEnabled(false);
 			_selectMc.visible=false;
 			var last:CellView=signal.params.last;
-			animationService.switchPosition(_currentSelected, last.stone, onFinished);
+			animationService.switchPosition(_currentSelectedStone, last.stone, onFinished);
 			last.switchStone(gameModel.selectedCell.node);
 			var switchAble:Boolean=(getClearList().length > 0) ? true : false;
 			if (switchAble == false)

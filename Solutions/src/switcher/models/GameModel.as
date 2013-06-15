@@ -61,9 +61,13 @@ package switcher.models
 		}
 		public function GameModel()
 		{
-			_grids=createCells();
+			reset()
 		}
-		
+		public function reset():void{
+			 _cells=[];
+			 _bulletList=[];
+			 _grids=createCells();
+		}
 		public function createCells():Array{
 			var cells:Array=[[]];
 			var cell:CellView;

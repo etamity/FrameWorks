@@ -49,17 +49,7 @@ package switcher.views.natives.views
 			target.data.stone=temp;
 			
 		}
-		
-		public function moveDown():void{
-			var down:Node=node.down;
-			while (down.data.stone==null)
-			{
-				down.data.stone=node.data.stone;
-				node.data.stone=null;
-				node=down;
-				moveDown();
-			}
-		}
+	
 		
 		public function blinking(val:Boolean):void{
 			if (val)
