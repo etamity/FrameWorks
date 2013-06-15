@@ -10,18 +10,18 @@ package switcher.views.natives.views.mediators
 	import com.core.mvsc.model.BaseSignal;
 	import com.core.mvsc.model.SignalBus;
 	import com.core.mvsc.services.AnimationService;
-
+	
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.filters.BlurFilter;
 	import flash.utils.setTimeout;
-
+	
 	import caurina.transitions.Tweener;
-
+	
 	import robotlegs.bender.bundles.mvcs.Mediator;
 	import robotlegs.bender.extensions.contextView.ContextView;
 	import robotlegs.bender.framework.api.ILogger;
-
+	
 	import switcher.models.GameModel;
 	import switcher.models.Node;
 	import switcher.models.Stone;
@@ -55,6 +55,8 @@ package switcher.views.natives.views.mediators
 		private var lastBullet:CellView;
 
 		private var continuous:int=1;
+		
+		private var gameFinishedBool:Boolean=false;
 
 		public function GridsViewMediator()
 		{
@@ -155,11 +157,13 @@ package switcher.views.natives.views.mediators
 		{
 			mouseEnabled(false);
 			unSelectCell();
+			gameFinishedBool=true;
 		}
 
 		private function doReplayEvent(signal:BaseSignal):void
 		{
 			mouseEnabled(true);
+			gameFinishedBool=false;
 		}
 
 		public function mouseEnabled(val:Boolean):void
@@ -248,25 +252,25 @@ package switcher.views.natives.views.mediators
 				//For lucky man, when player macthed 6 or more, will get extra time
 				spinCount =int(length/3);
 				signalBus.dispatch(GameEvent.SPINBUTTON, {spinCount:spinCount});
-				hint+="+" + String(spinCount) + " FREE SPIN" + "<br />";
+				hint=hint+"+" + String(spinCount) + " FREE SPIN" + "<br />";
 			}
 			if (length >= 8)
 			{
 				point+=30;
 				signalBus.dispatch(GameEvent.ADDTIME, {seconds: length});
-				hint+="+" + String(length) + " SECONDS"+"<br />";
+				hint=hint+"+" + String(length) + " SECONDS"+"<br />";
 			}
 			//point = point*plot >>> 0;
 			point=point * plot;
 			signalBus.dispatch(GameEvent.ADDSCORE, {point: point});
-			hint+="+" + String(point) +"<br />"+ " SCORES";
+			hint=hint+"+" + String(point) +"<br />"+ " SCORES";
 			var pointMc:PointsAsset=new PointsAsset();
 			pointMc.label.htmlText=hint;
 			pointMc.x=160;
 			pointMc.y=300;
 			pointMc.alpha=0.3;
 			view.addChild(pointMc);
-			animationService.moveTo(pointMc, {y: 150, alpha: 1, time: 1, onComplete: function():void
+			animationService.moveTo(pointMc, {y: 150, alpha: 0.9, time: 1, onComplete: function():void
 			{
 				animationService.moveTo(pointMc, {y: 0, alpha: 0, time: 1, onComplete: function():void
 				{
@@ -318,6 +322,7 @@ package switcher.views.natives.views.mediators
 			view.mouseChildren=true;
 			generateCells(gameModel.rowCount, gameModel.colCount);
 			addToView();
+			gameFinishedBool=false;
 		}
 
 		private function removeSameStone(complete:Function=null):void
@@ -362,6 +367,7 @@ package switcher.views.natives.views.mediators
 
 		private function checkAndAction():void
 		{
+			if(gameFinishedBool==false)
 			removeSameStone(function():void
 			{
 				moveDownStone();
@@ -610,16 +616,31 @@ package switcher.views.natives.views.mediators
 
 		}
 
-		public function spinCol(index:int=0, onFinishFunc:Function=null, timeSec:int=2):void
+		public function spinCol(index:int=0, onFinishFunc:Function=null,direct:String=Node.DOWN, timeSec:int=2):void
 		{
 
-			var startGridY:int=-1;
-			var speedOject:Object={speed: 0.2, blurY: 0};
+		
+			var speedOject:Object={speed: 0.2, blur: 0};
 			var spinBool:Boolean=true;
-			var newMc:MovieClip=createMC();
-
-			moveStepDown(newMc, startGridY);
-			Tweener.addTween(speedOject, {blurY: 15, speed: 0.04, time: 0.5, transition: "linear", onComplete: onFinishedTime});
+			var startGrid:int=-1;
+			var newMc:MovieClip;
+			switch (direct)
+			{
+				case Node.DOWN:
+					startGrid= -1;
+					break;
+				case Node.UP:
+					break;
+				case Node.LEFT:
+					break;
+				case Node.RIGHT:
+					break;
+			}
+			
+			
+			newMc=createMC();
+			moveStepDown(newMc, startGrid);
+			Tweener.addTween(speedOject, {blur: 15, speed: 0.04, time: 0.5, transition: "linear", onComplete: onFinishedTime});
 
 			function moveStepDownStone(mc:MovieClip, grid:int):void
 			{
@@ -634,10 +655,10 @@ package switcher.views.natives.views.mediators
 
 			function onFinishedTime():void
 			{
-				Tweener.addTween(speedOject, {blurY: 10, speed: 0.05, time: timeSec, transition: "linear", onComplete: function():void
+				Tweener.addTween(speedOject, {blur: 10, speed: 0.05, time: timeSec, transition: "linear", onComplete: function():void
 				{
 					speedOject.blurY=2;
-					Tweener.addTween(speedOject, {blurY: 0, speed: 0.5, time: 0.5, transition: "linear", onComplete: function():void
+					Tweener.addTween(speedOject, {blur: 0, speed: 0.5, time: 0.5, transition: "linear", onComplete: function():void
 					{
 						spinBool=false;
 					}});
@@ -650,14 +671,29 @@ package switcher.views.natives.views.mediators
 				var mc:MovieClip;
 				mc=new Stone();
 				mc.x=gameModel.getCellX(index);
-				mc.y=gameModel.getCellY(startGridY);
+				mc.y=gameModel.getCellY(startGrid);
 				return mc;
 			}
 
-			function updateStonesY(grid:int):void
+			function updateStones(grid:int):void
 			{
-				var stoneArr:Array=gameModel.getGridColStone(index);
-				var bf:BlurFilter=new BlurFilter(0, speedOject.blurY, 3);
+				var stoneArr:Array;
+				var bf:BlurFilter;
+				switch (direct)
+				{
+					case Node.DOWN:
+					case Node.UP:
+						stoneArr=gameModel.getGridColStone(index);
+						bf=new BlurFilter(0, speedOject.blur, 3);
+						break;
+					case Node.LEFT:
+					case Node.RIGHT:
+						stoneArr=gameModel.getGridRowStone(index);
+						bf=new BlurFilter(speedOject.blur,0, 3);
+						break;
+				}
+			
+				
 				var mc:MovieClip;
 				for (var i:int=0; i < stoneArr.length; i++)
 				{
@@ -670,14 +706,25 @@ package switcher.views.natives.views.mediators
 
 			function onFinished(mc:MovieClip, grid:int):void
 			{
-				var bf:BlurFilter=new BlurFilter(0, speedOject.blurY, 3);
+				var bf:BlurFilter;
+				switch (direct)
+				{
+					case Node.DOWN:
+					case Node.UP:
+						bf=new BlurFilter(0, speedOject.blur, 3);
+						break;
+					case Node.LEFT:
+					case Node.RIGHT:
+						bf=new BlurFilter(speedOject.blur,0, 3);
+						break;
+				}
 				mc.filters=[bf];
 
 				if (spinBool == true)
 				{
-					if (grid == startGridY)
+					if (grid == startGrid)
 					{
-						moveStepDown(createMC(), startGridY);
+						moveStepDown(createMC(), startGrid);
 
 					}
 
@@ -685,7 +732,7 @@ package switcher.views.natives.views.mediators
 					{
 						grid++;
 						moveStepDown(mc, grid);
-						updateStonesY(grid);
+						updateStones(grid);
 					}
 					else
 					{
