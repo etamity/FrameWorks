@@ -6,7 +6,7 @@
 
 package switcher.views.natives.views.mediators
 {
-	import com.core.mvsc.controllers.signals.GameEvent;
+	import switcher.signals.GameEvent;
 	import com.core.mvsc.model.SignalBus;
 	import com.core.mvsc.services.AnimationService;
 	
