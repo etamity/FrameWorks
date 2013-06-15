@@ -75,7 +75,7 @@ package switcher.models
 				cells[b]=new Array();
 				for(var a:uint=0;a<rowCount;a++){
 						cell=new CellView();
-						cell.index=getIndex(a,b);
+						cell.index=getIndex(b,a);
 						cells[b][a]=cell;
 				}
 			}
@@ -113,8 +113,8 @@ package switcher.models
 			return stoneDict[index];
 		}
 		
-		public function getIndex(x:int,y:int):int{
-			var index:int=y*_mapSize.y+x;
+		public function getIndex(b:int,a:int):int{
+			var index:int=b*_mapSize.y+a;
 			return index;
 		}
 		public function getGridColStone(index:int):Array{
@@ -165,7 +165,7 @@ package switcher.models
 			return rectMask;
 		}
 		
-		public function checkBoundsValid(a:int,b:int,direct:String):Boolean{
+		public function checkBoundsValid(b:int,a:int,direct:String):Boolean{
 			var result:Boolean=false;
 			switch (direct){
 				case "LEFT":

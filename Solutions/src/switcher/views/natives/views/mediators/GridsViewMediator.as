@@ -85,7 +85,7 @@ package switcher.views.natives.views.mediators
 					cell.cellx=a;
 					cell.celly=b;
 					cell.node.data=cell;
-					cell.index=gameModel.getIndex(a, b);
+					cell.index=gameModel.getIndex(b, a);
 					cell.addEvents(cell);
 					gameModel.cells.push(cell);
 
@@ -119,7 +119,7 @@ package switcher.views.natives.views.mediators
 			view.stoneView.removeChildren();
 		}
 
-		private function checkAndReGenerate():void
+		public function checkAndReGenerate():void
 		{
 			var cells:Array=getClearList();
 			gameModel.bulletList=cells;
@@ -594,10 +594,10 @@ package switcher.views.natives.views.mediators
 		public function setupLinks(a:int, b:int, node:Node):void
 		{
 
-			var left:Node=gameModel.checkBoundsValid(a, b, Node.LEFT) ? gameModel.grids[b][a - 1].node : null;
-			var up:Node=gameModel.checkBoundsValid(a, b, Node.UP) ? gameModel.grids[b - 1][a].node : null;
-			var down:Node=gameModel.checkBoundsValid(a, b, Node.DOWN) ? gameModel.grids[b + 1][a].node : null;
-			var right:Node=gameModel.checkBoundsValid(a, b, Node.RIGHT) ? gameModel.grids[b][a + 1].node : null;
+			var left:Node=gameModel.checkBoundsValid(b,a, Node.LEFT) ? gameModel.grids[b][a - 1].node : null;
+			var up:Node=gameModel.checkBoundsValid(b,a, Node.UP) ? gameModel.grids[b - 1][a].node : null;
+			var down:Node=gameModel.checkBoundsValid(b,a, Node.DOWN) ? gameModel.grids[b + 1][a].node : null;
+			var right:Node=gameModel.checkBoundsValid(b,a, Node.RIGHT) ? gameModel.grids[b][a + 1].node : null;
 
 			node.left=left;
 			node.right=right;
@@ -622,7 +622,7 @@ package switcher.views.natives.views.mediators
 					if (index == gameModel.colCount - 1)
 					{
 						spinCol(index, checkAndAction);
-							//	_logger.debug("SpinGame onFinoshed",[index]);
+						//_logger.debug("SpinGame onFinoshed",[index]);
 					}
 					else
 						spinCol(index);
@@ -769,7 +769,7 @@ package switcher.views.natives.views.mediators
 						if ((grid == gameModel.colCount - 1) && (onFinishFunc != null))
 						{
 							onFinishFunc();
-								//_logger.debug("Spin onFinishFunc",[grid]);
+							//_logger.debug("Spin onFinishFunc",[grid]);
 						}
 					}
 					Tweener.removeTweens(mc);
