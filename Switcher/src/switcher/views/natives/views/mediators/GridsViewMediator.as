@@ -627,7 +627,10 @@ package switcher.views.natives.views.mediators
 		{
 			//view.spinView.removeChildren();
 			removeChildren(view.spinView);
+
+			unSelectCell();
 			spinGame();
+			
 
 		}
 
