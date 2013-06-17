@@ -4,7 +4,7 @@
  * For more information see http://www.langteach.com/etblog/
  ******************************************************************************/
 
-package switcher.views.natives.views
+package switcher.views.mobile.views
 {
 	import com.core.mvsc.model.Utils;
 	
@@ -13,33 +13,32 @@ package switcher.views.natives.views
 	
 	import switcher.views.interfaces.IGridsView;
 	
-	public class GridsView extends MovieClip implements IGridsView
+	public class GridsView extends GridsViewAsset implements IGridsView
 	{
-		public var _stoneView:MovieClip= new MovieClip();
 		
-		public var _cellsView:MovieClip=new MovieClip();
+		private var _cellsView:MovieClip=new MovieClip();
 		
-		public var _spinView:MovieClip=new MovieClip();
+		private var _spinView:MovieClip=new MovieClip();
 		
 		private var _mask:Shape;
-		
 		public function GridsView()
 		{
 			super();
+			
 			_mask=Utils.generateMask("GRIDSVIEWMASK");
 			mask=_mask;
-			x=320;
-			y=100;
-			addChild(_stoneView);
+			_cellsView.x=_spinView.x=_mask.x=layoutView.x;
+			_cellsView.y=_spinView.y=_mask.y=layoutView.y;
 			addChild(_cellsView);
 			addChild(_spinView);
+
 
 		}
 		public function get mainView():MovieClip{
 			return this;
 		}
 		public function get stoneView():MovieClip{
-			return _stoneView;
+			return layoutView;
 		}
 		public function get cellsView():MovieClip{
 			return _cellsView;

@@ -156,14 +156,6 @@ package switcher.models
 			
 			return stones;
 		}
-		public function generateMask(id:String, w:int=360, h:int=345):Shape {
-			var rectMask:Shape = new Shape();
-			rectMask.name = "mask" + id;
-			rectMask.graphics.beginFill(0xFF0000, 1);
-			rectMask.graphics.drawRect(0, 0, w, h);
-			rectMask.graphics.endFill();
-			return rectMask;
-		}
 		
 		public function checkBoundsValid(b:int,a:int,direct:String):Boolean{
 			var result:Boolean=false;

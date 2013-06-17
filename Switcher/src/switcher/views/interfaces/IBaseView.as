@@ -4,7 +4,7 @@
  * For more information see http://www.langteach.com/etblog/
  ******************************************************************************/
 
-package switcher.views.natives.interfaces
+package switcher.views.interfaces
 {
 	import flash.display.Shape;
 

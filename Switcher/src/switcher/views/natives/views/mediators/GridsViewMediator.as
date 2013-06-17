@@ -25,8 +25,8 @@ package switcher.views.natives.views.mediators
 	import switcher.models.Node;
 	import switcher.models.Stone;
 	import switcher.signals.GameEvent;
+	import switcher.views.interfaces.IGridsView;
 	import switcher.views.natives.views.CellView;
-	import switcher.views.natives.views.GridsView;
 
 	public class GridsViewMediator extends Mediator
 	{
@@ -40,7 +40,7 @@ package switcher.views.natives.views.mediators
 		public var signalBus:SignalBus;
 
 		[Inject]
-		public var view:GridsView;
+		public var view:IGridsView;
 
 		[Inject]
 		public var _logger:ILogger;
@@ -153,8 +153,6 @@ package switcher.views.natives.views.mediators
 			signalBus.add(GameEvent.REPLAY, doReplayEvent);
 			signalBus.add(GameEvent.SPIN, doSpinEvent);
 
-
-			view.addMask(gameModel.generateMask("GRIDSVIEWMASK"));
 		}
 
 		private function doGameFinishedEvent(signal:BaseSignal):void
@@ -173,8 +171,8 @@ package switcher.views.natives.views.mediators
 
 		public function mouseEnabled(val:Boolean):void
 		{
-			view.mouseEnabled=val;
-			view.mouseChildren=val;
+			view.mainView.mouseEnabled=val;
+			view.mainView.mouseChildren=val;
 			signalBus.dispatch(GameEvent.MOUSEENABLED,{bool:val});
 		}
 
@@ -274,15 +272,13 @@ package switcher.views.natives.views.mediators
 			hint=hint+"<font color='#00FFFF'> +" + String(point) + " SCORES</font>";
 			var pointMc:PointsAsset=new PointsAsset();
 			pointMc.label.htmlText=hint;
-			pointMc.x=160;
-			pointMc.y=300;
 			pointMc.alpha=0.3;
-			view.addChild(pointMc);
+			view.mainView.addChild(pointMc);
 			animationService.moveTo(pointMc, {y: 150, alpha: 0.9, time: 1, onComplete: function():void
 			{
 				animationService.moveTo(pointMc, {y: 0, alpha: 0, time: 1, onComplete: function():void
 				{
-					view.removeChild(pointMc);
+					view.mainView.removeChild(pointMc);
 					
 				}});
 
@@ -336,8 +332,8 @@ package switcher.views.natives.views.mediators
 			removeChildren(view.stoneView);  
 			removeChildren(view.cellsView);
 			removeChildren(view.spinView);
-			view.mouseEnabled=true;
-			view.mouseChildren=true;
+			view.mainView.mouseEnabled=true;
+			view.mainView.mouseChildren=true;
 			gameModel.reset();
 			unSelectCell();
 			gameFinishedBool=false;

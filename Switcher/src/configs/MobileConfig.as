@@ -23,16 +23,16 @@ package configs
 	
 	import switcher.models.GameModel;
 	import switcher.views.interfaces.IGridsView;
+	import switcher.views.mobile.views.GridsView;
 	import switcher.views.natives.views.CellView;
 	import switcher.views.natives.views.GamePanelView;
-	import switcher.views.natives.views.GridsView;
 	import switcher.views.natives.views.MessageBoxView;
 	import switcher.views.natives.views.mediators.CellViewMediator;
 	import switcher.views.natives.views.mediators.GamePanelMediator;
 	import switcher.views.natives.views.mediators.GridsViewMediator;
 	import switcher.views.natives.views.mediators.MessageBoxMediator;
 	
-	public class NativeConfig implements IConfig
+	public class MobileConfig implements IConfig
 	{
 		[Inject]
 		public var mediatorMap:IMediatorMap;
@@ -59,7 +59,7 @@ package configs
 		}
 		private function setupViews():void{
 
-			contextView.view.addChild(new GameBGAsset());
+			//contextView.view.addChild(new GameBGAsset());
 			contextView.view.addChild(new GridsView());
 			contextView.view.addChild(new GamePanelView());
 			contextView.view.addChild(new MessageBoxView());
