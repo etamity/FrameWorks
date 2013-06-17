@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite name="flexUnitTests.switcher.views.natives.views.mediators.GridsViewMediatorTest" tests="4" failures="0" errors="0" skipped="0" time="0.082" hostname="DADI-PC" timestamp="2013-06-16T23:51:32">
+  <testcase classname="flexUnitTests.switcher.views.natives.views.mediators::GridsViewMediatorTest" name="testLinkNodes" time="0.028"/>
+  <testcase classname="flexUnitTests.switcher.views.natives.views.mediators::GridsViewMediatorTest" name="checkAndReGenerateTest" time="0.006"/>
+  <testcase classname="flexUnitTests.switcher.views.natives.views.mediators::GridsViewMediatorTest" name="testFillEmptyGridWithStone" time="0.010"/>
+  <testcase classname="flexUnitTests.switcher.views.natives.views.mediators::GridsViewMediatorTest" name="testGenerateCells" time="0.038"/>
+</testsuite>

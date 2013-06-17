@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+  <testsuite errors="0" failures="0" hostname="DADI-PC" id="0" name="GameModelTest" package="flexUnitTests.switcher.models" skipped="0" tests="6" time="0.056" timestamp="2013-06-16T23:51:32">
+      <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="createCellsTest" time="0.023" />
+
+      <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="checkBoundsValidTest" time="0.003" />
+
+      <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="getIndexTest" time="0.002" />
+
+      <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="resetTest" time="0.002" />
+
+      <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="getStonesFromGridsTest" time="0.025" />
+
+      <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="getStoneTest" time="0.001" />
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="DADI-PC" id="1" name="GridsViewMediatorTest" package="flexUnitTests.switcher.views.natives.views.mediators" skipped="0" tests="4" time="0.082" timestamp="2013-06-16T23:51:32">
+      <testcase classname="flexUnitTests.switcher.views.natives.views.mediators::GridsViewMediatorTest" name="testLinkNodes" time="0.028" />
+
+      <testcase classname="flexUnitTests.switcher.views.natives.views.mediators::GridsViewMediatorTest" name="checkAndReGenerateTest" time="0.006" />
+
+      <testcase classname="flexUnitTests.switcher.views.natives.views.mediators::GridsViewMediatorTest" name="testFillEmptyGridWithStone" time="0.010" />
+
+      <testcase classname="flexUnitTests.switcher.views.natives.views.mediators::GridsViewMediatorTest" name="testGenerateCells" time="0.038" />
+
+  </testsuite>
+</testsuites>

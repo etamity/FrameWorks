@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<testsuite name="flexUnitTests.switcher.models.GameModelTest" tests="6" failures="0" errors="0" skipped="0" time="0.056" hostname="DADI-PC" timestamp="2013-06-16T23:51:32">
+  <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="createCellsTest" time="0.023"/>
+  <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="checkBoundsValidTest" time="0.003"/>
+  <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="getIndexTest" time="0.002"/>
+  <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="resetTest" time="0.002"/>
+  <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="getStonesFromGridsTest" time="0.025"/>
+  <testcase classname="flexUnitTests.switcher.models::GameModelTest" name="getStoneTest" time="0.001"/>
+</testsuite>

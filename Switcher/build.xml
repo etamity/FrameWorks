@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Switcher" default="build" basedir=".">
+	
+	<!-- build.local.properties and sdk.local.proprties are optional files that
+		can be used to override the default properties. -->
+
+	<property name="RootDir" value="../" />
+	<property name="main.path" value="${basedir}/main" />
+	
+	<property file="${RootDir}/build/sdk.local.properties"/>
+	<property file="${basedir}/sdk.properties"/>
+	<property file="${RootDir}/build/build.local.properties"/>
+	<property file="${basedir}/build.properties"/>
+	
+	  <taskdef resource="flexUnitTasks.tasks" classpath="${libs.path}/flexUnitTasks-4.1.0-8.jar"/>
+	
+	<fail unless="ios.provision.path"/>
+	<fail unless="ios.certificate.path"/>
+	<fail unless="ios.certificate.password"/>
+	
+	<fail unless="android.certificate.path"/>
+	<fail unless="android.certificate.password"/>
+
+	<target name="build" depends="build-swf,test"/>
+
+	<target name="prepare">
+		<delete dir="${output.path}"/>
+	</target>
+
+	<target name="build-swf">
+		<echo message="Building swf ${ant.project.name}.swf"/>
+		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
+			<arg line="--target-player=${player.version}"/>
+			<arg line="--debug=true"/>
+			<arg line="--optimize=true"/>
+			<arg line="--swf-version=${swf.version}"/>
+			<arg line="--source-path+='${src.path}'"/>
+			<arg line="--source-path+='${assets.path}'"/>
+			<arg line="--library-path+='${assets.path}'"/>
+			<arg line="--library-path+='${libs.path}'"/>
+			<arg line="${src.path}/${ant.project.name}.as"/>
+			<arg line="--output ${bin.path}/${ant.project.name}.swf"/>
+		</exec>
+	</target>
+	<target name="build-air-swf">
+		<echo message="Building air ${ant.project.name}.swf"/>
+		<exec executable="${mxmlc}" dir="${basedir}" failonerror="true">
+			<arg line="+configname=air"/>
+			<arg line="--debug=false"/>
+			<arg line="--mobile=true"/>
+			<arg line="--optimize=true"/>
+			<arg line="--omit-trace-statements=true"/>
+			<arg line="--target-player=${player.version}"/>
+			<arg line="--swf-version=${swf.version}"/>
+			<arg line="--compress=false"/>
+			<arg line="--source-path+='${src.path}'"/>
+			<arg line="--source-path+='${assets.path}'"/>
+			<arg line="--library-path+='${assets.path}'"/>
+			<arg line="--library-path+='${libs.path}'"/>
+			<arg line="${src.path}/${ant.project.name}.as"/>
+			<arg line="--output ${bin.path}/${ant.project.name}.swf"/>
+
+
+		</exec>
+	</target>
+	<target name="build-ios" depends="build-air-swf">
+		<echo message="Packaging ${ant.project.name}.ipa" />
+		<exec executable="${adt}" dir="${basedir}" failonerror="true">
+			<arg line="-package"/>
+			<arg line="-target ipa-app-store"/>
+			<arg line="-provisioning-profile ${ios.provision.path}"/>
+			<arg line="-keystore ${ios.certificate.path}"/>
+			<arg line="-storetype pkcs12"/>
+			<arg line="-storepass ${ios.certificate.password}"/>
+			<arg line="${bin.path}/${ant.project.name}.ipa"/>
+			<arg line="${src.path}/${ant.project.name}-app.xml"/>
+			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
+			<arg line="-C ${bin.path}"/>
+			<arg line="${ant.project.name}.swf"/>
+			<!-- <arg line="TiledMap"/> -->
+		</exec>
+	</target>
+	<target name="build-android" depends="build-air-swf">
+		<echo message="Packaging ${ant.project.name}.apk"/>
+		<exec executable="${adt}" dir="${basedir}" failonerror="true">
+			<arg line="-package"/>
+			<arg line="-target apk"/>
+			<!--  ( apk | apk-debug | apk-emulator | apk-captive-runtime ) -->
+			<arg line="-storetype pkcs12"/>
+			<arg line="-keystore ${android.certificate.path}"/>
+			<arg line="-storepass ${android.certificate.password}"/>
+			<arg line="${bin.path}/${ant.project.name}.apk"/>
+			<arg line="${src.path}/${ant.project.name}-app.xml"/>
+			<!--<arg line="icon48.png icon72.png icon128.png icon512.png"/>-->
+			<arg line="-C ${bin.path}"/>
+			<arg line="${ant.project.name}.swf"/>
+		</exec>
+	</target>
+	<!-- Run Unit Tests -->
+	  <target name="test" depends="build-swf">
+	    <echo>[test] Running Unit Tests</echo>
+	<!-- Compile TestRunner.mxml as a SWF -->
+	    <java jar="${flexsdk.root}/lib/mxmlc.jar" dir="${flexframework.root}" fork="true" failonerror="true">
+	      <arg value="${test.src.path}/${ant.project.name}Test.mxml"/>
+	      <arg value="-source-path=${src.path}"/>
+		  <arg value="-source-path+=${assets.path}"/>
+		  <arg value="-library-path+=${assets.path}"/>
+	<!-- Flash those sweet legs. Blink and you'll miss 'em. -->
+	      <arg value="-output=${bin.path}/TestRunner.swf"/>
+	      <arg value="-default-size=200,200"/>
+	      <arg value="-default-background-color=0x000000"/>
+	<!-- Include classes from SWCs in this folder, but only the ones we use. -->
+	      <arg value="-library-path+=${libs.path}"/>
+	<!-- So true. -->
+	      <arg value="-incremental=true"/>
+	      <arg value="-verbose-stacktraces=true"/>
+	      <arg value="-headless-server=false"/>
+	      <arg value="-debug=true"/>
+	    </java>
+	<!-- Execute TestRunner.swf as FlexUnit tests and publish reports -->
+	    <mkdir dir="${report.path}"/>
+	    <flexunit swf="${bin.path}/TestRunner.swf" toDir="${report.path}" haltonfailure="true" verbose="true" localTrusted="true"/>
+	<!-- Generate readable JUnit-style reports -->
+	    <junitreport todir="${report.path}">
+	      <fileset dir="${report.path}">
+	        <include name="TEST-*.xml"/>
+	      </fileset>
+	      <report format="frames" todir="${report.path}/html"/>
+	    </junitreport>
+	    <echo>[test] Finished running Unit Tests</echo>
+	  </target>
+	<target name="copy">
+		<copy todir="${bin.path}">
+		    <fileset dir="${output.path}" excludes="**/*.fla,**/Thumbs.db"/>
+		</copy>
+	</target>
+	
+</project>
