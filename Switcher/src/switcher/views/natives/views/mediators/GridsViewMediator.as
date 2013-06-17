@@ -776,6 +776,7 @@ package switcher.views.natives.views.mediators
 						if (mc.parent != null)
 						{
 							mc.parent.removeChild(mc);
+							Tweener.removeTweens(mc);
 							mc=null;
 						}
 					}
