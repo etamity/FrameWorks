@@ -3,7 +3,6 @@ package com.smart.engine.physics.plugins
 	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
 	import com.smart.engine.PhysicsEngine;
-	import com.smart.engine.physics.core.PhysicsObject;
 	
 	import flash.utils.Dictionary;
 	
@@ -16,6 +15,7 @@ package com.smart.engine.physics.plugins
 		private var engine:PhysicsEngine;
 		private var bodies:Vector.<Body>;
 		private var bodyGraphics:Dictionary;
+		public var renderFunc:Function;
 		public function PhysicsRenderPlugin(val:Dictionary=null)
 		{
 			super();
@@ -44,6 +44,8 @@ package com.smart.engine.physics.plugins
 				graphic.y= body.position.y;
 				graphic.rotation= body.rotation;
 			}
+			if (renderFunc!=null)
+				renderFunc();
 		}
 		public function setImage():void{
 			this.engine.space.bodies.foreach(addGraphics);

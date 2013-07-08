@@ -12,6 +12,7 @@ package com.smart.engine.map.layer {
 	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.models.TMXMapModel;
 	import com.smart.engine.map.plugins.IViewPort;
+	import com.smart.engine.map.plugins.ViewportPlugin;
 	import com.smart.engine.map.utils.Point3D;
 	
 	import flash.geom.Point;
@@ -205,9 +206,11 @@ package com.smart.engine.map.layer {
 				}
 			}
 			
-			if (sort) {
-				sortSystem(time);
-			}
+			
+			/*if (sort) {
+				if (viewport.renderType==ViewportPlugin.TYPE_ORTHOGONAL)
+					sortSystem(time);
+			}*/
 		}
 		
 		public function get positionX():Number {
@@ -293,11 +296,16 @@ package com.smart.engine.map.layer {
 			if (wasFlat) {
 				_display.unflatten();
 			}
-			//_display.addChild(image);
-			//var mc:MovieClip= image as MovieClip;
-			var img:Image=Image(image);
-			
-			_quadBatch.addImage(img);
+			if (viewport.renderType==ViewportPlugin.TYPE_ISOMETRIC)
+			{
+				_display.addChild(image);
+			}
+			else
+			{
+				var img:Image=Image(image);
+				
+				_quadBatch.addImage(img);
+			}
 			
 			
 			forceUpdate();

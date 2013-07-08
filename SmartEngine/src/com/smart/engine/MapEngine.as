@@ -46,7 +46,7 @@ package com.smart.engine
 
 
 		private var engine:SmartSystem;
-		public var onCompelete:Function;
+		public var onComplete:Function;
 		
 		private var viewport:ViewportPlugin;
 		
@@ -249,7 +249,8 @@ package com.smart.engine
 			makeLayer();
 			addObjects();
 			//renderMap();
-			onCompelete();
+			if (onComplete!=null)
+			onComplete();
 		}
 
 		public function makeLayer():void

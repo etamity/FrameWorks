@@ -12,8 +12,8 @@ package com.smart.engine.map.plugins
 	import com.smart.core.IEngine;
 	import com.smart.core.Plugin;
 	import com.smart.engine.MapEngine;
-	import com.smart.engine.map.layer.ILayerDisplay;
 	import com.smart.engine.map.display.SmartDisplayObject;
+	import com.smart.engine.map.layer.ILayerDisplay;
 	import com.smart.engine.map.utils.Point3D;
 	
 	import flash.geom.Matrix;
@@ -32,6 +32,7 @@ package com.smart.engine.map.plugins
 		//private var _tmx:TMXMap;
 		private var engine:MapEngine;
 
+		private var _projectionType:String=TYPE_ISOMETRIC;
 		private var _cellH:Number;
 		
 		//private var sortSprite:SmartDisplayObject;
@@ -41,6 +42,7 @@ package com.smart.engine.map.plugins
 			var type:String=projectionType;
 			var cellWidth:Number=cellwidth;
 			var cellHeight:Number=cellheight;
+			_projectionType=type;
 			_cellH=cellHeight;
 			pt=new Point();
 			projection=new Matrix();
@@ -74,7 +76,7 @@ package com.smart.engine.map.plugins
 		}
 		
 		public function get renderType():String{
-			return null;
+			return _projectionType;
 		}
 		
 		public function get width():int{

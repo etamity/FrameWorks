@@ -62,6 +62,8 @@ package com.smart.engine.map.models
 			tmxXMLLoader.start();
 		}
 
+
+		
 		public function TMXMapModel(data:*, url:String)
 		{
 			this.data=XML(data);
