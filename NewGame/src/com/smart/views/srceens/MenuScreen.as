@@ -25,9 +25,9 @@ package com.smart.views.srceens
 			this._buttonGroup = new ButtonGroup();
 			_buttonsData= new ListCollection(
 				[
-					{ label: Language.STARTGAME, event:ScreenEventConst.STARTGAME_EVENT , triggered: button_triggeredHandler },
-					{ label: Language.CONTINUE, event:ScreenEventConst.PLAYANIMATION_EVENT, triggered: button_triggeredHandler },
-					{ label: Language.LEADERBOARD,event:ScreenEventConst.STOPANIMATION_EVENT, triggered: button_triggeredHandler },
+					{ label: Language.MAPENGINE, event:ScreenEventConst.MAPENGINE_EVENT , triggered: button_triggeredHandler },
+					{ label: Language.PHYSICENGINE, event:ScreenEventConst.PHYSIC_EVENT, triggered: button_triggeredHandler },
+					{ label: Language.FEATHER,event:ScreenEventConst.FEATHER_EVENT, triggered: button_triggeredHandler },
 					{ label: Language.SHOP, event:ScreenEventConst.PLAYANIMATION_EVENT,triggered: button_triggeredHandler },
 					{ label: Language.EXIT, event:ScreenEventConst.PLAYANIMATION_EVENT,triggered: button_triggeredHandler },
 				]);

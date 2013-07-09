@@ -23,10 +23,11 @@ package com.smart.views.srceens
 		public var _health:ProgressBar;
 		public var _exitBtn:Button;
 		protected var tmxData:TMXMapModel;
+		
+
 		public function GameScreen()
 		{
 			super();
-
 		}
 		
 
@@ -46,10 +47,11 @@ package com.smart.views.srceens
 
 			
 			var _reloadBtn:Button=newButton(Language.RELOAD,loadMap);
-			var _mapgirdBtn:Button=newButton(Language.MAPGRID);
-			
+			var _mapgirdBtn:Button=newButton(Language.MAPGRID,loadMapGridMap);
+			var _mapiosBtn:Button=newButton(Language.MAPISO,loadMapISOMap);
 			
 			addItem(_mapgirdBtn,RIGHT);
+			addItem(_mapiosBtn,RIGHT);
 			addItem(_reloadBtn,RIGHT);
 			addItem(_exitBtn,RIGHT);
 		
@@ -69,6 +71,15 @@ package com.smart.views.srceens
 		private function onTMXLoad(tmx:TMXMapModel):void {
 			this.tmxData=tmx;
 			start();
+		}
+		
+		private function loadMapGridMap(event:Event):void
+		{
+			TMXMapModel.loadTMX("./TiledMap/map0.tmx",onTMXLoad);
+		}
+		private function loadMapISOMap(event:Event):void
+		{
+			TMXMapModel.loadTMX("./Monopoly/map3.tmx",onTMXLoad);
 		}
 		private function loadMap(event:Event):void
 		{

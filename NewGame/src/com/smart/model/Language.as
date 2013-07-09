@@ -12,12 +12,14 @@ package com.smart.model {
 		
 		
 		public static var RELOAD:String="RELOAD";
-		public static var MAPISO:String="MAPISO";
-		public static var MAPGRID:String="MAPGRID";
-		public static var GAMETITLE:String="MAD WORLD";
+		public static var MAPISO:String="45 Angle";
+		public static var MAPGRID:String="90 Angle";
+		public static var GAMETITLE:String="Clear";
 		
 		
-		
+		public static var MAPENGINE:String="Map Demo";
+		public static var PHYSICENGINE:String="Physic Demo";
+		public static var FEATHER:String="Feather UI";
 		
 		
 		public static var HEALTH:String="Health";

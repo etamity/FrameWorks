@@ -13,6 +13,7 @@ package com.smart.views.srceens
 	
 	import starling.display.DisplayObject;
 	import starling.display.Image;
+	import starling.display.Sprite;
 	import starling.events.Event;
 
 
@@ -29,10 +30,11 @@ package com.smart.views.srceens
 		public var headerHeight:int=64;
 		protected var system:SmartSystem;
 		private var _data:Object;
-		
+		public var canvasView:Sprite;
 		public function BaseScreen()
 		{
-
+			canvasView=new Sprite();
+			addChild(canvasView);
 		}
 		
 		override protected function initialize():void{
@@ -64,7 +66,7 @@ package com.smart.views.srceens
 			if (system != null)
 				system.dispose();
 			
-			system = new SmartSystem(this);
+			system = new SmartSystem(canvasView);
 			addPlugins(system);
 			system.start();
 		}

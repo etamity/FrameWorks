@@ -42,23 +42,20 @@ package com.smart.views.srceens
 			addChild(_navigator);
 			var eventObject:Object=new Object();
 			eventObject[Language.STARTGAME]=ScreenConst.GAME_SCREEN;
-			eventObject[Language.EXIT]=showMainMenu;
+			//eventObject[Language.EXIT]=showMainMenu;
 			eventObject[Language.CONTINUE]=ScreenConst.PHYSIS_SCREEN;
 			var properties :Object = {"assets":assets};
 			_navigator.addScreen(ScreenConst.MAINMENU_SCREEN, new ScreenNavigatorItem(MenuScreen,eventObject,properties));
 			_navigator.addScreen(ScreenConst.GAME_SCREEN, new ScreenNavigatorItem(GameScreen,eventObject,properties));
 			_navigator.addScreen(ScreenConst.PHYSIS_SCREEN, new ScreenNavigatorItem(PhysisScreen,eventObject,properties));
 			
-			var _newBtn:Button=newButton(Language.GAMETITLE,clearEngine);
-			addItem(_newBtn,LEFT);
-			var _backBtn:Button=newButton(Language.EXIT,showMenu);
+		
+			var _backBtn:Button=newButton(Language.EXIT);
 			addItem(_backBtn,RIGHT);
 			
 			
 			var _circle:Button=newButton("Circle",drawPoly);
 			addItem(_circle,LEFT);
-			var _draw:Button=newButton("Draw",drawPoly);
-			addItem(_draw,LEFT);
 			
 			var _box:Button=newButton("Box",drawPoly);
 			addItem(_box,LEFT);
@@ -66,12 +63,14 @@ package com.smart.views.srceens
 			var _Regular:Button=newButton("Regular",drawPoly);
 			addItem(_Regular,LEFT);
 			
-			var _none:Button=newButton("",drawPoly);
+			var _draw:Button=newButton("Draw",drawPoly);
+			addItem(_draw,LEFT);
+			
+			var _none:Button=newButton("Pick",drawPoly);
 			addItem(_none,LEFT);
 			
-			var _Pivot:Button=newButton("Pivot",drawPoly);
-			addItem(_Pivot,LEFT);
-			
+			var _newBtn:Button=newButton(Language.GAMETITLE,clearEngine);
+			addItem(_newBtn,LEFT);
 			
 			addChild(_navigator);
 			
