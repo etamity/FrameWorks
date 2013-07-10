@@ -1,4 +1,4 @@
-package com.smart.device
+package com.smart.core
 {
 	import com.smart.logs.Debug;
 

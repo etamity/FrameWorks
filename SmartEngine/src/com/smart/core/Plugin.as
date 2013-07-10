@@ -5,7 +5,6 @@ package com.smart.core
 	import flash.utils.getQualifiedClassName;
 	
 	import starling.core.Starling;
-	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Stage;
 

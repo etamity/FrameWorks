@@ -6,11 +6,8 @@
 //	All rights reserved.
 //##########################################################
 
-package com.smart {
+package com.smart.core {
 
-	import com.smart.core.Engine;
-	import com.smart.core.IEngine;
-	import com.smart.core.IPlugin;
 	
 	import flash.system.System;
 	import flash.utils.Dictionary;

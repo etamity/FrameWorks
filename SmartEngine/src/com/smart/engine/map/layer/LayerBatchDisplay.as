@@ -8,7 +8,7 @@
 
 package com.smart.engine.map.layer {
 	
-	import com.smart.SmartSystem;
+	import com.smart.core.SmartSystem;
 	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.models.TMXMapModel;
 	import com.smart.engine.map.plugins.IViewPort;

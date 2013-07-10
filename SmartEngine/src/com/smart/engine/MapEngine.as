@@ -9,7 +9,7 @@
 package com.smart.engine
 {
 
-	import com.smart.SmartSystem;
+	import com.smart.core.SmartSystem;
 	import com.smart.core.Engine;
 	import com.smart.core.IEngine;
 	import com.smart.engine.map.display.SmartDisplayObject;
