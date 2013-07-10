@@ -12,7 +12,6 @@ package com.smart.engine.map.layer {
 	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.models.TMXMapModel;
 	import com.smart.engine.map.plugins.IViewPort;
-	import com.smart.engine.map.plugins.ViewportPlugin;
 	import com.smart.engine.map.utils.Point3D;
 	
 	import flash.geom.Point;
