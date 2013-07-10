@@ -296,16 +296,10 @@ package com.smart.engine.map.layer {
 			if (wasFlat) {
 				_display.unflatten();
 			}
-			if (viewport.renderType==ViewportPlugin.TYPE_ISOMETRIC)
-			{
-				_display.addChild(image);
-			}
-			else
-			{
-				var img:Image=Image(image);
+
+			var img:Image=Image(image);
 				
-				_quadBatch.addImage(img);
-			}
+			_quadBatch.addImage(img);
 			
 			
 			forceUpdate();

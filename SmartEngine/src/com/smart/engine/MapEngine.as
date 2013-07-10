@@ -15,7 +15,7 @@ package com.smart.engine
 	import com.smart.engine.map.display.SmartDisplayObject;
 	import com.smart.engine.map.display.SmartImage;
 	import com.smart.engine.map.layer.ILayerDisplay;
-	import com.smart.engine.map.layer.LayerBatchDisplay;
+	import com.smart.engine.map.layer.LayerQuadDisplay;
 	import com.smart.engine.map.models.TMXLayer;
 	import com.smart.engine.map.models.TMXMapModel;
 	import com.smart.engine.map.models.TMXObject;
@@ -70,7 +70,7 @@ package com.smart.engine
 		public function makeEmptyGridOfSize(tmxLayerIndex:int, name:String):ILayerDisplay
 		{
 			
-			var layer:ILayerDisplay=new LayerBatchDisplay(name,tmx,viewport);
+			var layer:ILayerDisplay=new LayerQuadDisplay(name,tmx,viewport);
 			for (var i:int=0; i <= tmxLayerIndex; i++)
 			{
 				if (i == linkedLayer.length)
