@@ -4,12 +4,15 @@ package com.smart
 	import com.smart.loaders.ResourcesManager;
 	import com.smart.logs.Debug;
 	import com.smart.uicore.starlingui.ProgressBar;
+	import com.ui.MetalWorksMobileTheme;
+	import com.ui.SmartGame;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
+	import flash.utils.getQualifiedClassName;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
@@ -22,12 +25,41 @@ package com.smart
 		private var _starling:Starling;
 		private var _assetResources:*;
 		private var _root:Sprite
+		private var _scenesList:Array;
+		
+		private var _game:SmartGame;
+		private var _startScene:*;
+		private var _theme:MetalWorksMobileTheme;
 		public function SmartWorld(root:Sprite)
 		{
 			_root=root;
+			_scenesList=[];
 		}
 		
-		public function start(gameContent:Class):void{
+		private function getSceneClassByName(name:String):*{
+			var obj:Object;
+			var result:Class;
+			for (var i:int=0; i<_scenesList.length;i++)
+			{
+				obj= _scenesList[i];
+				if (obj.name==name)
+					result = obj.classtype; 
+			}
+			return result;
+		}
+		private function getSceneTypeByName(name:String):String{
+			var obj:Object;
+			var result:String;
+			for (var i:int=0; i<_scenesList.length;i++)
+			{
+				obj= _scenesList[i];
+				if (obj.name==name)
+					result = obj.classname; 
+			}
+			return result;
+		}
+		public function start(sceneName:String=""):void{
+			_startScene=getSceneClassByName(sceneName);
 			_root.graphics.clear();
 			if(_root.stage)
 			{
@@ -43,17 +75,27 @@ package com.smart
 			Debug.CONSOLE_OUTPUT = true;
 			Debug.log("Smart Engine Version:"+ "1.02");
 			
-			_starling = new Starling(gameContent, _root.stage);
+			_starling = new Starling(SmartGame, _root.stage);
 			_starling.antiAliasing = 1;
 			_starling.showStatsAt("right","top",2);
 			_starling.addEventListener(Event.ROOT_CREATED,onRootCreated);
 			_starling.start();
 			
 		}
-		public function onRootCreated(event:Event):void
+		
+		public function addScene(name:String,scene:*):SmartWorld{
+				_scenesList.push({name:name,classname:getQualifiedClassName(scene),classtype:scene});
+				return this;
+		}
+		public function clearScenes():void{
+			_scenesList=[];
+		}
+		public function onRootCreated(event:Event, game:SmartGame):void
 		{
+			_theme=new MetalWorksMobileTheme(Starling.current.stage);
 			_starling.removeEventListener(Event.ROOT_CREATED,onRootCreated);
 			loadResources(_assetResources);
+			_game=game;
 		}
 
 		public function loadAssets(...assetResources):void{
@@ -90,6 +132,7 @@ package com.smart
 						mLoadingProgress.removeFromParent(true);
 						mLoadingProgress = null;
 						//start();
+						_game.start(_startScene,assets);
 					}, 0.15);
 			});
 			
