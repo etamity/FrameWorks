@@ -1,9 +1,12 @@
 package com.ui
 {
+	import com.data.Language;
 	import com.smart.core.SmartSystem;
 	
+	import feathers.controls.ButtonGroup;
 	import feathers.controls.Header;
 	import feathers.controls.Screen;
+	import feathers.data.ListCollection;
 	
 	import starling.display.DisplayObject;
 	
@@ -13,13 +16,37 @@ package com.ui
 		public var headerHeight:int=64;
 		protected var leftItems:Vector.<DisplayObject>;
 		protected var rightItems:Vector.<DisplayObject>;
+		protected const LEFT:String="LEFT";
+		protected const RIGHT:String="RIGHT";
+		private var _buttonsData:ListCollection;
 		public function SmartScene()
 		{
 			super();
 	
 		}
+		public function addItem(display:DisplayObject, direct:String=LEFT):void
+		{
+			addHeader("");
+			if (direct == LEFT)
+				leftItems.push(display);
+			else if (direct == RIGHT)
+				rightItems.push(display);
+			
+		}
 		override protected function initialize():void{
 			addHeader("test");
+			var _buttonGroup:ButtonGroup = new ButtonGroup();
+			_buttonsData= new ListCollection(
+				[
+					{ label: Language.STARTGAME },
+					{ label: Language.CONTINUE},
+					{ label: Language.LEADERBOARD},
+					{ label: Language.SHOP },
+					{ label: Language.EXIT},
+				]);
+			_buttonGroup.dataProvider = _buttonsData;
+			addChild(_buttonGroup);
+
 		}
 		protected function addHeader(title:String):Header
 		{

@@ -2,7 +2,6 @@ package
 {
 	import com.smart.SmartWorld;
 	import com.smart.core.Device;
-	import com.ui.MetalWorksMobileTheme;
 	import com.ui.SmartScene;
 	
 	import flash.display.Sprite;
