@@ -1,0 +1,44 @@
+36658
+1
+
+2
+0 anchor
+1 attack01
+
+file tower_lightning_00000.png 128 512
+
+anim idle_level1 33
+
+0 0 0 48 89 2
+0 24 53 90
+1 24 4 90
+
+anim idle_level2 33
+
+1 48 0 48 91 2
+0 24 59 90
+1 24 7 90
+
+anim idle_level3 33
+
+2 0 91 53 117 2
+0 27 82 90
+1 27 45 90
+
+anim attack_level1 33
+
+3 53 91 48 89 2
+0 24 53 90
+1 24 4 90
+
+anim attack_level2 33
+
+4 0 208 48 91 2
+0 24 59 90
+1 24 7 90
+
+anim attack_level3 33
+
+5 53 180 53 117 2
+0 27 82 90
+1 27 45 90

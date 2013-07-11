@@ -1,0 +1,76 @@
+36658
+1
+
+2
+0 anchor
+1 move01
+
+file unit_plane_00000.png 256 256
+
+anim move_000 33
+
+0 0 0 88 110 2
+0 44 46 90
+1 44 69 90
+
+1 88 0 88 107 2
+0 44 43 90
+1 44 66 90
+
+anim move_030 33
+
+anim move_060 33
+
+anim move_090 33
+
+2 176 0 78 109 2
+0 41 40 90
+1 5 31 90
+
+3 0 110 77 109 2
+0 41 40 90
+1 5 31 90
+
+anim move_120 33
+
+anim move_150 33
+
+anim move_180 33
+
+4 77 110 88 107 2
+0 44 50 90
+1 44 9 90
+
+5 165 109 88 107 2
+0 44 50 90
+1 44 9 90
+
+anim death_common01_000 33
+
+anim death_common01_090 33
+
+anim death_common01_180 33
+
+anim death_common02_000 33
+
+anim death_common02_090 33
+
+anim death_common02_180 33
+
+anim death_explosive01_000 33
+
+anim death_explosive01_090 33
+
+anim death_explosive01_180 33
+
+anim death_explosive02_000 33
+
+anim death_explosive02_090 33
+
+anim death_explosive02_180 33
+
+anim death_shock01_000 33
+
+anim death_shock01_090 33
+
+anim death_shock01_180 33
