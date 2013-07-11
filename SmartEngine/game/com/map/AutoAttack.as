@@ -1,20 +1,33 @@
 package com.map 
 {
-	import com.data.Load;
 	import com.command.Plan;
-	import com.enemy.*;
+	import com.data.Load;
+	import com.enemy.ArmyBase;
+	import com.enemy.Bike;
+	import com.enemy.Blimp;
+	import com.enemy.Chopper;
+	import com.enemy.EnemyBase;
+	import com.enemy.HazmatSoldier;
+	import com.enemy.HeavyBike;
+	import com.enemy.HeavySoldier;
+	import com.enemy.Jeep;
+	import com.enemy.LightSoldier;
+	import com.enemy.Plane;
+	import com.enemy.Robot;
+	import com.enemy.Tank;
+	import com.event.DisappearEvent;
+	import com.tower.Flame;
+	import com.tower.Gatling;
+	import com.tower.Goo;
+	import com.tower.Lightning;
+	import com.tower.Missile;
+	import com.tower.Mortar;
 	import com.tower.TowerBase;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
+	
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.net.SharedObject;
-	import flash.utils.getDefinitionByName;
 	import flash.utils.Timer;
-	import com.event.DisappearEvent;
-	import flash.utils.setTimeout;
-	import flash.utils.setInterval;
-	import com.tower.*;
 	/**
 	 * ...
 	 * @author tomome52@gmail.com

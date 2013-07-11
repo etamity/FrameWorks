@@ -1,4 +1,4 @@
-package com.ui
+package com.smart.game.tower.skins
 {
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
