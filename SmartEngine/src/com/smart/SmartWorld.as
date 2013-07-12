@@ -1,11 +1,10 @@
 package com.smart
 {
 	import com.smart.core.Device;
+	import com.smart.core.SmartGame;
 	import com.smart.loaders.ResourcesManager;
 	import com.smart.logs.Debug;
 	import com.smart.uicore.starlingui.ProgressBar;
-	import com.ui.MetalWorksMobileTheme;
-	import com.ui.SmartGame;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -13,6 +12,8 @@ package com.smart
 	import flash.geom.Rectangle;
 	import flash.system.Capabilities;
 	import flash.utils.getQualifiedClassName;
+	
+	import feathers.core.DisplayListWatcher;
 	
 	import starling.core.Starling;
 	import starling.events.Event;
@@ -29,7 +30,8 @@ package com.smart
 		
 		private var _game:SmartGame;
 		private var _startScene:*;
-		private var _theme:MetalWorksMobileTheme;
+		private var _theme:DisplayListWatcher;
+		private var _themeClass:*;
 		public function SmartWorld(root:Sprite)
 		{
 			_root=root;
@@ -58,6 +60,11 @@ package com.smart
 			}
 			return result;
 		}
+		
+		public function setUIskin(skin:*):void{
+			_themeClass=skin;
+		}
+		
 		public function start(sceneName:String=""):void{
 			_startScene=getSceneClassByName(sceneName);
 			_root.graphics.clear();
@@ -92,7 +99,10 @@ package com.smart
 		}
 		public function onRootCreated(event:Event, game:SmartGame):void
 		{
-			_theme=new MetalWorksMobileTheme(Starling.current.stage);
+			var themeClass:Class = _themeClass as Class;
+			_theme = new themeClass(game.stage);
+			
+			
 			_starling.removeEventListener(Event.ROOT_CREATED,onRootCreated);
 			loadResources(_assetResources);
 			_game=game;
