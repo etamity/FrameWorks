@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="SmartEngine.as" projectUUID="474f8747-57b9-4b6e-afa2-e9f9e22da4a1" version="11">
+<actionScriptProperties analytics="false" mainApplicationPath="/SmartEngine/game/TowerDefence.as" projectUUID="474f8747-57b9-4b6e-afa2-e9f9e22da4a1" version="11">
   <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="main"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="assets"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="game"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -37,7 +38,11 @@
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
-  <applications/>
+  <applications>
+    <application path="/SmartEngine/game/TowerDefence.as">
+      <airExcludes/>
+    </application>
+  </applications>
   <modules/>
   <workers/>
   <buildCSSFiles/>
