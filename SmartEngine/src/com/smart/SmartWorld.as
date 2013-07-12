@@ -29,16 +29,19 @@ package com.smart
 		private var _scenesList:Array;
 		
 		private var _game:SmartGame;
-		private var _startScene:*;
+		private var _startScene:String;
 		private var _theme:DisplayListWatcher;
 		private var _themeClass:*;
+		
+		private  var _instance:SmartWorld;
 		public function SmartWorld(root:Sprite)
 		{
 			_root=root;
 			_scenesList=[];
+			_instance=this;
 		}
 		
-		private function getSceneClassByName(name:String):*{
+		public function getSceneClassByName(name:String):*{
 			var obj:Object;
 			var result:Class;
 			for (var i:int=0; i<_scenesList.length;i++)
@@ -49,7 +52,7 @@ package com.smart
 			}
 			return result;
 		}
-		private function getSceneTypeByName(name:String):String{
+		public function getSceneTypeByName(name:String):String{
 			var obj:Object;
 			var result:String;
 			for (var i:int=0; i<_scenesList.length;i++)
@@ -66,7 +69,7 @@ package com.smart
 		}
 		
 		public function start(sceneName:String=""):void{
-			_startScene=getSceneClassByName(sceneName);
+			_startScene=sceneName;
 			_root.graphics.clear();
 			if(_root.stage)
 			{
@@ -141,8 +144,8 @@ package com.smart
 					{
 						mLoadingProgress.removeFromParent(true);
 						mLoadingProgress = null;
-						//start();
-						_game.start(_startScene,assets);
+						_game.start(_instance,assets);
+						_game.showScene(_startScene);
 					}, 0.15);
 			});
 			

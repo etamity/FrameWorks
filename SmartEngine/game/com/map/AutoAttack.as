@@ -53,7 +53,7 @@ package com.map
 		
 		public function AutoAttack() 
 		{
-			Load.from(Load.LOAD_XML, "com/map/List.xml", loaded);
+			Load.from(Load.LOAD_XML, "Data/List.xml", loaded);
 			
 			_timer1 = new Timer(0);
 			_timer1.addEventListener(TimerEvent.TIMER, onTimer);
@@ -302,7 +302,7 @@ package com.map
 		{
 			lastRoute[0] = route[0].slice();
 			lastRoute[1] = route[1].slice();
-			for each(var i in _enemy)
+			for each(var i:Object in _enemy)
 			{
 				if (i is ArmyBase) i.setRoute();
 			}
@@ -313,7 +313,7 @@ package com.map
 			route[0] = Plan.doPlan(new Point(1, 6));
 			route[1] = Plan.doPlan(new Point(1, 7));
 			if (!route[0]) return false;
-			for each(var i in _enemy)
+			for each(var i:Object  in _enemy)
 			{
 				if ((i is ArmyBase) && !i.hasWay()) return false;
 			}

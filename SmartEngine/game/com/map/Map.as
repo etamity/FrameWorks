@@ -2,16 +2,16 @@ package com.map
 {
 	import com.enemy.EnemyBase;
 	import com.tower.TowerBase;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.display.DisplayObject;
 	
+	import starling.display.DisplayObject;
+	import starling.display.Sprite;
+	
+
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
 	 */
-	public class Map extends MovieClip 
+	public class Map extends Sprite 
 	{
 		public static var place:Array;//地图二维数组
 		public static var map:Map;//对当前类对象的引用

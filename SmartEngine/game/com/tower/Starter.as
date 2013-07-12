@@ -1,11 +1,9 @@
 package com.tower 
 {
-	import flash.display.Bitmap;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
+	
+	import feathers.controls.Button;
 	
 	/**
 	 * ...
@@ -14,25 +12,22 @@ package com.tower
 	public class Starter extends Sprite 
 	{
 		private var _money:int;
-		private var _mc:MovieClip;
+		private var _mc:Button;
 		private var _click:Function;
 		private var _drag:Class;
 		private var _onDown:Boolean;
-		private var _txt:TextField;
-		private var _txtY:int;
 		private var _canUse:Boolean;
 		
-		public function Starter(mc:MovieClip, money:int, clickFun:Function, dragFun:Class, txtY:int)
+		public function Starter(mc:Button, money:int, clickFun:Function, dragFun:Class)
 		{
 			_canUse = mc.numChildren == 1;
 			_money = money;
-			_txtY = txtY;
 			_click = clickFun;
 			_drag = dragFun;
 			_mc = mc;
-			_mc.gotoAndStop(1);
+			//_mc.gotoAndStop(1);
 			createTxt();
-			_mc.mouseChildren = false;
+			//_mc.mouseChildren = false;
 			
 			if (_click != null)_mc.addEventListener(MouseEvent.CLICK, onClick);
 			if (_drag != null)
@@ -72,20 +67,15 @@ package com.tower
 		
 		private function createTxt():void
 		{
-			_txt = new TextField();
-			var tf:TextFormat = new TextFormat(null, 30);
-			_txt.defaultTextFormat = tf;
-			_txt.text = _money.toString() + "$";
-			_mc.addChild(_txt);
-			_txt.x = 115;
-			_txt.y = _txtY;
+			
+			_mc.label=_money.toString() + "$";
 		}
 		
 		private function maxed():void
 		{
-			_txt.text = "MAX";
+			_mc.label = "MAX";
 			_canUse = false;
-			_mc.gotoAndStop(1);
+			//_mc.gotoAndStop(1);
 		}
 		
 		private function onClick(e:MouseEvent):void 
@@ -101,15 +91,15 @@ package com.tower
 				return;
 			}
 			_money = money;
-			_txt.text = money.toString() + "$";
+			_mc.label = money.toString() + "$";
 		}
 		
 		public function changeState(money:int):void
 		{
-			if (_txt.text == "MAX") return;
+			if (_mc.label == "MAX") return;
 			_canUse = money >= _money;
 			var num:int = !_canUse?1:2;
-			_mc.gotoAndStop(num);
+			//_mc.gotoAndStop(num);
 		}
 	}
 

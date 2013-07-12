@@ -1,17 +1,15 @@
 package com.data 
 {
-	import adobe.utils.CustomActions;
-	import com.tower.Gatling;
+	import com.event.LoadEvent;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import com.Main;
-	import com.event.LoadEvent;
-	import flash.geom.Matrix;
 	/**
 	 * ...
 	 * @author tomome52@gmail.com

@@ -1,14 +1,15 @@
 package com.map 
 {
 	import com.enemy.EnemyBase;
-	import flash.display.MovieClip;
-	import com.map.Map;
+	
+	import starling.display.Sprite;
+	
 	
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
 	 */
-	public class MapPart extends MovieClip 
+	public class MapUnit extends Sprite 
 	{
 		protected var mapX:int;//在“地图”的x
 		protected var mapY:int;//在“地图”的y
@@ -17,7 +18,7 @@ package com.map
 		private var _h:int;//在“地图”的高
 		private var _place:Array;//地图
 		
-		public function MapPart() 
+		public function MapUnit() 
 		{
 			_place = Map.place;
 			

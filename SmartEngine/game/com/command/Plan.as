@@ -113,7 +113,7 @@ package com.command
 		
 		private function hasBlock(x:int, y:int):Boolean//判断是否有障碍
 		{
-			for each(var i in Map.place[x][y])
+			for each(var i:Object in Map.place[x][y])
 			{
 				if (i is TowerBase) return true;
 			}

@@ -1,4 +1,4 @@
-package com 
+package 
 {
 	import com.data.BmpData;
 	import com.event.LoadEvent;
@@ -8,6 +8,7 @@ package com
 	
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.net.SharedObject;
@@ -17,27 +18,29 @@ package com
 	 * ...
 	 * @author tomome52@gmail.com
 	 */
-	public class TowerDefence extends MovieClip 
+	public class TowerDefence extends Sprite  
 	{
 		private var _startUI:MovieClip;//这些MovieClip为fla中的
 		private var _progressBar:MovieClip;
 		private var _scorePlan:MovieClip;
 		private var _progressMask:MovieClip;
 		private var _recover:Boolean;//是否是恢复
-		
+		private var _main:GameMainAsset;
 		public function TowerDefence() 
 		{
-			_startUI = this.getChildByName("startUI") as MovieClip;
-			_progressBar = _startUI.getChildByName("progressBar") as MovieClip;
-			_progressMask = _progressBar.getChildByName("maskMC") as MovieClip;
+			_main=new GameMainAsset();
+			_startUI = _main.startUI;
+			_progressBar = _startUI.progressBar;
+			_progressMask = _progressBar.maskMC;
 			_progressBar.visible = false;
-			_scorePlan = _startUI.getChildByName("scorePlan") as MovieClip;
+			_scorePlan = _startUI.scorePlan;
 			_scorePlan.getChildAt(1).addEventListener(MouseEvent.CLICK, closeClick);
 			_scorePlan.visible = false;
 			
 			addBtnListener("startBtn");
 			addBtnListener("resumeBtn");
 			addBtnListener("scoreBtn");
+			addChild(_main);
 		}
 		
 		private function closeClick(e:MouseEvent):void 
@@ -110,10 +113,10 @@ package com
 			var map:Map = new Map();
 			map.x = 18;
 			map.y = 36;
-			this.addChildAt(map, 2);
+			_main.addChildAt(map, 2);
 			_startUI.visible = false;
 			var attack:AutoAttack = new AutoAttack();
-			var con:Control = new Control(this.getChildByName("gameUI") as MovieClip, attack);
+			var con:Control = new Control(_main.gameUI, attack);
 			if (_recover)
 			{
 				_recover = false;

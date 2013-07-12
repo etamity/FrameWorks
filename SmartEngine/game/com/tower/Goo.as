@@ -68,7 +68,7 @@ package com.tower
 		private function createBmp():void
 		{
 			var data:BitmapData = new BitmapData(18, 39);
-			data.copyPixels(new projectile_goo(), new Rectangle(0, 0, 18, 39), new Point);
+			//data.copyPixels(new projectile_goo(), new Rectangle(0, 0, 18, 39), new Point);
 			var bmp:Bitmap = new Bitmap(data);
 			bmp.x = -9;
 			bmp.y = -20;

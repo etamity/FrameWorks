@@ -1,19 +1,17 @@
 package com.tower 
 {
 	import com.data.BmpData;
-	import com.data.BmpData;
-	import fl.motion.ITween;
-	import flash.display.Sprite;
-	import com.map.Map;
-	import flash.events.Event;
-	import flash.utils.Timer;
 	import com.enemy.EnemyBase;
-	import flash.events.TimerEvent;
-	import flash.display.BitmapData;
+	import com.map.Map;
+	
 	import flash.display.Bitmap;
-	import flash.geom.Rectangle;
+	import flash.display.BitmapData;
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.geom.Point;
-	import com.map.AutoAttack;
+	import flash.geom.Rectangle;
+	import flash.utils.Timer;
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
@@ -86,7 +84,7 @@ package com.tower
 		private function createBmp():void
 		{
 			var data:BitmapData = new BitmapData(31, 60);
-			data.copyPixels(new projectile_mortar(), new Rectangle(0, 0, 31, 60), new Point);
+			//data.copyPixels(new projectile_mortar(), new Rectangle(0, 0, 31, 60), new Point);
 			var bmp:Bitmap = new Bitmap(data);
 			bmp.x = -15;
 			bmp.y = -50;

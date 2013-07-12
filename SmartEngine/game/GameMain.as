@@ -2,7 +2,8 @@ package
 {
 	import com.smart.SmartWorld;
 	import com.smart.core.Device;
-	import com.smart.core.SmartScene;
+	import com.smart.game.tower.scenes.GameScene;
+	import com.smart.game.tower.scenes.MenuScene;
 	import com.smart.game.tower.skins.MetalWorksMobileTheme;
 	
 	import flash.display.Sprite;
@@ -17,18 +18,18 @@ package
 		private var _theme:MetalWorksMobileTheme;
 		public function GameMain()
 		{
+			start();
+		}
+		
+		private function start():void{
 			var world:SmartWorld=new SmartWorld(this);
 			world.loadAssets(AssetEmbeds_3x);
 			world.setUIskin(MetalWorksMobileTheme);
-			world.addScene("MainScene",SmartScene);
+			world.addScene("MainScene",MenuScene)
+				 .addScene("GameScene",GameScene);
 			world.start("MainScene");
 
-			/*Starling.current.addEventListener(Event.ROOT_CREATED,function ():void{
-				Starling.current.removeEventListeners(Event.ROOT_CREATED);
-				_theme=new MetalWorksMobileTheme(Starling.current.stage);
-			});*/
-		}		
-		
+		}
 		
 	}
 }

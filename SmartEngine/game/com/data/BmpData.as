@@ -1,7 +1,11 @@
 package com.data 
 {
 	import com.event.LoadEvent;
+	
 	import flash.events.EventDispatcher;
+	
+	import starling.textures.Texture;
+
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
@@ -28,7 +32,7 @@ package com.data
 		
 		public static var bmpDatas:Array;//所有处理好的素材
 		public static var bmpPoints:Array;//所有的位图位置
-		
+		public static var bmpTextures:Array;//所有的位图位置
 		private var _towerUrl:Array;//所有塔的位图加载地址
 		private var _enemyUrl:Array;//所有敌人位图的加载地址
 		private var _total:Array;//总的加载量
@@ -41,7 +45,6 @@ package com.data
 			bmpPoints = new Array();
 			_total = new Array();
 			_loaded = new Array();
-			
 			_enemyUrl = ["plane", "hazmat_soldier", "heavy_soldier", "bike", "heavy_bike", "jeep", "tank", "light_soldier", "chopper", "robot", "blimp"];
 			_towerUrl = ["gatling", "goo", "missile", "flame", "lightning", "mortar"];
 			
@@ -66,6 +69,51 @@ package com.data
 				data.addEventListener(LoadEvent.LOADED, loaded);
 				data.addEventListener(LoadEvent.LOADING, loading);
 			}
+		}
+		
+		
+		public static function get Textures():Array{
+			var arr:Array=[[]];
+			var texture:Texture;
+			var result:Array;
+			var lengI:int;
+			var lengJ:int;
+			var lengK:int;
+			if (bmpTextures!=null)
+			{
+				result=bmpTextures;
+			}
+			else{
+				lengI=bmpDatas.length;
+				for (var i:int=0; i<lengI;i++)
+				{
+					arr[i]=new Array();
+					lengJ=bmpDatas[i].length;
+					for (var j:int =0; j<lengJ;j++)
+					{
+						arr[i][j]=new Array();
+						if (bmpDatas[i][j] is Array)
+						{
+							
+							lengK=bmpDatas[i][j].length;
+							for (var k:int=0;k<lengK;k++)
+							{
+								texture= Texture.fromBitmapData(bmpDatas[i][j][k]);
+								arr[i][j].push(texture);
+							}
+						}else
+						{
+							lengK=-1;
+						}
+						//trace("bmpDatas["+String(i)+ "]["+String(j)+ "]::: ",bmpDatas[i][j],lengK);
+					}
+					
+				}
+				bmpTextures=arr;
+				result=arr;
+			}
+		
+			return result;
 		}
 		
 		private function loading(e:LoadEvent):void//加载时的回调函数

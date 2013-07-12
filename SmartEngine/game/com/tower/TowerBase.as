@@ -1,29 +1,31 @@
 package com.tower 
 {
 	import com.enemy.EnemyBase;
-	import com.map.MapPart;
+	import com.map.AutoAttack;
+	import com.map.Control;
+	import com.map.Map;
+	import com.map.MapUnit;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Timer;
-	import com.map.Map;
-	import com.map.AutoAttack;
-	import  com.map.Control;
-	import flash.utils.setTimeout;
-	import flash.utils.setInterval;
 	import flash.utils.clearTimeout;
-	import flash.utils.getDefinitionByName;
+	import flash.utils.setInterval;
+	
+	import starling.core.Starling;
+	import starling.display.Image;
+	import starling.display.Sprite;
+	import starling.textures.Texture;
 	
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
 	 */
-	public class TowerBase extends MapPart 
+	public class TowerBase extends MapUnit 
 	{
 		protected var defense:int;//攻击范围
 		protected var damage:Array;//攻击威力
@@ -69,12 +71,12 @@ package com.tower
 		public function save():Object//保存
 		{
 			var obj:Object = new Object();
-			obj.x = this.x;
+			/*obj.x = this.x;
 			obj.y = this.y;
 			obj.level = this.level;
 			var str:String = this.toString();
 			str =str.substring(8, str.length - 1);
-			obj.towerClass = str;
+			obj.towerClass = str;*/
 			return obj;
 			
 		}
@@ -101,7 +103,7 @@ package com.tower
 			_timer.delay = fast?200 * reloadTime:1000 * reloadTime;
 		}
 		
-		override public function play():void//播放
+		/*override public function play():void//播放
 		{
 			super.play();
 			_timer.start();
@@ -111,10 +113,11 @@ package com.tower
 		{
 			super.stop();
 			_timer.stop();
-		}
+		}*/
 		
 		protected function createTower(level:int):void//构建塔防的素材
 		{
+			
 			this.level = level;
 			while (_tower.numChildren > 0)
 			{
@@ -128,7 +131,8 @@ package com.tower
 			
 			var idleIndex:int = level - 1;
 			var attackIndex:int = level + 2;
-			
+			var texture:Texture;
+			var image:Image;
 			for (var i:int = 0; i < bmpData[idleIndex].length; i++)
 			{
 				var bmpData1:BitmapData = bmpData[idleIndex][i];
@@ -137,7 +141,9 @@ package com.tower
 				bmp1.x = point.x * -1;
 				bmp1.y = point.y * -1;
 				bmp1.visible = false;
-				idle.addChild(bmp1);
+				texture=Texture.fromBitmapData(bmpData1);
+				image=new Image(texture);
+				idle.addChild(image);
 			}
 			if (!bmpData[attackIndex]) 
 			{
@@ -152,7 +158,9 @@ package com.tower
 				bmp2.x = point.x * -1;
 				bmp2.y = point.y * -1;
 				bmp2.visible = false;
-				attack.addChild(bmp2);
+				texture=Texture.fromBitmapData(bmpData2);
+				image=new Image(texture);
+				attack.addChild(image);
 			}
 			changeDisplay(0);
 		}
@@ -328,9 +336,9 @@ package com.tower
 		private function getEnemy(x:int, y:int):EnemyBase//判断是否有障碍
 		{
 			if (!Map.place[x]) return null;
-			for each(var i in Map.place[x][y])
+			for each(var i:Object in Map.place[x][y])
 			{
-				if ((i is EnemyBase) && i.isLife) return i;
+				if ((i is EnemyBase) && i.isLife) return EnemyBase(i);
 			}
 			return null;
 		}
@@ -352,7 +360,7 @@ package com.tower
 		
 		private function hasBlock(x:int, y:int):Boolean//判断是否有障碍
 		{
-			for each(var i in Map.place[x][y])
+			for each(var i:Object in Map.place[x][y])
 			{
 				if (i is TowerBase && i != this) return true;
 			}
@@ -362,7 +370,7 @@ package com.tower
 		private function rectifyPlace():Boolean//矫正位置
 		{
 			var bool:Boolean;
-			var point:Point = this.localToGlobal(new Point(this.mouseX, this.mouseY));
+			var point:Point = this.localToGlobal(new Point(Starling.current.nativeStage.mouseX, Starling.current.nativeStage.mouseY));
 			
 			var xx:int = int(point.x / 36) * 36;
 			var yy:int = int(point.y / 36) * 36;

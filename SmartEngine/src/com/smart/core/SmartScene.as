@@ -1,5 +1,7 @@
 package com.smart.core
 {
+	import com.smart.loaders.ResourcesManager;
+	
 	import feathers.controls.Screen;
 	
 	public class SmartScene extends Screen
@@ -10,9 +12,12 @@ package com.smart.core
 			super();
 			this.game=game;
 		}
-
-		public function addPlugins(system:SmartSystem):void {
-	
+		
+		public function get assets():ResourcesManager{
+			return game.assets;
+		}
+		public function get system():SmartSystem{
+			return game.system;
 		}
 	}
 }

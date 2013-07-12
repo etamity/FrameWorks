@@ -1,25 +1,27 @@
 package com.enemy 
 {
+	import com.data.EnemyFormat;
 	import com.event.DisappearEvent;
 	import com.map.AutoAttack;
-	import com.map.MapPart;
+	import com.map.Control;
+	import com.map.MapUnit;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.MovieClip;
-	import flash.display.Sprite;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
-	import flash.utils.setTimeout;
-	import flash.utils.clearTimeout;
 	import flash.utils.Timer;
-	import com.data.EnemyFormat;
-	import com.map.Control;
+	import flash.utils.clearTimeout;
+	import flash.utils.setTimeout;
+	
+	import starling.display.MovieClip;
+	import starling.display.Sprite;
 	
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
 	 */
-	public class EnemyBase extends MapPart 
+	public class EnemyBase extends MapUnit 
 	{
 		public static const DEATH_COMMON:String = "death_common";
 		public static const DEATH_SHOCK:String = "death_shock";
@@ -103,18 +105,6 @@ package com.enemy
 			_timer.delay = fast?20:100;
 		}
 		
-		override public function play():void//播放
-		{
-			super.play();
-			_timer.start();
-		}
-		
-		override public function stop():void//暂停
-		{
-			super.stop();
-			_timer.stop();
-		}
-		
 		protected function creatAnimation(id:int):void//构建一个可以添加“帧”的movieclip
 		{
 			if (_animation)
@@ -141,8 +131,8 @@ package com.enemy
 				num++;
 				_animation.addChild(bmp);
 			}
-			if (_animation.numChildren == 0) return;
-			_animation._currentFrame = 0;
+			if (_animation.texture == null) return;
+			_animation.currentFrame = 0;
 			_animation._totalFrames = bmpData[id].length;
 			_animation.getChildAt(0).visible = true;
 		}

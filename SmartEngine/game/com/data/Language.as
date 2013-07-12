@@ -1,8 +1,6 @@
 
 package com.data {
 	
-	
-	
 	public class Language {		
 		public static var STARTGAME:String="START GAME";
 		public static var CONTINUE:String="CONTINUE";
