@@ -9,6 +9,8 @@ package
 		[Embed(source="/media/graphics/playerbar.xml", mimeType="application/octet-stream")]
 		public static const playerbar_xml:Class;
 
+		[Embed(source="/Data/Maps/grasslands.png")]
+		public static const grasslands:Class;
 		
 /*		[Embed(source="/media/graphics/test/Monopoly/addTileSet.png")]
 		public static const addTileSet:Class;

@@ -14,7 +14,7 @@ package com.tower
 			this.defense = 72;
 			this.damage = [43, 86, 129];
 			this.cost = [5, 4, 4];
-			this.bmpData = BmpData.bmpDatas[BmpData.GATLING];
+			this.bmpData = BmpData.Textures[BmpData.GATLING];
 			this.bmpPoint = BmpData.bmpPoints[BmpData.GATLING];
 			this.reloadTime = 1;
 			

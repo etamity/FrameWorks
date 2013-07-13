@@ -12,7 +12,7 @@ package com.enemy
 		{
 			this.speed = 1.9;
 			this.healthTotal = 150 * healthModifier;
-			this.bmpData = BmpData.bmpDatas[BmpData.HEAVYSOLDIER];
+			this.bmpData = BmpData.Textures[BmpData.HEAVYSOLDIER];
 			this.bmpPoint = BmpData.bmpPoints[BmpData.HEAVYSOLDIER];
 			this.score = 150;
 			this.modifier = healthModifier;

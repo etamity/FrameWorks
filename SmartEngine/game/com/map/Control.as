@@ -7,15 +7,17 @@ package com.map
 	import com.tower.Missile;
 	import com.tower.Mortar;
 	import com.tower.Starter;
+	
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
+	import flash.net.SharedObject;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import flash.net.SharedObject;
 	import flash.utils.setTimeout;
+
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
@@ -40,12 +42,14 @@ package com.map
 		private var _settingPanel:MovieClip;//选项面板
 		private var _round:int = 1;//当前关数
 		
+		private var _main:MovieClip;
 		public function Control(mc:MovieClip, attack:AutoAttack)
 		{
 			control = this;
+			_main=_mc;
 			_attack = attack;
 			_mc = mc.getChildByName("life") as MovieClip;
-			_settingPanel = mc.parent.getChildByName("setting_panel") as MovieClip;
+			_settingPanel = new SettingAsset();
 			_settingPanel.visible = false;
 			_playBtn = mc.getChildByName("play_btn") as MovieClip;
 			_playBtn.buttonMode = true;
@@ -121,7 +125,7 @@ package com.map
 		public function gameOver(win:Boolean):void//游戏结束
 		{
 			setTimeout(overFun, 4000);
-			Map.map.parent.mouseEnabled = false;
+			//Map.map.parent.mouseEnabled = false;
 			_attack.stop();
 			var share:SharedObject = SharedObject.getLocal("aaabbbccc");
 			if (!share.data.score) share.data.score = [];
@@ -144,7 +148,7 @@ package com.map
 		
 		private function overFun():void 
 		{
-			Map.map.parent.mouseEnabled = true;
+			//Map.map.parent.mouseEnabled = true;
 			Map.map.parent.removeChild(Map.map);
 			this.dispatchEvent(new Event("save"));
 		}
@@ -254,23 +258,23 @@ package com.map
 			txt.height = txt.textHeight + 4;
 			txt.width = 200;
 			txt.mouseEnabled = false;
-			Map.map.addChildAt(txt, Map.map.numChildren - 1);
+			//_main.addChild(txt);
 		}
 		
 		private function formatBtns(mc:MovieClip):void//初始化按钮
 		{
 			var btn:MovieClip = mc.getChildByName("gatling") as MovieClip;
-			_btns.push(new Starter(btn, 5, null, Gatling, 135));
+			_btns.push(new Starter(btn, 5, null, Gatling));
 			btn = mc.getChildByName("goo") as MovieClip;
-			_btns.push(new Starter(btn, 10, null, Goo, 135));
+			_btns.push(new Starter(btn, 10, null, Goo));
 			btn = mc.getChildByName("missile") as MovieClip;
-			_btns.push(new Starter(btn, 20, null, Missile, 135));
+			_btns.push(new Starter(btn, 20, null, Missile));
 			btn = mc.getChildByName("flame") as MovieClip;
-			_btns.push(new Starter(btn, 50, null, Flame, 135));
+			_btns.push(new Starter(btn, 50, null, Flame));
 			btn = mc.getChildByName("lightning") as MovieClip;
-			_btns.push(new Starter(btn, 70, null, Lightning, 135));
+			_btns.push(new Starter(btn, 70, null, Lightning));
 			btn = mc.getChildByName("mortar") as MovieClip;
-			_btns.push(new Starter(btn, 120, null, Mortar, 135));
+			_btns.push(new Starter(btn, 120, null, Mortar));
 		}
 		
 		public function get cost():int 

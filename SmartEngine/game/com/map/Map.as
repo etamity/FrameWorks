@@ -50,7 +50,7 @@ package com.map
 			addChild(child);
 		}
 		
-		override public function addChild(child:DisplayObject):DisplayObject//让子元件按规律排序
+		/*override public function addChild(child:DisplayObject):DisplayObject//让子元件按规律排序
 		{
 			if (child == _topChild)
 			{
@@ -68,7 +68,7 @@ package com.map
 				}
 			}
 			return child;
-		}
+		}*/
 		
 		public function addBulletChild(child:DisplayObject):void//主要用于子弹
 		{

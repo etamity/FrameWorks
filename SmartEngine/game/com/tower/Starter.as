@@ -1,9 +1,8 @@
 package com.tower 
 {
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
-	import feathers.controls.Button;
 	
 	/**
 	 * ...
@@ -12,13 +11,13 @@ package com.tower
 	public class Starter extends Sprite 
 	{
 		private var _money:int;
-		private var _mc:Button;
+		private var _mc:MovieClip;
 		private var _click:Function;
 		private var _drag:Class;
 		private var _onDown:Boolean;
 		private var _canUse:Boolean;
 		
-		public function Starter(mc:Button, money:int, clickFun:Function, dragFun:Class)
+		public function Starter(mc:MovieClip, money:int, clickFun:Function, dragFun:Class)
 		{
 			_canUse = mc.numChildren == 1;
 			_money = money;

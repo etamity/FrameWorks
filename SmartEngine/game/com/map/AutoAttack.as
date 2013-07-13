@@ -127,11 +127,11 @@ package com.map
 		{
 			for each(var enemy:EnemyBase in _enemy)
 			{
-				enemy.play();
+				enemy.display.play();
 			}
 			for each(var tower:TowerBase in _towers)
 			{
-				tower.play();
+				tower.display.play();
 			}
 			for each(var timer:Timer in _runTimer)
 			{
@@ -174,11 +174,11 @@ package com.map
 		{
 			for each(var enemy:EnemyBase in _enemy)
 			{
-				enemy.stop();
+				enemy.display.stop();
 			}
 			for each(var tower:TowerBase in _towers)
 			{
-				tower.stop();
+				tower.display.stop();
 			}
 			for each(var timer:Timer in _runTimer)
 			{

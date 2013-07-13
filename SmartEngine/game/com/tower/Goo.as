@@ -1,16 +1,18 @@
 package com.tower 
 {
 	import com.data.BmpData;
-	import flash.display.Bitmap;
+	import com.enemy.EnemyBase;
+	import com.map.Map;
+	
 	import flash.display.BitmapData;
-	import flash.display.Sprite;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import com.enemy.EnemyBase;
 	import flash.utils.Timer;
-	import com.map.Map;
-	import com.map.AutoAttack;
+	
+	import starling.display.Image;
+	import starling.display.Sprite;
+	import starling.textures.Texture;
+
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
@@ -29,7 +31,7 @@ package com.tower
 			this.defense = 90;
 			this.damage = [35, 50, 65];
 			this.cost = [10, 5, 5];
-			this.bmpData = BmpData.bmpDatas[BmpData.GOO];
+			this.bmpData = BmpData.Textures[BmpData.GOO];
 			this.bmpPoint = BmpData.bmpPoints[BmpData.GOO];
 			this.reloadTime = 1.2;
 			
@@ -55,7 +57,7 @@ package com.tower
 		{
 			_bmp.x += _moveX;
 			_bmp.y += _moveY;
-			if (_bmp.hitTestObject(_enemy) || _timer.currentCount == 20)
+			if (_bmp.hitTest(new Point(_enemy.pivotX,_enemy.y)) || _timer.currentCount == 20)
 			{
 				_timer.reset();
 				_canFire = true;
@@ -69,10 +71,11 @@ package com.tower
 		{
 			var data:BitmapData = new BitmapData(18, 39);
 			//data.copyPixels(new projectile_goo(), new Rectangle(0, 0, 18, 39), new Point);
-			var bmp:Bitmap = new Bitmap(data);
-			bmp.x = -9;
-			bmp.y = -20;
-			_bmp.addChild(bmp);
+			var texture:Texture = Texture.fromBitmapData(data);
+			var image :Image= new Image(texture);
+			image.x = -9;
+			image.y = -20;
+			_bmp.addChild(image);
 		}
 		
 		override protected function fire(mc:EnemyBase, angle:Number):void

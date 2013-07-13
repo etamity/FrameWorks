@@ -22,7 +22,7 @@ package com.tower
 			this.defense = 72;
 			this.damage = [400, 800, 1200];
 			this.cost = [50, 40, 40];
-			this.bmpData = BmpData.bmpDatas[BmpData.FLAME];
+			this.bmpData = BmpData.Textures[BmpData.FLAME];
 			this.bmpPoint = BmpData.bmpPoints[BmpData.FLAME];
 			this.reloadTime = 1;
 			

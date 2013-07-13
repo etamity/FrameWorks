@@ -1,7 +1,9 @@
 package com.event 
 {
 	import com.enemy.EnemyBase;
-	import flash.events.Event;
+	
+	import starling.events.Event;
+
 	
 	/**
 	 * ...

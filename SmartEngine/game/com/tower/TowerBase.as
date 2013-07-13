@@ -6,9 +6,6 @@ package com.tower
 	import com.map.Map;
 	import com.map.MapUnit;
 	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
@@ -18,7 +15,9 @@ package com.tower
 	
 	import starling.core.Starling;
 	import starling.display.Image;
+	import starling.display.MovieClip;
 	import starling.display.Sprite;
+	import starling.events.Event;
 	import starling.textures.Texture;
 	
 	/**
@@ -44,8 +43,10 @@ package com.tower
 		private var _angle:Number;//当前的角度
 		private var _timeId:int;
 		
+		private var _display:MovieClip;
 		public function TowerBase() 
 		{
+			super();
 			_tower = new Sprite();
 			_tower.scaleX = 0.7;
 			_tower.scaleY = 0.7;
@@ -63,11 +64,14 @@ package com.tower
 			this.addEventListener(MouseEvent.MOUSE_UP, onUp);
 			
 			Map.map.addTopChild(this);
-			super();
+	
 			_back = new Indicator(defense, this.cost[0]);
 			this.addChild(_back);
 		}
 		
+		public function get display():MovieClip{
+			return _display;
+		}
 		public function save():Object//保存
 		{
 			var obj:Object = new Object();
@@ -119,7 +123,7 @@ package com.tower
 		{
 			
 			this.level = level;
-			while (_tower.numChildren > 0)
+			/*while (_tower.numChildren > 0)
 			{
 				_tower.removeChildAt(0);
 			}
@@ -135,13 +139,8 @@ package com.tower
 			var image:Image;
 			for (var i:int = 0; i < bmpData[idleIndex].length; i++)
 			{
-				var bmpData1:BitmapData = bmpData[idleIndex][i];
-				var bmp1:Bitmap = new Bitmap(bmpData1);
 				var point:Point = bmpPoint[idleIndex][i];
-				bmp1.x = point.x * -1;
-				bmp1.y = point.y * -1;
-				bmp1.visible = false;
-				texture=Texture.fromBitmapData(bmpData1);
+				texture=bmpData[idleIndex][i];
 				image=new Image(texture);
 				idle.addChild(image);
 			}
@@ -149,25 +148,32 @@ package com.tower
 			{
 				changeDisplay(0);
 				return;
-			}
-			for (var j:int = 0; j < bmpData[attackIndex].length; j++)
+			}*/
+
+			
+		/*	for (var j:int = 0; j < bmpData[attackIndex].length; j++)
 			{
-				var bmpData2:BitmapData = bmpData[attackIndex][j];
-				var bmp2:Bitmap = new Bitmap(bmpData2);
 				point = bmpPoint[attackIndex][j];
-				bmp2.x = point.x * -1;
-				bmp2.y = point.y * -1;
-				bmp2.visible = false;
-				texture=Texture.fromBitmapData(bmpData2);
+				texture=bmpData[attackIndex][j];
 				image=new Image(texture);
 				attack.addChild(image);
-			}
+			}*/
 			changeDisplay(0);
 		}
 		
 		private function changeDisplay(id:int):void//改变要显示的位图
 		{
-			if (_last[0])_last[0].visible = false;
+			
+			if (_display != null)
+				_display.removeFromParent(true);
+			
+			var vectorTextures:Vector.<Texture>=Vector.<Texture>(bmpData[id]);
+			_display=new MovieClip(vectorTextures, 22);
+			this.addChild(_display);
+			Starling.juggler.add(_display);
+			_display.play();
+			
+			/*if (_last[0])_last[0].visible = false;
 			var idle:Sprite = _tower.getChildAt(0) as Sprite;
 			_last[0] = idle.getChildAt(id);
 			_last[0].visible = true;
@@ -176,7 +182,7 @@ package com.tower
 			var attack:Sprite = _tower.getChildAt(1) as Sprite;
 			if (attack.numChildren == 0) return;
 			_last[1] = attack.getChildAt(int(id * attack.numChildren / idle.numChildren));
-			_last[1].visible = true;
+			_last[1].visible = true;*/
 		}
 		
 		protected function fireAni(id:int):void//开火动画
@@ -370,7 +376,7 @@ package com.tower
 		private function rectifyPlace():Boolean//矫正位置
 		{
 			var bool:Boolean;
-			var point:Point = this.localToGlobal(new Point(Starling.current.nativeStage.mouseX, Starling.current.nativeStage.mouseY));
+			var point:Point = new Point(Starling.current.nativeStage.mouseX-width/2, Starling.current.nativeStage.mouseY-height/2);
 			
 			var xx:int = int(point.x / 36) * 36;
 			var yy:int = int(point.y / 36) * 36;

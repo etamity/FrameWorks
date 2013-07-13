@@ -32,8 +32,8 @@ package com.tower
 			reclaim.y = -35;
 			upgrade.x = 28;
 			upgrade.y = -35;
-			_upgrade = new Starter(upgrade, money, upgradeFun, null);
-			_reclaim = new Starter(reclaim, money, reclaimFUn, null);
+			//_upgrade = new Starter(upgrade, money, upgradeFun, null);
+			//_reclaim = new Starter(reclaim, money, reclaimFUn, null);
 		}
 		
 		private function reclaimFUn():void 

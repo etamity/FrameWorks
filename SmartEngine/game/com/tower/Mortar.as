@@ -6,12 +6,15 @@ package com.tower
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import flash.utils.Timer;
+	
+	import starling.display.Image;
+	import starling.display.Sprite;
+	import starling.textures.Texture;
+
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
@@ -28,7 +31,7 @@ package com.tower
 			this.defense = 145;
 			this.damage = [1300, 2600, 3900];
 			this.cost = [120, 90, 90];
-			this.bmpData = BmpData.bmpDatas[BmpData.MORTAR];
+			this.bmpData = BmpData.Textures[BmpData.MORTAR];
 			this.bmpPoint = BmpData.bmpPoints[BmpData.MORTAR];
 			this.reloadTime = 2;
 			
@@ -59,7 +62,7 @@ package com.tower
 			_bmp.x += xx;
 			_bmp.y += yy -2;
 			if (_timer.currentCount < 6) this.fireAni(_timer.currentCount-1);
-			if (_bmp.hitTestObject(_enemy) || !_enemy.isLife)
+			if (_bmp.hitTest(new Point(_enemy.pivotX,_enemy.y)) || !_enemy.isLife)
 			{
 				_bmp.visible = false;
 				_canFire = true;
@@ -85,10 +88,11 @@ package com.tower
 		{
 			var data:BitmapData = new BitmapData(31, 60);
 			//data.copyPixels(new projectile_mortar(), new Rectangle(0, 0, 31, 60), new Point);
-			var bmp:Bitmap = new Bitmap(data);
-			bmp.x = -15;
-			bmp.y = -50;
-			_bmp.addChild(bmp);
+			var texture:Texture = Texture.fromBitmapData(data);
+			var image :Image= new Image(texture);
+			image.x = -15;
+			image.y = -50;
+			_bmp.addChild(image);
 		}
 	}
 

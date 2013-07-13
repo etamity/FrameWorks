@@ -2,12 +2,17 @@ package com.smart.game.tower.scenes
 {
 	import com.data.BmpData;
 	import com.data.EnemyFormat;
+	import com.enemy.LightSoldier;
+	import com.map.AutoAttack;
+	import com.map.Control;
+	import com.map.Map;
 	import com.smart.core.SmartGame;
 	import com.smart.core.SmartScene;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.MovieClip;
+	import starling.display.Sprite;
 	import starling.textures.Texture;
 	
 	public class GameScene extends SmartScene
@@ -18,24 +23,35 @@ package com.smart.game.tower.scenes
 		}
 		
 		override protected function initialize():void{
-			var texture:Texture=  Texture.fromBitmapData(BmpData.bmpDatas[BmpData.BIKE][0][0]);
+		/*	var texture:Texture=  Texture.fromBitmapData(BmpData.bmpDatas[BmpData.BIKE][0][0]);
 			
+			
+			var sp:Sprite=new Sprite();
 			var image:Image= new Image(BmpData.Textures[BmpData.BIKE][0][0]);
 			//addChild(image);
 			
-			var vectorTextures:Vector.<Texture>=Vector.<Texture>(BmpData.bmpTextures[BmpData.HEAVYSOLDIER][EnemyFormat.MOVE_90]);
+			var vectorTextures:Vector.<Texture>=Vector.<Texture>(BmpData.Textures[BmpData.LIGHTSOLDIER][EnemyFormat.MOVE_90]);
 			var mc:MovieClip =new MovieClip(vectorTextures,25);
-			addChild(mc);
+			sp.addChild(mc);
+			addChild(sp);
 			mc.play();
-			Starling.juggler.add(mc);	
+			Starling.juggler.add(mc);	*/
+			
+			start();
 		}
 		
 		public function start():void{
-			/*var map:Map = new Map();
+			
+			var bg:Image=new Image(Texture.fromBitmap(new AssetEmbeds_3x.grasslands()))
+			addChild(bg);
+			var map:Map = new Map();
 			map.x = 18;
 			map.y = 36;
-			addChildAt(map, 0);
-			var attack:AutoAttack = new AutoAttack();*/
+			addChild(map);
+			var attack:AutoAttack = new AutoAttack();
+			var mc:GameUIAsset=new GameUIAsset();
+			var con:Control = new Control(mc, attack);
+			Starling.current.nativeStage.addChild(mc);
 		}
 
 	}

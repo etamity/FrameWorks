@@ -6,12 +6,15 @@ package com.tower
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import flash.utils.Timer;
+	
+	import starling.display.Image;
+	import starling.display.Sprite;
+	import starling.textures.Texture;
+
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
@@ -28,7 +31,7 @@ package com.tower
 			this.defense = 120;
 			this.damage = [105, 195, 285];
 			this.cost = [20, 15, 15];
-			this.bmpData = BmpData.bmpDatas[BmpData.MISSILE];
+			this.bmpData = BmpData.Textures[BmpData.MISSILE];
 			this.bmpPoint = BmpData.bmpPoints[BmpData.MISSILE];
 			this.reloadTime = 1.5;
 			
@@ -60,7 +63,7 @@ package com.tower
 			var yy:Number = 5 * Math.cos(angle) * -1;
 			_bmp.x += xx;
 			_bmp.y += yy;
-			if (_bmp.hitTestObject(_enemy) || !_enemy.isLife)
+			if (_bmp.hitTest(new Point(_enemy.pivotX,_enemy.y))  || !_enemy.isLife)
 			{
 				_bmp.visible = false;
 				_canFire = true;
@@ -85,10 +88,11 @@ package com.tower
 		{
 			var data:BitmapData = new BitmapData(17, 45);
 			//data.copyPixels(new projectile_missile(), new Rectangle(0, 0, 17, 45), new Point);
-			var bmp:Bitmap = new Bitmap(data);
-			bmp.x = -8;
-			bmp.y = -22;
-			_bmp.addChild(bmp);
+			var texture:Texture = Texture.fromBitmapData(data);
+			var image :Image= new Image(texture);
+			image.x = -8;
+			image.y = -22;
+			_bmp.addChild(image);
 		}
 	}
 
