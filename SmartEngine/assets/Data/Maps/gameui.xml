@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:ed97c2ff127f8c6b1797a43062f284cd$ -->
+<TextureAtlas imagePath="gameui.png">
+    <SubTexture name="flame_tower" x="593" y="392" width="199" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="flame_tower_on" x="615" y="197" width="199" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="goo_tower" x="414" y="197" width="199" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="goo_tower_on" x="213" y="199" width="199" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="gun_tower" x="404" y="589" width="187" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="gun_tower_on" x="404" y="394" width="187" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="highlight" x="203" y="784" width="119" height="61" frameX="-165" frameY="-131" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="hud_fast" x="2" y="792" width="69" height="53" frameX="-99" frameY="-88" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="hud_fast_on" x="736" y="587" width="97" height="87" frameX="-84" frameY="-71" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="hud_pause" x="324" y="784" width="57" height="57" frameX="-104" frameY="-85" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="hud_play" x="698" y="722" width="61" height="69" frameX="-102" frameY="-81" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="lifes_icon" x="593" y="587" width="141" height="133" frameX="-62" frameY="-55" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="missile_tower" x="203" y="589" width="199" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="missile_tower_on" x="203" y="394" width="199" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="mortar_tower" x="215" y="2" width="207" height="193" frameX="-22" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="mortar_tower_on" x="2" y="199" width="209" height="193" frameX="-22" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="ray_tower" x="625" y="2" width="199" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="ray_tower_on" x="424" y="2" width="199" height="193" frameX="-21" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="sell_icon" x="2" y="2" width="211" height="195" frameX="-22" frameY="-19" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="setting_icon" x="593" y="722" width="103" height="103" frameX="-81" frameY="-66" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="upgrade" x="2" y="593" width="199" height="197" frameX="-22" frameY="-18" frameWidth="313" frameHeight="235"/>
+    <SubTexture name="upgrade_on" x="2" y="394" width="199" height="197" frameX="-22" frameY="-18" frameWidth="313" frameHeight="235"/>
+</TextureAtlas>
