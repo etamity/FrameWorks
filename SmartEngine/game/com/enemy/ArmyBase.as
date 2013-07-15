@@ -41,9 +41,9 @@ package com.enemy
 			changeGap();
 		}
 		
-		override protected function timee():void 
+		override protected function recoverTime():void 
 		{
-			super.timee();
+			super.recoverTime();
 			changeGap();
 		}
 		

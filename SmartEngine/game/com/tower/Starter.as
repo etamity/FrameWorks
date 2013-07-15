@@ -10,23 +10,23 @@ package com.tower
 	 */
 	public class Starter extends Sprite 
 	{
-		private var _money:int;
+		private var _cost:int;
 		private var _mc:MovieClip;
 		private var _click:Function;
 		private var _drag:Class;
 		private var _onDown:Boolean;
 		private var _canUse:Boolean;
 		
-		public function Starter(mc:MovieClip, money:int, clickFun:Function, dragFun:Class)
+		public function Starter(mc:MovieClip, cost:int, clickFun:Function, dragClass:Class)
 		{
 			_canUse = mc.numChildren == 1;
-			_money = money;
+			_cost = cost;
 			_click = clickFun;
-			_drag = dragFun;
+			_drag = dragClass;
 			_mc = mc;
-			//_mc.gotoAndStop(1);
+			_mc.gotoAndStop(1);
 			createTxt();
-			//_mc.mouseChildren = false;
+			_mc.mouseChildren = false;
 			
 			if (_click != null)_mc.addEventListener(MouseEvent.CLICK, onClick);
 			if (_drag != null)
@@ -67,14 +67,14 @@ package com.tower
 		private function createTxt():void
 		{
 			
-			_mc.label=_money.toString() + "$";
+			_mc._label=_cost.toString() + "$";
 		}
 		
 		private function maxed():void
 		{
-			_mc.label = "MAX";
+			_mc._label = "MAX";
 			_canUse = false;
-			//_mc.gotoAndStop(1);
+			_mc.gotoAndStop(1);
 		}
 		
 		private function onClick(e:MouseEvent):void 
@@ -82,23 +82,23 @@ package com.tower
 			if (_canUse)_click();
 		}
 		
-		public function setMoney(money:int):void
+		public function setMoney(cost:int):void
 		{
-			if (money == 0) 
+			if (cost == 0) 
 			{
 				maxed();
 				return;
 			}
-			_money = money;
-			_mc.label = money.toString() + "$";
+			_cost = cost;
+			_mc._label = cost.toString() + "$";
 		}
 		
-		public function changeState(money:int):void
+		public function changeState(cost:int):void
 		{
-			if (_mc.label == "MAX") return;
-			_canUse = money >= _money;
+			if (_mc._label == "MAX") return;
+			_canUse = cost >= _cost;
 			var num:int = !_canUse?1:2;
-			//_mc.gotoAndStop(num);
+			_mc.gotoAndStop(num);
 		}
 	}
 

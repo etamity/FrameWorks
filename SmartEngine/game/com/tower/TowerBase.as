@@ -14,10 +14,12 @@ package com.tower
 	import flash.utils.setInterval;
 	
 	import starling.core.Starling;
-	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
 	import starling.events.Event;
+	import starling.events.Touch;
+	import starling.events.TouchEvent;
+	import starling.events.TouchPhase;
 	import starling.textures.Texture;
 	
 	/**
@@ -34,25 +36,26 @@ package com.tower
 		protected var level:int;//等级
 		protected var reloadTime:Number = 0;//重新开火的时间的倍数
 		
-		private var _tower:Sprite;//显示素材
+		protected var _tower:Sprite;//显示素材
 		private var _timer:Timer;
 		private var _canUse:Boolean;//能否放置
-		private var _last:Array;//上次显示的素材
 		private var _back:Indicator;//范围显示器
 		private var _enemy:EnemyBase;//发现的敌人
 		private var _angle:Number;//当前的角度
 		private var _timeId:int;
+		private var _attack:MovieClip;
+		private var _idle:MovieClip;
 		
-		private var _display:MovieClip;
+		
+		private var currentIndex:int=0;
+		private var currentIdle:int=0;
 		public function TowerBase() 
 		{
 			super();
 			_tower = new Sprite();
 			_tower.scaleX = 0.7;
-			_tower.scaleY = 0.7;
+			_tower.scaleY = 0.7
 			this.addChild(_tower);
-			
-			_last = new Array();
 			
 			createTower(1);
 			
@@ -61,26 +64,24 @@ package com.tower
 			_timer.addEventListener(TimerEvent.TIMER, onTimer);
 			
 			this.addEventListener(Event.ENTER_FRAME, onEnter);
-			this.addEventListener(MouseEvent.MOUSE_UP, onUp);
+			this.addEventListener(TouchEvent.TOUCH, onUp);
 			
 			Map.map.addTopChild(this);
 	
 			_back = new Indicator(defense, this.cost[0]);
-			this.addChild(_back);
+			Starling.current.nativeStage.addChild(_back);
+			play();
 		}
-		
-		public function get display():MovieClip{
-			return _display;
-		}
-		public function save():Object//保存
+
+		public function save():Object// Save game
 		{
 			var obj:Object = new Object();
-			/*obj.x = this.x;
+			obj.x = this.x;
 			obj.y = this.y;
 			obj.level = this.level;
-			var str:String = this.toString();
+			var str:String = String(this);
 			str =str.substring(8, str.length - 1);
-			obj.towerClass = str;*/
+			obj.towerClass = str;
 			return obj;
 			
 		}
@@ -88,8 +89,8 @@ package com.tower
 		public function recover(obj:Object):void//恢复
 		{
 			this.removeEventListener(Event.ENTER_FRAME, onEnter);
-			this.removeEventListener(MouseEvent.MOUSE_UP, onUp);
-			this.addEventListener(MouseEvent.CLICK, onClick);
+			this.removeEventListener(TouchEvent.TOUCH, onUp);
+			this.addEventListener(TouchEvent.TOUCH, onClick);
 			this.level = obj.level;
 			createTower(this.level);
 			this.setPoint(obj.x, obj.y);
@@ -107,119 +108,116 @@ package com.tower
 			_timer.delay = fast?200 * reloadTime:1000 * reloadTime;
 		}
 		
-		/*override public function play():void//播放
+		public function play():void//播放
 		{
-			super.play();
+			_idle.play();
 			_timer.start();
 		}
 		
-		override public function stop():void//暂停
+		public function stop():void//暂停
 		{
-			super.stop();
+			_idle.stop();
 			_timer.stop();
-		}*/
+		}
 		
 		protected function createTower(level:int):void//构建塔防的素材
 		{
 			
 			this.level = level;
-			/*while (_tower.numChildren > 0)
+			
+		
+			while (_tower.numChildren > 0)
 			{
 				_tower.removeChildAt(0);
 			}
-			var idle:Sprite = new Sprite();
-			_tower.addChild(idle);
-			var attack:Sprite = new Sprite();
-			attack.visible = false;
-			_tower.addChild(attack);
-			
+	
 			var idleIndex:int = level - 1;
 			var attackIndex:int = level + 2;
-			var texture:Texture;
-			var image:Image;
-			for (var i:int = 0; i < bmpData[idleIndex].length; i++)
-			{
-				var point:Point = bmpPoint[idleIndex][i];
-				texture=bmpData[idleIndex][i];
-				image=new Image(texture);
-				idle.addChild(image);
-			}
-			if (!bmpData[attackIndex]) 
-			{
-				changeDisplay(0);
-				return;
-			}*/
-
 			
-		/*	for (var j:int = 0; j < bmpData[attackIndex].length; j++)
-			{
-				point = bmpPoint[attackIndex][j];
-				texture=bmpData[attackIndex][j];
-				image=new Image(texture);
-				attack.addChild(image);
-			}*/
-			changeDisplay(0);
+			
+			var vectorTextures:Vector.<Texture>=Vector.<Texture>(bmpData[idleIndex]);
+			_idle=new MovieClip(vectorTextures,60);
+			
+			Starling.juggler.add(_idle);
+			_idle.addEventListener(Event.ENTER_FRAME,function (evt:Event):void{
+				if (_idle.currentFrame==currentIdle)
+					_idle.stop();
+			});
+			_tower.addChild(_idle);
+			
+			if (!bmpData[attackIndex]){
+				changeDisplay(0)
+				return;
+			}
+			
+			var attackTextures:Vector.<Texture>=Vector.<Texture>(bmpData[attackIndex]);
+			_attack=new MovieClip(attackTextures,60);
+			_attack.visible=false;
+			_tower.addChild(_attack);
+			
+			Starling.juggler.add(_attack);
+			_attack.addEventListener(Event.ENTER_FRAME,function (evt:Event):void{
+			  if (_attack.currentFrame==currentIndex)
+				  _attack.stop();
+			});
+			
+			changeDisplay(attackIndex);
+	
 		}
 		
 		private function changeDisplay(id:int):void//改变要显示的位图
 		{
+
+			currentIdle=id;
+			if (_idle.currentFrame== currentIdle) return;
+			_idle.play();
+			if (_attack == null) return;
+			currentIndex=id * _attack.numFrames / _idle.numFrames;
+			if (_attack.currentFrame== currentIndex) return;
+			_attack.play();
 			
-			if (_display != null)
-				_display.removeFromParent(true);
-			
-			var vectorTextures:Vector.<Texture>=Vector.<Texture>(bmpData[id]);
-			_display=new MovieClip(vectorTextures, 22);
-			this.addChild(_display);
-			Starling.juggler.add(_display);
-			_display.play();
-			
-			/*if (_last[0])_last[0].visible = false;
-			var idle:Sprite = _tower.getChildAt(0) as Sprite;
-			_last[0] = idle.getChildAt(id);
-			_last[0].visible = true;
-			
-			if (_last[1])_last[1].visible = false;
-			var attack:Sprite = _tower.getChildAt(1) as Sprite;
-			if (attack.numChildren == 0) return;
-			_last[1] = attack.getChildAt(int(id * attack.numChildren / idle.numChildren));
-			_last[1].visible = true;*/
 		}
 		
 		protected function fireAni(id:int):void//开火动画
 		{
-			if (_last[1])_last[1].visible = false;
-			var attack:Sprite = _tower.getChildAt(1) as Sprite;
-			_last[1] = attack.getChildAt(id);
-			_last[1].visible = true;
+			if (_attack) _attack.visible = false;
+			
+			_attack.visible = true;
+			currentIndex=id;
 		}
 		
-		private function onUp(e:MouseEvent):void //塔被放置
+		private function onUp(e:TouchEvent):void //塔被放置
 		{
 			this.removeEventListener(Event.ENTER_FRAME, onEnter);
-			this.removeEventListener(MouseEvent.MOUSE_UP, onUp);
+			this.removeEventListener(TouchEvent.TOUCH, onUp);
 			this.addEventListener(MouseEvent.CLICK, onClick);
-			
-			if (_canUse)
-			{
-				_back.changeState(2);
-				_back.visible = false;
-				if (AutoAttack.onRun)_timer.start();
-				AutoAttack.setWay();
-				Map.map.removeTopChild(this);
-				Control.control.changeCost(this.cost[0], false);
-				_back.setMoney(this.cost[this.level], getCost());
-				AutoAttack.addTower(this);
-			}
-			else
-			{
-				this.removeFromMap();
+	
+			var touch:Touch = e.getTouch(this, TouchPhase.ENDED);
+				if (touch){
+					if (_canUse)
+					{
+						_back.changeState(2);
+						_back.visible = false;
+						if (AutoAttack.onRun)_timer.start();
+						AutoAttack.setWay();
+						Map.map.removeTopChild(this);
+						Control.control.changeCost(this.cost[0], false);
+						_back.setMoney(this.cost[this.level], getCost());
+						AutoAttack.addTower(this);
+				
+					}
+					else
+					{
+						this.removeFromMap();
+					}
+				
 			}
 		}
 		
-		private function onClick(e:MouseEvent):void //单击塔
+		private function onClick(e:TouchEvent):void //单击塔
 		{
 			this.removeEventListener(MouseEvent.CLICK, onClick);
-			this.stage.addEventListener(MouseEvent.CLICK, stageClick);
+			this.stage.addEventListener(TouchEvent.TOUCH, stageClick);
 		}
 		
 		private function getCost():int//获取塔的总价值
@@ -236,7 +234,7 @@ package com.tower
 		public function reclaim():void//回收
 		{
 			_timer.stop();
-			this.stage.removeEventListener(MouseEvent.CLICK, stageClick);
+			this.stage.removeEventListener(TouchEvent.TOUCH, stageClick);
 			this.removeFromMap();
 			AutoAttack.hasWay();
 			AutoAttack.setWay();
@@ -252,23 +250,28 @@ package com.tower
 			Control.control.changeCost(this.cost[this.level], false);
 		}
 		
-		private function stageClick(e:MouseEvent):void //舞台被单击
+		private function stageClick(e:TouchEvent):void //舞台被单击
 		{
-			if (_back.visible)
-			{
-				_back.visible = false;
-				if (!this.parent) return;
-				Map.map.removeTopChild(this);
-				this.addEventListener(MouseEvent.CLICK, onClick);
-				this.stage.removeEventListener(MouseEvent.CLICK, stageClick);
-				clearTimeout(_timeId);
-			}
-			else
-			{
-				_back.changeUpgradeState(Control.control.cost);
-				_timeId = setInterval(inTime, 1000);
-				_back.visible = true;
-				Map.map.addTopChild(this);
+			var touch:Touch = e.getTouch(this, TouchPhase.BEGAN);
+			if (touch){
+				if (_back.visible)
+				{
+					_back.visible = false;
+					if (!this.parent) return;
+					Map.map.removeTopChild(this);
+					this.addEventListener(MouseEvent.CLICK, onClick);
+					this.stage.removeEventListener(MouseEvent.CLICK, stageClick);
+					clearTimeout(_timeId);
+		
+				}
+				else
+				{
+					_back.changeUpgradeState(Control.control.cost);
+					_timeId = setInterval(inTime, 1000);
+					_back.visible = true;
+					Map.map.addTopChild(this);
+					
+				}
 			}
 		}
 		
@@ -279,7 +282,7 @@ package com.tower
 		
 		private function onEnter(e:Event):void //未放置时
 		{
-			if (rectifyPlace())_canUse = testPlace();
+			if (rectifyPosition())_canUse = testPlace();
 		}
 		
 		private function onTimer(e:TimerEvent):void //开火和转向
@@ -307,17 +310,14 @@ package com.tower
 			angle += 90;
 			if (angle < 0) angle += 360;
 			_angle = angle;
-			var child:Sprite = _tower.getChildAt(0) as Sprite;
-			var index:int = child.numChildren * angle / 360;
+			var index:int = _idle.numFrames * angle / 360;
 			changeDisplay(index);
 		}
 		
 		protected function changeState(isFire:Boolean):void//改变状态
 		{
-			var child:Sprite = _tower.getChildAt(int(isFire)) as Sprite;
-			child.visible = true;
-			child = _tower.getChildAt(int(!isFire)) as Sprite;
-			child.visible = false;
+			_attack.visible = isFire;
+			_idle.visible = !isFire;
 		}
 		
 		private function findEnemy():EnemyBase//寻找敌人
@@ -373,21 +373,21 @@ package com.tower
 			return false;
 		}
 		
-		private function rectifyPlace():Boolean//矫正位置
+		private function rectifyPosition():Boolean//矫正位置
 		{
 			var bool:Boolean;
 			var point:Point = new Point(Starling.current.nativeStage.mouseX-width/2, Starling.current.nativeStage.mouseY-height/2);
 			
 			var xx:int = int(point.x / 36) * 36;
 			var yy:int = int(point.y / 36) * 36;
-			
+
 			if (this.x != xx || this.y != yy)
 			{
 				this.setPoint(xx, yy);
 				
 				bool = true;
 			}
-			
+
 			return bool;
 		}
 	}

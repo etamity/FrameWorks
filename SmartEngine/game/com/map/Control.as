@@ -34,7 +34,7 @@ package com.map
 		private var _btns:Array = [];//放置塔的6个按钮
 		private var _score:int;//当前分数
 		private var _life:int = 20;//当前生命
-		private var _mc:MovieClip;//游戏界面的心形
+		private var _lifes:MovieClip;//游戏界面的心形
 		private var _attack:AutoAttack;//AutoAttack对象
 		private var _playBtn:MovieClip;//播放和暂停按钮
 		private var _speedBtn:MovieClip;//改变速度的按钮
@@ -42,34 +42,60 @@ package com.map
 		private var _settingPanel:MovieClip;//选项面板
 		private var _round:int = 1;//当前关数
 		
-		private var _main:MovieClip;
-		public function Control(mc:MovieClip, attack:AutoAttack)
+		private var _startUI:MovieClip;
+		private var _gameUI:MovieClip;
+		public function Control(mc:GameUIAsset, attack:AutoAttack)
 		{
 			control = this;
-			_main=_mc;
+			_gameUI=mc.gameUI;
 			_attack = attack;
-			_mc = mc.getChildByName("life") as MovieClip;
-			_settingPanel = new SettingAsset();
+			_lifes = _gameUI.life;
+			_settingPanel = mc.setting_panel;
 			_settingPanel.visible = false;
-			_playBtn = mc.getChildByName("play_btn") as MovieClip;
+			_startUI=mc.startUI;
+			_startUI.visible=false;
+			_playBtn = _gameUI.play_btn;
 			_playBtn.buttonMode = true;
 			_playBtn.gotoAndStop(2);
-			_speedBtn = mc.getChildByName("speed_btn") as MovieClip;
+			_speedBtn = _gameUI.speed_btn
 			_speedBtn.buttonMode = true;
 			_speedBtn.gotoAndStop(1);
-			_settingBtn = mc.getChildByName("setting_btn") as SimpleButton;
+			_settingBtn = _gameUI.setting_btn;
 			
 			
-			formatBtns(mc);
 			
-			sortTxt();
+			createGameUIButtons();
+			
+			
+	
 			
 			changeBtnState();
-			
+			sortTxt();
 			_settingBtn.addEventListener(MouseEvent.CLICK, settingClick);
 			_speedBtn.addEventListener(MouseEvent.CLICK, speedClick);
 			_playBtn.addEventListener(MouseEvent.CLICK, playClick);
 			_settingPanel.addEventListener(MouseEvent.CLICK, panelClick);
+		}
+		
+		private function createGameUIButtons():void{
+			var btn:MovieClip =_gameUI.gatling;
+			btn.stop();
+			_btns.push(new Starter(btn, 5, null, Gatling));
+			btn = _gameUI.goo;
+			btn.stop();
+			_btns.push(new Starter(btn, 10, null, Goo));
+			btn = _gameUI.missile;
+			btn.stop();
+			_btns.push(new Starter(btn, 20, null, Missile));
+			btn =_gameUI.flame;
+			btn.stop();
+			_btns.push(new Starter(btn, 50, null, Flame));
+			btn = _gameUI.lightning;
+			btn.stop();
+			_btns.push(new Starter(btn, 70, null, Lightning));
+			btn =_gameUI.mortar;
+			btn.stop();
+			_btns.push(new Starter(btn, 120, null, Mortar));
 		}
 		
 		private function removeLister():void//移除按钮的单击侦听
@@ -127,7 +153,7 @@ package com.map
 			setTimeout(overFun, 4000);
 			//Map.map.parent.mouseEnabled = false;
 			_attack.stop();
-			var share:SharedObject = SharedObject.getLocal("aaabbbccc");
+			var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 			if (!share.data.score) share.data.score = [];
 			var arr:Array = share.data.score;
 			for (var i:int = 0; i < arr.length + 1; i++)
@@ -143,7 +169,7 @@ package com.map
 				btn1.removeLister();
 			}
 			this.removeLister();
-			formatTxt(new TextField(), 380, 200, win?"胜利":"失败");
+			formatTxt(new TextField(), 380, 200, win?"WIN":"FAILURE");
 		}
 		
 		private function overFun():void 
@@ -155,7 +181,7 @@ package com.map
 		
 		public function recover():void//恢复保存的进度
 		{
-			var share:SharedObject = SharedObject.getLocal("aaabbbccc");
+			var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 			_cost = 0;
 			changeCost(share.data.cost, true);
 			_life = share.data.life + 1;
@@ -202,13 +228,13 @@ package com.map
 		private function sortTxt():void//对所有的显示文本初始化
 		{
 			_costTxt = new TextField();
-			formatTxt(_costTxt, 35, -20, String(_cost));
+			formatTxt(_costTxt, 35, 20, String(_cost));
 			_scoreTxt = new TextField();
-			formatTxt(_scoreTxt, 380, -20, "0");
+			formatTxt(_scoreTxt, 380, 20, "0");
 			_lifeTxt = new TextField();
-			formatTxt(_lifeTxt, 700, -20, "20");
+			formatTxt(_lifeTxt, 700, 20, "20");
 			_stateTxt = new TextField();
-			formatTxt(_stateTxt, 360, 10,"ROUND 0");
+			formatTxt(_stateTxt, 360, 40,"ROUND 0");
 		}
 		
 		public function changeCost(size:int, add:Boolean):void//改变金币
@@ -230,7 +256,7 @@ package com.map
 			_life--;
 			if (_life <= 0)gameOver(false);
 			_lifeTxt.text = String(_life);
-			_mc.gotoAndPlay(2);
+			_lifes.gotoAndPlay(2);
 		}
 		
 		private function changeBtnState():void//改变6个启动塔的按钮的状态
@@ -244,7 +270,7 @@ package com.map
 		public function changeRound(round:int):void//改变关数
 		{
 			_round = round;
-			_stateTxt.text = "round " + String(round);
+			_stateTxt.text = "ROUND " + String(round);
 		}
 		
 		private function formatTxt(txt:TextField, x:int, y:int, str:String):void//初始化文本
@@ -252,31 +278,17 @@ package com.map
 			var tf:TextFormat = new TextFormat("Stencil Std", 18);
 			tf.color = 0xFFE600;
 			txt.defaultTextFormat = tf;
+			txt.defaultTextFormat.bold=true;
 			txt.x = x;
 			txt.y = y;
 			txt.text = str;
 			txt.height = txt.textHeight + 4;
 			txt.width = 200;
 			txt.mouseEnabled = false;
-			//_main.addChild(txt);
+			_gameUI.addChild(txt);
 		}
 		
-		private function formatBtns(mc:MovieClip):void//初始化按钮
-		{
-			var btn:MovieClip = mc.getChildByName("gatling") as MovieClip;
-			_btns.push(new Starter(btn, 5, null, Gatling));
-			btn = mc.getChildByName("goo") as MovieClip;
-			_btns.push(new Starter(btn, 10, null, Goo));
-			btn = mc.getChildByName("missile") as MovieClip;
-			_btns.push(new Starter(btn, 20, null, Missile));
-			btn = mc.getChildByName("flame") as MovieClip;
-			_btns.push(new Starter(btn, 50, null, Flame));
-			btn = mc.getChildByName("lightning") as MovieClip;
-			_btns.push(new Starter(btn, 70, null, Lightning));
-			btn = mc.getChildByName("mortar") as MovieClip;
-			_btns.push(new Starter(btn, 120, null, Mortar));
-		}
-		
+
 		public function get cost():int 
 		{
 			return _cost;

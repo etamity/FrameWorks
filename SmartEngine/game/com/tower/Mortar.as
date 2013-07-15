@@ -4,11 +4,11 @@ package com.tower
 	import com.enemy.EnemyBase;
 	import com.map.Map;
 	
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
 	import starling.display.Image;
@@ -87,7 +87,7 @@ package com.tower
 		private function createBmp():void
 		{
 			var data:BitmapData = new BitmapData(31, 60);
-			//data.copyPixels(new projectile_mortar(), new Rectangle(0, 0, 31, 60), new Point);
+			data.copyPixels(new projectile_mortar(), new Rectangle(0, 0, 31, 60), new Point);
 			var texture:Texture = Texture.fromBitmapData(data);
 			var image :Image= new Image(texture);
 			image.x = -15;

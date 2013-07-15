@@ -77,6 +77,17 @@ package com.enemy
 			return _display;
 		}
 
+		
+		public function play():void{
+			_timer.start();
+			_display.play();
+		}
+		
+		
+		public function stop():void{
+			_timer.stop();
+			_display.stop();
+		}
 		protected function move(e:TimerEvent):void //移动
 		{
 			if (this.x >= 900)
@@ -93,10 +104,10 @@ package com.enemy
 		{
 			clearTimeout(_moderateId);
 			speed=_speed * size;
-			_moderateId=setTimeout(timee, _timer.delay * 20);
+			_moderateId=setTimeout(recoverTime, _timer.delay * 20);
 		}
 
-		protected function timee():void //恢复速度
+		protected function recoverTime():void //恢复速度
 		{
 			speed=_speed;
 		}
@@ -104,7 +115,7 @@ package com.enemy
 		private function arriveEnd():void //到达终点
 		{
 			over(null);
-			//Control.control.changeLife();
+			Control.control.changeLife();
 		}
 
 		public function changeSpeed(fast:Boolean):void //改变速度
@@ -112,7 +123,7 @@ package com.enemy
 			_timer.delay=fast ? 20 : 100;
 		}
 
-		protected function creatAnimation(id:int):void //构建一个可以添加“帧”的movieclip
+		protected function creatAnimation(id:int):void  
 		{
 
 			if (_display != null)

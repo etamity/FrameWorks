@@ -1,18 +1,11 @@
 package com.tower 
 {
-	import feathers.controls.Button;
-	
-	import starling.display.Sprite;
-	
-	
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
 	 */
-	public class Indicator extends Sprite 
+	public class Indicator extends IndicatorAsset 
 	{
-		public var upgrade:Button;
-		public var reclaim:Button;
 		
 		private var _upgrade:Starter;
 		private var _reclaim:Starter;
@@ -23,17 +16,15 @@ package com.tower
 			_defense = defense;
 			//upgrade = this.getChildByName("upgrade") as MovieClip;
 			//reclaim = this.getChildByName("reclaim") as MovieClip;
-			upgrade= new Button();
-			reclaim=new Button();
-			upgrade.label="upgrade";
-			reclaim.label="reclaim";
+			upgrade._label="upgrade";
+			reclaim._label="reclaim";
 			
 			reclaim.x = -100;
 			reclaim.y = -35;
 			upgrade.x = 28;
 			upgrade.y = -35;
-			//_upgrade = new Starter(upgrade, money, upgradeFun, null);
-			//_reclaim = new Starter(reclaim, money, reclaimFUn, null);
+			_upgrade = new Starter(upgrade, money, upgradeFun, null);
+			_reclaim = new Starter(reclaim, money, reclaimFUn, null);
 		}
 		
 		private function reclaimFUn():void 
@@ -60,7 +51,7 @@ package com.tower
 		public function changeState(id:int):void
 		{
 			var color:uint = id == 0?0xff0000:0x00ff00;
-			//drawBack(color);
+			drawBack(color);
 			var bool:Boolean = id == 2;
 			reclaim.visible = bool;
 			upgrade.visible = bool;
@@ -68,14 +59,14 @@ package com.tower
 			this.parent.setChildIndex(this, index);
 		}
 		
-		/*private function drawBack(color:uint):void
+		private function drawBack(color:uint):void
 		{
 			this.graphics.clear();
 			this.graphics.lineStyle(1, color);
 			this.graphics.beginFill(color, 0.5);
 			this.graphics.drawCircle(0, 0, _defense);
 			this.graphics.endFill();
-		}*/
+		}
 	}
 
 }

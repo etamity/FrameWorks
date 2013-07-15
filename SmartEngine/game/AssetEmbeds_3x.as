@@ -12,6 +12,13 @@ package
 		[Embed(source="/Data/Maps/grasslands.png")]
 		public static const grasslands:Class;
 		
+		
+		[Embed(source="/Data/Maps/gameui.png")]
+		public static const gameui:Class;
+		[Embed(source="/Data/Maps/gameui.xml", mimeType="application/octet-stream")]
+		public static const gameui_xml:Class;
+
+		
 /*		[Embed(source="/media/graphics/test/Monopoly/addTileSet.png")]
 		public static const addTileSet:Class;
 		[Embed(source="/media/graphics/test/Monopoly/tileSet.png")]

@@ -1,8 +1,5 @@
 package com.smart.game.tower.scenes
 {
-	import com.data.BmpData;
-	import com.data.EnemyFormat;
-	import com.enemy.LightSoldier;
 	import com.map.AutoAttack;
 	import com.map.Control;
 	import com.map.Map;
@@ -11,8 +8,6 @@ package com.smart.game.tower.scenes
 	
 	import starling.core.Starling;
 	import starling.display.Image;
-	import starling.display.MovieClip;
-	import starling.display.Sprite;
 	import starling.textures.Texture;
 	
 	public class GameScene extends SmartScene

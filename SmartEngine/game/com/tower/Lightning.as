@@ -8,7 +8,6 @@ package com.tower
 	import flash.utils.setTimeout;
 	
 	import starling.display.Shape;
-	import starling.display.Sprite;
 
 	/**
 	 * ...
@@ -36,7 +35,7 @@ package com.tower
 		
 		private function createLight(mc:EnemyBase, angle:Number):void
 		{
-			//_light.rotation = angle;
+			_light.rotation = angle;
 			_light.x = this.x;
 			_light.y = this.y;
 			_light.graphics.lineStyle(2, 0xffffff);

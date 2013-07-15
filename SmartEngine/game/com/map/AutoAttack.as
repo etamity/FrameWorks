@@ -80,7 +80,7 @@ package com.map
 		
 		public function save():void//保存进度
 		{
-			var share:SharedObject = SharedObject.getLocal("aaabbbccc");
+			var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 			var arr:Array = share.data.data = [];
 			
 			for each(var tower:TowerBase in _towers)
@@ -93,7 +93,7 @@ package com.map
 		
 		public function recover():void//恢复进度
 		{
-			var share:SharedObject = SharedObject.getLocal("aaabbbccc");
+			var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 			var arr:Array = share.data.data;
 			if (!arr) return;
 			for each(var obj:Object in arr)
@@ -127,11 +127,11 @@ package com.map
 		{
 			for each(var enemy:EnemyBase in _enemy)
 			{
-				enemy.display.play();
+				enemy.play();
 			}
 			for each(var tower:TowerBase in _towers)
 			{
-				tower.display.play();
+				tower.play();
 			}
 			for each(var timer:Timer in _runTimer)
 			{
@@ -174,11 +174,11 @@ package com.map
 		{
 			for each(var enemy:EnemyBase in _enemy)
 			{
-				enemy.display.stop();
+				enemy.stop();
 			}
 			for each(var tower:TowerBase in _towers)
 			{
-				tower.display.stop();
+				tower.stop();
 			}
 			for each(var timer:Timer in _runTimer)
 			{

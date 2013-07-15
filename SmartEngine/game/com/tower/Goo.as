@@ -7,6 +7,7 @@ package com.tower
 	import flash.display.BitmapData;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
 	import starling.display.Image;
@@ -70,11 +71,11 @@ package com.tower
 		private function createBmp():void
 		{
 			var data:BitmapData = new BitmapData(18, 39);
-			//data.copyPixels(new projectile_goo(), new Rectangle(0, 0, 18, 39), new Point);
+			data.copyPixels(new projectile_goo(), new Rectangle(0, 0, 18, 39), new Point);
 			var texture:Texture = Texture.fromBitmapData(data);
 			var image :Image= new Image(texture);
-			image.x = -9;
-			image.y = -20;
+			image.x = 36;
+			image.y = 36;
 			_bmp.addChild(image);
 		}
 		
@@ -90,8 +91,8 @@ package com.tower
 			angle *= Math.PI / 180;
 			_moveX = 5 * Math.sin(angle);
 			_moveY = 5 * Math.cos(angle) * -1;
-			_bmp.x = _moveX * 6 + this.x;
-			_bmp.y = _moveY * 6 + this.y - 12;
+			_bmp.x = _moveX * 6 + this.x + 36;
+			_bmp.y = _moveY * 6 + this.y + 36;
 			_bmp.visible = true;
 			_canFire = false;
 			_enemy = mc;
