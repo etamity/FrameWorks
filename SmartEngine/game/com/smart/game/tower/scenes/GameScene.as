@@ -6,9 +6,9 @@
 
 package com.smart.game.tower.scenes
 {
-	import com.map.AutoAttack;
-	import com.map.Control;
-	import com.map.Map;
+	import com.smart.game.tower.model.AutoAttack;
+	import com.smart.game.tower.ui.Control;
+	import com.smart.game.tower.model.Map;
 	import com.smart.core.SmartGame;
 	import com.smart.core.SmartScene;
 	

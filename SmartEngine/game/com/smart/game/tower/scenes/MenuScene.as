@@ -6,10 +6,10 @@
 
 package com.smart.game.tower.scenes
 {
-	import com.data.BmpData;
-	import com.data.Language;
-	import com.event.LoadEvent;
-	import com.event.ScreenEventConst;
+	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.Language;
+	import com.smart.game.tower.event.LoadEvent;
+	import com.smart.game.tower.event.ScreenEventConst;
 	import com.smart.core.SmartGame;
 	import com.smart.core.SmartScene;
 	
