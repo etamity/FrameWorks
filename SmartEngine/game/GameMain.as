@@ -5,7 +5,6 @@
  ******************************************************************************/
 package 
 {
-	import com.map.Control;
 	import com.smart.SmartWorld;
 	import com.smart.core.Device;
 	import com.smart.game.tower.scenes.GameScene;
