@@ -37,7 +37,7 @@ package com.smart.game.tower.scenes
 		
 		public function start():void{
 			
-			var bg:Image=new Image(Texture.fromBitmap(new AssetEmbeds_3x.grasslands()))
+			var bg:Image=new Image(Texture.fromBitmap(new AssetEmbeds_3x.frostbite()))
 			addChild(bg);
 			var map:Map = new Map();
 			map.x = 18;

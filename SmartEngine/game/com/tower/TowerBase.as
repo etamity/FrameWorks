@@ -39,7 +39,7 @@ package com.tower
 		protected var _tower:Sprite;//显示素材
 		private var _timer:Timer;
 		private var _canUse:Boolean;//能否放置
-		private var _back:Indicator;//范围显示器
+		private var _indicator:Indicator;//范围显示器
 		private var _enemy:EnemyBase;//发现的敌人
 		private var _angle:Number;//当前的角度
 		private var _timeId:int;
@@ -68,8 +68,8 @@ package com.tower
 			
 			Map.map.addTopChild(this);
 	
-			_back = new Indicator(defense, this.cost[0]);
-			Starling.current.nativeStage.addChild(_back);
+			_indicator = new Indicator(defense, this.cost[0]);
+			Starling.current.nativeStage.addChild(_indicator);
 			play();
 		}
 
@@ -94,12 +94,12 @@ package com.tower
 			this.level = obj.level;
 			createTower(this.level);
 			this.setPoint(obj.x, obj.y);
-			_back.changeState(2);
-			_back.visible = false;
+			_indicator.changeState(2);
+			_indicator.visible = false;
 			if (AutoAttack.onRun)_timer.start();
 			AutoAttack.setWay();
 			Map.map.removeTopChild(this);
-			_back.setMoney(this.cost[this.level], getCost());
+			_indicator.setMoney(this.cost[this.level], getCost());
 			AutoAttack.addTower(this);
 		}
 		
@@ -110,13 +110,13 @@ package com.tower
 		
 		public function play():void//播放
 		{
-			_idle.play();
+			//_idle.play();
 			_timer.start();
 		}
 		
 		public function stop():void//暂停
 		{
-			_idle.stop();
+			//_idle.stop();
 			_timer.stop();
 		}
 		
@@ -138,11 +138,12 @@ package com.tower
 			var vectorTextures:Vector.<Texture>=Vector.<Texture>(bmpData[idleIndex]);
 			_idle=new MovieClip(vectorTextures,60);
 			
-			Starling.juggler.add(_idle);
-			_idle.addEventListener(Event.ENTER_FRAME,function (evt:Event):void{
+			//Starling.juggler.add(_idle);
+			/*_idle.addEventListener(Event.ENTER_FRAME,function (evt:Event):void{
 				if (_idle.currentFrame==currentIdle)
 					_idle.stop();
-			});
+				_idle.currentFrame=currentIdle;
+			});*/
 			_tower.addChild(_idle);
 			
 			if (!bmpData[attackIndex]){
@@ -155,11 +156,13 @@ package com.tower
 			_attack.visible=false;
 			_tower.addChild(_attack);
 			
-			Starling.juggler.add(_attack);
-			_attack.addEventListener(Event.ENTER_FRAME,function (evt:Event):void{
+			//Starling.juggler.add(_attack);
+			/*_attack.addEventListener(Event.ENTER_FRAME,function (evt:Event):void{
 			  if (_attack.currentFrame==currentIndex)
 				  _attack.stop();
-			});
+
+			});*/
+			
 			
 			changeDisplay(attackIndex);
 	
@@ -170,12 +173,13 @@ package com.tower
 
 			currentIdle=id;
 			if (_idle.currentFrame== currentIdle) return;
-			_idle.play();
+			_idle.currentFrame=currentIdle;
+			//_idle.play();
 			if (_attack == null) return;
 			currentIndex=id * _attack.numFrames / _idle.numFrames;
 			if (_attack.currentFrame== currentIndex) return;
-			_attack.play();
-			
+			//_attack.play();
+			_attack.currentFrame= currentIndex;
 		}
 		
 		protected function fireAni(id:int):void//开火动画
@@ -192,26 +196,25 @@ package com.tower
 			this.removeEventListener(TouchEvent.TOUCH, onUp);
 			this.addEventListener(MouseEvent.CLICK, onClick);
 	
+
 			var touch:Touch = e.getTouch(this, TouchPhase.ENDED);
-				if (touch){
 					if (_canUse)
 					{
-						_back.changeState(2);
-						_back.visible = false;
+						trace("onUp onUp");
+						_indicator.changeState(2);
+						_indicator.visible = false;
 						if (AutoAttack.onRun)_timer.start();
 						AutoAttack.setWay();
 						Map.map.removeTopChild(this);
 						Control.control.changeCost(this.cost[0], false);
-						_back.setMoney(this.cost[this.level], getCost());
+						_indicator.setMoney(this.cost[this.level], getCost());
 						AutoAttack.addTower(this);
-				
 					}
 					else
 					{
 						this.removeFromMap();
 					}
 				
-			}
 		}
 		
 		private function onClick(e:TouchEvent):void //单击塔
@@ -246,7 +249,7 @@ package com.tower
 		{
 			this.level++;
 			createTower(this.level);
-			_back.setMoney(this.cost[this.level], getCost());
+			_indicator.setMoney(this.cost[this.level], getCost());
 			Control.control.changeCost(this.cost[this.level], false);
 		}
 		
@@ -254,9 +257,9 @@ package com.tower
 		{
 			var touch:Touch = e.getTouch(this, TouchPhase.BEGAN);
 			if (touch){
-				if (_back.visible)
+				if (_indicator.visible)
 				{
-					_back.visible = false;
+					_indicator.visible = false;
 					if (!this.parent) return;
 					Map.map.removeTopChild(this);
 					this.addEventListener(MouseEvent.CLICK, onClick);
@@ -266,9 +269,9 @@ package com.tower
 				}
 				else
 				{
-					_back.changeUpgradeState(Control.control.cost);
+					_indicator.changeUpgradeState(Control.control.cost);
 					_timeId = setInterval(inTime, 1000);
-					_back.visible = true;
+					_indicator.visible = true;
 					Map.map.addTopChild(this);
 					
 				}
@@ -277,7 +280,7 @@ package com.tower
 		
 		private function inTime():void //检测能否升级
 		{
-			_back.changeUpgradeState(Control.control.cost);
+			_indicator.changeUpgradeState(Control.control.cost);
 		}
 		
 		private function onEnter(e:Event):void //未放置时
@@ -353,12 +356,12 @@ package com.tower
 		{
 			if (this.mapX <= 1 || this.mapX == 21 || this.mapY == 0 || this.mapY == 12 || hasBlock(this.mapX, this.mapY) || !AutoAttack.hasWay())
 			{
-				_back.changeState(0);
+				_indicator.changeState(0);
 				return false;
 			}
 			else
 			{
-				_back.changeState(1);
+				_indicator.changeState(1);
 				return true;
 			}
 			return false;
@@ -384,10 +387,14 @@ package com.tower
 			if (this.x != xx || this.y != yy)
 			{
 				this.setPoint(xx, yy);
+				_indicator.x=xx+74*0.7;
+				_indicator.y=yy+80*0.7;
 				
 				bool = true;
 			}
+			
 
+			
 			return bool;
 		}
 	}

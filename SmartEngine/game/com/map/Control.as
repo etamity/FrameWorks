@@ -228,7 +228,7 @@ package com.map
 		private function sortTxt():void//对所有的显示文本初始化
 		{
 			_costTxt = new TextField();
-			formatTxt(_costTxt, 35, 20, String(_cost));
+			formatTxt(_costTxt, 65, 20, String(_cost));
 			_scoreTxt = new TextField();
 			formatTxt(_scoreTxt, 380, 20, "0");
 			_lifeTxt = new TextField();
