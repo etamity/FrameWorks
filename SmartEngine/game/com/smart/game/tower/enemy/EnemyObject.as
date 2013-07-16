@@ -130,7 +130,7 @@ package com.smart.game.tower.enemy
 		protected function creatAnimation(id:int):void  
 		{
 			var vectorTextures:Vector.<Texture>=Vector.<Texture>(bmpData[id]);
-			if (vectorTextures==null) return;
+			if (vectorTextures.length<=0) return;
 			if (_display != null)
 			{
 				this.removeChild(_display);
