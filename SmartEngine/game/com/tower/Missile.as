@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
+
 package com.tower 
 {
 	import com.data.BmpData;
@@ -15,10 +22,7 @@ package com.tower
 	import starling.display.Sprite;
 	import starling.textures.Texture;
 
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Missile extends TowerBase 
 	{
 		private var _bmp:Sprite;
@@ -57,8 +61,8 @@ package com.tower
 		private function onTimer(e:Event):void 
 		{
 			var angle:Number = Math.atan2 ((_enemy.y - _bmp.y), (_enemy.x - _bmp.x)) * 180 / Math.PI + 90;
-			_bmp.rotation = angle;
 			angle *= Math.PI / 180;
+			_bmp.rotation = angle;
 			var xx:Number = 5 * Math.sin(angle);
 			var yy:Number = 5 * Math.cos(angle) * -1;
 			_bmp.x += xx;
@@ -67,7 +71,7 @@ package com.tower
 			{
 				_bmp.visible = false;
 				_canFire = true;
-				_timer.stop();
+				_timer.reset();
 				if (_enemy.isLife)_enemy.destroy(this.damage[this.level - 1], EnemyBase.DEATH_COMMON);
 			}
 		}

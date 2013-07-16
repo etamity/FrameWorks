@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
+
 package com.tower 
 {
 	import com.data.BmpData;
@@ -8,10 +15,7 @@ package com.tower
 	import flash.utils.setTimeout;
 	import flash.utils.clearTimeout;
 	import com.map.Map;
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Flame extends TowerBase 
 	{
 		private var _flame:Fire;
@@ -47,8 +51,9 @@ package com.tower
 		
 		private function changeFireDirection(mc:EnemyBase, angle:Number):void
 		{
-			_flame.rotation = angle;
+	
 			angle *= Math.PI / 180;
+			_flame.rotation = angle;
 			_flame.x = 80 * Math.sin(angle) + this.x;
 			_flame.y = -80 * Math.cos(angle) + this.y - 20;
 		}

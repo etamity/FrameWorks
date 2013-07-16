@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
+
 package com.tower 
 {
 	import com.data.BmpData;
@@ -14,10 +21,7 @@ package com.tower
 	import starling.display.Sprite;
 	import starling.textures.Texture;
 
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Goo extends TowerBase 
 	{
 		private var _timer:Timer;
@@ -87,8 +91,8 @@ package com.tower
 		
 		private function startFire(mc:EnemyBase, angle:Number):void
 		{
-			_bmp.rotation = angle;
 			angle *= Math.PI / 180;
+			_bmp.rotation = angle;
 			_moveX = 5 * Math.sin(angle);
 			_moveY = 5 * Math.cos(angle) * -1;
 			_bmp.x = _moveX * 6 + this.x + 36;

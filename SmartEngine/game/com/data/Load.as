@@ -1,4 +1,9 @@
-﻿package com.data
+﻿/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+package com.data
 {
 	import flash.display.Loader;
 	import flash.net.URLLoader;
@@ -22,8 +27,7 @@
 		private var _loadedFunc:Function;
 		private var _loadingFunc:Function;
 		private var _type:int;
-		//这是一个方便加载的类，就是简化加载步骤，方便使用
-		
+	
 		public function Load(type:int,url:String,loadedFunc:Function,loadingFunc:Function=null) 
 		{
 			_type=type;

@@ -1,13 +1,15 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.tower 
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-	
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Starter extends Sprite 
 	{
 		private var _cost:int;
@@ -67,12 +69,12 @@ package com.tower
 		private function createTxt():void
 		{
 			
-			_mc._label=_cost.toString() + "$";
+			_mc.label.text=_cost.toString() + "$";
 		}
 		
 		private function maxed():void
 		{
-			_mc._label = "MAX";
+			_mc.label.text = "MAX";
 			_canUse = false;
 			_mc.gotoAndStop(1);
 		}
@@ -90,12 +92,12 @@ package com.tower
 				return;
 			}
 			_cost = cost;
-			_mc._label = cost.toString() + "$";
+			_mc.label.text = cost.toString() + "$";
 		}
 		
 		public function changeState(cost:int):void
 		{
-			if (_mc._label == "MAX") return;
+			if (_mc.label.text == "MAX") return;
 			_canUse = cost >= _cost;
 			var num:int = !_canUse?1:2;
 			_mc.gotoAndStop(num);

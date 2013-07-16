@@ -1,22 +1,23 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.map 
 {
 	import com.enemy.EnemyBase;
 	
 	import starling.display.Sprite;
-	
-	
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class MapUnit extends Sprite 
 	{
-		protected var mapX:int;//在“地图”的x
-		protected var mapY:int;//在“地图”的y
+		protected var mapX:int;
+		protected var mapY:int;
 		
-		private var _w:int;//在“地图”的宽
-		private var _h:int;//在“地图”的高
-		private var _place:Array;//地图
+		private var _w:int;
+		private var _h:int;
+		private var _place:Array;
 		
 		public function MapUnit() 
 		{
@@ -38,7 +39,7 @@ package com.map
 			addToMap();
 		}
 		
-		private function formatIntfo():void//将对象的位置相关属性格式化
+		private function formatIntfo():void
 		{
 			mapX = Math.round(this.x / 36);
 			if (mapX < 0) mapX = 0;
@@ -49,7 +50,7 @@ package com.map
 			if (mapY > 12) mapY = 12;
 		}
 		
-		private function findGridInMap(fun:Function):void//遍历在地图中的所占方格
+		private function findGridInMap(fun:Function):void
 		{
 			for (var i:int = mapX; i < mapX + _w; i++)
 			{
@@ -60,31 +61,31 @@ package com.map
 			}
 		}
 		
-		protected function addToMap():void//添加到地图
+		protected function addToMap():void
 		{
 			Map.map.addChild(this);
 			
 			findGridInMap(addToMapFun);
 		}
 		
-		private function addToMapFun(i:int, j:int):void//添加到地图位置数组
+		private function addToMapFun(i:int, j:int):void
 		{
 			_place[i][j].push(this);
 		}
 		
-		public function removeFromMap():void//从地图移除
+		public function removeFromMap():void
 		{
 			this.parent.removeChild(this);
 			
 			findGridInMap(removeFromMapFun);
 		}
 		
-		private function removeFromMapFun(i:int, j:int):void//移除在地图位置的数组引用
+		private function removeFromMapFun(i:int, j:int):void
 		{
 			_place[i][j].splice(_place[i][j].indexOf(this), 1);
 		}
 		
-		protected function setPoint(xx:Number, yy:Number):void//设置位置属性
+		protected function setPoint(xx:Number, yy:Number):void
 		{
 			findGridInMap(removeFromMapFun);
 			

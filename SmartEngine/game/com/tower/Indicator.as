@@ -1,9 +1,13 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
+
 package com.tower 
 {
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Indicator extends IndicatorAsset 
 	{
 		
@@ -16,8 +20,8 @@ package com.tower
 			_defense = defense;
 			//upgrade = this.getChildByName("upgrade") as MovieClip;
 			//reclaim = this.getChildByName("reclaim") as MovieClip;
-			upgrade._label="upgrade";
-			reclaim._label="reclaim";
+			upgrade.label.text="upgrade";
+			reclaim.label.text="reclaim";
 			
 			reclaim.x = -100;
 			reclaim.y = -35;
@@ -29,7 +33,7 @@ package com.tower
 		
 		private function reclaimFUn():void 
 		{
-			(this.parent as TowerBase).reclaim();
+			(this.parent as TowerBase).sellTower();
 		}
 		
 		private function upgradeFun():void 

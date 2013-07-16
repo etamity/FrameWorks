@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.map 
 {
 	import com.tower.Flame;
@@ -18,29 +24,26 @@ package com.map
 	import flash.text.TextFormat;
 	import flash.utils.setTimeout;
 
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Control extends EventDispatcher
 	{
 		public static var control:Control;
 		
-		private var _cost:int = 15;//目前的金币
-		private var _costTxt:TextField;//显示金币的文本
-		private var _scoreTxt:TextField;//显示分数的文本
-		private var _lifeTxt:TextField;//显示生命的文本
-		private var _stateTxt:TextField;//显示关数的文本
-		private var _btns:Array = [];//放置塔的6个按钮
-		private var _score:int;//当前分数
-		private var _life:int = 20;//当前生命
-		private var _lifes:MovieClip;//游戏界面的心形
-		private var _attack:AutoAttack;//AutoAttack对象
-		private var _playBtn:MovieClip;//播放和暂停按钮
-		private var _speedBtn:MovieClip;//改变速度的按钮
-		private var _settingBtn:SimpleButton;//选项按钮
-		private var _settingPanel:MovieClip;//选项面板
-		private var _round:int = 1;//当前关数
+		private var _cost:int = 15;
+		private var _costTxt:TextField;
+		private var _scoreTxt:TextField;
+		private var _lifeTxt:TextField;
+		private var _stateTxt:TextField;
+		private var _btns:Array = [];
+		private var _score:int;
+		private var _life:int = 20;
+		private var _lifes:MovieClip;
+		private var _attack:AutoAttack;
+		private var _playBtn:MovieClip;
+		private var _speedBtn:MovieClip;
+		private var _settingBtn:SimpleButton;
+		private var _settingPanel:MovieClip;
+		private var _round:int = 1;
 		
 		private var _startUI:MovieClip;
 		private var _gameUI:MovieClip;
@@ -98,7 +101,7 @@ package com.map
 			_btns.push(new Starter(btn, 120, null, Mortar));
 		}
 		
-		private function removeLister():void//移除按钮的单击侦听
+		private function removeLister():void
 		{
 			_settingBtn.removeEventListener(MouseEvent.CLICK, settingClick);
 			_speedBtn.removeEventListener(MouseEvent.CLICK, speedClick);
@@ -106,17 +109,17 @@ package com.map
 			_settingPanel.removeEventListener(MouseEvent.CLICK, panelClick);
 		}
 		
-		private function panelClick(e:MouseEvent):void //选项面板的按钮动作
+		private function panelClick(e:MouseEvent):void 
 		{
 			var btn:SimpleButton = e.target as SimpleButton;
 			var str:String = btn?btn.name:null;
 			if(str)_settingPanel.visible = false;
 			switch(str)
 			{
-				case "btn1"://继续
+				case "btn1":
 					_attack.play();
 					break;
-				case "btn2"://重新开始
+				case "btn2":
 					_attack.reStart();
 					_cost = 15;
 					changeCost(0, false);
@@ -128,9 +131,9 @@ package com.map
 					_playBtn.gotoAndStop(2);
 					_speedBtn.gotoAndStop(1);
 					break;
-				case "btn3"://保存并退出
+				case "btn3":
 					_attack.save();
-					var share:SharedObject = SharedObject.getLocal("aaabbbccc");
+					var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 					share.data.cost = _cost;
 					share.data.life = _life;
 					share.data.sorce = _score;
@@ -142,13 +145,13 @@ package com.map
 					this.removeLister();
 					this.dispatchEvent(new Event("save"));
 					break;
-				case "btn4"://关闭面板
+				case "btn4":
 					_attack.play();
 					break;
 			}
 		}
 		
-		public function gameOver(win:Boolean):void//游戏结束
+		public function gameOver(win:Boolean):void
 		{
 			setTimeout(overFun, 4000);
 			//Map.map.parent.mouseEnabled = false;
@@ -179,7 +182,7 @@ package com.map
 			this.dispatchEvent(new Event("save"));
 		}
 		
-		public function recover():void//恢复保存的进度
+		public function recover():void
 		{
 			var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 			_cost = 0;
@@ -191,13 +194,13 @@ package com.map
 			changeRound(share.data.round);
 		}
 		
-		private function settingClick(e:MouseEvent):void //单击了选项按钮
+		private function settingClick(e:MouseEvent):void
 		{
 			_settingPanel.visible = true;
 			_attack.stop();
 		}
 		
-		private function speedClick(e:MouseEvent):void //单击了速度按钮
+		private function speedClick(e:MouseEvent):void
 		{
 			if (_speedBtn.currentFrame == 1)
 			{
@@ -211,7 +214,7 @@ package com.map
 			}
 		}
 		
-		private function playClick(e:MouseEvent):void //单击了播放按钮
+		private function playClick(e:MouseEvent):void 
 		{
 			if (_playBtn.currentFrame == 1)
 			{
@@ -225,7 +228,7 @@ package com.map
 			}
 		}
 		
-		private function sortTxt():void//对所有的显示文本初始化
+		private function sortTxt():void
 		{
 			_costTxt = new TextField();
 			formatTxt(_costTxt, 65, 20, String(_cost));
@@ -237,7 +240,7 @@ package com.map
 			formatTxt(_stateTxt, 360, 40,"ROUND 0");
 		}
 		
-		public function changeCost(size:int, add:Boolean):void//改变金币
+		public function changeCost(size:int, add:Boolean):void
 		{
 			size = add?size:size * -1;
 			_cost += size;
@@ -245,13 +248,13 @@ package com.map
 			changeBtnState();
 		}
 		
-		public function changeScore(size:int):void //改变分数
+		public function changeScore(size:int):void
 		{
 			_score += size;
 			_scoreTxt.text = String(_score);
 		}
 		
-		public function changeLife():void//改变命数
+		public function changeLife():void
 		{
 			_life--;
 			if (_life <= 0)gameOver(false);
@@ -259,7 +262,7 @@ package com.map
 			_lifes.gotoAndPlay(2);
 		}
 		
-		private function changeBtnState():void//改变6个启动塔的按钮的状态
+		private function changeBtnState():void
 		{
 			for each(var btn:Starter in _btns)
 			{
@@ -267,13 +270,13 @@ package com.map
 			}
 		}
 		
-		public function changeRound(round:int):void//改变关数
+		public function changeRound(round:int):void
 		{
 			_round = round;
 			_stateTxt.text = "ROUND " + String(round);
 		}
 		
-		private function formatTxt(txt:TextField, x:int, y:int, str:String):void//初始化文本
+		private function formatTxt(txt:TextField, x:int, y:int, str:String):void
 		{
 			var tf:TextFormat = new TextFormat("Stencil Std", 18);
 			tf.color = 0xFFE600;

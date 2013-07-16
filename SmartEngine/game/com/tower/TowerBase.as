@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.tower 
 {
 	import com.enemy.EnemyBase;
@@ -22,26 +27,23 @@ package com.tower
 	import starling.events.TouchPhase;
 	import starling.textures.Texture;
 	
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class TowerBase extends MapUnit 
 	{
-		protected var defense:int;//攻击范围
-		protected var damage:Array;//攻击威力
-		protected var cost:Array;//值的金币
+		protected var defense:int;
+		protected var damage:Array;
+		protected var cost:Array;
 		protected var bmpData:Array;
 		protected var bmpPoint:Array;
-		protected var level:int;//等级
-		protected var reloadTime:Number = 0;//重新开火的时间的倍数
+		protected var level:int;
+		protected var reloadTime:Number = 0;
 		
-		protected var _tower:Sprite;//显示素材
+		protected var _tower:Sprite;
 		private var _timer:Timer;
-		private var _canUse:Boolean;//能否放置
-		private var _indicator:Indicator;//范围显示器
-		private var _enemy:EnemyBase;//发现的敌人
-		private var _angle:Number;//当前的角度
+		private var _canUse:Boolean;
+		private var _indicator:Indicator;
+		private var _enemy:EnemyBase;
+		private var _angle:Number;
 		private var _timeId:int;
 		private var _attack:MovieClip;
 		private var _idle:MovieClip;
@@ -53,8 +55,8 @@ package com.tower
 		{
 			super();
 			_tower = new Sprite();
-			_tower.scaleX = 0.7;
-			_tower.scaleY = 0.7
+			//_tower.scaleX = 0.7;
+			//_tower.scaleY = 0.7
 			this.addChild(_tower);
 			
 			createTower(1);
@@ -86,7 +88,7 @@ package com.tower
 			
 		}
 		
-		public function recover(obj:Object):void//恢复
+		public function recover(obj:Object):void
 		{
 			this.removeEventListener(Event.ENTER_FRAME, onEnter);
 			this.removeEventListener(TouchEvent.TOUCH, onUp);
@@ -103,24 +105,24 @@ package com.tower
 			AutoAttack.addTower(this);
 		}
 		
-		public function changeSpeed(fast:Boolean):void//改变速度
+		public function changeSpeed(fast:Boolean):void
 		{
 			_timer.delay = fast?200 * reloadTime:1000 * reloadTime;
 		}
 		
-		public function play():void//播放
+		public function play():void
 		{
 			//_idle.play();
 			_timer.start();
 		}
 		
-		public function stop():void//暂停
+		public function stop():void
 		{
 			//_idle.stop();
 			_timer.stop();
 		}
 		
-		protected function createTower(level:int):void//构建塔防的素材
+		protected function createTower(level:int):void
 		{
 			
 			this.level = level;
@@ -168,7 +170,7 @@ package com.tower
 	
 		}
 		
-		private function changeDisplay(id:int):void//改变要显示的位图
+		private function changeDisplay(id:int):void
 		{
 
 			currentIdle=id;
@@ -180,17 +182,19 @@ package com.tower
 			if (_attack.currentFrame== currentIndex) return;
 			//_attack.play();
 			_attack.currentFrame= currentIndex;
+
 		}
 		
-		protected function fireAni(id:int):void//开火动画
+		protected function fireAni(id:int):void
 		{
 			if (_attack) _attack.visible = false;
 			
+		
 			_attack.visible = true;
 			currentIndex=id;
 		}
 		
-		private function onUp(e:TouchEvent):void //塔被放置
+		private function onUp(e:TouchEvent):void
 		{
 			this.removeEventListener(Event.ENTER_FRAME, onEnter);
 			this.removeEventListener(TouchEvent.TOUCH, onUp);
@@ -217,13 +221,13 @@ package com.tower
 				
 		}
 		
-		private function onClick(e:TouchEvent):void //单击塔
+		private function onClick(e:TouchEvent):void 
 		{
 			this.removeEventListener(MouseEvent.CLICK, onClick);
 			this.stage.addEventListener(TouchEvent.TOUCH, stageClick);
 		}
 		
-		private function getCost():int//获取塔的总价值
+		private function getCost():int
 		{
 			var num:int;
 			for (var i:int = 0; i < this.level; i++)
@@ -234,7 +238,7 @@ package com.tower
 			return num;
 		}
 		
-		public function reclaim():void//回收
+		public function sellTower():void 
 		{
 			_timer.stop();
 			this.stage.removeEventListener(TouchEvent.TOUCH, stageClick);
@@ -245,7 +249,7 @@ package com.tower
 			AutoAttack.removeTower(this);
 		}
 		
-		public function upgrade():void//升级
+		public function upgrade():void
 		{
 			this.level++;
 			createTower(this.level);
@@ -253,7 +257,7 @@ package com.tower
 			Control.control.changeCost(this.cost[this.level], false);
 		}
 		
-		private function stageClick(e:TouchEvent):void //舞台被单击
+		private function stageClick(e:TouchEvent):void  
 		{
 			var touch:Touch = e.getTouch(this, TouchPhase.BEGAN);
 			if (touch){
@@ -278,17 +282,20 @@ package com.tower
 			}
 		}
 		
-		private function inTime():void //检测能否升级
+		private function inTime():void //check if can upgrade
 		{
 			_indicator.changeUpgradeState(Control.control.cost);
 		}
 		
-		private function onEnter(e:Event):void //未放置时
+		private function onEnter(e:Event):void 
 		{
 			if (rectifyPosition())_canUse = testPlace();
+			_idle.readjustSize();
+			if (_attack == null) return;
+			_attack.readjustSize();
 		}
 		
-		private function onTimer(e:TimerEvent):void //开火和转向
+		private function onTimer(e:TimerEvent):void 
 		{
 			//if (!_enemy || !_enemy.parent)
 			_enemy = findEnemy();
@@ -299,12 +306,12 @@ package com.tower
 			}
 		}
 		
-		protected function fire(mc:EnemyBase, angle:Number):void//开火,由子类重写
+		protected function fire(mc:EnemyBase, angle:Number):void // fire to enemy, subclass rewrite
 		{
 			
 		}
 		
-		private function changOrientation(mc:EnemyBase):void//根据敌人的位置改变方向
+		private function changOrientation(mc:EnemyBase):void//Change Orientation based on enemy
 		{
 			var xx:int = mc.x - this.x;
 			var yy:int = mc.y - this.y;
@@ -317,13 +324,13 @@ package com.tower
 			changeDisplay(index);
 		}
 		
-		protected function changeState(isFire:Boolean):void//改变状态
+		protected function changeState(isFire:Boolean):void 
 		{
 			_attack.visible = isFire;
 			_idle.visible = !isFire;
 		}
 		
-		private function findEnemy():EnemyBase//寻找敌人
+		private function findEnemy():EnemyBase//check enemies
 		{
 			var xx:int, yy:int, num1:int, num2:int, enemy:EnemyBase;
 			num1 = defense * 2 / 25;
@@ -342,7 +349,7 @@ package com.tower
 			return null;
 		}
 		
-		private function getEnemy(x:int, y:int):EnemyBase//判断是否有障碍
+		private function getEnemy(x:int, y:int):EnemyBase // get enemy by map x , y
 		{
 			if (!Map.place[x]) return null;
 			for each(var i:Object in Map.place[x][y])
@@ -352,7 +359,7 @@ package com.tower
 			return null;
 		}
 		
-		private function testPlace():Boolean//检验位置是否能放
+		private function testPlace():Boolean//Check if can be placed
 		{
 			if (this.mapX <= 1 || this.mapX == 21 || this.mapY == 0 || this.mapY == 12 || hasBlock(this.mapX, this.mapY) || !AutoAttack.hasWay())
 			{
@@ -367,7 +374,7 @@ package com.tower
 			return false;
 		}
 		
-		private function hasBlock(x:int, y:int):Boolean//判断是否有障碍
+		private function hasBlock(x:int, y:int):Boolean//check if block
 		{
 			for each(var i:Object in Map.place[x][y])
 			{
@@ -376,7 +383,7 @@ package com.tower
 			return false;
 		}
 		
-		private function rectifyPosition():Boolean//矫正位置
+		private function rectifyPosition():Boolean // motify position
 		{
 			var bool:Boolean;
 			var point:Point = new Point(Starling.current.nativeStage.mouseX-width/2, Starling.current.nativeStage.mouseY-height/2);
@@ -387,8 +394,8 @@ package com.tower
 			if (this.x != xx || this.y != yy)
 			{
 				this.setPoint(xx, yy);
-				_indicator.x=xx+74*0.7;
-				_indicator.y=yy+80*0.7;
+				_indicator.x=xx+60;
+				_indicator.y=yy+70;
 				
 				bool = true;
 			}

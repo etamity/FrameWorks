@@ -1,21 +1,23 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.enemy 
 {
 	import com.map.AutoAttack;
 	import flash.geom.Point;
-	import com.command.Plan;
+	import com.command.RoadAI;
 	import com.data.EnemyFormat;
 	import flash.events.TimerEvent;
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class ArmyBase extends EnemyBase 
 	{
-		private var _route:Array;//需要走的路线
-		private var _gapX:Number;//用于转弯
+		private var _route:Array;
+		private var _gapX:Number;
 		private var _gapY:Number;
-		private var _way:Array;//可能需要走的路线
-		private var _direction:int;//方向
+		private var _way:Array;
+		private var _direction:int;
 		
 		public function ArmyBase(startId:int) 
 		{
@@ -28,14 +30,14 @@ package com.enemy
 			super();
 		}
 		
-		override protected function move(e:TimerEvent):void//移动
+		override protected function move(e:TimerEvent):void
 		{
 			changeDirection();
 			this.setPoint(this.x + _gapX, this.y + _gapY);
 			super.move(e);
 		}
 		
-		override public function moderate(size:Number):void//移动速度变慢
+		override public function moderate(size:Number):void
 		{
 			super.moderate(size);
 			changeGap();
@@ -47,7 +49,7 @@ package com.enemy
 			changeGap();
 		}
 		
-		private function changeDirection():void//改变方向
+		private function changeDirection():void
 		{
 			var bool:Boolean;
 			if (_route[0].x == 21)
@@ -86,7 +88,7 @@ package com.enemy
 			
 		}
 		
-		private function changeGap():void//改变_gapX,_gapY
+		private function changeGap():void
 		{
 			switch(_direction)
 			{
@@ -113,13 +115,13 @@ package com.enemy
 			}
 		}
 		
-		public function setRoute():void//设置路线
+		public function setRoute():void
 		{
 			if (!_way) hasWay();
 			_route = _way.slice();
 		}
 		
-		public function hasWay():Boolean//是否有路
+		public function hasWay():Boolean
 		{
 			var route:Array = AutoAttack.route[this.startPoint];
 			if (!route) return false;
@@ -132,7 +134,7 @@ package com.enemy
 					return true;
 				}
 			}
-			_way = Plan.doPlan(new Point(this.mapX, this.mapY));
+			_way = RoadAI.doPlan(new Point(this.mapX, this.mapY));
 			if (_way) return true;
 			
 			return false;

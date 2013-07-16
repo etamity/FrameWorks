@@ -1,12 +1,16 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
+
 package com.tower 
 {
 	import com.data.BmpData;
 	import com.enemy.EnemyBase;
 	import flash.utils.setTimeout;
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Gatling extends TowerBase 
 	{
 		public function Gatling() 

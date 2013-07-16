@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
+
 package com.tower 
 {
 	import com.data.BmpData;
@@ -9,10 +16,7 @@ package com.tower
 	
 	import starling.display.Shape;
 
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Lightning extends TowerBase 
 	{
 		private var _light:Shape;

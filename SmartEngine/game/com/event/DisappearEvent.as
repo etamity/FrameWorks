@@ -1,14 +1,16 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.event 
 {
 	import com.enemy.EnemyBase;
 	
 	import starling.events.Event;
 
-	
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class DisappearEvent extends Event 
 	{
 		public static const DISAPPEAR:String = "disappear";

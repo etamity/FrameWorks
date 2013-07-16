@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.tower 
 {
 	import com.data.BmpData;
@@ -15,10 +21,6 @@ package com.tower
 	import starling.display.Sprite;
 	import starling.textures.Texture;
 
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
 	public class Mortar extends TowerBase 
 	{
 		private var _bmp:Sprite;
@@ -57,6 +59,7 @@ package com.tower
 		private function onTimer(e:Event):void 
 		{
 			var angle:Number = Math.atan2 ((_enemy.y - _bmp.y), (_enemy.x - _bmp.x)) +  Math.PI / 2;
+			_bmp.rotation=angle;
 			var xx:Number = 10 * Math.sin(angle);
 			var yy:Number = 10 * Math.cos(angle) * -1;
 			_bmp.x += xx;

@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.enemy
 {
 	import com.data.EnemyFormat;
@@ -5,22 +10,19 @@ package com.enemy
 	import com.map.AutoAttack;
 	import com.map.Control;
 	import com.map.MapUnit;
-
+	
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.utils.Timer;
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
-
+	
 	import starling.core.Starling;
 	import starling.display.MovieClip;
 	import starling.display.Shape;
+	import starling.events.EnterFrameEvent;
 	import starling.textures.Texture;
 
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
 	public class EnemyBase extends MapUnit
 	{
 		public static const DEATH_COMMON:String="death_common";
@@ -29,26 +31,28 @@ package com.enemy
 		private static const STARTPOINT1:Point=new Point(0, 7 * 36);
 		private static const STARTPOINT2:Point=new Point(0, 7 * 36);
 
-		public var isLife:Boolean; //是否挂掉
+		public var isLife:Boolean; 
 
-		protected var speed:Number=0; //当前移动速度
-		protected var healthTotal:int; //总的血量
-		protected var bmpData:Array; //处理好的位图
-		protected var bmpPoint:Array; //位图数据对应的位置
-		protected var startPoint:int; //起点(1,6)||(1,7)
-		protected var score:int; //分数
-		protected var modifier:Number=0; //healthTotal的增加倍数
+		protected var speed:Number=0; 
+		protected var healthTotal:int; 
+		protected var bmpData:Array; 
+		protected var bmpPoint:Array; 
+		protected var startPoint:int; //startPoint(1,6)||(1,7)
+		protected var score:int; 
+		protected var modifier:Number=0; 
 
-		private var _startPoint:Point; //起点
-		private var _haemalStrand:Shape; //血条
-		private var _timeoutId:int; //用于clearTimeout
-		private var _timer:Timer; //计时器
-		private var _animation:MovieClip; //动画
-		private var _healthNow:int; //当前的血量
-		private var _speed:Number; //初始的移动速度
-		private var _moderateId:int; //用于clearTimeout
+		private var _startPoint:Point; 
+		private var _haemalStrand:Shape; 
+		private var _timeoutId:int; 
+		private var _timer:Timer;
+		private var _animation:MovieClip; 
+		private var _healthNow:int; 
+		private var _speed:Number; 
+		private var _moderateId:int; 
 		private var _display:MovieClip;
 
+		private var _healthBar:Shape;
+		
 		public function EnemyBase()
 		{
 			super();
@@ -88,7 +92,7 @@ package com.enemy
 			_timer.stop();
 			_display.stop();
 		}
-		protected function move(e:TimerEvent):void //移动
+		protected function move(e:TimerEvent):void 
 		{
 			if (this.x >= 900)
 			{
@@ -100,86 +104,98 @@ package com.enemy
 			}
 		}
 
-		public function moderate(size:Number):void //减速
+		public function moderate(size:Number):void 
 		{
 			clearTimeout(_moderateId);
 			speed=_speed * size;
 			_moderateId=setTimeout(recoverTime, _timer.delay * 20);
 		}
 
-		protected function recoverTime():void //恢复速度
+		protected function recoverTime():void 
 		{
 			speed=_speed;
 		}
-
-		private function arriveEnd():void //到达终点
+		
+		private function arriveEnd():void 
 		{
 			over(null);
 			Control.control.changeLife();
 		}
 
-		public function changeSpeed(fast:Boolean):void //改变速度
+		public function changeSpeed(fast:Boolean):void 
 		{
 			_timer.delay=fast ? 20 : 100;
 		}
 
 		protected function creatAnimation(id:int):void  
 		{
-
-			if (_display != null)
-				_display.removeFromParent(true);
-
-
 			var vectorTextures:Vector.<Texture>=Vector.<Texture>(bmpData[id]);
+			if (vectorTextures==null) return;
+			if (_display != null)
+			{
+				this.removeChild(_display);
+				Starling.juggler.remove(_display);
+			}
+
+			_display=null;
+
 			_display=new MovieClip(vectorTextures, 22);
+			_display.readjustSize();
 			this.addChild(_display);
+			_display.addEventListener(EnterFrameEvent.ENTER_FRAME, onFrame);
+			
 			Starling.juggler.add(_display);
 			playAnimation();
 
 
 		}
-
-		protected function playAnimation():void //播放下一“帧”
+		private function onFrame(evt:EnterFrameEvent):void
+		{
+			MovieClip(evt.target).readjustSize();
+		}
+		
+		protected function playAnimation():void 
 		{
 			_display.play();
 		}
 
-		private function creatHaemalStrand():void //初始化血条
+		private function creatHaemalStrand():void 
 		{
 			_haemalStrand=new Shape();
-			this.addChild(_haemalStrand);
+			addChild(_haemalStrand);
 			drawRect(_haemalStrand, 0xff0000);
 
-			var back:Shape=new Shape();
-			drawRect(back, 0x00ff00);
-			_haemalStrand.addChild(back);
-			_haemalStrand.x=-10;
-			_haemalStrand.y=this.height * -0.8;
+			_healthBar=new Shape();
+			drawRect(_healthBar, 0x00ff00);
+			addChild(_healthBar);
+			//_haemalStrand.x=-10;
+			//_haemalStrand.y=this.height * -0.8;
 			_haemalStrand.visible=false;
 		}
 
-		private function changeHaemalStrand():void //改变血条状态
+		private function changeHaemalStrand():void 
 		{
 			clearTimeout(_timeoutId);
-			_haemalStrand.visible=true;
 			var num:Number=_healthNow / healthTotal;
-			_haemalStrand.getChildAt(0).scaleX=num < 0 ? 0 : num;
+			_healthBar.scaleX=num < 0 ? 0 : num;
 			_timeoutId=setTimeout(hideHaemalStrand, 2000);
+			_haemalStrand.visible=true;
 		}
 
-		private function hideHaemalStrand():void //1.5秒后隐藏血条 
+		private function hideHaemalStrand():void  
 		{
 			_haemalStrand.visible=false;
 		}
 
-		private function drawRect(sp:Shape, color:uint):void //绘制矩形
+		private function drawRect(sp:Shape, color:uint):void 
 		{
+			sp.graphics.clear();
 			sp.graphics.beginFill(color);
 			sp.graphics.drawRect(0, 0, 20, 2);
 			sp.graphics.endFill();
 		}
 
-		public function destroy(size:int, mode:String):void //受到攻击
+		public function destroy(size:int, mode:String):void 
 		{
 			_healthNow-=size;
 			if (_healthNow <= 0)
@@ -191,7 +207,7 @@ package com.enemy
 			changeHaemalStrand();
 		}
 
-		private function over(mode:String):void //挂掉了
+		private function over(mode:String):void 
 		{
 			_timer.stop();
 			isLife=false;
@@ -211,21 +227,21 @@ package com.enemy
 			}
 		}
 
-		private function deathAnimation(id:int):void //挂掉时的动画
+		private function deathAnimation(id:int):void 
 		{
 			creatAnimation(id);
-			var timer:Timer=new Timer(10, bmpData.length);
+			var timer:Timer=new Timer(20, bmpData.length);
 			timer.addEventListener(TimerEvent.TIMER, onTomer);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, onComplete);
 			timer.start();
 		}
 
-		private function onComplete(e:TimerEvent):void //彻底消失
+		private function onComplete(e:TimerEvent):void 
 		{
 			this.removeFromMap();
 		}
 
-		private function onTomer(e:TimerEvent):void //播放挂掉的动画
+		private function onTomer(e:TimerEvent):void 
 		{
 			playAnimation();
 		}

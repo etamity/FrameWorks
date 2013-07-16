@@ -1,11 +1,12 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.event 
 {
 	import flash.events.Event;
 	
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
 	public class LoadEvent extends Event 
 	{
 		public static const LOADED:String = "loaded";

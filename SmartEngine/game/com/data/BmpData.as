@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.data 
 {
 	import com.event.LoadEvent;
@@ -6,10 +12,6 @@ package com.data
 	
 	import starling.textures.Texture;
 
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
 	public class BmpData extends EventDispatcher
 	{
 		public static const PLANE:int = 0;
@@ -30,14 +32,14 @@ package com.data
 		public static const LIGHTNING:int = 15;
 		public static const MORTAR:int = 16;
 		
-		public static var bmpDatas:Array;//所有处理好的素材
-		public static var bmpPoints:Array;//所有的位图位置
-		public static var bmpTextures:Array;//所有的位图位置
-		private var _towerUrl:Array;//所有塔的位图加载地址
-		private var _enemyUrl:Array;//所有敌人位图的加载地址
-		private var _total:Array;//总的加载量
-		private var _loaded:Array;//已经加载的
-		private var _loadedNum:int;//已经加载的个数
+		public static var bmpDatas:Array;
+		public static var bmpPoints:Array;
+		public static var bmpTextures:Array;
+		private var _towerUrl:Array;
+		private var _enemyUrl:Array;
+		private var _total:Array;
+		private var _loaded:Array;
+		private var _loadedNum:int;
 		
 		public function BmpData() 
 		{
@@ -52,7 +54,7 @@ package com.data
 			load(_enemyUrl, "Data/Enemies/unit_");
 		}
 		
-		private function load(arr:Array, str:String):void//加载方法
+		private function load(arr:Array, str:String):void
 		{
 			for (var i:int; i < arr.length; i++)
 			{
@@ -116,7 +118,7 @@ package com.data
 			return result;
 		}
 		
-		private function loading(e:LoadEvent):void//加载时的回调函数
+		private function loading(e:LoadEvent):void
 		{
 			var str:String = e.info.url;
 			str = str.substring(str.indexOf("_") + 1, str.length - 4);
@@ -142,7 +144,7 @@ package com.data
 			}
 		}
 		
-		private function countPrt():void//计算加载的总量的百分比，貌似不准
+		private function countPrt():void
 		{
 			var num1:int;
 			var num2:int;
@@ -157,7 +159,7 @@ package com.data
 			this.dispatchEvent(new LoadEvent(LoadEvent.LOADING, num1 / num2));
 		}
 		
-		private function loaded(e:LoadEvent):void //当单个素材处理好时调用
+		private function loaded(e:LoadEvent):void
 		{
 			var str:String = e.info.url;
 			str = str.substring(str.indexOf("_") + 1, str.length - 4);

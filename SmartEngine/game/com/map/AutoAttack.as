@@ -1,6 +1,11 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.map 
 {
-	import com.command.Plan;
+	import com.command.RoadAI;
 	import com.data.Load;
 	import com.enemy.ArmyBase;
 	import com.enemy.Bike;
@@ -41,15 +46,15 @@ package com.map
 		
 		private static var _towers:Array;
 		private static var _enemy:Array;
-		
-		private var _info:XML;//加载的xml
+	
+		private var _info:XML;
 		private var _timer1:Timer;
 		private var _timer2:Timer;
 		private var _timer3:Timer;
-		private var _index:int;//当前的关数
-		private var _enemyNum:int;//地图上敌人的数量
-		private var _runTimer:Array;//正在运行的计时器
-		private var _modifier:int;//计时器delay的倍数
+		private var _index:int;
+		private var _enemyNum:int;
+		private var _runTimer:Array;
+		private var _modifier:int;
 		
 		public function AutoAttack() 
 		{
@@ -64,7 +69,7 @@ package com.map
 			reset();
 		}
 		
-		public function reStart():void//重新开始
+		public function reStart():void
 		{
 			for each(var enemy:EnemyBase in _enemy)
 			{
@@ -78,7 +83,7 @@ package com.map
 			start();
 		}
 		
-		public function save():void//保存进度
+		public function save():void
 		{
 			var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 			var arr:Array = share.data.data = [];
@@ -91,7 +96,7 @@ package com.map
 			Map.map.parent.removeChild(Map.map);
 		}
 		
-		public function recover():void//恢复进度
+		public function recover():void
 		{
 			var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 			var arr:Array = share.data.data;
@@ -108,7 +113,7 @@ package com.map
 			Control.control.recover();
 		}
 		
-		private function reset():void//重置
+		private function reset():void
 		{
 			_enemy = [];
 			_towers = [];
@@ -123,7 +128,7 @@ package com.map
 			setWay();
 		}
 		
-		public function play():void//播放
+		public function play():void
 		{
 			for each(var enemy:EnemyBase in _enemy)
 			{
@@ -140,7 +145,7 @@ package com.map
 			onRun = true;
 		}
 		
-		public function changeSpeed(fast:Boolean):void//改变运行速度
+		public function changeSpeed(fast:Boolean):void
 		{
 			moveFast = fast;
 			changeRate(fast);
@@ -154,7 +159,7 @@ package com.map
 			}
 		}
 		
-		private function changeRate(fast:Boolean):void//改变计时器的速度
+		private function changeRate(fast:Boolean):void
 		{
 			_modifier = fast?5:1;
 			for each(var timer:Timer in _runTimer)
@@ -170,7 +175,7 @@ package com.map
 			}
 		}
 		
-		public function stop():void//暂停
+		public function stop():void
 		{
 			for each(var enemy:EnemyBase in _enemy)
 			{
@@ -187,7 +192,7 @@ package com.map
 			onRun = false;
 		}
 		
-		private function onTimer(e:TimerEvent, timer:Timer = null):void //计时器的回调函数
+		private function onTimer(e:TimerEvent, timer:Timer = null):void
 		{
 			timer = timer?timer:e.currentTarget as Timer;
 			if (timer.currentCount == timer.repeatCount) return;
@@ -203,7 +208,7 @@ package com.map
 			}
 		}
 		
-		private function disappearFun(e:DisappearEvent):void //敌人挂掉时
+		private function disappearFun(e:DisappearEvent):void
 		{
 			var enemy:EnemyBase = e.info;
 			_enemy.splice(_enemy.indexOf(enemy), 1);
@@ -211,7 +216,7 @@ package com.map
 			if (_enemyNum == 0) start();
 		}
 		
-		private function createEnemy(i:int):void//生成敌人
+		private function createEnemy(i:int):void
 		{
 			var name:String = _info.Wave[_index].HorizontalStream[i].@enemyFile;
 			var enemyClass:Class = nameToClass(name);
@@ -224,7 +229,7 @@ package com.map
 			_enemy.push(enemy);
 		}
 		
-		private function start():void//每过一关调用，重新设置计时器
+		private function start():void
 		{
 			_index++;
 			if (_index == 100)
@@ -259,13 +264,13 @@ package com.map
 			 onTimer(null, _timer2);
 		}
 		
-		private function loaded(xml:XML):void //xml加载完成
+		private function loaded(xml:XML):void 
 		{
 			_info = xml;
 			start();
 		}
 		
-		private function nameToClass(name:String):Class//根据名称获取类，用getDefinitionByName()不好使
+		private function nameToClass(name:String):Class
 		{
 			if (name == "unit_bike") return Bike;
 			if (name == "unit_blimp") return Blimp;
@@ -288,17 +293,17 @@ package com.map
 			return null;
 		}
 		
-		public static function addTower(tower:TowerBase):void//添加了塔
+		public static function addTower(tower:TowerBase):void
 		{
 			_towers.push(tower);
 		}
 		
-		public static function removeTower(tower:TowerBase):void//移除了塔
+		public static function removeTower(tower:TowerBase):void
 		{
 			_towers.splice(_towers.indexOf(tower), 1);
 		}
 		
-		public static function setWay():void//设置敌人的路线
+		public static function setWay():void
 		{
 			lastRoute[0] = route[0].slice();
 			lastRoute[1] = route[1].slice();
@@ -308,10 +313,10 @@ package com.map
 			}
 		}
 		
-		public static function hasWay():Boolean//计算是否有路,防止把路堵死
+		public static function hasWay():Boolean
 		{
-			route[0] = Plan.doPlan(new Point(1, 6));
-			route[1] = Plan.doPlan(new Point(1, 7));
+			route[0] = RoadAI.doPlan(new Point(1, 6));
+			route[1] = RoadAI.doPlan(new Point(1, 7));
 			if (!route[0]) return false;
 			for each(var i:Object  in _enemy)
 			{

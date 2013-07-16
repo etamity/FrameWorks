@@ -1,14 +1,16 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.tower 
 {
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
 	import starling.display.Shape;
-	
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Fire extends Shape 
 	{
 		private static const colors:Array = [0xffff00, 0xffff00, 0xffff00, 0xffff00, 0xff0000];
@@ -18,7 +20,7 @@ package com.tower
 		private var _timer:Timer;
 		
 		public var isPlay:Boolean;
-		//对bitmapData不熟悉，只能用graphics
+
 		public function Fire(w:int, h:int) 
 		{
 			_w = w;

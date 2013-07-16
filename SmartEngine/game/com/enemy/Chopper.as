@@ -1,10 +1,7 @@
 package com.enemy 
 {
 	import com.data.BmpData;
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class Chopper extends PlaneBase 
 	{
 		

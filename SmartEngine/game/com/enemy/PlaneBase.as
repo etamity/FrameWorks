@@ -1,11 +1,13 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.enemy 
 {
 	import flash.events.TimerEvent;
 	import com.data.EnemyFormat;
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class PlaneBase extends EnemyBase 
 	{
 		public function PlaneBase(startId:int) 

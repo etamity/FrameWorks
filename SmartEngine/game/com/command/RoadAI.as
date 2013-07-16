@@ -1,25 +1,27 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.command 
 {
 	import flash.geom.Point;
 	import com.tower.TowerBase;
 	import com.map.Map;
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
-	public class Plan 
+
+	public class RoadAI 
 	{
 		
-		private const AROUND_POINT:Array = [[ -1, 0], [0, -1], [0, 1], [1, 0]];//当前点与四周点的差值
+		private const AROUND_POINT:Array = [[ -1, 0], [0, -1], [0, 1], [1, 0]];
 		
-		private var _startPoint:Point;//起点位置
-		private var _endPoint:Point;//终点位置
-		private var _place:Array;//地图数据，一个二维数组，存的布尔值，假为不能通过
-		private var _pendingList:Array;//待处理的点
-		private var _parentList:Array;//父节点,一个二维数组
-		private var _hasWay:Boolean;//是否找到路
+		private var _startPoint:Point;
+		private var _endPoint:Point;
+		private var _place:Array;
+		private var _pendingList:Array;
+		private var _parentList:Array;
+		private var _hasWay:Boolean;
 		
-		public function Plan(startPoint:Point)
+		public function RoadAI(startPoint:Point)
 		{
 			_startPoint = startPoint;
 			_place = createPlace();
@@ -28,7 +30,7 @@ package com.command
 			findWay();
 		}
 		
-		private function findWay():void//寻路的主体，不断处理待处理的点，直到找到路或者没有处理待处理的点
+		private function findWay():void
 		{
 			var x:int, y:int;
 			while (_pendingList.length != 0 && !_hasWay)
@@ -39,7 +41,7 @@ package com.command
 			}
 		}
 		
-		private function getTrail():Array//当寻路结束后，计算出路线，是一个子元素为Point的数组
+		private function getTrail():Array
 		{
 			if (!_hasWay) return null;
 			
@@ -57,18 +59,19 @@ package com.command
 			return arr;
 		}
 		
-		private function testGrid(x:int, y:int):void//测试一个点的上下左右是否有可以搜索的点
+		private function testGrid(x:int, y:int):void
 		{
-			_pendingList.shift();//把它从待检测列表移除
-			_place[x][y] = false;//防止它再次被搜索
+			_pendingList.shift();
+			_place[x][y] = false;
 			var xx:int, yy:int;
 			for (var i:int = 3; i > -1; i--)
 			{
 				xx = AROUND_POINT[i][0] + x;
 				yy = AROUND_POINT[i][1] + y;
+				if (_place[xx])
 				if (_place[xx][yy])
 				{
-					if (xx != 21 || (yy != 6 && yy != 7))//判断是否找到路
+					if (xx != 21 || (yy != 6 && yy != 7))
 					{
 						addPandingGrid(xx, yy, x, y);
 					}
@@ -83,14 +86,14 @@ package com.command
 			}
 		}
 		
-		private function addPandingGrid(x:int, y:int, pX:int, pY:int):void//把一个点添加到_pendingList，并设置_parentList
+		private function addPandingGrid(x:int, y:int, pX:int, pY:int):void
 		{
-			_pendingList.push(new Point(x, y));//把它添加到待检测列表
-			_place[x][y] = false;//防止它再次被搜索
-			_parentList[x][y] = new Point(pX, pY);//设置父节点
+			_pendingList.push(new Point(x, y));
+			_place[x][y] = false;
+			_parentList[x][y] = new Point(pX, pY);
 		}
 		
-		private function createPlace():Array//处理地图数据
+		private function createPlace():Array
 		{
 			var arr:Array = [];
 			var n:int = Map.place.length;
@@ -100,7 +103,7 @@ package com.command
 				arr[i] = [];
 				for (var j:int = 0; j < m; j++)
 				{
-					//是否为障碍就是在这里判断的
+	
 					arr[i][j] = (i < 2 || i == 21 || j < 1 || j == 12 || hasBlock(i, j))?false:true;
 				}
 			}
@@ -111,7 +114,7 @@ package com.command
 			return arr;
 		}
 		
-		private function hasBlock(x:int, y:int):Boolean//判断是否有障碍
+		private function hasBlock(x:int, y:int):Boolean
 		{
 			for each(var i:Object in Map.place[x][y])
 			{
@@ -120,7 +123,7 @@ package com.command
 			return false;
 		}
 		
-		private function createList():Array//创造一个二维数组，主要用于_parentList
+		private function createList():Array
 		{
 			var arr:Array = [];
 			for (var i:int = 0; i < Map.place.length; i++)
@@ -130,9 +133,9 @@ package com.command
 			return arr;
 		}
 		
-		public static function doPlan(startPoint:Point):Array//一个静态方法，方便使用
+		public static function doPlan(startPoint:Point):Array
 		{
-			var plan:Plan = new Plan(startPoint);
+			var plan:RoadAI = new RoadAI(startPoint);
 			return plan.getTrail();
 		}
 	}

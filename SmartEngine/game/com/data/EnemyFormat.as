@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.data 
 {
 	import com.event.LoadEvent;
@@ -10,10 +16,7 @@ package com.data
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
+
 	public class EnemyFormat extends EventDispatcher
 	{
 		public static const MOVE_00:int = 0;
@@ -29,12 +32,12 @@ package com.data
 		public static const DEATH_SHOCK_270:int = 14;
 		public static const MOVE_270:int = 15;
 		
-		private var _bmpData:Array;//处理好的BitmapData
-		private var _bmps:Array;//加载进来的原始位图
-		private var _info:Array;//位图的处理信息
-		private var _loadedNum:int;//加载的位图数量
-		private var _url:String;//加载xml的地址
-		private var _points:Array;//单个BitmapData的对应位置
+		private var _bmpData:Array;
+		private var _bmps:Array;
+		private var _info:Array;
+		private var _loadedNum:int;
+		private var _url:String;
+		private var _points:Array;
 		
 		public function EnemyFormat(xmlUrl:String)
 		{
@@ -46,18 +49,18 @@ package com.data
 			Load.from(Load.LOAD_TXT, xmlUrl, xmlLoaded);
 		}
 		
-		private function xmlLoaded(str:String):void//xml加载完成
+		private function xmlLoaded(str:String):void
 		{
 			var arr:Array = str.match(/unit_.+png/g);
 			for each(var url:String in arr)
 			{
-				Load.from(Load.LOAD_BMP, "Data/Enemies/" + url, bmpLoaded, bmpLoading);//开始加载位图
+				Load.from(Load.LOAD_BMP, "Data/Enemies/" + url, bmpLoaded, bmpLoading);
 			}
 			
 			formatInfo(str);
 		}
 		
-		private function formatInfo(str:String):void//解析xml
+		private function formatInfo(str:String):void
 		{
 			_info = str.split("file ");
 			_info.shift();
@@ -79,7 +82,7 @@ package com.data
 			}
 		}
 		
-		private function getIndex(str:String):int//根据名称获取索引
+		private function getIndex(str:String):int
 		{
 			if (str.search("move_000") != -1) return 0;
 			if (str.search("move_030") != -1) return 1;
@@ -98,7 +101,7 @@ package com.data
 			return -1;
 		}
 		
-		private function formatBmp(id:int):void//处理位图，把原始位图切成一块块的BitmapData
+		private function formatBmp(id:int):void
 		{
 			var datas:BitmapData = _bmps[id].bitmapData;
 			
@@ -121,7 +124,7 @@ package com.data
 			}
 		}
 		
-		private function bmpLoaded(e:Loader):void//单个位图加载完成
+		private function bmpLoaded(e:Loader):void
 		{
 			var str:String = e.contentLoaderInfo.url;
 			var id:int = int(str.substr(str.length - 5, 1));
@@ -137,7 +140,7 @@ package com.data
 			}
 		}
 		
-		private function flipBmpDatas(id1:int, id2:int):void//原始位图只有0~180，0~-180靠这个函数产生
+		private function flipBmpDatas(id1:int, id2:int):void
 		{
 			_bmpData[id2] = [];
 			_points[id2] = [];
@@ -150,7 +153,7 @@ package com.data
 			}
 		}
 		
-		private function flipHorizontal(bmpData:BitmapData):BitmapData//水平翻转位图数据
+		private function flipHorizontal(bmpData:BitmapData):BitmapData
         {
             var matrix:Matrix = new Matrix();
             matrix.a = -1;
@@ -160,7 +163,7 @@ package com.data
             return bmpData_;
         }
 		
-		private function bmpLoading(e:ProgressEvent):void//位图的加载进度
+		private function bmpLoading(e:ProgressEvent):void
 		{
 			this.dispatchEvent(new LoadEvent(LoadEvent.LOADING, { progress:e, url:_url } ));
 		}

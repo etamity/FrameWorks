@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
+
 package com.map 
 {
 	import com.enemy.EnemyBase;
@@ -7,17 +13,13 @@ package com.map
 	import starling.display.Sprite;
 	
 
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
 	public class Map extends Sprite 
 	{
-		public static var place:Array;//地图二维数组
-		public static var map:Map;//对当前类对象的引用
+		public static var place:Array;
+		public static var map:Map;
 		
-		private var _childs:Array;//用于分层的显示对象
-		private var _topChild:TowerBase;//置顶的子元素
+		private var _childs:Array;
+		private var _topChild:TowerBase;
 		
 		public function Map() 
 		{
@@ -28,7 +30,7 @@ package com.map
 			layering();
 		}
 		
-		private function layering():void//分层，让地图的东西按一定的层级排序
+		private function layering():void
 		{
 			_childs = [];
 			for (var i:int = 0; i < 13; i++)
@@ -38,19 +40,19 @@ package com.map
 			}
 		}
 		
-		public function addTopChild(child:TowerBase):void//添加置顶显示的子元件
+		public function addTopChild(child:TowerBase):void
 		{
 			_topChild = child;
 			addChild(child);
 		}
 		
-		public function removeTopChild(child:TowerBase):void//移除置顶显示的子元件
+		public function removeTopChild(child:TowerBase):void
 		{
 			_topChild = null;
 			addChild(child);
 		}
 		
-		/*override public function addChild(child:DisplayObject):DisplayObject//让子元件按规律排序
+		/*override public function addChild(child:DisplayObject):DisplayObject
 		{
 			if (child == _topChild)
 			{
@@ -70,12 +72,12 @@ package com.map
 			return child;
 		}*/
 		
-		public function addBulletChild(child:DisplayObject):void//主要用于子弹
+		public function addBulletChild(child:DisplayObject):void
 		{
 			_childs[12].addChild(child);
 		}
 		
-		private function drawMapGrid():void//生成地图的二维数组
+		private function drawMapGrid():void
 		{
 			place = new Array();
 			
