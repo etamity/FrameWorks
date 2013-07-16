@@ -6,8 +6,8 @@
 
 package com.smart.game.tower.scenes
 {
-	import com.smart.game.tower.model.AutoAttack;
-	import com.smart.game.tower.ui.Control;
+	import com.smart.game.tower.model.AttackFactory;
+	import com.smart.game.tower.ui.GameUI;
 	import com.smart.game.tower.model.Map;
 	import com.smart.core.SmartGame;
 	import com.smart.core.SmartScene;
@@ -49,9 +49,9 @@ package com.smart.game.tower.scenes
 			map.x = 18;
 			map.y = 36;
 			addChild(map);
-			var attack:AutoAttack = new AutoAttack();
+			var attack:AttackFactory = new AttackFactory();
 			var mc:GameUIAsset=new GameUIAsset();
-			var con:Control = new Control(mc, attack);
+			var con:GameUI = new GameUI(mc, attack);
 			Starling.current.nativeStage.addChild(mc);
 		}
 

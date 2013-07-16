@@ -6,7 +6,7 @@
 
 package com.smart.game.tower.model 
 {
-	import com.smart.game.tower.enemy.EnemyBase;
+	import com.smart.game.tower.enemy.EnemyObject;
 	
 	import starling.display.Sprite;
 
@@ -23,7 +23,7 @@ package com.smart.game.tower.model
 		{
 			_place = Map.place;
 			
-			if (this is EnemyBase)
+			if (this is EnemyObject)
 			{
 				_w = this.width < 52?1:this.width / 52;
 				_h = this.height < 52?1:this.height / 52;

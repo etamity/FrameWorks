@@ -5,17 +5,17 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
-	public class LightSoldier extends ArmyBase 
+	public class LightSoldier extends ArmyObject 
 	{
 		
 		public function LightSoldier(startId:int, healthModifier:Number) 
 		{
 			this.speed = 1.5;
 			this.healthTotal = 100 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.LIGHTSOLDIER];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.LIGHTSOLDIER];
+			this.bmpData = GraphicsData.Textures[GraphicsData.LIGHTSOLDIER];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.LIGHTSOLDIER];
 			this.score = 100;
 			this.modifier = healthModifier;
 			

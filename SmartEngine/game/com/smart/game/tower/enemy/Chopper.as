@@ -1,6 +1,6 @@
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
 	public class Chopper extends PlaneBase 
 	{
@@ -9,8 +9,8 @@ package com.smart.game.tower.enemy
 		{
 			this.speed = 1.5;
 			this.healthTotal = 650 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.CHOPPER];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.CHOPPER];
+			this.bmpData = GraphicsData.Textures[GraphicsData.CHOPPER];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.CHOPPER];
 			this.score = 700;
 			this.modifier = healthModifier;
 			

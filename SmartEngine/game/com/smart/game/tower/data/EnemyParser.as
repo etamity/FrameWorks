@@ -17,7 +17,7 @@ package com.smart.game.tower.data
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
-	public class EnemyFormat extends EventDispatcher
+	public class EnemyParser extends EventDispatcher
 	{
 		public static const MOVE_00:int = 0;
 		public static const MOVE_90:int = 3;
@@ -39,14 +39,14 @@ package com.smart.game.tower.data
 		private var _url:String;
 		private var _points:Array;
 		
-		public function EnemyFormat(xmlUrl:String)
+		public function EnemyParser(xmlUrl:String)
 		{
 			_bmps = new Array();
 			_bmpData = new Array();
 			_points = new Array();
 			_url = xmlUrl;
 			
-			Load.from(Load.LOAD_TXT, xmlUrl, xmlLoaded);
+			AssetsLoader.from(AssetsLoader.LOAD_TXT, xmlUrl, xmlLoaded);
 		}
 		
 		private function xmlLoaded(str:String):void
@@ -54,7 +54,7 @@ package com.smart.game.tower.data
 			var arr:Array = str.match(/unit_.+png/g);
 			for each(var url:String in arr)
 			{
-				Load.from(Load.LOAD_BMP, "Data/Enemies/" + url, bmpLoaded, bmpLoading);
+				AssetsLoader.from(AssetsLoader.LOAD_BMP, "Data/Enemies/" + url, bmpLoaded, bmpLoading);
 			}
 			
 			formatInfo(str);

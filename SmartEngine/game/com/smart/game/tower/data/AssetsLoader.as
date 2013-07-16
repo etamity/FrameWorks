@@ -6,15 +6,13 @@
 package com.smart.game.tower.data
 {
 	import flash.display.Loader;
-	import flash.net.URLLoader;
-	import flash.events.Event;
-	import flash.sensors.Accelerometer;
-	import flash.events.ProgressEvent;
-	import flash.display.Bitmap;
 	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.events.ProgressEvent;
+	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
-	public class Load 
+	public class AssetsLoader 
 	{
 		public static const  LOAD_BMP:int=0;
 		public static const  LOAD_SWF:int=1;
@@ -28,7 +26,7 @@ package com.smart.game.tower.data
 		private var _loadingFunc:Function;
 		private var _type:int;
 	
-		public function Load(type:int,url:String,loadedFunc:Function,loadingFunc:Function=null) 
+		public function AssetsLoader(type:int,url:String,loadedFunc:Function,loadingFunc:Function=null) 
 		{
 			_type=type;
 			if(loadedFunc!=null) _loadedFunc=loadedFunc;
@@ -50,9 +48,9 @@ package com.smart.game.tower.data
 				_urlLoad.load(_urlRequest);
 			}
 		}
-		public static function from(type:int,url:String,loadedFunc:Function,loadingFunc:Function=null):Load
+		public static function from(type:int,url:String,loadedFunc:Function,loadingFunc:Function=null):AssetsLoader
 		{
-			return new Load(type,url,loadedFunc,loadingFunc);
+			return new AssetsLoader(type,url,loadedFunc,loadingFunc);
 		}
 		private function onLoaded(e:Event):void
 		{

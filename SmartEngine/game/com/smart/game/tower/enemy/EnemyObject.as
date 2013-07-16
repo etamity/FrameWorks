@@ -5,10 +5,10 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy
 {
-	import com.smart.game.tower.data.EnemyFormat;
+	import com.smart.game.tower.data.EnemyParser;
 	import com.smart.game.tower.event.DisappearEvent;
-	import com.smart.game.tower.model.AutoAttack;
-	import com.smart.game.tower.ui.Control;
+	import com.smart.game.tower.model.AttackFactory;
+	import com.smart.game.tower.ui.GameUI;
 	import com.smart.game.tower.model.MapUnit;
 	
 	import flash.events.TimerEvent;
@@ -23,7 +23,7 @@ package com.smart.game.tower.enemy
 	import starling.events.EnterFrameEvent;
 	import starling.textures.Texture;
 
-	public class EnemyBase extends MapUnit
+	public class EnemyObject extends MapUnit
 	{
 		public static const DEATH_COMMON:String="death_common";
 		public static const DEATH_SHOCK:String="death_shock";
@@ -53,7 +53,7 @@ package com.smart.game.tower.enemy
 
 		private var _healthBar:Shape;
 		
-		public function EnemyBase()
+		public function EnemyObject()
 		{
 			super();
 			_startPoint=startPoint == 0 ? STARTPOINT1 : STARTPOINT2;
@@ -64,12 +64,12 @@ package com.smart.game.tower.enemy
 
 			_healthNow=healthTotal;
 
-			creatAnimation(EnemyFormat.MOVE_90);
+			creatAnimation(EnemyParser.MOVE_90);
 
 			creatHaemalStrand();
 
 			_timer=new Timer(100);
-			changeSpeed(AutoAttack.moveFast);
+			changeSpeed(AttackFactory.moveFast);
 			_timer.addEventListener(TimerEvent.TIMER, move);
 			_timer.start();
 
@@ -119,7 +119,7 @@ package com.smart.game.tower.enemy
 		private function arriveEnd():void 
 		{
 			over(null);
-			Control.control.changeLife();
+			GameUI.control.changeLife();
 		}
 
 		public function changeSpeed(fast:Boolean):void 
@@ -201,8 +201,8 @@ package com.smart.game.tower.enemy
 			if (_healthNow <= 0)
 			{
 				over(mode);
-				Control.control.changeScore(this.score * this.modifier);
-				Control.control.changeCost(this.score / 100, true);
+				GameUI.control.changeScore(this.score * this.modifier);
+				GameUI.control.changeCost(this.score / 100, true);
 			}
 			changeHaemalStrand();
 		}
@@ -215,11 +215,11 @@ package com.smart.game.tower.enemy
 			this.dispatchEvent(new DisappearEvent(DisappearEvent.DISAPPEAR, this));
 			if (mode == DEATH_COMMON)
 			{
-				deathAnimation(EnemyFormat.DEATH_COMMON_90);
+				deathAnimation(EnemyParser.DEATH_COMMON_90);
 			}
 			else if (mode == DEATH_SHOCK)
 			{
-				deathAnimation(EnemyFormat.DEATH_SHOCK_90);
+				deathAnimation(EnemyParser.DEATH_SHOCK_90);
 			}
 			else
 			{

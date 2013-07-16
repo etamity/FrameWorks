@@ -23,13 +23,13 @@ package com.smart.game.tower.ui
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.utils.setTimeout;
-	import com.smart.game.tower.model.AutoAttack;
+	import com.smart.game.tower.model.AttackFactory;
 	import com.smart.game.tower.model.Map;
 
 
-	public class Control extends EventDispatcher
+	public class GameUI extends EventDispatcher
 	{
-		public static var control:Control;
+		public static var control:GameUI;
 		
 		private var _cost:int = 15;
 		private var _costTxt:TextField;
@@ -40,7 +40,7 @@ package com.smart.game.tower.ui
 		private var _score:int;
 		private var _life:int = 20;
 		private var _lifes:MovieClip;
-		private var _attack:AutoAttack;
+		private var _attack:AttackFactory;
 		private var _playBtn:MovieClip;
 		private var _speedBtn:MovieClip;
 		private var _settingBtn:SimpleButton;
@@ -49,7 +49,7 @@ package com.smart.game.tower.ui
 		
 		private var _startUI:MovieClip;
 		private var _gameUI:MovieClip;
-		public function Control(mc:GameUIAsset, attack:AutoAttack)
+		public function GameUI(mc:GameUIAsset, attack:AttackFactory)
 		{
 			control = this;
 			_gameUI=mc.gameUI;
@@ -80,6 +80,7 @@ package com.smart.game.tower.ui
 			_speedBtn.addEventListener(MouseEvent.CLICK, speedClick);
 			_playBtn.addEventListener(MouseEvent.CLICK, playClick);
 			_settingPanel.addEventListener(MouseEvent.CLICK, panelClick);
+			_settingBtn.visible=false;
 		}
 		
 		private function createGameUIButtons():void{
@@ -237,7 +238,7 @@ package com.smart.game.tower.ui
 			_scoreTxt = new TextField();
 			formatTxt(_scoreTxt, 380, 20, "0");
 			_lifeTxt = new TextField();
-			formatTxt(_lifeTxt, 700, 20, "20");
+			formatTxt(_lifeTxt, 680, 20, "20");
 			_stateTxt = new TextField();
 			formatTxt(_stateTxt, 360, 40,"ROUND 0");
 		}

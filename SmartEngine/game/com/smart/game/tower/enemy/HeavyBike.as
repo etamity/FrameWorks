@@ -5,17 +5,17 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
-	public class HeavyBike extends ArmyBase 
+	public class HeavyBike extends ArmyObject 
 	{
 		
 		public function HeavyBike(startId:int, healthModifier:Number) 
 		{
 			this.speed = 2.5;
 			this.healthTotal = 300 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.HEAVYBIKE];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.HEAVYBIKE];
+			this.bmpData = GraphicsData.Textures[GraphicsData.HEAVYBIKE];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.HEAVYBIKE];
 			this.score = 350;
 			this.modifier = healthModifier;
 			

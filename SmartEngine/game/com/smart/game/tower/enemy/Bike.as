@@ -5,9 +5,9 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
-	public class Bike extends ArmyBase 
+	public class Bike extends ArmyObject 
 	{
 		
 		public function Bike(startId:int, healthModifier:Number) 
@@ -15,8 +15,8 @@ package com.smart.game.tower.enemy
 			this.speed = 3;
 			this.modifier = healthModifier;
 			this.healthTotal = 200 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.BIKE];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.BIKE];
+			this.bmpData = GraphicsData.Textures[GraphicsData.BIKE];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.BIKE];
 			this.score = 250;
 			
 			super(startId);

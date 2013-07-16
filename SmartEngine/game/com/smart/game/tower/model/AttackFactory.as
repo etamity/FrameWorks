@@ -5,12 +5,12 @@
  ******************************************************************************/
 package com.smart.game.tower.model 
 {
-	import com.smart.game.tower.data.Load;
-	import com.smart.game.tower.enemy.ArmyBase;
+	import com.smart.game.tower.data.AssetsLoader;
+	import com.smart.game.tower.enemy.ArmyObject;
 	import com.smart.game.tower.enemy.Bike;
 	import com.smart.game.tower.enemy.Blimp;
 	import com.smart.game.tower.enemy.Chopper;
-	import com.smart.game.tower.enemy.EnemyBase;
+	import com.smart.game.tower.enemy.EnemyObject;
 	import com.smart.game.tower.enemy.HazmatSoldier;
 	import com.smart.game.tower.enemy.HeavyBike;
 	import com.smart.game.tower.enemy.HeavySoldier;
@@ -26,19 +26,19 @@ package com.smart.game.tower.model
 	import com.smart.game.tower.tower.Lightning;
 	import com.smart.game.tower.tower.Missile;
 	import com.smart.game.tower.tower.Mortar;
-	import com.smart.game.tower.tower.TowerBase;
+	import com.smart.game.tower.tower.TowerObject;
 	
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
 	import flash.net.SharedObject;
 	import flash.utils.Timer;
-	import com.smart.game.tower.ui.Control;
+	import com.smart.game.tower.ui.GameUI;
 
 	/**
 	 * ...
 	 * @author tomome52@gmail.com
 	 */
-	public class AutoAttack
+	public class AttackFactory
 	{
 		public static var route:Array;
 		public static var lastRoute:Array;
@@ -57,9 +57,9 @@ package com.smart.game.tower.model
 		private var _runTimer:Array;
 		private var _modifier:int;
 		
-		public function AutoAttack() 
+		public function AttackFactory() 
 		{
-			Load.from(Load.LOAD_XML, "Data/List.xml", loaded);
+			AssetsLoader.from(AssetsLoader.LOAD_XML, "Data/List.xml", loaded);
 			
 			_timer1 = new Timer(0);
 			_timer1.addEventListener(TimerEvent.TIMER, onTimer);
@@ -72,11 +72,11 @@ package com.smart.game.tower.model
 		
 		public function reStart():void
 		{
-			for each(var enemy:EnemyBase in _enemy)
+			for each(var enemy:EnemyObject in _enemy)
 			{
 				enemy.removeFromMap();
 			}
-			for each(var tower:TowerBase in _towers)
+			for each(var tower:TowerObject in _towers)
 			{
 				tower.removeFromMap();
 			}
@@ -89,7 +89,7 @@ package com.smart.game.tower.model
 			var share:SharedObject = SharedObject.getLocal("TowerGame20130715");
 			var arr:Array = share.data.data = [];
 			
-			for each(var tower:TowerBase in _towers)
+			for each(var tower:TowerObject in _towers)
 			{
 				arr.push(tower.save());
 			}
@@ -105,13 +105,13 @@ package com.smart.game.tower.model
 			for each(var obj:Object in arr)
 			{
 				var towerClass:Class = nameToClass(obj.towerClass);
-				var tower:TowerBase = new towerClass();
+				var tower:TowerObject = new towerClass();
 				tower.recover(obj);
 			}
 			hasWay();
 			setWay();
 			_index = share.data.round - 2;
-			Control.control.recover();
+			GameUI.control.recover();
 		}
 		
 		private function reset():void
@@ -131,11 +131,11 @@ package com.smart.game.tower.model
 		
 		public function play():void
 		{
-			for each(var enemy:EnemyBase in _enemy)
+			for each(var enemy:EnemyObject in _enemy)
 			{
 				enemy.play();
 			}
-			for each(var tower:TowerBase in _towers)
+			for each(var tower:TowerObject in _towers)
 			{
 				tower.play();
 			}
@@ -150,11 +150,11 @@ package com.smart.game.tower.model
 		{
 			moveFast = fast;
 			changeRate(fast);
-			for each(var enemy:EnemyBase in _enemy)
+			for each(var enemy:EnemyObject in _enemy)
 			{
 				enemy.changeSpeed(fast);
 			}
-			for each(var tower:TowerBase in _towers)
+			for each(var tower:TowerObject in _towers)
 			{
 				tower.changeSpeed(fast);
 			}
@@ -178,11 +178,11 @@ package com.smart.game.tower.model
 		
 		public function stop():void
 		{
-			for each(var enemy:EnemyBase in _enemy)
+			for each(var enemy:EnemyObject in _enemy)
 			{
 				enemy.stop();
 			}
-			for each(var tower:TowerBase in _towers)
+			for each(var tower:TowerObject in _towers)
 			{
 				tower.stop();
 			}
@@ -211,7 +211,7 @@ package com.smart.game.tower.model
 		
 		private function disappearFun(e:DisappearEvent):void
 		{
-			var enemy:EnemyBase = e.info;
+			var enemy:EnemyObject = e.info;
 			_enemy.splice(_enemy.indexOf(enemy), 1);
 			_enemyNum--;
 			if (_enemyNum == 0) start();
@@ -225,7 +225,7 @@ package com.smart.game.tower.model
 			var num:Number = Number(_info.Wave[_index].HorizontalStream[i].@healthModifier);
 			if (_index > 40) num *= 1.5;
 			if (_index > 80) num *= 2;
-			var enemy:EnemyBase = new enemyClass(startId, num);
+			var enemy:EnemyObject = new enemyClass(startId, num);
 			enemy.addEventListener(DisappearEvent.DISAPPEAR, disappearFun);
 			_enemy.push(enemy);
 		}
@@ -235,10 +235,10 @@ package com.smart.game.tower.model
 			_index++;
 			if (_index == 100)
 			{
-				Control.control.gameOver(true);
+				GameUI.control.gameOver(true);
 				return;
 			}
-			Control.control.changeRound(_index + 1);
+			GameUI.control.changeRound(_index + 1);
 			_timer1.reset();
 			_timer1.delay = Number(_info.Wave[_index].HorizontalStream[0].@spawnRate) * 1000 / _modifier;
 			_timer1.repeatCount = Number(_info.Wave[_index].HorizontalStream[0].@count);
@@ -294,12 +294,12 @@ package com.smart.game.tower.model
 			return null;
 		}
 		
-		public static function addTower(tower:TowerBase):void
+		public static function addTower(tower:TowerObject):void
 		{
 			_towers.push(tower);
 		}
 		
-		public static function removeTower(tower:TowerBase):void
+		public static function removeTower(tower:TowerObject):void
 		{
 			_towers.splice(_towers.indexOf(tower), 1);
 		}
@@ -310,7 +310,7 @@ package com.smart.game.tower.model
 			lastRoute[1] = route[1].slice();
 			for each(var i:Object in _enemy)
 			{
-				if (i is ArmyBase) i.setRoute();
+				if (i is ArmyObject) i.setRoute();
 			}
 		}
 		
@@ -321,7 +321,7 @@ package com.smart.game.tower.model
 			if (!route[0]) return false;
 			for each(var i:Object  in _enemy)
 			{
-				if ((i is ArmyBase) && !i.hasWay()) return false;
+				if ((i is ArmyObject) && !i.hasWay()) return false;
 			}
 			return true;
 		}

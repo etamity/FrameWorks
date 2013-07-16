@@ -6,7 +6,7 @@
 package com.smart.game.tower.model 
 {
 	import flash.geom.Point;
-	import com.smart.game.tower.tower.TowerBase;
+	import com.smart.game.tower.tower.TowerObject;
 
 	public class RoadAI 
 	{
@@ -117,7 +117,7 @@ package com.smart.game.tower.model
 		{
 			for each(var i:Object in Map.place[x][y])
 			{
-				if (i is TowerBase) return true;
+				if (i is TowerObject) return true;
 			}
 			return false;
 		}

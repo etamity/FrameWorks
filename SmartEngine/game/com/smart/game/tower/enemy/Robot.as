@@ -5,17 +5,17 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
-	public class Robot extends ArmyBase 
+	public class Robot extends ArmyObject 
 	{
 		
 		public function Robot(startId:int, healthModifier:Number) 
 		{
 			this.speed = 1;
 			this.healthTotal = 30000 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.ROBOT];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.ROBOT];
+			this.bmpData = GraphicsData.Textures[GraphicsData.ROBOT];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.ROBOT];
 			this.score = 4000;
 			this.modifier = healthModifier;
 			

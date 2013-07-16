@@ -5,9 +5,9 @@
  ******************************************************************************/
 package com.smart.game.tower.tower 
 {
-	import com.smart.game.tower.enemy.EnemyBase;
-	import com.smart.game.tower.model.AutoAttack;
-	import com.smart.game.tower.ui.Control;
+	import com.smart.game.tower.enemy.EnemyObject;
+	import com.smart.game.tower.model.AttackFactory;
+	import com.smart.game.tower.ui.GameUI;
 	import com.smart.game.tower.model.Map;
 	import com.smart.game.tower.model.MapUnit;
 	
@@ -29,7 +29,7 @@ package com.smart.game.tower.tower
 	import com.smart.game.tower.ui.Indicator;
 	
 
-	public class TowerBase extends MapUnit 
+	public class TowerObject extends MapUnit 
 	{
 		protected var defense:int;
 		protected var damage:Array;
@@ -43,7 +43,7 @@ package com.smart.game.tower.tower
 		private var _timer:Timer;
 		private var _canUse:Boolean;
 		private var _indicator:Indicator;
-		private var _enemy:EnemyBase;
+		private var _enemy:EnemyObject;
 		private var _angle:Number;
 		private var _timeId:int;
 		private var _attack:MovieClip;
@@ -52,7 +52,7 @@ package com.smart.game.tower.tower
 		
 		private var currentIndex:int=0;
 		private var currentIdle:int=0;
-		public function TowerBase() 
+		public function TowerObject() 
 		{
 			super();
 			_tower = new Sprite();
@@ -63,7 +63,7 @@ package com.smart.game.tower.tower
 			createTower(1);
 			
 			_timer = new Timer(1000);
-			changeSpeed(AutoAttack.moveFast);
+			changeSpeed(AttackFactory.moveFast);
 			_timer.addEventListener(TimerEvent.TIMER, onTimer);
 			
 			this.addEventListener(Event.ENTER_FRAME, onEnter);
@@ -99,11 +99,11 @@ package com.smart.game.tower.tower
 			this.setPoint(obj.x, obj.y);
 			_indicator.changeState(2);
 			_indicator.visible = false;
-			if (AutoAttack.onRun)_timer.start();
-			AutoAttack.setWay();
+			if (AttackFactory.onRun)_timer.start();
+			AttackFactory.setWay();
 			Map.map.removeTopChild(this);
 			_indicator.setMoney(this.cost[this.level], getCost());
-			AutoAttack.addTower(this);
+			AttackFactory.addTower(this);
 		}
 		
 		public function changeSpeed(fast:Boolean):void
@@ -208,12 +208,12 @@ package com.smart.game.tower.tower
 						trace("onUp onUp");
 						_indicator.changeState(2);
 						_indicator.visible = false;
-						if (AutoAttack.onRun)_timer.start();
-						AutoAttack.setWay();
+						if (AttackFactory.onRun)_timer.start();
+						AttackFactory.setWay();
 						Map.map.removeTopChild(this);
-						Control.control.changeCost(this.cost[0], false);
+						GameUI.control.changeCost(this.cost[0], false);
 						_indicator.setMoney(this.cost[this.level], getCost());
-						AutoAttack.addTower(this);
+						AttackFactory.addTower(this);
 					}
 					else
 					{
@@ -244,10 +244,10 @@ package com.smart.game.tower.tower
 			_timer.stop();
 			this.stage.removeEventListener(TouchEvent.TOUCH, stageClick);
 			this.removeFromMap();
-			AutoAttack.hasWay();
-			AutoAttack.setWay();
-			Control.control.changeCost(getCost(), true);
-			AutoAttack.removeTower(this);
+			AttackFactory.hasWay();
+			AttackFactory.setWay();
+			GameUI.control.changeCost(getCost(), true);
+			AttackFactory.removeTower(this);
 		}
 		
 		public function upgrade():void
@@ -255,7 +255,7 @@ package com.smart.game.tower.tower
 			this.level++;
 			createTower(this.level);
 			_indicator.setMoney(this.cost[this.level], getCost());
-			Control.control.changeCost(this.cost[this.level], false);
+			GameUI.control.changeCost(this.cost[this.level], false);
 		}
 		
 		private function stageClick(e:TouchEvent):void  
@@ -274,7 +274,7 @@ package com.smart.game.tower.tower
 				}
 				else
 				{
-					_indicator.changeUpgradeState(Control.control.cost);
+					_indicator.changeUpgradeState(GameUI.control.cost);
 					_timeId = setInterval(inTime, 1000);
 					_indicator.visible = true;
 					Map.map.addTopChild(this);
@@ -285,7 +285,7 @@ package com.smart.game.tower.tower
 		
 		private function inTime():void //check if can upgrade
 		{
-			_indicator.changeUpgradeState(Control.control.cost);
+			_indicator.changeUpgradeState(GameUI.control.cost);
 		}
 		
 		private function onEnter(e:Event):void 
@@ -307,12 +307,12 @@ package com.smart.game.tower.tower
 			}
 		}
 		
-		protected function fire(mc:EnemyBase, angle:Number):void // fire to enemy, subclass rewrite
+		protected function fire(mc:EnemyObject, angle:Number):void // fire to enemy, subclass rewrite
 		{
 			
 		}
 		
-		private function changOrientation(mc:EnemyBase):void//Change Orientation based on enemy
+		private function changOrientation(mc:EnemyObject):void//Change Orientation based on enemy
 		{
 			var xx:int = mc.x - this.x;
 			var yy:int = mc.y - this.y;
@@ -331,9 +331,9 @@ package com.smart.game.tower.tower
 			_idle.visible = !isFire;
 		}
 		
-		private function findEnemy():EnemyBase//check enemies
+		private function findEnemy():EnemyObject//check enemies
 		{
-			var xx:int, yy:int, num1:int, num2:int, enemy:EnemyBase;
+			var xx:int, yy:int, num1:int, num2:int, enemy:EnemyObject;
 			num1 = defense * 2 / 25;
 			num1 = num1 % 2 == 0?num1 + 1:num1;
 			num2 = int(num1 / 2);
@@ -350,19 +350,19 @@ package com.smart.game.tower.tower
 			return null;
 		}
 		
-		private function getEnemy(x:int, y:int):EnemyBase // get enemy by map x , y
+		private function getEnemy(x:int, y:int):EnemyObject // get enemy by map x , y
 		{
 			if (!Map.place[x]) return null;
 			for each(var i:Object in Map.place[x][y])
 			{
-				if ((i is EnemyBase) && i.isLife) return EnemyBase(i);
+				if ((i is EnemyObject) && i.isLife) return EnemyObject(i);
 			}
 			return null;
 		}
 		
 		private function testPlace():Boolean//Check if can be placed
 		{
-			if (this.mapX <= 1 || this.mapX == 21 || this.mapY == 0 || this.mapY == 12 || hasBlock(this.mapX, this.mapY) || !AutoAttack.hasWay())
+			if (this.mapX <= 1 || this.mapX == 21 || this.mapY == 0 || this.mapY == 12 || hasBlock(this.mapX, this.mapY) || !AttackFactory.hasWay())
 			{
 				_indicator.changeState(0);
 				return false;
@@ -379,7 +379,7 @@ package com.smart.game.tower.tower
 		{
 			for each(var i:Object in Map.place[x][y])
 			{
-				if (i is TowerBase && i != this) return true;
+				if (i is TowerObject && i != this) return true;
 			}
 			return false;
 		}

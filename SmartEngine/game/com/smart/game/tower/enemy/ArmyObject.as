@@ -5,13 +5,13 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.model.AutoAttack;
+	import com.smart.game.tower.model.AttackFactory;
 	import flash.geom.Point;
 	import com.smart.game.tower.model.RoadAI;
-	import com.smart.game.tower.data.EnemyFormat;
+	import com.smart.game.tower.data.EnemyParser;
 	import flash.events.TimerEvent;
 
-	public class ArmyBase extends EnemyBase 
+	public class ArmyObject extends EnemyObject 
 	{
 		private var _route:Array;
 		private var _gapX:Number;
@@ -19,11 +19,11 @@ package com.smart.game.tower.enemy
 		private var _way:Array;
 		private var _direction:int;
 		
-		public function ArmyBase(startId:int) 
+		public function ArmyObject(startId:int) 
 		{
 			this.speed *= 2;
 			this.startPoint = startId;
-			_route = AutoAttack.lastRoute[this.startPoint].slice();
+			_route = AttackFactory.lastRoute[this.startPoint].slice();
 			_direction = 1;
 			_gapX = this.speed;
 			_gapY = 0;
@@ -95,22 +95,22 @@ package com.smart.game.tower.enemy
 				case 0:
 					_gapX = 0
 					_gapY = this.speed * -1;
-					this.creatAnimation(EnemyFormat.MOVE_00);
+					this.creatAnimation(EnemyParser.MOVE_00);
 					break;
 				case 1:
 					_gapX = this.speed;
 					_gapY = 0;
-					this.creatAnimation(EnemyFormat.MOVE_90);
+					this.creatAnimation(EnemyParser.MOVE_90);
 					break;
 				case 2:
 					_gapX = 0;
 					_gapY = this.speed;
-					this.creatAnimation(EnemyFormat.MOVE_180);
+					this.creatAnimation(EnemyParser.MOVE_180);
 					break;
 					case 3:
 					_gapX = this.speed * -1;
 					_gapY = 0;
-					this.creatAnimation(EnemyFormat.MOVE_270);
+					this.creatAnimation(EnemyParser.MOVE_270);
 					break;
 			}
 		}
@@ -123,7 +123,7 @@ package com.smart.game.tower.enemy
 		
 		public function hasWay():Boolean
 		{
-			var route:Array = AutoAttack.route[this.startPoint];
+			var route:Array = AttackFactory.route[this.startPoint];
 			if (!route) return false;
 			for (var i:int = 0; i < route.length; i++)
 			{

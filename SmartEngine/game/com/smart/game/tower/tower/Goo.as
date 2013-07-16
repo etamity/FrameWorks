@@ -7,8 +7,8 @@
 
 package com.smart.game.tower.tower 
 {
-	import com.smart.game.tower.data.BmpData;
-	import com.smart.game.tower.enemy.EnemyBase;
+	import com.smart.game.tower.data.GraphicsData;
+	import com.smart.game.tower.enemy.EnemyObject;
 	import com.smart.game.tower.model.Map;
 	
 	import flash.display.BitmapData;
@@ -22,22 +22,22 @@ package com.smart.game.tower.tower
 	import starling.textures.Texture;
 
 
-	public class Goo extends TowerBase 
+	public class Goo extends TowerObject 
 	{
 		private var _timer:Timer;
 		private var _bmp:Sprite;
 		private var _moveX:Number;
 		private var _moveY:Number;
 		private var _canFire:Boolean = true;
-		private var _enemy:EnemyBase;
+		private var _enemy:EnemyObject;
 		
 		public function Goo() 
 		{
 			this.defense = 90;
 			this.damage = [35, 50, 65];
 			this.cost = [10, 5, 5];
-			this.bmpData = BmpData.Textures[BmpData.GOO];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.GOO];
+			this.bmpData = GraphicsData.Textures[GraphicsData.GOO];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.GOO];
 			this.reloadTime = 1.2;
 			
 			_timer = new Timer(100);
@@ -83,13 +83,13 @@ package com.smart.game.tower.tower
 			_bmp.addChild(image);
 		}
 		
-		override protected function fire(mc:EnemyBase, angle:Number):void
+		override protected function fire(mc:EnemyObject, angle:Number):void
 		{
 			if (!_canFire) return;
 			startFire(mc, angle);
 		}
 		
-		private function startFire(mc:EnemyBase, angle:Number):void
+		private function startFire(mc:EnemyObject, angle:Number):void
 		{
 			angle *= Math.PI / 180;
 			_bmp.rotation = angle;

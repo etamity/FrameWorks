@@ -6,8 +6,8 @@
 
 package com.smart.game.tower.tower 
 {
-	import com.smart.game.tower.data.BmpData;
-	import com.smart.game.tower.enemy.EnemyBase;
+	import com.smart.game.tower.data.GraphicsData;
+	import com.smart.game.tower.enemy.EnemyObject;
 	import com.smart.game.tower.model.Map;
 	
 	import flash.display.BitmapData;
@@ -21,11 +21,11 @@ package com.smart.game.tower.tower
 	import starling.display.Sprite;
 	import starling.textures.Texture;
 
-	public class Mortar extends TowerBase 
+	public class Mortar extends TowerObject 
 	{
 		private var _bmp:Sprite;
 		private var _timer:Timer;
-		private var _enemy:EnemyBase;
+		private var _enemy:EnemyObject;
 		private var _canFire:Boolean = true;
 		
 		public function Mortar() 
@@ -33,8 +33,8 @@ package com.smart.game.tower.tower
 			this.defense = 145;
 			this.damage = [1300, 2600, 3900];
 			this.cost = [120, 90, 90];
-			this.bmpData = BmpData.Textures[BmpData.MORTAR];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.MORTAR];
+			this.bmpData = GraphicsData.Textures[GraphicsData.MORTAR];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.MORTAR];
 			this.reloadTime = 2;
 			
 			_bmp = new Sprite();
@@ -70,12 +70,12 @@ package com.smart.game.tower.tower
 				_bmp.visible = false;
 				_canFire = true;
 				_timer.reset();
-				if (_enemy.isLife)_enemy.destroy(this.damage[this.level - 1], EnemyBase.DEATH_COMMON);
+				if (_enemy.isLife)_enemy.destroy(this.damage[this.level - 1], EnemyObject.DEATH_COMMON);
 				this.changeState(false);
 			}
 		}
 		
-		override protected function fire(mc:EnemyBase, angle:Number):void
+		override protected function fire(mc:EnemyObject, angle:Number):void
 		{
 			if (!_canFire) return;
 			_bmp.x = this.x;

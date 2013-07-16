@@ -8,7 +8,7 @@
 package com.smart.game.tower.ui 
 {
 	import com.smart.game.tower.tower.Starter;
-	import com.smart.game.tower.tower.TowerBase;
+	import com.smart.game.tower.tower.TowerObject;
 
 	public class Indicator extends IndicatorAsset 
 	{
@@ -35,12 +35,12 @@ package com.smart.game.tower.ui
 		
 		private function reclaimFUn():void 
 		{
-			(this.parent as TowerBase).sellTower();
+			(this.parent as TowerObject).sellTower();
 		}
 		
 		private function upgradeFun():void 
 		{
-			(this.parent as TowerBase).upgrade();
+			(this.parent as TowerObject).upgrade();
 		}
 		
 		public function setMoney(money1:int, money2:int):void

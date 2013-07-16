@@ -6,7 +6,7 @@
 
 package com.smart.game.tower.scenes
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 	import com.smart.game.tower.data.Language;
 	import com.smart.game.tower.event.LoadEvent;
 	import com.smart.game.tower.event.ScreenEventConst;
@@ -30,14 +30,14 @@ package com.smart.game.tower.scenes
 		}
 		private function loadData():void
 		{
-			if (BmpData.bmpDatas) 
+			if (GraphicsData.bmpDatas) 
 			{
 				loaded(null);
 				return;
 			}
 			//_progressBar.visible = true;
 			//_progressMask.scaleX = 0;
-			var bmpData:BmpData = new BmpData();
+			var bmpData:GraphicsData = new GraphicsData();
 			//bmpData.addEventListener(LoadEvent.LOADING, loading);
 			bmpData.addEventListener(LoadEvent.LOADED, loaded);
 		}

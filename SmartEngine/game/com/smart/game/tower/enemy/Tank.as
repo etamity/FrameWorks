@@ -5,17 +5,17 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
-	public class Tank extends ArmyBase 
+	public class Tank extends ArmyObject 
 	{
 		
 		public function Tank(startId:int, healthModifier:Number) 
 		{
 			this.speed = 1;
 			this.healthTotal = 8000 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.TANK];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.TANK];
+			this.bmpData = GraphicsData.Textures[GraphicsData.TANK];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.TANK];
 			this.score = 1000;
 			this.modifier = healthModifier;
 			

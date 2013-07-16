@@ -6,9 +6,9 @@
 package com.smart.game.tower.enemy 
 {
 	import flash.events.TimerEvent;
-	import com.smart.game.tower.data.EnemyFormat;
+	import com.smart.game.tower.data.EnemyParser;
 
-	public class PlaneBase extends EnemyBase 
+	public class PlaneBase extends EnemyObject 
 	{
 		public function PlaneBase(startId:int) 
 		{

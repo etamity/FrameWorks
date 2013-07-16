@@ -12,7 +12,7 @@ package com.smart.game.tower.data
 	
 	import starling.textures.Texture;
 
-	public class BmpData extends EventDispatcher
+	public class GraphicsData extends EventDispatcher
 	{
 		public static const PLANE:int = 0;
 		public static const HAZMATSOLDIER:int = 1;
@@ -41,7 +41,7 @@ package com.smart.game.tower.data
 		private var _loaded:Array;
 		private var _loadedNum:int;
 		
-		public function BmpData() 
+		public function GraphicsData() 
 		{
 			bmpDatas = new Array();
 			bmpPoints = new Array();
@@ -62,11 +62,11 @@ package com.smart.game.tower.data
 				var data:*;
 				if (str.indexOf("tower") != -1)
 				{
-					data = new TowerFormat(url);
+					data = new TowerParser(url);
 				}
 				else
 				{
-					data = new EnemyFormat(url);
+					data = new EnemyParser(url);
 				}
 				data.addEventListener(LoadEvent.LOADED, loaded);
 				data.addEventListener(LoadEvent.LOADING, loading);

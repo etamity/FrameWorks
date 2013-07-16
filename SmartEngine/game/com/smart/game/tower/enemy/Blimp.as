@@ -5,7 +5,7 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
 	public class Blimp extends PlaneBase 
 	{
@@ -14,8 +14,8 @@ package com.smart.game.tower.enemy
 		{
 			this.speed = 0.25;
 			this.healthTotal = 60000 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.BLIMP];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.BLIMP];
+			this.bmpData = GraphicsData.Textures[GraphicsData.BLIMP];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.BLIMP];
 			this.score = 10000;
 			this.modifier = healthModifier;
 			

@@ -7,8 +7,8 @@
 
 package com.smart.game.tower.tower 
 {
-	import com.smart.game.tower.data.BmpData;
-	import com.smart.game.tower.enemy.EnemyBase;
+	import com.smart.game.tower.data.GraphicsData;
+	import com.smart.game.tower.enemy.EnemyObject;
 	import com.smart.game.tower.model.Map;
 	
 	import flash.display.BitmapData;
@@ -23,11 +23,11 @@ package com.smart.game.tower.tower
 	import starling.textures.Texture;
 
 
-	public class Missile extends TowerBase 
+	public class Missile extends TowerObject 
 	{
 		private var _bmp:Sprite;
 		private var _timer:Timer;
-		private var _enemy:EnemyBase;
+		private var _enemy:EnemyObject;
 		private var _canFire:Boolean = true;
 		
 		public function Missile() 
@@ -35,8 +35,8 @@ package com.smart.game.tower.tower
 			this.defense = 120;
 			this.damage = [105, 195, 285];
 			this.cost = [20, 15, 15];
-			this.bmpData = BmpData.Textures[BmpData.MISSILE];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.MISSILE];
+			this.bmpData = GraphicsData.Textures[GraphicsData.MISSILE];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.MISSILE];
 			this.reloadTime = 1.5;
 			
 			_bmp = new Sprite();
@@ -72,11 +72,11 @@ package com.smart.game.tower.tower
 				_bmp.visible = false;
 				_canFire = true;
 				_timer.reset();
-				if (_enemy.isLife)_enemy.destroy(this.damage[this.level - 1], EnemyBase.DEATH_COMMON);
+				if (_enemy.isLife)_enemy.destroy(this.damage[this.level - 1], EnemyObject.DEATH_COMMON);
 			}
 		}
 		
-		override protected function fire(mc:EnemyBase, angle:Number):void
+		override protected function fire(mc:EnemyObject, angle:Number):void
 		{
 			if (!_canFire) return;
 			_bmp.x = this.x;

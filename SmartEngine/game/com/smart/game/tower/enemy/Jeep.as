@@ -5,17 +5,17 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
-	public class Jeep extends ArmyBase 
+	public class Jeep extends ArmyObject 
 	{
 		
 		public function Jeep(startId:int, healthModifier:Number) 
 		{
 			this.speed = 2;
 			this.healthTotal = 650 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.JEEP];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.JEEP];
+			this.bmpData = GraphicsData.Textures[GraphicsData.JEEP];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.JEEP];
 			this.score = 600;
 			this.modifier = healthModifier;
 			

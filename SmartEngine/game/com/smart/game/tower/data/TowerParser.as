@@ -1,3 +1,8 @@
+/*******************************************************************************
+ * Author: Joey Etamity
+ * Email: etamity@gmail.com
+ * For more information see http://www.langteach.com/etblog/
+ ******************************************************************************/
 package com.smart.game.tower.data 
 {
 	import com.smart.game.tower.event.LoadEvent;
@@ -10,11 +15,8 @@ package com.smart.game.tower.data
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	/**
-	 * ...
-	 * @author tomome52@gmail.com
-	 */
-	public class TowerFormat extends EventDispatcher
+
+	public class TowerParser extends EventDispatcher
 	{
 		public static const IDLE_LEVEL1:int = 0;
 		public static const IDLE_LEVEL2:int = 1;
@@ -29,15 +31,14 @@ package com.smart.game.tower.data
 		private var _info:Array;
 		private var _loadedNum:int;
 		private var _url:String;
-		//这个注释同EnemyFormat,和EnemyFormat的变量方法基本一样，但实现过程不同，所以没有用继承
-		public function TowerFormat(xmlUrl:String)
+		public function TowerParser(xmlUrl:String)
 		{
 			_bmps = new Array();
 			_bmpData = new Array();
 			_points = new Array();
 			_url = xmlUrl;
 			
-			Load.from(Load.LOAD_TXT, xmlUrl, xmlLoaded);
+			AssetsLoader.from(AssetsLoader.LOAD_TXT, xmlUrl, xmlLoaded);
 		}
 		
 		private function xmlLoaded(str:String):void
@@ -45,7 +46,7 @@ package com.smart.game.tower.data
 			var arr:Array = str.match(/tower_.+png/g);
 			for each(var url:String in arr)
 			{
-				Load.from(Load.LOAD_BMP, "Data/Towers/" + url, bmpLoaded, bmpLoading);
+				AssetsLoader.from(AssetsLoader.LOAD_BMP, "Data/Towers/" + url, bmpLoaded, bmpLoading);
 			}
 			
 			formatInfo(str);
@@ -145,7 +146,7 @@ package com.smart.game.tower.data
 			}
 		}
 		
-		private function flipHorizontal(bmpData:BitmapData):BitmapData//水平翻转位图数据
+		private function flipHorizontal(bmpData:BitmapData):BitmapData
         {
             var matrix:Matrix = new Matrix();
             matrix.a = -1;

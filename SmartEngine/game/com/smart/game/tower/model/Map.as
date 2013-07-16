@@ -6,8 +6,7 @@
 
 package com.smart.game.tower.model 
 {
-	import com.smart.game.tower.enemy.EnemyBase;
-	import com.smart.game.tower.tower.TowerBase;
+	import com.smart.game.tower.tower.TowerObject;
 	
 	import starling.display.DisplayObject;
 	import starling.display.Sprite;
@@ -19,7 +18,7 @@ package com.smart.game.tower.model
 		public static var map:Map;
 		
 		private var _childs:Array;
-		private var _topChild:TowerBase;
+		private var _topChild:TowerObject;
 		
 		public function Map() 
 		{
@@ -40,13 +39,13 @@ package com.smart.game.tower.model
 			}
 		}
 		
-		public function addTopChild(child:TowerBase):void
+		public function addTopChild(child:TowerObject):void
 		{
 			_topChild = child;
 			addChild(child);
 		}
 		
-		public function removeTopChild(child:TowerBase):void
+		public function removeTopChild(child:TowerObject):void
 		{
 			_topChild = null;
 			addChild(child);

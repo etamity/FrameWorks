@@ -7,8 +7,8 @@
 
 package com.smart.game.tower.tower 
 {
-	import com.smart.game.tower.data.BmpData;
-	import com.smart.game.tower.enemy.EnemyBase;
+	import com.smart.game.tower.data.GraphicsData;
+	import com.smart.game.tower.enemy.EnemyObject;
 	import com.smart.game.tower.model.Map;
 	
 	import flash.utils.Timer;
@@ -17,7 +17,7 @@ package com.smart.game.tower.tower
 	import starling.display.Shape;
 
 
-	public class Lightning extends TowerBase 
+	public class Lightning extends TowerObject 
 	{
 		private var _light:Shape;
 		private var _timer:Timer;
@@ -27,8 +27,8 @@ package com.smart.game.tower.tower
 			this.defense = 90;
 			this.damage = [525, 1050, 1575];
 			this.cost = [70, 50, 50];
-			this.bmpData = BmpData.Textures[BmpData.LIGHTNING];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.LIGHTNING];
+			this.bmpData = GraphicsData.Textures[GraphicsData.LIGHTNING];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.LIGHTNING];
 			this.reloadTime = 1.5;
 			
 			_light = new Shape();
@@ -37,7 +37,7 @@ package com.smart.game.tower.tower
 			super();
 		}
 		
-		private function createLight(mc:EnemyBase, angle:Number):void
+		private function createLight(mc:EnemyObject, angle:Number):void
 		{
 			_light.rotation = angle;
 			_light.x = this.x;
@@ -47,11 +47,11 @@ package com.smart.game.tower.tower
 			_light.graphics.lineTo(mc.x - this.x, mc.y - this.y);
 		}
 		
-		override protected function fire(mc:EnemyBase, angle:Number):void
+		override protected function fire(mc:EnemyObject, angle:Number):void
 		{
 			this.changeState(true);
 			createLight(mc, angle);
-			mc.destroy(this.damage[this.level - 1], EnemyBase.DEATH_SHOCK);
+			mc.destroy(this.damage[this.level - 1], EnemyObject.DEATH_SHOCK);
 			setTimeout(timeOut, 100);
 		}
 		

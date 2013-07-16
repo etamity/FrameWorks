@@ -6,7 +6,7 @@
 
 package com.smart.game.tower.event 
 {
-	import com.smart.game.tower.enemy.EnemyBase;
+	import com.smart.game.tower.enemy.EnemyObject;
 	
 	import starling.events.Event;
 
@@ -15,15 +15,15 @@ package com.smart.game.tower.event
 	{
 		public static const DISAPPEAR:String = "disappear";
 		
-		private var _info:EnemyBase;
+		private var _info:EnemyObject;
 		
-		public function DisappearEvent(type:String, enemy:EnemyBase) 
+		public function DisappearEvent(type:String, enemy:EnemyObject) 
 		{ 
 			_info = enemy;
 			super(type, false, false);
 		} 
 		
-		public function get info():EnemyBase 
+		public function get info():EnemyObject 
 		{
 			return _info;
 		}

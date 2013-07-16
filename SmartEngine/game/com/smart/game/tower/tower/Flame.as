@@ -7,16 +7,16 @@
 
 package com.smart.game.tower.tower 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 	import flash.display.Shape;
-	import com.smart.game.tower.enemy.EnemyBase;
+	import com.smart.game.tower.enemy.EnemyObject;
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.utils.setTimeout;
 	import flash.utils.clearTimeout;
 	import com.smart.game.tower.model.Map;
 
-	public class Flame extends TowerBase 
+	public class Flame extends TowerObject 
 	{
 		private var _flame:Fire;
 		private var _timeId:int;
@@ -26,8 +26,8 @@ package com.smart.game.tower.tower
 			this.defense = 72;
 			this.damage = [400, 800, 1200];
 			this.cost = [50, 40, 40];
-			this.bmpData = BmpData.Textures[BmpData.FLAME];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.FLAME];
+			this.bmpData = GraphicsData.Textures[GraphicsData.FLAME];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.FLAME];
 			this.reloadTime = 1;
 			
 			_flame = new Fire(30, 30);
@@ -36,9 +36,9 @@ package com.smart.game.tower.tower
 			super();
 		}
 		
-		override protected function fire(mc:EnemyBase, angle:Number):void
+		override protected function fire(mc:EnemyObject, angle:Number):void
 		{
-			mc.destroy(this.damage[this.level - 1], EnemyBase.DEATH_COMMON);
+			mc.destroy(this.damage[this.level - 1], EnemyObject.DEATH_COMMON);
 			changeFireDirection(mc, angle);
 			if (!_flame.isPlay)
 			{
@@ -49,7 +49,7 @@ package com.smart.game.tower.tower
 			_timeId = setTimeout(timeOut, 1000);
 		}
 		
-		private function changeFireDirection(mc:EnemyBase, angle:Number):void
+		private function changeFireDirection(mc:EnemyObject, angle:Number):void
 		{
 	
 			angle *= Math.PI / 180;

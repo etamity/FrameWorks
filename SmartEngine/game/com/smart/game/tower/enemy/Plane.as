@@ -5,7 +5,7 @@
  ******************************************************************************/
 package com.smart.game.tower.enemy 
 {
-	import com.smart.game.tower.data.BmpData;
+	import com.smart.game.tower.data.GraphicsData;
 
 	public class Plane extends PlaneBase 
 	{
@@ -14,8 +14,8 @@ package com.smart.game.tower.enemy
 		{
 			this.speed = 2.5;
 			this.healthTotal = 300 * healthModifier;
-			this.bmpData = BmpData.Textures[BmpData.PLANE];
-			this.bmpPoint = BmpData.bmpPoints[BmpData.PLANE];
+			this.bmpData = GraphicsData.Textures[GraphicsData.PLANE];
+			this.bmpPoint = GraphicsData.bmpPoints[GraphicsData.PLANE];
 			this.score = 700;
 			
 			super(startId);
